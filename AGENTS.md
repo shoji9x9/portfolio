@@ -28,7 +28,7 @@
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
 - lefthook / commitlint / markdownlint-cli2 / knip / jscpd / dependency-cruiser
 
-**サプライチェーン対策**
+**サプライチェーン対策** — 依存経由の攻撃への多層防御
 
 - mise: `minimum_release_age` で新しすぎるツールリリースの採用を遅延
 - pnpm: `.npmrc` の `minimumReleaseAge` などで新しすぎるパッケージ公開の採用を遅延

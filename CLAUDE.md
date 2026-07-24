@@ -4,6 +4,7 @@
 ここには Claude Code 固有の差分のみを記述する。
 
 <!-- Claude Code が AGENTS.md を常時コンテキストへ読み込むための import 指定（上のリンクは人間が辿る用） -->
+
 @AGENTS.md
 
 ## スキルの利用
