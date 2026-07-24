@@ -19,10 +19,9 @@
     "format:check": "vp fmt -c oxfmt.config.ts --check",
     "knip": "knip --no-config-hints",
     "jscpd": "jscpd",
-    "depcruise": "depcruise src --config .dependency-cruiser.js",
     "commitlint": "commitlint --edit",
     "license:check": "pnpm licenses list --json | tsx scripts/check-licenses.ts",
-    "doctor": "react-doctor"
+    "doctor": "bash scripts/react-doctor-gate.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -42,7 +41,6 @@
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "^4.1.10",
     "babel-plugin-react-compiler": "^1.0.0",
-    "dependency-cruiser": "^18.1.0",
     "jscpd": "^4.0.0",
     "knip": "^6.27.0",
     "lefthook": "^2.1.10",

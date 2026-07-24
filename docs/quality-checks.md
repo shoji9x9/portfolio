@@ -2,7 +2,7 @@
 
 このプロジェクトで実行する静的解析・検査ツールと、実行タイミング（pre-commit / pre-push / CI）・
 対象ファイルの一覧。設定の実体は各ツールの設定ファイル（`oxlint.config.ts` / `oxfmt.config.ts` /
-`knip.ts` / `.dependency-cruiser.js` / `.markdownlint-cli2.mjs` / `lefthook.yml` / `.github/workflows/`）を参照。
+`knip.ts` / `.markdownlint-cli2.mjs` / `lefthook.yml` / `.github/workflows/`）を参照。
 
 ## 実行タイミングの方針
 
@@ -21,7 +21,6 @@
 | shellcheck                    | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                  |
 | gitleaks                      | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                              |
 | knip                          | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | プロジェクト全体（entry `src/main.tsx`）                                       |
-| dependency-cruiser            | 循環依存 / 依存規則              | ✓ src（関連 staged 時）  | –        | ✓                                          | `src/**`（※TS7 未対応で現状解析は限定的）                                      |
 | jscpd                         | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` ほか                                                                     |
 | commitlint                    | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                             |
 | tsc                           | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src`・各 config）                                              |
@@ -31,9 +30,11 @@
 | pnpm audit signatures         | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                       |
 | check-licenses.ts             | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                    |
 
-## CI ジョブ構成（並列）
+## CI ジョブ構成
 
-- `ci.yml`: `analyze`（静的解析）/ `verify`（型・テスト・ビルド・doctor）/ `supply-chain`（署名検証・ライセンス）/ `secret-scan`（全履歴）を並列実行。
+- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/doctor/署名検証/ライセンス）を
+  **ネイティブの step 並列（`parallel:`）** で実行し、`secret-scan` ジョブ（全履歴 gitleaks）を並列実行。
+  ※ `parallel:` は actionlint 未対応のため `.github/actionlint.yaml` で ci.yml のみ該当メッセージを ignore。
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。
 - `outdated.yml`: 週次で `mise outdated` を検出し Issue で通知。
 
@@ -41,4 +42,4 @@
 
 - lint は最初から厳格（ラチェットなし）。検出はすべて error として失敗させる。
 - `.agents/` / `.claude/`（vendored スキル実体）は lint/format 対象外。
-- `dependency-cruiser` は TypeScript 7 に未対応のため、現状は解析範囲が限定的（対応待ち）。
+- 循環依存は oxlint `import/no-cycle` で検査する（dependency-cruiser は TypeScript 7 未対応のため撤去）。

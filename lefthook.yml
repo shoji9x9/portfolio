@@ -9,7 +9,7 @@
 #
 # 前提の pnpm scripts（package.json 側で用意されている想定・notes 参照）:
 #   format(=vp fmt -c oxfmt.config.ts) / lint(=vp lint -c oxlint.config.ts --type-aware)
-#   lint:md(=markdownlint-cli2) / knip / depcruise / jscpd
+#   lint:md(=markdownlint-cli2) / knip / jscpd
 #   typecheck(=tsc -b) / test(=vp test --passWithNoTests) / doctor(=react-doctor)
 #
 # lefthook v2 の jobs / group（piped・parallel）/ glob / exclude / stage_fixed /
@@ -65,7 +65,7 @@ pre-commit:
             run: shellcheck --external-sources {staged_files}
 
     # 3. scan — 並列実行。シークレット/未使用/循環依存/コピペ検査。
-    #    knip/depcruise/jscpd はプロジェクト全体を解析するため {staged_files} は渡さず、
+    #    knip/jscpd はプロジェクト全体を解析するため {staged_files} は渡さず、
     #    glob で「関連ファイルが staged されたときのみ実行」するゲートとして使う。
     - name: scan
       group:
@@ -81,11 +81,6 @@ pre-commit:
               - "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
               - "package.json"
             run: pnpm knip
-
-          # dependency-cruiser: 循環依存・依存ルール検査（src 全体）
-          - name: depcruise
-            glob: "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
-            run: pnpm depcruise
 
           # jscpd: コピー&ペースト検出（全体）
           - name: jscpd

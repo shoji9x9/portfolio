@@ -26,7 +26,7 @@
 - TypeScript v7（LSP も v7 に統一） / tsx / turbo / playwright
 - react / tailwindcss v4 / shadcn/ui / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
-- lefthook / commitlint / markdownlint-cli2 / knip / jscpd / dependency-cruiser
+- lefthook / commitlint / markdownlint-cli2 / knip / jscpd
 
 **サプライチェーン対策** — 依存経由の攻撃への多層防御
 
