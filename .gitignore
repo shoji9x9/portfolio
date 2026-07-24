@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+build/
+.output/
+.wrangler/
+.turbo/
+
+# test / coverage / reports
+coverage/
+playwright-report/
+test-results/
+.playwright/
+reports/
+
+# caches
+*.tsbuildinfo
+.cache/
+.eslintcache
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# editor / os
+.DS_Store
+*.log
+.idea/
+.vscode/*
+!.vscode/extensions.json

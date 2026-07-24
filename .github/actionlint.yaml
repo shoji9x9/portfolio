@@ -1,0 +1,10 @@
+# actionlint 設定。
+# ci.yml は GitHub Actions ネイティブの step 並列（parallel:）を使う。
+# 現行 actionlint(v1.7.12) はこの構文に未対応で、parallel: ステップを
+# 「step must run script ...」と誤検出する。ci.yml に限りこのメッセージのみ無視する。
+# （ghalint / pinact / ランタイムは native 構文を受け付ける。他ファイルの検査は無効化しない。
+#  actionlint が parallel: に対応したら、この除外を削除する。）
+paths:
+  .github/workflows/ci.yml:
+    ignore:
+      - 'step must run script with "run" section or run action with "uses" section'

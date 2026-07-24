@@ -1,0 +1,102 @@
+name: CI
+
+# PR と main への push で、静的解析・型検査・テスト・ビルド・秘密情報スキャン・
+# ライセンス検査を実行する。
+# 時間短縮のため、各チェックを GitHub Actions ネイティブの step 並列（parallel:）で実行する。
+# 注: actionlint(v1.7.12) は parallel: 構文に未対応のため、.github/actionlint.yaml で
+#     ci.yml に限り該当メッセージのみ ignore している（ghalint / pinact は native を許容）。
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+# 最小権限（読み取りのみ）。
+permissions:
+  contents: read
+
+# 同一 ref の進行中実行はキャンセルして無駄な実行を減らす。
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # 静的解析 / 型検査 / テスト / ビルド（各チェックをステップ並列で実行）
+  # ---------------------------------------------------------------------------
+  check:
+    name: Lint / Typecheck / Test / Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise tools
+        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
+        with:
+          cache: true
+      - name: Resolve pnpm store path
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      - name: Cache pnpm store
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      # 独立した各チェックをステップ並列で実行し、すべて完了したら次へ進む。
+      - parallel:
+          - name: Verify registry signatures
+            run: pnpm audit signatures
+          - name: Format check
+            run: pnpm run format:check
+          - name: Lint
+            run: pnpm run lint
+          - name: Lint Markdown
+            run: pnpm run lint:md
+          - name: Lint shell scripts
+            run: pnpm run lint:sh
+          - name: Knip (unused files / deps)
+            run: pnpm run knip
+          - name: Copy-paste detection (jscpd)
+            run: pnpm run jscpd
+          - name: React Doctor
+            run: pnpm run doctor
+          - name: Typecheck
+            run: pnpm run typecheck
+          - name: Test
+            run: pnpm run test
+          - name: Build
+            run: pnpm run build
+          - name: License compliance
+            run: pnpm run license:check
+
+  # ---------------------------------------------------------------------------
+  # 秘密情報スキャン（gitleaks で全履歴を走査）
+  # ---------------------------------------------------------------------------
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # 全履歴を対象にするため fetch-depth: 0。
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up mise tools
+        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
+        with:
+          cache: true
+      - name: Run gitleaks
+        run: gitleaks git --no-banner --redact .
