@@ -1,0 +1,44 @@
+# shoji9x9/skills 配布物がインストール先で参照するプロジェクト設定。
+# 人手で編集可。`gh skill update` はこのファイルに触れないため設定は保持される。
+version: 1
+skills:
+  common:
+    # ブランチ運用・commit 規約・Issue タイトル規約の正本ドキュメント。
+    # issue-start / pr-review-handle / pr-finalize-loop / dependabot-alert-issue が参照する。
+    conventions_doc: AGENTS.md
+    # PR 再レビューを依頼する AI レビュアー（pr-review-handle / pr-finalize-loop が共有）。
+    review_tool: copilot # copilot | claude-code | codex | none
+
+  dependabot-merge:
+    # Dependabot PR のマージ方式。導入時に一度決める。
+    merge_method: merge # squash | merge | rebase
+
+  replace-strategy:
+    # shoji9x9.github.io を新リポジトリ・Cloudflare へ移行するプロジェクトの設定。
+    # 既知の値のみシード。スタック等の計測由来の値や references は `replace-strategy setup` で確定する。
+    current: # 現行アプリ（移行元）
+      repo: shoji9x9/shoji9x9.github.io
+      url: https://shoji9x9.github.io/ # 特性化の対象環境（公開中の静的サイト）
+      stack: [] # 現行スタック。調査・計測で判明した値を記録する
+    new: # 新側アプリ（移行先）
+      repo: shoji9x9/portfolio
+      url: none # Cloudflare のデプロイ URL が決まったら記入
+    forbidden_actions: # 現行サイトは公開中の静的サイト。読み取り専用として扱う
+      - 現行サイトへの書き込み・変更操作
+    parity_suite_dir: e2e/ # パリティスイートの配置（parity-suite が読む）
+    intentional_diffs: # 意図的差異レジストリ
+      keep: [] # 変えない（URL 構造・ページ構成など。計測後に確定）
+      may_change:
+        # UI コンポーネントは変更予定。ライブラリ変更に伴うコンポーネントレベルの機能・見た目の差異は許容する。
+        - UI コンポーネントの実装・見た目（shadcn/ui 等への移行に伴う差異）
+      pending: [] # 保留（計測結果で決める）
+    component_diffs: [] # コンポーネント系統差レジストリ（parity-replace が宣言）
+    component_diff_exceptions: [] # インスタンス単位の例外（parity-diff が宣言）
+
+  # dependabot-alert-issue:
+  #   リポジトリ固有の alert 特別処理（dismiss ルール等）が必要になったらここに記述する。
+  #   現時点では規約は common.conventions_doc に従う。
+
+  # browser-test:
+  #   新アプリ（Cloudflare 上）の環境 URL・起動方法・認証が定まってから設定する。
+  #   アプリ未整備のため現時点では未設定。
