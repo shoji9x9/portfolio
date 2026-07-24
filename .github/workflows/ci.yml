@@ -58,43 +58,41 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # サプライチェーン対策: レジストリ署名を検証する（改ざん / なりすまし検出）。
-      - name: Verify registry signatures
-        run: pnpm audit signatures
+      # 時間のかかる各チェックを 1 ステップ内でバックグラウンド並列実行する。
+      # （GitHub Actions ネイティブの step 並列 `background:`/`wait-all:` は
+      #  現行 actionlint が未対応で actions-lint を壊すため、shell 並列で実現する。）
+      # チェックごとにログを保存し、いずれかが失敗すればジョブを失敗させる。
+      - name: Quality checks (parallel)
+        run: |
+          set -u
+          declare -A PID
+          run() {
+            local name="$1"; shift
+            ( "$@" ) >"$RUNNER_TEMP/ck-$name.log" 2>&1 &
+            PID[$name]=$!
+          }
+          # サプライチェーン: レジストリ署名検証（改ざん / なりすまし検出）
+          run audit      pnpm audit signatures
+          run format     pnpm run format:check
+          run lint       pnpm run lint
+          run lint-md    pnpm run lint:md
+          run lint-sh    pnpm run lint:sh
+          run knip       pnpm run knip
+          run depcruise  pnpm run depcruise
+          run jscpd      pnpm run jscpd
+          run doctor     pnpm run doctor
+          run typecheck  pnpm run typecheck
+          run test       pnpm run test
+          run build      pnpm run build
 
-      - name: Format check
-        run: pnpm run format:check
-
-      - name: Lint
-        run: pnpm run lint
-
-      - name: Lint Markdown
-        run: pnpm run lint:md
-
-      # シェルスクリプト検査（shellcheck + shfmt -d）。mise 提供の CLI を使う。
-      - name: Lint shell scripts
-        run: pnpm run lint:sh
-
-      - name: Knip (unused files / deps)
-        run: pnpm run knip
-
-      - name: Dependency Cruiser
-        run: pnpm run depcruise
-
-      - name: Copy-paste detection (jscpd)
-        run: pnpm run jscpd
-
-      - name: React Doctor
-        run: pnpm run doctor
-
-      - name: Typecheck
-        run: pnpm run typecheck
-
-      - name: Test
-        run: pnpm run test
-
-      - name: Build
-        run: pnpm run build
+          fail=0
+          for name in "${!PID[@]}"; do
+            if wait "${PID[$name]}"; then status="✓"; else status="✗ FAILED"; fail=1; fi
+            echo "::group::${status} ${name}"
+            cat "$RUNNER_TEMP/ck-$name.log"
+            echo "::endgroup::"
+          done
+          exit "$fail"
 
   # ---------------------------------------------------------------------------
   # 秘密情報スキャン（gitleaks で全履歴を走査）
