@@ -2,8 +2,6 @@ name: CI
 
 # PR と main への push で、静的解析・型検査・テスト・ビルド・秘密情報スキャン・
 # ライセンス検査を実行する。
-# 時間短縮のため独立した検査群を「並列ジョブ」に分割する（ジョブは既定で並列実行される）。
-# ジョブ内のステップは逐次だが、検査ごとにステップを分けてログの可読性を確保する。
 on:
   push:
     branches:
@@ -21,55 +19,13 @@ concurrency:
 
 jobs:
   # ---------------------------------------------------------------------------
-  # 静的解析（format / lint / md / sh / knip / depcruise / jscpd）
+  # 品質チェック（1 ステップ内で shell バックグラウンド並列）
+  #   GitHub Actions ネイティブの step 並列（background:/wait-all:）は現行 actionlint
+  #   が未対応で actions-lint を壊すため、副作用のない shell 並列（& + wait）で実現する。
+  #   各チェックのログを保存し、いずれか失敗でジョブを失敗させる。
   # ---------------------------------------------------------------------------
-  analyze:
-    name: Static analysis
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Set up mise tools
-        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
-        with:
-          cache: true
-      - name: Resolve pnpm store path
-        id: pnpm-store
-        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-      - name: Cache pnpm store
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-store-${{ runner.os }}-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Format check
-        run: pnpm run format:check
-      - name: Lint
-        run: pnpm run lint
-      - name: Lint Markdown
-        run: pnpm run lint:md
-      - name: Lint shell scripts
-        run: pnpm run lint:sh
-      - name: Knip (unused files / deps)
-        run: pnpm run knip
-      - name: Dependency Cruiser
-        run: pnpm run depcruise
-      - name: Copy-paste detection (jscpd)
-        run: pnpm run jscpd
-
-  # ---------------------------------------------------------------------------
-  # 型検査 / テスト / ビルド / React 健全性
-  # ---------------------------------------------------------------------------
-  verify:
-    name: Typecheck / Test / Build
+  check:
+    name: Lint / Typecheck / Test / Build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
@@ -95,51 +51,44 @@ jobs:
             pnpm-store-${{ runner.os }}-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      - name: Typecheck
-        run: pnpm run typecheck
-      - name: Test
-        run: pnpm run test
-      - name: Build
-        run: pnpm run build
-      - name: React Doctor
-        run: pnpm run doctor
+      # 独立した各チェックを 1 ステップ内でバックグラウンド並列実行する。
+      - name: Quality checks (parallel)
+        run: |
+          set -u
+          declare -A PID
+          run() {
+            local name="$1"
+            shift
+            ( "$@" ) >"$RUNNER_TEMP/ck-$name.log" 2>&1 &
+            PID[$name]=$!
+          }
+          run audit      pnpm audit signatures
+          run format     pnpm run format:check
+          run lint       pnpm run lint
+          run lint-md    pnpm run lint:md
+          run lint-sh    pnpm run lint:sh
+          run knip       pnpm run knip
+          run depcruise  pnpm run depcruise
+          run jscpd      pnpm run jscpd
+          run doctor     pnpm run doctor
+          run typecheck  pnpm run typecheck
+          run test       pnpm run test
+          run build      pnpm run build
+          run license    pnpm run license:check
 
-  # ---------------------------------------------------------------------------
-  # サプライチェーン（レジストリ署名検証 + 依存ライセンス検査）
-  # ---------------------------------------------------------------------------
-  supply-chain:
-    name: Supply chain
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Set up mise tools
-        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
-        with:
-          cache: true
-      - name: Resolve pnpm store path
-        id: pnpm-store
-        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
-      - name: Cache pnpm store
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-store-${{ runner.os }}-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      # レジストリ署名を検証する（改ざん / なりすまし検出）。
-      - name: Verify registry signatures
-        run: pnpm audit signatures
-      # GPL / AGPL / SSPL 等のコピーレフトを含めば fail する。
-      - name: Check dependency licenses
-        run: pnpm run license:check
+          fail=0
+          for name in "${!PID[@]}"; do
+            if wait "${PID[$name]}"; then
+              status="✓"
+            else
+              status="✗ FAILED"
+              fail=1
+            fi
+            echo "::group::${status} ${name}"
+            cat "$RUNNER_TEMP/ck-$name.log"
+            echo "::endgroup::"
+          done
+          exit "$fail"
 
   # ---------------------------------------------------------------------------
   # 秘密情報スキャン（gitleaks で全履歴を走査）
@@ -161,6 +110,5 @@ jobs:
         uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
         with:
           cache: true
-      # git 履歴全体をスキャンし、検出値はマスク（--redact）して出力する。
       - name: Run gitleaks
         run: gitleaks git --no-banner --redact .
