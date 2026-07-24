@@ -1,0 +1,86 @@
+{
+  "skill_name": "kaizen",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "このセッションで「パスを間違えていました、修正してください」という指示があった。このセッションの学びを 1 件抽出して .kaizen/ に保存したい",
+      "assertions": [
+        ".kaizen/ ディレクトリが作成されている",
+        ".kaizen/*.md ファイルが 1 件作成されている",
+        "作成されたファイルの frontmatter に date, type, status, priority フィールドがある",
+        "作成されたファイルに「事象」「根本原因」「提案」セクションがある",
+        "status が pending になっている",
+        "個別の失敗ではなく根本原因が記述されている"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "全セッションを振り返って学びを抽出したい",
+      "assertions": [
+        "references/extract.md の --all モードに従って全セッションログを対象にしようとしている",
+        "複数の候補が提示されている（または候補がない旨が伝えられている）",
+        "ユーザーの承認なしに .kaizen/ にファイルを書き込んでいない"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": ".kaizen/ に pending な学びがある前提で、学びを適用したい",
+      "assertions": [
+        ".kaizen/*.md の一覧を確認しようとしている",
+        "1 件ずつユーザーに確認するフローになっている",
+        "type に応じて multiagent-setup スキルを参照しようとしている",
+        "全件処理後にブランチ継続か Issue 作成かをユーザーに確認している"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "kaizen の Hook を Claude Code に設定して、コミット前に学びを自動抽出できるようにしたい",
+      "assertions": [
+        ".claude/settings.json の hooks セクションに Stop イベントの設定が追加されている",
+        "Stop Hook がバンドルされた kaizen-stop-mark スクリプトを呼び出し、未抽出センチネル .kaizen/.pending-extract を作成する設定になっている",
+        "Stop Hook に echo によるリマインダー出力が含まれていない",
+        "PreToolUse Hook（matcher が Bash）が設定され、kaizen-precommit-gate スクリプトを呼び出している",
+        "ゲートは未抽出センチネルがある時に git commit をブロックして kaizen --current の実行を促す設計になっている"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "このセッションでコマンドエラーが繰り返し起きた。kaizen で根本原因を分析して学びを抽出したい",
+      "assertions": [
+        "症状レベルで止めず、最低 3 階層の「なぜ」を掘り下げようとしている",
+        "既存の .kaizen/*.md と照合（KEDB）して同種の学びがないか確認しようとしている",
+        "同じ根本原因が他の箇所にも潜んでいないか横断スコープを確認しようとしている",
+        "ユーザーの承認なしに .kaizen/ にファイルを書き込んでいない"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "kaizen のセッション開始時フックを設定して、過去の学びをエージェントが参照できるようにしたい",
+      "assertions": [
+        "SessionStart（またはセッション開始相当）の Hook を設定しようとしている",
+        "kaizen-context-inject スクリプトを呼び出す設定になっている",
+        "Claude Code は context へ注入され、Codex / Copilot はベストエフォートという但し書きに言及している",
+        "「kaizen を実行せよ」という行動リマインダーではなく、学びデータの供給が目的だと区別している"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "学びを抽出し、その内容を同じセッションで AGENTS.md に反映した。.kaizen のファイルはどう扱うべきか",
+      "assertions": [
+        "反映（適用）が完了したら当該ファイルの status を pending から applied に更新すべきと案内している",
+        "grep などで反映済みなのに status: pending が残っていないか確認する手順に言及している"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "kaizen をインストールしたので初期セットアップをしたい",
+      "assertions": [
+        "references/setup.md を参照してセットアップ手順に従おうとしている",
+        "AGENTS.md にエージェントの自己設定編集の制約（自己改変ガード）を追記しようとしている（既存なら追記しない）",
+        "Claude Code は .claude/settings.json を直接編集できない場合があり、tmp に書いて ! cp での適用をユーザーに依頼すると案内している",
+        "タスク終了時・コミット前ゲート・セッション開始時の 3 つの Hook を設定しようとしている",
+        ".gitignore に **/.kaizen/.pending-extract* と **/.kaizen/.extract-done を追加しようとしている（.kaizen/ 本体はコミット対象のまま）"
+      ]
+    }
+  ]
+}
