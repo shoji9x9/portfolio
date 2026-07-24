@@ -1,0 +1,127 @@
+# Lefthook — Git hooks manager (https://lefthook.dev)
+# 導入は package.json の "prepare"（lefthook install）経由。lefthook は pnpm 管理（v2 系）。
+#
+# 実行系の前提:
+#   - vp（vite+ / viteplus）は mise 管理で PATH 上にある。lint/format/test は vp で実行する。
+#   - mise 管理バイナリ（PATH 上）を直接呼ぶもの:
+#       gitleaks / shfmt / shellcheck / actionlint / ghalint / pinact
+#   - vendored の .agents/ .claude/ は lint/format 対象から除外（exclude 正規表現）。
+#
+# 前提の pnpm scripts（package.json 側で用意されている想定・notes 参照）:
+#   format(=vp fmt -c oxfmt.config.ts) / lint(=vp lint -c oxlint.config.ts --type-aware)
+#   lint:md(=markdownlint-cli2) / knip / depcruise / jscpd
+#   typecheck(=tsc -b) / test(=vp test --passWithNoTests) / doctor(=react-doctor)
+#
+# lefthook v2 の jobs / group（piped・parallel）/ glob / exclude / stage_fixed /
+# {staged_files} を用いる。
+min_version: "2.1.0"
+
+# pre-commit: 変更（staged）ファイル中心の高速ゲート。
+#   1. format (piped)  : 整形して自動再 stage
+#   2. lint   (parallel): 静的解析
+#   3. scan   (parallel): シークレット/未使用/循環/コピペ検査
+pre-commit:
+  jobs:
+    # 1. format — 順次実行（piped）。整形後に stage_fixed で再ステージ。
+    - name: format
+      group:
+        piped: true
+        jobs:
+          # oxfmt: JS/TS/JSON/CSS などを整形（vendored ディレクトリは除外）
+          - name: oxfmt
+            glob:
+              - "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
+              - "*.{json,jsonc,css}"
+            exclude: '(^|/)\.(agents|claude)/'
+            run: pnpm format {staged_files}
+            stage_fixed: true
+
+          # shfmt: シェルスクリプトを整形（-w で書き換え）
+          - name: shfmt
+            glob: "*.{sh,bash}"
+            run: shfmt -w --indent 2 --case-indent --binary-next-line {staged_files}
+            stage_fixed: true
+
+    # 2. lint — 並列実行。整形済みの変更ファイルを検査。
+    - name: lint
+      group:
+        parallel: true
+        jobs:
+          # oxlint: type-aware lint（変更ファイル）
+          - name: oxlint
+            glob: "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
+            exclude: '(^|/)\.(agents|claude)/'
+            run: pnpm lint {staged_files}
+
+          # markdownlint-cli2: Markdown 検査
+          - name: markdownlint
+            glob: "*.md"
+            exclude: '(^|/)\.(agents|claude)/'
+            run: pnpm lint:md {staged_files}
+
+          # shellcheck: シェルスクリプト静的解析
+          - name: shellcheck
+            glob: "*.{sh,bash}"
+            run: shellcheck --external-sources {staged_files}
+
+    # 3. scan — 並列実行。シークレット/未使用/循環依存/コピペ検査。
+    #    knip/depcruise/jscpd はプロジェクト全体を解析するため {staged_files} は渡さず、
+    #    glob で「関連ファイルが staged されたときのみ実行」するゲートとして使う。
+    - name: scan
+      group:
+        parallel: true
+        jobs:
+          # gitleaks: staged 差分のシークレット検査
+          - name: gitleaks
+            run: gitleaks git --staged --no-banner --redact
+
+          # knip: 未使用の依存/export/ファイル検査（全体）
+          - name: knip
+            glob:
+              - "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
+              - "package.json"
+            run: pnpm knip
+
+          # dependency-cruiser: 循環依存・依存ルール検査（src 全体）
+          - name: depcruise
+            glob: "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
+            run: pnpm depcruise
+
+          # jscpd: コピー&ペースト検出（全体）
+          - name: jscpd
+            glob: "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
+            run: pnpm jscpd
+
+# commit-msg: Conventional Commits 検証（commitlint）。{1} = コミットメッセージファイルパス。
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: pnpm exec commitlint --edit {1}
+
+# pre-push: 重い全体検査をここで 1 回だけ実行する。
+pre-push:
+  parallel: true
+  jobs:
+    # プロジェクト全体の型/テスト/健全性
+    - name: verify
+      group:
+        parallel: true
+        jobs:
+          - name: typecheck
+            run: pnpm typecheck
+          - name: test
+            run: pnpm test
+          - name: doctor
+            run: pnpm doctor
+
+    # GitHub Actions 検査（ワークフロー変更の有無に関わらず全体検証）
+    - name: actions
+      group:
+        parallel: true
+        jobs:
+          - name: actionlint
+            run: actionlint
+          - name: ghalint
+            run: ghalint run
+          - name: pinact
+            run: pinact run --check
