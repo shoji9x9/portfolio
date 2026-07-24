@@ -30,9 +30,11 @@ export default {
       "promise",
     ],
     jsPlugins: ["oxlint-tailwindcss"],
+    // 最初から厳格にする（ラチェットは使わない）。現状 warning だったものは
+    // すべて error に格上げし、CI / フックで失敗させる。
     categories: {
       correctness: "error",
-      suspicious: "warn",
+      suspicious: "error",
     },
     settings: {
       tailwindcss: {
@@ -48,25 +50,25 @@ export default {
 
       // react-hooks 相当のルールを明示的に有効化する。
       "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/exhaustive-deps": "error",
 
       // CSS などの副作用 import（`import "./index.css"`）は許可する。
-      "import/no-unassigned-import": ["warn", { allow: ["**/*.css"] }],
+      "import/no-unassigned-import": ["error", { allow: ["**/*.css"] }],
 
       "tailwindcss/no-unknown-classes": "error",
       "tailwindcss/no-conflicting-classes": "error",
       "tailwindcss/no-contradicting-variants": "error",
       "tailwindcss/no-deprecated-classes": "error",
+      "tailwindcss/no-duplicate-classes": "error",
+      "tailwindcss/no-unnecessary-whitespace": "error",
+      "tailwindcss/enforce-canonical": "error",
+      "tailwindcss/enforce-shorthand": "error",
+      "tailwindcss/no-unnecessary-arbitrary-value": "error",
+      "tailwindcss/consistent-variant-order": "error",
+      "tailwindcss/enforce-consistent-important-position": "error",
+      "tailwindcss/enforce-consistent-variable-syntax": "error",
 
-      "tailwindcss/no-duplicate-classes": "warn",
-      "tailwindcss/no-unnecessary-whitespace": "warn",
-      "tailwindcss/enforce-canonical": "warn",
-      "tailwindcss/enforce-shorthand": "warn",
-      "tailwindcss/no-unnecessary-arbitrary-value": "warn",
-      "tailwindcss/consistent-variant-order": "warn",
-      "tailwindcss/enforce-consistent-important-position": "warn",
-      "tailwindcss/enforce-consistent-variable-syntax": "warn",
-
+      // 並び替えは oxfmt に一元化するため lint 側は無効のまま。
       "tailwindcss/enforce-sort-order": "off",
     },
     overrides: [

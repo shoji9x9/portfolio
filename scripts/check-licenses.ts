@@ -50,6 +50,11 @@ function atomDenied(id: string, deny: DenyRule[]): boolean {
   return deny.some((d) => d.re.test(token));
 }
 
+/** トークンが指定の演算子/記号か（大文字小文字無視）。 */
+function isOp(t: string | undefined, op: string): boolean {
+  return t !== undefined && t.toUpperCase() === op;
+}
+
 /** SPDX 式をトークン列に分解する（カッコ・演算子・識別子）。 */
 function tokenize(expr: string): string[] {
   return expr
@@ -71,8 +76,6 @@ function isExpressionAllowed(expr: string, deny: DenyRule[]): boolean {
   let pos = 0;
 
   const peek = (): string | undefined => tokens[pos];
-  const isOp = (t: string | undefined, op: string): boolean =>
-    t !== undefined && t.toUpperCase() === op;
 
   function parseAtom(): boolean {
     const t = peek();
@@ -197,9 +200,14 @@ async function main(): Promise<void> {
 
   let data: Record<string, LicenseEntry[]>;
   try {
+    // JSON.parse は any を返す。外部ツール（pnpm licenses list --json）の出力を
+    // 受け取る I/O 境界であり、形状は collectViolations 側で防御的に検証するため、
+    // ここでの型付けアサーションのみ明示的に許可する。
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion
     data = JSON.parse(raw) as Record<string, LicenseEntry[]>;
   } catch (err) {
-    console.error(`error: failed to parse JSON input: ${(err as Error).message}`);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`error: failed to parse JSON input: ${message}`);
     process.exit(2);
   }
 
