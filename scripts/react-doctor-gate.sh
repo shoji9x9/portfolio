@@ -20,9 +20,12 @@ raw_output="$(pnpm exec react-doctor --score --no-supply-chain 2>&1 || true)"
 # プロジェクト選択行（例: "✔ Select projects › portfolio"）が混ざり得るため、
 # ANSI を除去したうえで「単独行の整数」を末尾から 1 つ取り出す。
 # grep のマッチ無し(exit 1)は想定内なので握りつぶし、pipefail で中断させない。
+# ESC 文字は bash の ANSI-C quoting でリテラルとして埋め込む（sed の \x1b は
+# BSD/macOS の sed で解釈されないため、移植性のためリテラル ESC を渡す）。
+esc=$'\x1b'
 score="$(
   printf '%s\n' "$raw_output" \
-    | sed -E 's/\x1b\[[0-9;]*m//g' \
+    | sed -E "s/${esc}\[[0-9;]*m//g" \
     | { grep -oE '^[[:space:]]*[0-9]+[[:space:]]*$' || true; } \
     | tr -d '[:space:]' \
     | tail -n1
