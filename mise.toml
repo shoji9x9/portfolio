@@ -1,0 +1,25 @@
+# mise で管理するツール。`mise install` で導入する。
+# バージョンは再現性のため厳密にピン留めする（更新は Dependabot / mise up で行う）。
+[tools]
+# ランタイム / パッケージマネージャ
+node = "24.18.0"
+pnpm = "11.17.0"
+
+# セキュリティ / lint（シェル・GitHub Actions）
+gitleaks = "8.30.1"
+actionlint = "1.7.12"
+ghalint = "1.5.6"
+pinact = "4.1.0"
+shfmt = "3.13.1"
+shellcheck = "0.11.0"
+
+# Cloudflare CLI
+wrangler = { version = "4.114.0", allow_builds = ["esbuild", "sharp", "workerd"] }
+
+# vite+（vite / vitest / oxlint / oxfmt などを内包）
+viteplus = "0.2.6"
+
+[settings]
+# サプライチェーン対策: 公開直後の新しすぎるリリースを採用しない（悪意あるリリースの取り下げ猶予）。
+# ツール解決・更新時にこの日数を経ていないバージョンを避ける。
+minimum_release_age = "7 days"

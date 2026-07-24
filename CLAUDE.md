@@ -1,7 +1,9 @@
 # Claude Code 設定
 
-プロジェクト概要・技術スタック・ワークフロー・規約は [AGENTS.md](AGENTS.md) を参照する。
+プロジェクト概要・技術スタック・ワークフロー・規約は @AGENTS.md を参照する。
 ここには Claude Code 固有の差分のみを記述する。
+
+@AGENTS.md
 
 ## スキルの利用
 
