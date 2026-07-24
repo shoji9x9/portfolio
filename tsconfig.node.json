@@ -5,7 +5,10 @@
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "lib": ["ES2023"],
-    "types": ["node"]
+    "types": ["node"],
+    // preinstall 用の素の Node スクリプト（.mjs）に型情報を与えるため許可する
+    // （checkJs は無効なので型検査はせず、oxlint の型認識に Node 型を供給するだけ）。
+    "allowJs": true
   },
   "include": [
     "vite.config.ts",
@@ -14,6 +17,7 @@
     "vitest.workspace.ts",
     "playwright.config.ts",
     "*.config.ts",
-    "scripts/**/*.ts"
+    "scripts/**/*.ts",
+    "scripts/**/*.mjs"
   ]
 }

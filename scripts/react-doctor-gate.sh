@@ -12,14 +12,18 @@ set -euo pipefail
 # 100 点未満を error とする閾値。緩めたい場合はここを変更する。
 THRESHOLD="${REACT_DOCTOR_MIN_SCORE:-100}"
 
+# react-doctor が非 0 終了しても set -e で即死させず、stdout/stderr を両方
+# 取得する（失敗時の原因を下の「取得失敗」ハンドラで表示できるように）。
+raw_output="$(pnpm exec react-doctor --score --no-supply-chain 2>&1 || true)"
+
 # --score は「数値のみ」を出力する想定だが、pnpm / mise のプリアンブルや
 # プロジェクト選択行（例: "✔ Select projects › portfolio"）が混ざり得るため、
 # ANSI を除去したうえで「単独行の整数」を末尾から 1 つ取り出す。
-raw_output="$(pnpm exec react-doctor --score --no-supply-chain 2>/dev/null)"
+# grep のマッチ無し(exit 1)は想定内なので握りつぶし、pipefail で中断させない。
 score="$(
   printf '%s\n' "$raw_output" \
     | sed -E 's/\x1b\[[0-9;]*m//g' \
-    | grep -oE '^[[:space:]]*[0-9]+[[:space:]]*$' \
+    | { grep -oE '^[[:space:]]*[0-9]+[[:space:]]*$' || true; } \
     | tr -d '[:space:]' \
     | tail -n1
 )"

@@ -40,7 +40,8 @@ pre-commit:
           - name: shfmt
             glob: "*.{sh,bash}"
             exclude: '(^|/)\.(agents|claude)/'
-            run: shfmt -w --indent 2 --case-indent --binary-next-line {staged_files}
+            # 整形オプションは .editorconfig を単一の設定源とする（フラグを重複させない）。
+            run: shfmt -w {staged_files}
             stage_fixed: true
 
     # 2. lint — 並列実行。整形済みの変更ファイルを検査。

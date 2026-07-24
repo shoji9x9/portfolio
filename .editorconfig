@@ -1,0 +1,10 @@
+root = true
+
+# シェルスクリプトの整形ルール（shfmt が読み取る単一の設定源）。
+# lefthook（pre-commit の shfmt -w）と CI（lint:sh の shfmt -d）が
+# ともにここを参照するため、オプションを二重管理しない。
+[*.{sh,bash}]
+indent_style = space
+indent_size = 2
+switch_case_indent = true
+binary_next_line = true
