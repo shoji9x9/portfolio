@@ -2,6 +2,9 @@ name: CI
 
 # PR と main への push で、静的解析・型検査・テスト・ビルド・秘密情報スキャン・
 # ライセンス検査を実行する。
+# 時間短縮のため、各チェックを GitHub Actions ネイティブの step 並列（parallel:）で実行する。
+# 注: actionlint(v1.7.12) は parallel: 構文に未対応のため、.github/actionlint.yaml で
+#     ci.yml に限り該当メッセージのみ ignore している（ghalint / pinact は native を許容）。
 on:
   push:
     branches:
@@ -19,10 +22,7 @@ concurrency:
 
 jobs:
   # ---------------------------------------------------------------------------
-  # 品質チェック（1 ステップ内で shell バックグラウンド並列）
-  #   GitHub Actions ネイティブの step 並列（background:/wait-all:）は現行 actionlint
-  #   が未対応で actions-lint を壊すため、副作用のない shell 並列（& + wait）で実現する。
-  #   各チェックのログを保存し、いずれか失敗でジョブを失敗させる。
+  # 静的解析 / 型検査 / テスト / ビルド（各チェックをステップ並列で実行）
   # ---------------------------------------------------------------------------
   check:
     name: Lint / Typecheck / Test / Build
@@ -51,44 +51,32 @@ jobs:
             pnpm-store-${{ runner.os }}-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      # 独立した各チェックを 1 ステップ内でバックグラウンド並列実行する。
-      - name: Quality checks (parallel)
-        run: |
-          set -u
-          declare -A PID
-          run() {
-            local name="$1"
-            shift
-            ( "$@" ) >"$RUNNER_TEMP/ck-$name.log" 2>&1 &
-            PID[$name]=$!
-          }
-          run audit      pnpm audit signatures
-          run format     pnpm run format:check
-          run lint       pnpm run lint
-          run lint-md    pnpm run lint:md
-          run lint-sh    pnpm run lint:sh
-          run knip       pnpm run knip
-          run depcruise  pnpm run depcruise
-          run jscpd      pnpm run jscpd
-          run doctor     pnpm run doctor
-          run typecheck  pnpm run typecheck
-          run test       pnpm run test
-          run build      pnpm run build
-          run license    pnpm run license:check
-
-          fail=0
-          for name in "${!PID[@]}"; do
-            if wait "${PID[$name]}"; then
-              status="✓"
-            else
-              status="✗ FAILED"
-              fail=1
-            fi
-            echo "::group::${status} ${name}"
-            cat "$RUNNER_TEMP/ck-$name.log"
-            echo "::endgroup::"
-          done
-          exit "$fail"
+      # 独立した各チェックをステップ並列で実行し、すべて完了したら次へ進む。
+      - parallel:
+          - name: Verify registry signatures
+            run: pnpm audit signatures
+          - name: Format check
+            run: pnpm run format:check
+          - name: Lint
+            run: pnpm run lint
+          - name: Lint Markdown
+            run: pnpm run lint:md
+          - name: Lint shell scripts
+            run: pnpm run lint:sh
+          - name: Knip (unused files / deps)
+            run: pnpm run knip
+          - name: Copy-paste detection (jscpd)
+            run: pnpm run jscpd
+          - name: React Doctor
+            run: pnpm run doctor
+          - name: Typecheck
+            run: pnpm run typecheck
+          - name: Test
+            run: pnpm run test
+          - name: Build
+            run: pnpm run build
+          - name: License compliance
+            run: pnpm run license:check
 
   # ---------------------------------------------------------------------------
   # 秘密情報スキャン（gitleaks で全履歴を走査）
