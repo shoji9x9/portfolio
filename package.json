@@ -14,7 +14,7 @@
     "lint": "vp lint -c oxlint.config.ts --type-aware",
     "lint:fix": "vp lint -c oxlint.config.ts --type-aware --fix",
     "lint:md": "markdownlint-cli2",
-    "lint:sh": "git ls-files -z '*.sh' '*.bash' | xargs -0 -r shellcheck && git ls-files -z '*.sh' '*.bash' | xargs -0 -r shfmt -d",
+    "lint:sh": "git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 -r shellcheck && git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 -r shfmt -d --indent 2 --case-indent --binary-next-line",
     "format": "vp fmt -c oxfmt.config.ts",
     "format:check": "vp fmt -c oxfmt.config.ts --check",
     "knip": "knip --no-config-hints",

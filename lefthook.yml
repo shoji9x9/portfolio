@@ -39,6 +39,7 @@ pre-commit:
           # shfmt: シェルスクリプトを整形（-w で書き換え）
           - name: shfmt
             glob: "*.{sh,bash}"
+            exclude: '(^|/)\.(agents|claude)/'
             run: shfmt -w --indent 2 --case-indent --binary-next-line {staged_files}
             stage_fixed: true
 
@@ -62,6 +63,7 @@ pre-commit:
           # shellcheck: シェルスクリプト静的解析
           - name: shellcheck
             glob: "*.{sh,bash}"
+            exclude: '(^|/)\.(agents|claude)/'
             run: shellcheck --external-sources {staged_files}
 
     # 3. scan — 並列実行。シークレット/未使用/循環依存/コピペ検査。
