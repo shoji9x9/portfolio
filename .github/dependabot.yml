@@ -1,0 +1,64 @@
+# Dependabot による依存更新設定。
+#
+# 注意: mise（mise.toml）で管理するツール
+#   node / pnpm / gitleaks / actionlint / ghalint / pinact / shfmt / shellcheck /
+#   wrangler / viteplus
+# は Dependabot がネイティブに扱えない（対応エコシステムに mise が無いため）。
+# これらの更新は `mise outdated` / `mise up` で手動管理し、本設定の対象外とする。
+version: 2
+updates:
+  # ---------------------------------------------------------------------------
+  # pnpm 依存（package.json / pnpm-lock.yaml）
+  # Dependabot は pnpm を "npm" エコシステムとして解釈する。
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "javascript"
+    # Conventional Commits に合わせた commit message prefix。
+    commit-message:
+      prefix: "chore(deps)" # 本体依存 -> "chore(deps): ..."
+      prefix-development: "chore(deps-dev)" # devDependencies -> "chore(deps-dev): ..."
+    # サプライチェーン対策: 公開直後のリリース採用を遅延させる
+    # （mise の minimum_release_age / pnpm の minimumReleaseAge と方針を揃える）。
+    cooldown:
+      default-days: 7
+    groups:
+      # マイナー / パッチはまとめて 1 PR にしレビュー負荷を下げる。
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # ---------------------------------------------------------------------------
+  # GitHub Actions（.github/workflows/**）
+  # uses: は commit SHA でピン留め運用（pinact）。Dependabot は SHA を更新しつつ
+  # 併記したバージョンコメントも追従更新する。
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)" # Actions 更新 -> "ci(deps): ..."
+    cooldown:
+      default-days: 7
+    groups:
+      actions-minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"

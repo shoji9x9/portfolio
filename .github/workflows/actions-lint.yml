@@ -1,0 +1,55 @@
+name: Actions Lint
+
+# GitHub Actions ワークフロー自体を actionlint / ghalint で検査し、
+# pinact で uses: の SHA ピン留めを検証する。
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/**"
+      - ".github/actions/**"
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - ".github/actions/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: actions-lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actions-lint:
+    name: actionlint / ghalint / pinact
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # actionlint / ghalint / pinact / shellcheck を mise で用意する（mise.toml を読み込む）。
+      - name: Set up mise tools
+        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
+        with:
+          cache: true
+
+      # ワークフローの構文・式・型を検査する。PATH 上の shellcheck と連携し run: のシェルも検査。
+      - name: Run actionlint
+        run: actionlint -color
+
+      # セキュリティ観点のポリシー検査（permissions 明示・SHA ピン等）。
+      - name: Run ghalint
+        run: ghalint run
+
+      # uses: が commit SHA でピン留めされているか検証する（未ピンなら fail、ファイルは編集しない）。
+      - name: Verify actions are pinned (pinact)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: pinact run --check

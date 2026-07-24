@@ -1,0 +1,116 @@
+name: mise outdated
+
+# mise 管理ツール（node / pnpm / 各 CLI）の更新を毎週チェックし、固定タイトルの
+# Issue に集約通知する。メジャー更新は破壊的変更を伴い得るため自動通知しない
+# （現在バージョンと bump/latest のメジャーが一致する項目のみ対象）。
+on:
+  schedule:
+    # 毎週月曜 00:00 UTC。
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: outdated-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  outdated:
+    name: Report outdated mise tools
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      # 固定タイトル Issue の作成・更新・クローズに必要（ラベル作成も含む）。
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # mise を用意する（mise.toml を読み込む）。バージョン解決は mise.toml の
+      # minimum_release_age（7 日）を尊重する。
+      - name: Set up mise tools
+        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
+        with:
+          cache: true
+
+      # `mise outdated --bump --json` を取得し、current と (bump//latest) の
+      # メジャーが一致する項目のみ残す（メジャー更新は除外）。Markdown 表本文を生成。
+      - name: Compute outdated tools (minor/patch only)
+        id: outdated
+        run: |
+          # jq プログラム内の \(...) は jq 構文（shell 展開ではない）。
+          # shellcheck disable=SC2016
+          set -euo pipefail
+          raw="$(mise outdated --bump --json 2>/dev/null || true)"
+          if [ -z "$raw" ]; then raw='{}'; fi
+
+          # current と (bump//latest) のメジャーが一致する項目のみ残す
+          # （メジャー更新は自動通知しない）。
+          items="$(printf '%s' "$raw" | jq -c '
+            (if type=="object" then [to_entries[].value] else . end)
+            | map( (.bump // .latest) as $t
+              | select(.current != null and $t != null)
+              | select((.current|split(".")[0]) == ($t|split(".")[0]))
+              | {name, current, target: $t})')"
+
+          count="$(printf '%s' "$items" | jq 'length')"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "mise 管理ツールに minor/patch 更新があります。"
+            echo "この Issue は \`mise outdated\` ワークフローが自動生成・更新します"
+            echo "（メジャー更新は破壊的変更を伴い得るため対象外）。"
+            echo
+            echo "| ツール | 現在 | 最新 |"
+            echo "| --- | --- | --- |"
+            printf '%s' "$items" | jq -r '.[] | "| \(.name) | \(.current) | \(.target) |"'
+            echo
+            echo "## 更新手順"
+            echo
+            echo "対象ツールを個別に bump します（\`mise.toml\` のバージョン指定を更新）。"
+            echo
+            echo '```bash'
+            printf '%s' "$items" | jq -r '.[] | "mise upgrade \(.name) --bump"'
+            echo '```'
+          } > issue-body.md
+
+      # 固定タイトルの open Issue を検索し、状況に応じて作成 / 更新 / クローズする（冪等）。
+      - name: Create, update or close issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COUNT: ${{ steps.outdated.outputs.count }}
+        run: |
+          set -euo pipefail
+          title="mise outdated tool versions"
+
+          # 既存の open Issue 番号（完全一致タイトル）を取得する。
+          number="$(gh issue list --state open --limit 100 \
+            --json number,title \
+            --jq "map(select(.title == \"$title\")) | (.[0].number // empty)")"
+
+          if [ "${COUNT:-0}" -gt 0 ]; then
+            # ラベルが無い場合に create が失敗しないよう、存在保証する（冪等）。
+            gh label create dependencies --color 0366d6 \
+              --description "Dependency updates" 2>/dev/null || true
+            if [ -n "$number" ]; then
+              echo "Updating existing issue #$number"
+              gh issue edit "$number" --body-file issue-body.md
+            else
+              echo "Creating new issue"
+              gh issue create --title "$title" \
+                --body-file issue-body.md --label dependencies
+            fi
+          else
+            if [ -n "$number" ]; then
+              echo "No outdated tools; closing issue #$number"
+              gh issue close "$number" \
+                --comment "すべての mise ツールが最新です（メジャー更新を除く）。自動クローズします。"
+            else
+              echo "No outdated tools and no open issue; nothing to do."
+            fi
+          fi
