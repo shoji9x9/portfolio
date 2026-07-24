@@ -31,7 +31,7 @@
 **サプライチェーン対策** — 依存経由の攻撃への多層防御
 
 - mise: `minimum_release_age` で新しすぎるツールリリースの採用を遅延
-- pnpm: `.npmrc` の `minimumReleaseAge` などで新しすぎるパッケージ公開の採用を遅延
+- pnpm: `pnpm-workspace.yaml` の `minimumReleaseAge` などで新しすぎるパッケージ公開の採用を遅延
 - Dependabot による依存更新、ライセンスチェック（AGPL 等リスクのあるライセンスを禁止）
 
 ## ワークフロー
