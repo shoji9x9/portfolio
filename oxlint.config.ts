@@ -99,6 +99,15 @@ export default {
           "no-console": "off",
         },
       },
+      {
+        // テストは cn() の挙動確認のため意図的にダミー/衝突クラスを渡すので、
+        // Tailwind クラスの妥当性・衝突検査を無効化する。
+        files: ["**/*.{test,spec}.{ts,tsx}"],
+        rules: {
+          "tailwindcss/no-unknown-classes": "off",
+          "tailwindcss/no-conflicting-classes": "off",
+        },
+      },
     ],
   },
 };
