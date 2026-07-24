@@ -1,8 +1,8 @@
 import { fileURLToPath, URL } from "node:url";
 
 import babel from "@rolldown/plugin-babel";
-import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
 // Vite+ (vite-plus) unified config. The `vp` CLI is provided by mise (viteplus).

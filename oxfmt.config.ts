@@ -16,6 +16,22 @@ export default {
       "reports",
       "pnpm-lock.yaml",
     ],
+    // import 文のグルーピング + 並び替え（ESLint 不要。oxfmt が
+    // eslint-plugin-perfectionist/sort-imports 相当のアルゴリズムで整列する）。
+    //   型 import → Node ビルトイン → 外部 → 内部エイリアス(@/**) → 相対 → 副作用。
+    sortImports: {
+      groups: [
+        "type",
+        "builtin",
+        "external",
+        "internal",
+        ["parent", "sibling", "index"],
+        "side_effect",
+        "unknown",
+      ],
+      internalPattern: ["@/"],
+      order: "asc",
+    },
     // Tailwind のクラス並び替えを維持する。
     sortTailwindcss: {
       stylesheet: "src/index.css",
