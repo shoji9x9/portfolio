@@ -44,6 +44,25 @@ export default {
     rules: {
       "no-console": ["error", { allow: ["warn", "error"] }],
 
+      // 型システムの回避を封じる（自律エージェントが多用する `as any` / `: any` /
+      // 非 null アサーション `!` / 非網羅 switch / Promise 誤用を error 化）。
+      // これらは type-aware（--type-aware）で評価される。
+      "typescript/no-explicit-any": "error",
+      "typescript/no-unsafe-assignment": "error",
+      "typescript/no-unsafe-call": "error",
+      "typescript/no-unsafe-member-access": "error",
+      "typescript/no-unsafe-return": "error",
+      "typescript/no-unsafe-argument": "error",
+      "typescript/no-non-null-assertion": "error",
+      "typescript/no-misused-promises": "error",
+      "typescript/switch-exhaustiveness-check": "error",
+
+      // 循環依存・重複 import を担保する（dependency-cruiser は TypeScript 7 未対応で
+      // 実質無効のため oxlint で代替）。未解決 import は tsc が検出する。
+      // import/order・import/no-unresolved は現行 oxlint 未実装のため設定しない。
+      "import/no-cycle": "error",
+      "import/no-duplicates": "error",
+
       // 新 JSX 変換（自動 runtime）のため React のスコープ内参照は不要。
       // src/main.tsx / src/App.tsx での誤検出を無効化する。
       "react/react-in-jsx-scope": "off",
