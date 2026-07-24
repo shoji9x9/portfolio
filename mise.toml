@@ -19,6 +19,10 @@ wrangler = { version = "4.114.0", allow_builds = ["esbuild", "sharp", "workerd"]
 # vite+（vite / vitest / oxlint / oxfmt などを内包）
 viteplus = "0.2.6"
 
+# TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
+# プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。
+"npm:typescript-language-server" = "5.3.0"
+
 [settings]
 # サプライチェーン対策: 公開直後の新しすぎるリリースを採用しない（悪意あるリリースの取り下げ猶予）。
 # ツール解決・更新時にこの日数を経ていないバージョンを避ける。

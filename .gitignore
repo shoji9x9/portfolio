@@ -9,11 +9,12 @@ build/
 .wrangler/
 .turbo/
 
-# test / coverage
+# test / coverage / reports
 coverage/
 playwright-report/
 test-results/
 .playwright/
+reports/
 
 # caches
 *.tsbuildinfo

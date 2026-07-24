@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* Tailwind CSS v4 is CSS-first: no tailwind.config.js.
+ * `shadcn init` will inject the design tokens (@theme, :root/.dark CSS
+ * variables, the `dark` custom variant, and the tw-animate-css import) into
+ * this file. Keep app-wide base styles here after that step. */
