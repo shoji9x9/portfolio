@@ -29,7 +29,7 @@
 | actionlint / ghalint / pinact | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                         |
 | pnpm audit signatures         | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                       |
 | check-licenses.ts             | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                    |
-| Dependency Review             | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / pnpm lockfile                                                 |
+| Dependency Review             | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                      |
 
 ## CI ジョブ構成
 
