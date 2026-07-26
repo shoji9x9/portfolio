@@ -25,7 +25,7 @@ import { readFile } from "node:fs/promises";
 // ---------------------------------------------------------------------------
 // 拒否リスト（Single Source of Truth）
 //   .github/license-policy.json をローカル検査と Dependency Review の両方で使用する。
-//   末尾 "+" の legacy SPDX 表記も同じ -only/-or-later を意味するため許可しない。
+//   legacy SPDX 表記（GPL-2.0 / GPL-2.0+ 等）は canonical ID に正規化して判定する。
 // ---------------------------------------------------------------------------
 type DenyRule = { readonly id: string; readonly re: RegExp };
 
@@ -55,7 +55,7 @@ function escapeRegExp(value: string): string {
 
 const DENY: DenyRule[] = policy.denyLicenses.map((id) => ({
   id,
-  re: new RegExp(`^${escapeRegExp(id)}\\+?$`, "i"),
+  re: new RegExp(`^${escapeRegExp(id)}$`, "i"),
 }));
 
 // ---------------------------------------------------------------------------
@@ -64,8 +64,15 @@ const DENY: DenyRule[] = policy.denyLicenses.map((id) => ({
 
 /** ライセンス識別子（原子）が拒否対象か。 */
 function atomDenied(id: string, deny: DenyRule[]): boolean {
-  const token = id.trim();
+  const token = normalizeLegacyLicenseId(id.trim());
   return deny.some((d) => d.re.test(token));
+}
+
+function normalizeLegacyLicenseId(id: string): string {
+  const match = /^(A?GPL-[1-3]\.0)(\+)?$/i.exec(id);
+  if (match === null) return id;
+
+  return `${match[1]}-${match[2] === "+" ? "or-later" : "only"}`;
 }
 
 /** トークンが指定の演算子/記号か（大文字小文字無視）。 */
