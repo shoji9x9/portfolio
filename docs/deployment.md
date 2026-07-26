@@ -56,11 +56,12 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    ファイルとして保存される。`CLOUDFLARE_AUTH_USE_KEYRING=true` は keyring が使えない場合の
    平文保存へのフォールバックを禁止する。以後の Wrangler コマンドにもこの環境変数を付ける。
 
-2. Pages プロジェクトの production branch を `main` として作成する。
+2. Pages プロジェクト `shoji9x9` の production branch を `main` として作成する。
+   production domain は <https://shoji9x9.pages.dev/> になる。
 
    ```bash
    CLOUDFLARE_AUTH_USE_KEYRING=true \
-     mise exec -- wrangler pages project create portfolio --production-branch main
+     mise exec -- wrangler pages project create shoji9x9 --production-branch main
    ```
 
    プロジェクト作成だけでは production を公開しない。最初の `main` デプロイ前は、
@@ -107,8 +108,10 @@ Cloudflare Pages は preview deploy ごとに、変更されない deployment �
 継続して確認する URL には使わない。
 
 同時に、PR ブランチ名に対応する branch alias が作られ、常にそのブランチの最新 deployment を指す。
-preview を確認するときは、Cloudflare Dashboard の deployment details に表示される alias を使う。branch
-名は小文字化・記号の置換・長さの切り詰めが行われるため、URL を組み立てずに表示値をコピーする。
+これは設定項目ではなく、`pages deploy --branch <PR ブランチ>` が自動生成する。
+[Cloudflare の preview aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases)
+に従い、Cloudflare Dashboard の deployment details で表示値を確認して使う。branch 名は小文字化・記号の
+置換・長さの切り詰めが行われるため、URL を組み立てずに表示値をコピーする。
 
 `browser-test` スキルの現行設定は `local` と `local-production` だけを登録している。PR ごとに変わる
 branch alias を同スキルや parity 系スキルへ共通の target として指定する仕組みは、まだない。環境別

@@ -45,7 +45,7 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: >-
-            pages deploy dist --project-name portfolio
+            pages deploy dist --project-name shoji9x9
             --branch ${{ github.event.pull_request.head.ref }}
 
   production:
@@ -74,4 +74,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name portfolio --branch main
+          command: pages deploy dist --project-name shoji9x9 --branch main
