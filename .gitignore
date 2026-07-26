@@ -32,3 +32,8 @@ reports/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# kaizen hook runtime markers
+**/.kaizen/.pending-extract*
+**/.kaizen/.extract-done
+.claude/scheduled_tasks.lock

@@ -39,6 +39,13 @@ skills:
   #   リポジトリ固有の alert 特別処理（dismiss ルール等）が必要になったらここに記述する。
   #   現時点では規約は common.conventions_doc に従う。
 
-  # browser-test:
-  #   新アプリ（Cloudflare 上）の環境 URL・起動方法・認証が定まってから設定する。
-  #   アプリ未整備のため現時点では未設定。
+  browser-test:
+    environments:
+      - name: local
+        url: http://localhost:5173
+        auth: none
+        start: pnpm dev
+        check_urls:
+          - http://localhost:5173/
+        default: true
+        forbidden_actions: []
