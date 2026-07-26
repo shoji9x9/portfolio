@@ -63,6 +63,10 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
      mise exec -- wrangler pages project create portfolio --production-branch main
    ```
 
+   プロジェクト作成だけでは production を公開しない。最初の `main` デプロイ前は、
+   production URL に `Nothing is here yet` または 404 が表示される。PR preview は production URL
+   ではなく、PR ブランチに対応する別の Cloudflare Pages URL で公開される。
+
 3. Cloudflare Dashboard の [API Tokens](https://dash.cloudflare.com/profile/api-tokens) で、
    `github-actions-portfolio-pages-deploy` という名前の API Token を作成する。対象アカウントを
    選び、**Account / Cloudflare Pages / Edit** だけを許可する。`Read` は別途追加しない。
