@@ -34,6 +34,14 @@ describe("getCurrentYear", () => {
     expect(getCurrentYear()).toBe(2026);
   });
 
+  it("Temporal の Now に plainDateISO がない場合は Date の年を返す", () => {
+    vi.stubGlobal("Temporal", { Now: {} });
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-07-26T15:00:00+09:00"));
+
+    expect(getCurrentYear()).toBe(2026);
+  });
+
   it("Temporal が日付を返さない場合は Date の年を返す", () => {
     vi.stubGlobal("Temporal", {
       Now: {
