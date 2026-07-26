@@ -1,8 +1,10 @@
 interface TemporalNamespace {
   Now?: {
-    plainDateISO?(): {
-      year: number;
-    };
+    plainDateISO?():
+      | {
+          year: number;
+        }
+      | undefined;
   };
 }
 
@@ -11,5 +13,5 @@ function getTemporal() {
 }
 
 export function getCurrentYear() {
-  return getTemporal()?.Now?.plainDateISO?.().year ?? new Date().getFullYear();
+  return getTemporal()?.Now?.plainDateISO?.()?.year ?? new Date().getFullYear();
 }
