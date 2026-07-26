@@ -8,6 +8,12 @@ describe("Button", () => {
     expect(renderToStaticMarkup(<Button>送信しない</Button>)).toContain('type="button"');
   });
 
+  it("type に undefined を渡してもフォームを送信しない", () => {
+    expect(renderToStaticMarkup(<Button type={undefined}>送信しない</Button>)).toContain(
+      'type="button"',
+    );
+  });
+
   it("呼び出し側で type を上書きできる", () => {
     expect(renderToStaticMarkup(<Button type="submit">送信する</Button>)).toContain(
       'type="submit"',
