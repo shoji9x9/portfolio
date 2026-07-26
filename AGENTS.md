@@ -59,6 +59,10 @@ pnpm install       # 依存パッケージを導入
 - AI 再レビューは `review_tool`（既定 `copilot`）に依頼する（`.config/skills/shoji9x9/skills.yml`）。
 - PR 仕上げ・レビュー対応は `pr-finalize-loop` / `pr-review-handle` を用いる。
 
+### 記述言語
+
+- セッション応答、作成・更新するドキュメント、コード内コメント、GitHub Issue・PR の本文とコメントは日本語で記述する。
+
 ### 品質チェック
 
 静的解析・検査ツールと、実行タイミング（pre-commit / pre-push / CI）・対象ファイルの一覧は
