@@ -43,6 +43,8 @@ export default {
     },
     rules: {
       "no-console": ["error", { allow: ["warn", "error"] }],
+      // 循環的複雑度が 15 を超える関数は分割を検討する。
+      complexity: ["error", 15],
 
       // 型システムの回避を封じる（自律エージェントが多用する `as any` / `: any` /
       // 非 null アサーション `!` / 非網羅 switch / Promise 誤用を error 化）。

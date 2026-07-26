@@ -1,11 +1,13 @@
 #!/usr/bin/env tsx
+import { readFile } from "node:fs/promises";
+
 /**
  * 依存ライセンスのコンプライアンス検査（自前実装 / tsx 実行）。
  *
  * 方式は「拒否リスト（default-allow）」:
- *   下記 DENY に列挙した SPDX ライセンス（GPL / AGPL / SSPL 等の強いコピーレフト）を
+ *   .github/license-policy.json に列挙した SPDX ライセンス（GPL / AGPL / SSPL 等の強いコピーレフト）を
  *   含むパッケージを検出し、1 つでもあれば非 0 終了する。列挙外は許可する。
- *   拒否リストがこのファイル内の Single Source of Truth。
+ *   拒否リストは Dependency Review と共有する Single Source of Truth。
  *
  * 入力: `pnpm licenses list --json` の出力を stdin で受け取る。
  *   形式: { "<SPDX>": [ { name, versions[], paths[], license, ... }, ... ], ... }
@@ -22,23 +24,39 @@
 
 // ---------------------------------------------------------------------------
 // 拒否リスト（Single Source of Truth）
-//   各要素はライセンストークン全体に対する完全一致（大文字小文字無視）の正規表現。
-//   完全一致なので "LGPL-3.0-or-later" が GPL パターンに誤ヒットしない
-//   （LGPL / MPL などの弱いコピーレフトは拒否しない）。
+//   .github/license-policy.json をローカル検査と Dependency Review の両方で使用する。
+//   末尾 "+" の legacy SPDX 表記も同じ -only/-or-later を意味するため許可しない。
 // ---------------------------------------------------------------------------
 type DenyRule = { readonly id: string; readonly re: RegExp };
 
-const DENY: DenyRule[] = [
-  // GNU General Public License（強いコピーレフト）
-  { id: "GPL-1.0(-only/-or-later)", re: /^GPL-1\.0(-only|-or-later)?\+?$/i },
-  { id: "GPL-2.0(-only/-or-later)", re: /^GPL-2\.0(-only|-or-later)?\+?$/i },
-  { id: "GPL-3.0(-only/-or-later)", re: /^GPL-3\.0(-only|-or-later)?\+?$/i },
-  // GNU Affero GPL（ネットワーク越しでもソース開示義務。SaaS/公開サイトで危険）
-  { id: "AGPL-1.0(-only/-or-later)", re: /^AGPL-1\.0(-only|-or-later)?\+?$/i },
-  { id: "AGPL-3.0(-only/-or-later)", re: /^AGPL-3\.0(-only|-or-later)?\+?$/i },
-  // Server Side Public License（コピーレフト相当の配布制約）
-  { id: "SSPL-1.0", re: /^SSPL-1\.0$/i },
-];
+type LicensePolicy = { readonly denyLicenses: readonly string[] };
+
+const policyUrl = new URL("../.github/license-policy.json", import.meta.url);
+
+function parseLicensePolicy(raw: string): LicensePolicy {
+  const parsed: unknown = JSON.parse(raw);
+  if (
+    typeof parsed !== "object" ||
+    parsed === null ||
+    !("denyLicenses" in parsed) ||
+    !Array.isArray(parsed.denyLicenses) ||
+    !parsed.denyLicenses.every((license) => typeof license === "string")
+  ) {
+    throw new Error(".github/license-policy.json must define denyLicenses as an array of strings");
+  }
+  return { denyLicenses: parsed.denyLicenses };
+}
+
+const policy = parseLicensePolicy(await readFile(policyUrl, "utf8"));
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+const DENY: DenyRule[] = policy.denyLicenses.map((id) => ({
+  id,
+  re: new RegExp(`^${escapeRegExp(id)}\\+?$`, "i"),
+}));
 
 // ---------------------------------------------------------------------------
 // SPDX 式の評価

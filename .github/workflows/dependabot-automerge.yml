@@ -1,0 +1,89 @@
+name: Dependabot auto-merge
+
+# pull_request_target grants the write token required to merge Dependabot PRs.
+# This workflow never checks out or executes PR-controlled code.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions: {}
+
+concurrency:
+  group: dependabot-automerge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      actions: read
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Read Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a # v2.5.0
+        with:
+          github-token: ${{ github.token }}
+      - name: Determine whether every update is eligible
+        id: policy
+        env:
+          UPDATES: ${{ steps.metadata.outputs.updated-dependencies-json }}
+        run: |
+          node -e '
+            const updates = JSON.parse(process.env.UPDATES);
+            const eligible = updates.length > 0 && updates.every((update) => {
+              if (update.packageEcosystem !== "npm") return false;
+              if (!["direct:production", "direct:development"].includes(update.dependencyType)) return false;
+              if (update.updateType === "version-update:semver-patch") return true;
+              return update.updateType === "version-update:semver-minor"
+                && /^[1-9][0-9]*\./.test(update.newVersion);
+            });
+            process.stdout.write("eligible=" + eligible + "\n");
+          ' >> "$GITHUB_OUTPUT"
+      - name: Wait for CI and dependency review
+        id: gates
+        if: steps.policy.outputs.eligible == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          remaining=120
+          while [ "$remaining" -gt 0 ]; do
+            runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${HEAD_SHA}&per_page=100")"
+            ci="$(printf '%s' "$runs" | jq -r '[.workflow_runs[] | select(.name == "CI") | .conclusion][0] // empty')"
+            dependency_review="$(printf '%s' "$runs" | jq -r '[.workflow_runs[] | select(.name == "Dependency Review") | .conclusion][0] // empty')"
+
+            if [ "$ci" = "success" ] && [ "$dependency_review" = "success" ]; then
+              echo "ready=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ -n "$ci" ] && [ "$ci" != "success" ]; then
+              echo "CI concluded with ${ci}; leaving the PR for review."
+              echo "ready=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ -n "$dependency_review" ] && [ "$dependency_review" != "success" ]; then
+              echo "Dependency Review concluded with ${dependency_review}; leaving the PR for review."
+              echo "ready=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            remaining=$((remaining - 1))
+            sleep 10
+          done
+
+          echo "Timed out waiting for CI and Dependency Review; leaving the PR for review."
+          echo "ready=false" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Merge eligible update
+        if: steps.policy.outputs.eligible == 'true' && steps.gates.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr merge --merge --match-head-commit "$HEAD_SHA" "$PR_URL"

@@ -31,10 +31,10 @@ updates:
     cooldown:
       default-days: 7
     groups:
-      # マイナー / パッチはまとめて 1 PR にしレビュー負荷を下げる。
-      minor-and-patch:
+      # patch は安全な範囲としてまとめる。minor は個別 PR にして
+      # dependabot-automerge.yml が各依存のメジャーバージョンを正しく判定する。
+      patch:
         update-types:
-          - "minor"
           - "patch"
 
   # ---------------------------------------------------------------------------

@@ -15,7 +15,9 @@ pnpm install   # 依存パッケージを導入
 ## 技術スタック
 
 - ランタイム/ツール（mise 管理）: Node.js, pnpm, gitleaks, actionlint, ghalint, pinact, shfmt, shellcheck, Cloudflare CLI(wrangler), vite+
-- アプリ（pnpm 管理）: TypeScript v7, React, Tailwind CSS v4, shadcn/ui, Vite / Vitest, Playwright, Turbo ほか
+- アプリ（pnpm 管理）: TypeScript v7, React, Tailwind CSS v4, Vite / Vitest, React Compiler ほか
+
+Cloudflare デプロイ、shadcn/ui、Playwright は Issue #4 で導入予定です。
 
 ## 開発
 
@@ -23,4 +25,4 @@ pnpm install   # 依存パッケージを導入
 
 ## ライセンス
 
-TBD
+[MIT License](LICENSE)

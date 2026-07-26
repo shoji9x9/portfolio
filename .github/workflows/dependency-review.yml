@@ -1,0 +1,42 @@
+name: Dependency Review
+
+on:
+  # PR の内容ではなく base branch のポリシーと生成スクリプトを使う。
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    paths:
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependency-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up mise tools
+        uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
+        with:
+          cache: true
+      - name: Generate Dependency Review policy
+        run: node scripts/generate-dependency-review-config.mjs "$RUNNER_TEMP/dependency-review-config.yml"
+      - name: Review dependency changes
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: moderate
+          fail-on-scopes: runtime,development,unknown
+          config-file: ${{ runner.temp }}/dependency-review-config.yml

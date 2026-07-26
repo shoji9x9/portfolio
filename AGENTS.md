@@ -23,8 +23,8 @@
 
 **pnpm で管理（`package.json`）** — プロジェクト結合の強い依存
 
-- TypeScript v7（LSP も v7 に統一） / tsx / turbo / playwright
-- react / tailwindcss v4 / shadcn/ui / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
+- TypeScript v7（LSP も v7 に統一） / tsx
+- react / tailwindcss v4 / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
 - lefthook / commitlint / markdownlint-cli2 / knip / jscpd
 
@@ -32,7 +32,7 @@
 
 - mise: `minimum_release_age` で新しすぎるツールリリースの採用を遅延
 - pnpm: `pnpm-workspace.yaml` の `minimumReleaseAge` などで新しすぎるパッケージ公開の採用を遅延
-- Dependabot による依存更新、ライセンスチェック（AGPL 等リスクのあるライセンスを禁止）
+- Dependabot による依存更新、Dependency Review、ライセンスチェック（AGPL 等リスクのあるライセンスを禁止）
 
 ## ワークフロー
 
@@ -65,6 +65,26 @@ pnpm install       # 依存パッケージを導入
 [docs/quality-checks.md](docs/quality-checks.md) を参照する。lint は最初から厳格（ラチェットなし）で、
 検出はすべて error として扱う。
 
+### エージェントの自己設定編集について
+
+コーディングエージェントは自身の設定ファイルの編集が制限される場合がある（自己改変ガード）。
+設定ファイルを書き換える作業（kaizen の Hook セットアップ等）でブロックされたら、適用すべき内容を
+一時ファイルに書き出し、ユーザーに `cp <tmp> <設定ファイル>` 等での適用を依頼する。
+
+| エージェント   | 自己設定ファイル             | 編集可否                                                     |
+| -------------- | ---------------------------- | ------------------------------------------------------------ |
+| Claude Code    | `.claude/settings.json`      | 不可（ハードブロック。bypass でも確認が出る）                |
+| Codex          | `.codex/config.toml` / hooks | 現状は可（ただし credentials/auth/profile 等の上書きは制限） |
+| GitHub Copilot | `.github/agents/`（指示）    | 不可（ハードブロック）                                       |
+| GitHub Copilot | `.github/hooks/`（フック）   | 可（手動承認ガードの設定を推奨）                             |
+
+### 外部スキルの問題報告
+
+- `.agents/skills/` と `.claude/skills/` の外部インストール済みスキルは、このリポジトリーで直接修正しない。
+- セキュリティ上の問題以外は、問題を見つけた場合にスキル開発元へ Issue を作成し、再現に必要な最小限の公開可能情報だけを記載する。
+- セキュリティ上の問題は、開発元の脆弱性開示ポリシーに従って非公開の報告経路を使う。非公開経路がない場合は、外部へ報告する前にユーザーの承認を得る。
+- このリポジトリーのコード、設定、URL、認証情報、利用者・顧客情報など、開発元の Issue に不要な情報は含めない。
+
 ## コンポーネント選択基準
 
 知識・規約・処理を追加するときは skill / rule / hook / doc のどれに落とすかを判断する
@@ -85,5 +105,5 @@ pnpm install       # 依存パッケージを導入
 - `parity-diff` / `parity-replace` / `parity-suite` / `golden-dataset`: 移行元との等価性の検証・置換・データ整合
 - `pr-review-handle` / `pr-finalize-loop`: PR のレビュー対応・仕上げ
 - `dependabot-alert-issue` / `dependabot-merge`: Dependabot アラートの Issue 化・PR マージ
-- `browser-test`: ブラウザ E2E テスト（新アプリ整備後に設定）
+- `browser-test`: ブラウザ E2E テスト（ローカル環境を設定済み。Cloudflare 環境はデプロイ後に追加）
 - `kaizen`: コミット前ゲート・継続的改善

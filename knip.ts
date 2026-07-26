@@ -21,8 +21,7 @@ export default {
     "wrangler",
   ],
   // knip が用途を静的検知できない依存を保持する。
-  //   - turbo: タスク実行/将来のモノレポ化のために保持（現状スクリプト未使用）
   //   - oxlint-tailwindcss: oxlint.config.ts の jsPlugins に文字列で指定（実使用）
   //   - react-doctor: scripts/react-doctor-gate.sh（shell）から呼ぶため静的検知不可
-  ignoreDependencies: ["turbo", "oxlint-tailwindcss", "react-doctor"],
+  ignoreDependencies: ["oxlint-tailwindcss", "react-doctor"],
 } satisfies KnipConfig;
