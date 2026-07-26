@@ -19,19 +19,35 @@ skills:
     current: # 現行アプリ（移行元）
       repo: shoji9x9/shoji9x9.github.io
       url: https://shoji9x9.github.io/ # 特性化の対象環境（公開中の静的サイト）
-      stack: [] # 現行スタック。調査・計測で判明した値を記録する
+      stack: [Next.js 13, React 18, TypeScript 5, Tailwind CSS 3]
     new: # 新側アプリ（移行先）
       repo: shoji9x9/portfolio
       url: none # Cloudflare のデプロイ URL が決まったら記入
     forbidden_actions: # 現行サイトは公開中の静的サイト。読み取り専用として扱う
       - 現行サイトへの書き込み・変更操作
     parity_suite_dir: e2e/ # パリティスイートの配置（parity-suite が読む）
+    dataset_tool_dir: seed/ # golden-dataset の投入ツールの配置先
+    static_analysis:
+      - pnpm typecheck
+      - pnpm lint
+    artifacts:
+      retention: latest
+      storage: local
+      size_threshold_mb: 50
+      overrides: {}
     intentional_diffs: # 意図的差異レジストリ
-      keep: [] # 変えない（URL 構造・ページ構成など。計測後に確定）
+      keep:
+        - 公開ルート（/）と単一ページのセクション順
+        - プロフィール、バッジ、職務経歴、製作物、静的テキストの内容
+        - 既存の外部リンク先
+        - 読み取り専用の公開サイトとしての振る舞い
       may_change:
         # UI コンポーネントは変更予定。ライブラリ変更に伴うコンポーネントレベルの機能・見た目の差異は許容する。
         - UI コンポーネントの実装・見た目（shadcn/ui 等への移行に伴う差異）
-      pending: [] # 保留（計測結果で決める）
+        - HTML の id/name とコンポーネント内部構造
+      pending:
+        - LAPRAS プレビューをビルド時に取得するか、Cloudflare Worker 実行時に取得するか
+        - LAPRAS プレビュー取得失敗時の表示とキャッシュ方針
     component_diffs: [] # コンポーネント系統差レジストリ（parity-replace が宣言）
     component_diff_exceptions: [] # インスタンス単位の例外（parity-diff が宣言）
 
