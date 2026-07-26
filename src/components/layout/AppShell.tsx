@@ -11,7 +11,7 @@ export function AppShell({ children }: PropsWithChildren) {
           <Link className="font-semibold tracking-tight" to="/">
             portfolio
           </Link>
-          <nav aria-label="Main navigation">
+          <nav aria-label="メインナビゲーション">
             <ul className="flex items-center gap-1">
               <li>
                 <Link

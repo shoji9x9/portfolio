@@ -21,6 +21,7 @@ describe("App", () => {
 
     expect(html).toContain("portfolio");
     expect(html).toContain("移行の準備中です");
+    expect(html).toContain('aria-label="メインナビゲーション"');
   });
 
   it("GitHub リポジトリへ移動する", () => {
