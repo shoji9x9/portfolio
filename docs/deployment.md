@@ -96,10 +96,25 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
 - PR の作成・更新: repository secret で `pages deploy --branch <PR ブランチ>` を実行し、PR ブランチに
   対応する Cloudflare Pages preview deployment を更新する。repository owner が作成した同一リポジトリ
   内 PR だけが対象であり、外部 fork・Dependabot・collaborator の PR では secret を安全に渡せないため
-  preview deploy を実行しない。Cloudflare Dashboard または Actions の実行ログに出力される URL から
-  アクセスする。
+  preview deploy を実行しない。
 - `main`: repository secret で `pages deploy --branch main` を実行し、Cloudflare Pages の production を
   更新する。
+
+### Preview URL
+
+Cloudflare Pages は preview deploy ごとに、変更されない deployment 固有 URL
+（`https://<hash>.<project-domain>.pages.dev/`）を発行する。この hash は deploy のたびに変わるため、
+継続して確認する URL には使わない。
+
+同時に、PR ブランチ名に対応する branch alias が作られ、常にそのブランチの最新 deployment を指す。
+preview を確認するときは、Cloudflare Dashboard の deployment details に表示される alias を使う。branch
+名は小文字化・記号の置換・長さの切り詰めが行われるため、URL を組み立てずに表示値をコピーする。
+
+`browser-test` スキルの現行設定は `local` と `local-production` だけを登録している。PR ごとに変わる
+branch alias を同スキルや parity 系スキルへ共通の target として指定する仕組みは、まだない。環境別
+target の選択・成果物の分離は [skills#126](https://github.com/shoji9x9/skills/issues/126) で対応中であり、
+それまでは parity の比較をローカルに限定し、preview は branch alias に対するデプロイ後の最終確認に
+使う。
 
 実装中は `pnpm dev` を起動し、<http://localhost:5173/> を browser-test スキルへ
 `--env local` を指定して確認する。これはシェルコマンドではない。production-like の確認には、
