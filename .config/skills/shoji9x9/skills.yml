@@ -65,3 +65,10 @@ skills:
           - http://localhost:5173/
         default: true
         forbidden_actions: []
+      - name: local-production
+        url: http://localhost:4173
+        auth: none
+        start: pnpm start
+        check_urls:
+          - http://localhost:4173/
+        forbidden_actions: []
