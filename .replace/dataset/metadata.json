@@ -19,7 +19,7 @@
     "language": "typescript"
   },
   "static_snapshot": {
-    "fingerprint": "ec209504",
+    "fingerprint": "711a2cc4",
     "source": "services/badges.ts, services/careers.ts, services/artifacts.ts, app/page.tsx"
   },
   "phase_b": {}
