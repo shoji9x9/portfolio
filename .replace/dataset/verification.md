@@ -10,7 +10,7 @@
 | 検査               | 結果                                                                                                                                    |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
 | 現行ソースとの照合 | `services/badges.ts`、`services/careers.ts`、`services/artifacts.ts`、`app/page.tsx` をコミット `b10b54a…` で読み取り、値と定義順を転記 |
-| 安定 ID            | 49 個の ID が一意で、`^[a-z0-9-]+$` に一致                                                                                              |
+| 安定 ID            | 41 個の ID が一意で、`^[a-z0-9-]+$` に一致                                                                                              |
 | 件数               | profile 4、account badges 5、language badges 7、framework badges 14、careers 2、projects 6、artifacts 3、自己 PR 4、資格分類 4          |
 | 決定性             | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint を出力                                                                        |
 | 冪等性             | 書き込みを行わない純粋な検証ツールのため、再実行しても出力・外部状態は変化しない                                                        |
