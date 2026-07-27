@@ -1,6 +1,3 @@
-export const datasetVersion = 1;
-export const sourceCommit = "b10b54a489fbac94f7bf8beef1a005ffe19ee791";
-
 type Badge = { id: string; label: string; href?: string; imageSrc: string };
 type Project = {
   id: string;
@@ -29,9 +26,9 @@ function createImageBadges(values: readonly (readonly [string, string, string])[
 const accountBadges = createLinkedBadges([
   [
     "github",
-    "Github",
+    "GitHub",
     "https://github.com/shoji9x9",
-    "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=Github&logoColor=white",
+    "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=github&logoColor=white",
   ],
   [
     "twitter",
@@ -161,7 +158,7 @@ const frameworkBadges = createImageBadges([
   ],
   [
     "github-actions",
-    "GithubActions",
+    "GitHubActions",
     "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
   ],
 ]);
@@ -323,7 +320,7 @@ export const goldenDataset = {
         title: "GitHub PagesにNext.jsでポートフォリオ作ってみた",
         url: "https://zenn.dev/shoji9x9/articles/90897d3f772e8a",
       },
-      techStack: ["React", "TypeScript", "NextJS", "TailwindCSS", "GithubActions"],
+      techStack: ["React", "TypeScript", "NextJS", "TailwindCSS", "GitHubActions"],
     },
     {
       id: "qiita-search",
@@ -403,21 +400,22 @@ export function verifyGoldenDataset(): {
   if (new Set(ids).size !== ids.length || ids.some((id) => !/^[a-z0-9-]+$/.test(id))) {
     throw new Error("安定 ID が一意でないか、形式が不正です。");
   }
-  if (goldenDataset.careers.flatMap((career) => career.projects).length !== 6) {
+  const projectsCount = goldenDataset.careers.flatMap((career) => career.projects).length;
+  if (projectsCount !== 6) {
     throw new Error("職務経歴の件数が現行ソースと一致しません。");
   }
   return {
     fingerprint: fingerprint(canonicalJson()),
     counts: {
-      profile: 4,
-      accountBadges: 5,
-      languageBadges: 7,
-      frameworkBadges: 14,
-      careers: 2,
-      projects: 6,
-      artifacts: 3,
-      selfPromotion: 4,
-      qualificationGroups: 4,
+      profile: goldenDataset.profile.length,
+      accountBadges: goldenDataset.badges.account.length,
+      languageBadges: goldenDataset.badges.language.length,
+      frameworkBadges: goldenDataset.badges.framework.length,
+      careers: goldenDataset.careers.length,
+      projects: projectsCount,
+      artifacts: goldenDataset.artifacts.length,
+      selfPromotion: goldenDataset.staticContent.selfPromotion.length,
+      qualificationGroups: Object.keys(goldenDataset.staticContent.qualifications).length,
     },
   };
 }

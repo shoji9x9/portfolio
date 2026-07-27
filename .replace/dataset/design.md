@@ -18,7 +18,7 @@
 | 自己 PR・資格・希望条件 | static-content     |              4・4・1 | ページ内の記述順                        |
 | LAPRAS                  | lapras             |                1 URL | `publicUrl` のみ。プレビュー本文は gap  |
 
-DB・テーブル・外部キーは存在しない。`seed/golden-dataset.ts` は外部環境を書き換えず、固定データを出力して件数・ID・SHA-256 を検証する静的データ移送方式である。
+DB・テーブル・外部キーは存在しない。`seed/golden-dataset.ts` は外部環境を書き換えず、固定データを出力して件数・ID・32-bit fingerprint を検証する静的データ移送方式である。
 
 ## 含めたエッジケース
 

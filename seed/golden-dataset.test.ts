@@ -5,7 +5,7 @@ import { goldenDataset, verifyGoldenDataset } from "./golden-dataset.js";
 describe("静的ゴールデンデータセット", () => {
   it("安定 ID、表示順、件数を検証する", () => {
     expect(verifyGoldenDataset()).toEqual({
-      fingerprint: "ec209504",
+      fingerprint: "711a2cc4",
       counts: {
         profile: 4,
         accountBadges: 5,

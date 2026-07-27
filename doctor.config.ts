@@ -43,6 +43,12 @@ export default {
         files: ["**/*.{test,spec}.{ts,tsx}"],
         rules: ["deslop/unused-file"],
       },
+      {
+        // seed は `tsx` で直接実行するデータセット生成・検証ツールであり、アプリの
+        // エントリから import されない。CLI エントリに限り unused-file を抑制する。
+        files: ["seed/**/*.ts"],
+        rules: ["deslop/unused-file"],
+      },
     ],
   },
 
