@@ -421,5 +421,5 @@ export function verifyGoldenDataset(): {
 }
 
 if (import.meta.main) {
-  console.error(JSON.stringify(verifyGoldenDataset()));
+  process.stdout.write(`${JSON.stringify(verifyGoldenDataset())}\n`);
 }
