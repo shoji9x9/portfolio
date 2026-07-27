@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { goldenDataset, verifyGoldenDataset } from "./golden-dataset.js";
+import { goldenDataset, verifyGoldenDataset } from "./golden-dataset";
 
 describe("静的ゴールデンデータセット", () => {
   it("安定 ID、表示順、件数を検証する", () => {
