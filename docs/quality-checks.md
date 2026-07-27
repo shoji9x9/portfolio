@@ -25,7 +25,7 @@
 | commitlint                    | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                             |
 | tsc                           | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src`・各 config）                                              |
 | vitest                        | テスト                           | –                        | ✓ 全体   | ✓                                          | `*.{test,spec}.*`                                                              |
-| react-doctor                  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                          |
+| react-doctor (`react:doctor`) | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                          |
 | actionlint / ghalint / pinact | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                         |
 | pnpm audit signatures         | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                       |
 | check-licenses.ts             | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                    |
@@ -33,7 +33,7 @@
 
 ## CI ジョブ構成
 
-- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/doctor/署名検証/ライセンス）を
+- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/react:doctor/署名検証/ライセンス）を
   **ネイティブの step 並列（`parallel:`）** で実行し、`secret-scan` ジョブ（全履歴 gitleaks）を並列実行。
   ※ `parallel:` は actionlint 未対応のため `.github/actionlint.yaml` で ci.yml のみ該当メッセージを ignore。
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。

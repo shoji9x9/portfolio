@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "base_time": null,
+  "generated_at": "2026-07-27T10:49:38+09:00",
+  "current": {
+    "commit": "b10b54a489fbac94f7bf8beef1a005ffe19ee791",
+    "seeded_at": null,
+    "verified_at": "2026-07-27T10:49:38+09:00"
+  },
+  "run": {
+    "agent": "Codex",
+    "model": "GPT-5",
+    "effort": "標準",
+    "skill_version": "golden-dataset v1.21.4"
+  },
+  "tool": {
+    "dir": "seed/",
+    "entry": "seed/golden-dataset.ts",
+    "language": "typescript"
+  },
+  "static_snapshot": {
+    "fingerprint": "711a2cc4",
+    "source": "services/badges.ts, services/careers.ts, services/artifacts.ts, app/page.tsx"
+  },
+  "phase_b": {}
+}

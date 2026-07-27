@@ -22,7 +22,7 @@
     "jscpd": "jscpd",
     "commitlint": "commitlint --edit",
     "license:check": "pnpm licenses list --json | tsx scripts/check-licenses.ts",
-    "doctor": "bash scripts/react-doctor-gate.sh"
+    "react:doctor": "bash scripts/react-doctor-gate.sh"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",

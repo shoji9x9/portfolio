@@ -10,7 +10,7 @@
 # 前提の pnpm scripts（package.json 側で用意されている想定・notes 参照）:
 #   format(=vp fmt -c oxfmt.config.ts) / lint(=vp lint -c oxlint.config.ts --type-aware)
 #   lint:md(=markdownlint-cli2) / knip / jscpd
-#   typecheck(=tsc -b) / test(=vp test --passWithNoTests) / doctor(=react-doctor)
+#   typecheck(=tsc -b) / test(=vp test --passWithNoTests) / react:doctor(=react-doctor)
 #
 # lefthook v2 の jobs / group（piped・parallel）/ glob / exclude / stage_fixed /
 # {staged_files} を用いる。
@@ -109,8 +109,8 @@ pre-push:
             run: pnpm typecheck
           - name: test
             run: pnpm test
-          - name: doctor
-            run: pnpm doctor
+          - name: react-doctor
+            run: pnpm react:doctor
 
     # GitHub Actions 検査（ワークフロー変更の有無に関わらず全体検証）
     - name: actions

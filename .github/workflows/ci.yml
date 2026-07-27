@@ -68,7 +68,7 @@ jobs:
           - name: Copy-paste detection (jscpd)
             run: pnpm run jscpd
           - name: React Doctor
-            run: pnpm run doctor
+            run: pnpm react:doctor
           - name: Typecheck
             run: pnpm run typecheck
           - name: Test
