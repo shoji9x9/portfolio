@@ -45,6 +45,8 @@ export default defineConfig({
   projects: [
     {
       name: "current",
+      // 新側専用のスペック。新側ベースラインの採取は parity-diff の工程で、現側では走らせない。
+      testIgnore: [/static-page\/baseline-new\.spec\.ts$/],
       use: {
         ...devices["Desktop Chrome"],
         ...(currentUiUrl === undefined ? {} : { baseURL: currentUiUrl }),
