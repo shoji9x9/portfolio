@@ -21,5 +21,13 @@
     "entry": "seed/golden-dataset.ts",
     "language": "typescript"
   },
-  "phase_b": {}
+  "phase_b": {
+    "static-page": {
+      "local-dev": {
+        "dataset_version": 2,
+        "seeded_at": "2026-07-28T21:20:00+09:00",
+        "verified_at": "2026-07-28T22:05:00+09:00"
+      }
+    }
+  }
 }
