@@ -403,8 +403,8 @@ export function serializeDataset(): Map<string, string> {
 export function fingerprintOf(files: Map<string, string>): string {
   const normalized = [...files.entries()]
     .toSorted(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
-    .map(([path, content]) => `${path} ${content}`)
-    .join(" ");
+    .map(([path, content]) => `${path}\0${content}`)
+    .join("\0");
   return fingerprint(normalized);
 }
 
