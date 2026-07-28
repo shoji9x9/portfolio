@@ -43,6 +43,18 @@ mise install       # mise 管理ツール（node, pnpm, 各 CLI）を導入
 pnpm install       # 依存パッケージを導入
 ```
 
+### chrome-devtools MCP
+
+`.mcp.json` の chrome-devtools MCP には `--isolated` を付ける。**外さないこと。**
+既定では `~/.cache/chrome-devtools-mcp/chrome-profile` を共有プロファイルとして使うため、
+複数のエージェントセッションが同時にブラウザーを起動できず、後発のセッションが
+「The browser is already running for ...」で接続できなくなる。`--isolated` はサーバーインスタンスごとに
+一時プロファイルを作り終了時に破棄するため、この競合が起きない。
+
+プロファイルは毎回破棄されるので Cookie・ログイン状態は残らない。現状の対象環境は
+`browser-test.environments` がいずれも `auth: none` で影響しないが、認証が要る環境を追加するときは
+ログイン手順をスイート側に持たせる。
+
 ### ブランチ運用・commit 規約
 
 - **ベースブランチ**: `main`
