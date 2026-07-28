@@ -18,16 +18,49 @@ skills:
     # 既知の値のみシード。スタック等の計測由来の値や references は `replace-strategy setup` で確定する。
     current: # 現行アプリ（移行元）
       repo: shoji9x9/shoji9x9.github.io
-      url: https://shoji9x9.github.io/ # 特性化の対象環境（公開中の静的サイト）
       stack: [Next.js 13, React 18, TypeScript 5, Tailwind CSS 3]
     new: # 新側アプリ（移行先）
       repo: shoji9x9/portfolio
-      url: none # Cloudflare のデプロイ URL が決まったら記入
-    forbidden_actions: # 現行サイトは公開中の静的サイト。読み取り専用として扱う
-      - 現行サイトへの書き込み・変更操作
+      stack: [Vite 8, React 19, TypeScript 7, Tailwind CSS 4, TanStack Router]
+    targets: # 現・新の実行対象環境。各スキルの --target <name> で選択する
+      - name: current-prod # 現行の公開サイト（特性化の対象環境。静的サイトのため読み取り専用で扱う）
+        side: current
+        url: https://shoji9x9.github.io/
+        forbidden_actions: # 現行サイトは公開中の静的サイト
+          - 現行サイトへの書き込み・変更操作
+        default: true
+      - name: local-dev # 新側のローカル開発環境（実行系キーは browser-test の同一環境とアンカーで共有）
+        side: new
+        url: &local-dev-url http://localhost:5173
+        forbidden_actions: [] # 空リスト = すべて実施可（未定義 = 読み取り専用とは意味が異なる）
+        start: &local-dev-start pnpm dev # 稼働していないときだけ実行する（稼働判定は check_urls）
+        check_urls: &local-dev-check-urls
+          - http://localhost:5173/
+        default: true
+      - name: local-production # 新側のローカル本番相当（build 成果物を preview サーバーで配信。実行系キーは browser-test と共有）
+        side: new
+        url: &local-production-url http://localhost:4173
+        forbidden_actions: []
+        pre_commands: &local-production-pre-commands # サーバー稼働の有無に依らず毎回 build する（start は未稼働時のみ実行のため）
+          - pnpm build
+        start: &local-production-start pnpm preview # build は pre_commands が担う（pnpm start だと build が二重になる）
+        check_urls: &local-production-check-urls
+          - http://localhost:4173/
+      - name: preview # Cloudflare Pages のプレビュー環境（ブランチ別 URL: https://<branch alias>.shoji9x9.pages.dev）
+        side: new
+        # URL がブランチごとに変わるため固定 URL を書けない。skills 側の動的 URL 対応
+        # （shoji9x9/skills#131）が入り次第、対応するキーへ書き換える。
+        url: none
+        forbidden_actions: # 共有のデプロイ環境（インターネット公開）のため書き込み系は行わない
+          - プレビュー環境への書き込み・変更操作
+      - name: production # Cloudflare Pages の本番環境。デプロイ開始後に commit_check / on_diff の追加を検討する
+        side: new
+        url: https://shoji9x9.pages.dev/
+        forbidden_actions: # 公開後は本番サイトとして扱う
+          - 本番サイトへの書き込み・変更操作
     parity_suite_dir: e2e/ # パリティスイートの配置（parity-suite が読む）
     dataset_tool_dir: seed/ # golden-dataset の投入ツールの配置先
-    static_analysis:
+    verification_commands: # 完了前に実行する検証コマンド列（parity-replace が読む）
       - pnpm typecheck
       - pnpm lint
     artifacts:
@@ -57,18 +90,19 @@ skills:
 
   browser-test:
     environments:
+      # url / pre_commands / start / check_urls は replace-strategy.targets の同一環境のアンカーを参照
+      # （auth は型が異なるためエントリ全体は共有しない。片側だけの変更は両スキルに影響する点に注意）
       - name: local
-        url: http://localhost:5173
+        url: *local-dev-url
         auth: none
-        start: pnpm dev
-        check_urls:
-          - http://localhost:5173/
+        start: *local-dev-start
+        check_urls: *local-dev-check-urls
         default: true
         forbidden_actions: []
       - name: local-production
-        url: http://localhost:4173
+        url: *local-production-url
         auth: none
-        start: pnpm start
-        check_urls:
-          - http://localhost:4173/
+        pre_commands: *local-production-pre-commands # サーバー稼働の有無に依らず毎回 build する（start はサーバー未稼働時のみ実行のため）
+        start: *local-production-start # build は pre_commands が担う（pnpm start だと build が二重になる）
+        check_urls: *local-production-check-urls
         forbidden_actions: []
