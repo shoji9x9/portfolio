@@ -2,7 +2,7 @@
 
 - 対象 slug: `static-page`
 - モード: feature
-- 最終更新: 2026-07-29T06:05:00+09:00
+- 最終更新: 2026-07-29T08:40:00+09:00
 - 対象 target: `local-dev`（`http://localhost:5173`）
 - 現行コードの参照元: `shoji9x9/shoji9x9.github.io` の `b10b54a…`（`app/page.tsx`・`components/**`・`services/**`）
 

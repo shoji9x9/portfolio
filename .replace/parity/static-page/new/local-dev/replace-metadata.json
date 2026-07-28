@@ -26,7 +26,10 @@
     "note": "現側専用スペック（baseline.spec.ts / strength.spec.ts）は playwright.config.ts の new プロジェクトで testIgnore している。新側の採取と現新比較は parity-diff が new/<target>/ に対して行う。"
   },
   "verification": {
-    "commands": ["pnpm typecheck", "pnpm lint"],
+    "commands": [
+      "pnpm typecheck",
+      "pnpm lint"
+    ],
     "passed_at": "2026-07-28T22:05:00+09:00",
     "additional": [
       "pnpm test（20 件・カバレッジ 89.36% ≥ 80%）",
@@ -45,10 +48,13 @@
     "recorded": 6
   },
   "loop": {
-    "iterations": 0,
+    "iterations": 1,
     "max_iterations": 5,
-    "last_diff_report": "none",
+    "last_diff_report": ".replace/parity/static-page/new/local-dev/diff.md",
     "on_diff_doc": "none",
-    "changed_scope": null
+    "changed_scope": {
+      "pages": [],
+      "global": true
+    }
   }
 }
