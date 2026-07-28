@@ -4,9 +4,9 @@ description: 仕様を変えないアプリケーションリプレイスの入�
 license: MIT
 metadata:
     github-path: skills/replace-strategy
-    github-ref: refs/tags/v1.23.0
+    github-ref: refs/tags/v1.26.1
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: c34c4485ae9c68ec5bfc992cd68057339851482d
+    github-tree-sha: 4bd37a23cef44c2d2232266a3c16840c330fccba
 name: replace-strategy
 ---
 # Replace Strategy
@@ -71,9 +71,12 @@ replace-strategy status
 1. **依存の確認**: 前提スキル（`issue-create` / `browser-test`）のインストール状況と chrome-devtools MCP の有効性を確認する。未導入・無効なら導入手順（`gh skill install shoji9x9/skills <name>`、MCP の設定）を示す。**MCP が無いままでは測定できないため、手順を示したうえで停止する**
 2. **対話セットアップ**: 次を対話で確認し設定ファイルへ保存する。**技術スタックはスキル本体に書かず、設定で受け取る。** シークレットの扱いは [`references/project-config.md`](references/project-config.md) の「シークレットの扱い」に従い、**接続確認を最初に行い、繋がらなければ早期に失敗する**
    - 現・新のリポジトリ、起動ラッパー
-   - **実行対象環境（`targets`）**: 現側は測定対象のテスト環境、新側は local-dev / develop 等。環境ごとに `side`（必須）・`url`・`api_url`（UI と API が別 origin のときだけ）・
-     DB・認証（ロールごとの環境変数名のみ）・禁止操作・`pre_commands` / `start` / `check_urls`・`commit_check`（`start` を持たない配信型環境で稼働中コミットを確認するコマンド）・
-     **側ごとの `default`**（`current` / `new` で 1 つずつ）・`on_diff` を確認する。スキーマ不変条件と選択規則は [`references/project-config.md`](references/project-config.md) の「実行対象環境」に従う
+   - **実行対象環境（`targets`）**: 現側は測定対象のテスト環境、新側は local-dev / develop 等。環境ごとに `side`（必須）・`url`・
+     `url_command`（URL が実行ごとに決まる環境で `url` の代わりに）・`api_url`（UI と API が別 origin のときだけ）・
+     DB（環境変数名と**投入してよいかの `seedable`**）・認証（ロールごとの環境変数名のみ）・禁止操作・`pre_commands` / `start` / `check_urls`・`commit_check`（`start` を持たない配信型環境で稼働中コミットを確認するコマンド）・
+     **側ごとの `default`**（`current` / `new` で 1 つずつ）・`on_diff` を確認する。スキーマ不変条件は [`references/project-config.md`](references/project-config.md)「実行対象環境」、選択規則は同節の「選択規則」に従う
+   - **ゴールデンデータセットの実体（`dataset_mode`）**: DB なら `db`（既定）、リポジトリ内の静的データなら `static` を選び、`static` では投入ツールが生成・削除してよい `dataset_static_paths` を確定する。
+     **`seedable` と `dataset_static_paths` は投入の設定由来ゲート**であり、既定は deny（書かなければ投入されない）。実データを持つ環境は `seedable` を付けずに読み取り専用として登録する。正本は [`references/project-config.md`](references/project-config.md) の「データセットの実体」
    - **検証コマンド列（`verification_commands`）**: 完了前に実行する静的解析・テスト等。`parity-replace` の完了判定に必須のため、無いままにせずここで確定する
      （環境準備・起動は含めない。それらは target の `pre_commands` / `start`）
    - **`on_diff` のドキュメント**: 内容はプロジェクトが持つものだが、`references` と同様に **`setup` が下書きを生成し、人間がレビューして確定する**（既定挙動で足りる環境には作らない）
@@ -110,7 +113,7 @@ replace-strategy status
 
 | 成果物 | 場所 | 内容 |
 |---|---|---|
-| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリ／実行対象環境（`targets`。環境ごとの URL・DB・認証・禁止操作・起動・`on_diff`）／起動ラッパー／検証コマンド列／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
+| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリ／実行対象環境（`targets`。環境ごとの URL・DB（`env_vars` と `seedable`）・認証・禁止操作・起動・`on_diff`）／データセットの実体（`dataset_mode` / `dataset_static_paths`）／起動ラッパー／検証コマンド列／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
 | 測定レポート | `.replace/survey.md` | セマンティクス測定値、DB 復元可否、コード入手性、副作用棚卸し、既存テスト評価。すべて実測値 |
 | 戦略書 | `.replace/strategy.md` | 非対称設計、パリティスイート戦略、ゴールデンデータセットの方針、未検証領域の扱い |
 | 機能インベントリ | `.replace/features.md` | 機能一覧、依存順、ページ／API／テーブル／副作用出力、横断 API の fan-out とリソースグルーピング、slug、Issue 化の状態 |

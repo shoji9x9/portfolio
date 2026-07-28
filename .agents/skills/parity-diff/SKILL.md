@@ -1,12 +1,12 @@
 ---
-argument-hint: '[--feature <slug>] [--target <name>]'
+argument-hint: '[--feature <slug>] [--target <name>] [--remeasure-noise]'
 description: 仕様を変えないアプリケーションリプレイスで、parity-suite が採取したベースライン・ノイズ基準値・強度ゲートで検証済みの差分器を使い、現行と新側の差分を決定論的ツールで検出して分類する replace-strategy の姉妹スキル。検出は画素・特性照合・aria の 3 経路が担い、LLM には「差分があるか」を聞かず「この差分は重要か」だけを 1 件ずつ crop 対で聞いて要対応／許容／環境ノイズに分類する。新側環境は --target で選び成果物は環境別。要対応は parity-replace へ差し戻し、収束は未説明差分ゼロかつ未修正回帰ゼロ。1 回で 1 機能。replace-strategy setup・golden-dataset・対象 slug の parity-suite・parity-replace の新側 green が前提で、未完了なら捏造せず停止する。「現新の差分を検出して」「差分を分類して」「parity-diff」や --feature / --target を伴う依頼で発動する。
 license: MIT
 metadata:
     github-path: skills/parity-diff
-    github-ref: refs/tags/v1.23.0
+    github-ref: refs/tags/v1.26.1
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: 6ed31684de1dadc7921a186c869fd8d4f707f564
+    github-tree-sha: caaf3e441e48f895dadcdcba7c5c8fd0c8b21d51
 name: parity-diff
 ---
 # Parity Diff
@@ -20,13 +20,15 @@ name: parity-diff
 ## 使い方
 
 ```text
-parity-diff [--feature <slug>] [--target <name>]
+parity-diff [--feature <slug>] [--target <name>] [--remeasure-noise]
 ```
 
 - **1 回の実行につき 1 機能。** 複数機能を並行して進めない
 - `slug` は `.replace/features.md` が採番したもの。**自分で採番しない。** 省略時は features.md の未着手から対話選択する
-- `--target` は差分を検出する**新側の環境**（`skills.replace-strategy.targets` のうち `side: new` のもの）。省略時はその側の `default: true`、無ければ候補を提示して確認する。
-  存在しない名前・`side: current` の名前は**停止**する（読み替えない。選択規則の正本は `replace-strategy` の `references/project-config.md`）。**成果物は環境ごとに分かれる**（下記「成果物」）
+- `--target` は差分を検出する**新側の環境**（`skills.replace-strategy.targets` のうち `side: new` のもの。本スキルが対象とする側の宣言はここが正本）。
+  省略時の既定・候補提示・存在しない名前や側違いでの停止といった**選択規則は `replace-strategy` の `references/project-config.md`「実行対象環境」の「選択規則」に従う**（ここへ転記しない）。
+  **成果物は環境ごとに分かれる**（下記「成果物」）
+- `--remeasure-noise` は新側の自己ノイズを**全組で測り直す**（既定は前回実行の測定値を組単位で再利用する。再利用の可否・失効条件は [`references/capture-new.md`](references/capture-new.md)「測定値の再利用」が正本）
 - **モードは `.replace/parity/<slug>/metadata.json` の `mode`（feature / api-resource / batch）を正として引く**（フラグは無い。features.md の表位置から再導出しない）
 - 自然文でも発動する:「現新の差分を検出して」「差分を分類して」「この画面の差を見て」
 
@@ -53,6 +55,7 @@ parity-diff [--feature <slug>] [--target <name>]
 - **全画面のスクリーンショット対をモデルに渡して比較させない。** トリアージは差分領域の crop 対を 1 件ずつ渡す。スイート外の依頼（「2 枚を見比べて違いを見つけて」等）にも**目視検出を代替提供しない**——決定論的ツール（画素経路）に検出させてから分類だけを担う。
   **拒否するときは正しい進め方（決定論的ツールに検出させ、差分領域の crop 対を 1 件ずつ提示して要対応／許容／環境ノイズの 3 値に分類する）を必ず添える**
 - **現行と異なる条件で新側を撮らない**（環境差を差分として報告しないため）
+- **失効条件を確かめずに自己ノイズ測定値を再利用しない。** 判断材料が欠ければ再利用せず測り直す（安全側）。再利用してもゲート判定は毎回行う
 - **カタログサイト（コンポーネントライブラリの見本）を比較の正解にしない。** 正解は動いている現行アプリ
 - **ピクセル比較系 VRT ツールで新旧を突き合わせない**（実装が違えば全面赤になり無意味）
 - **差分をしきい値で潰さない**（特性照合の別経路で捉える）
@@ -71,7 +74,7 @@ parity-diff [--feature <slug>] [--target <name>]
 
 | キー | 読/書 | 用途 |
 |---|---|---|
-| `targets[]`（`side: new`） | 読 | 差分検出の対象環境。`--target` で選択（省略時は new 側の `default`）。`url` / `api_url` は新側疎通・撮影先・api-resource モードの発行先（`PARITY_NEW_UI_URL` / `PARITY_NEW_API_URL` に解決）、`pre_commands` / `start` / `check_urls` は撮影前の起動・稼働確認、`on_diff`（対応手順ドキュメントのパス）は要対応差分が残ったときの分岐（手順 7）。**`db` を持たない target はゴールデンデータ未投入**＝データセットバージョンの三者一致を要求しない代わりに、データ依存の差分を「未検証」として `diff.md` に明記する（[`references/preflight.md`](references/preflight.md)） |
+| `targets[]`（`side: new`） | 読 | 差分検出の対象環境。`--target` で選択（選択規則は上記「使い方」の正本参照。ここへ転記しない）。`url` / `api_url` は新側疎通・撮影先・api-resource モードの発行先（`PARITY_NEW_UI_URL` / `PARITY_NEW_API_URL` に解決。`url_command` の target はコマンド実行で解決し、失敗・空出力は停止）、`pre_commands` / `start` / `check_urls` は撮影前の起動・稼働確認、`on_diff`（対応手順ドキュメントのパス）は要対応差分が残ったときの分岐（手順 7）。**投入対象でない target**（`dataset_mode: db` で `db` 未定義、または `db.env_vars` はあるが `seedable` の無い読み取り専用）**はゴールデンデータ未投入**＝データセットバージョンの三者一致を要求しない代わりに、データ依存の差分を「未検証」として `diff.md` に明記する（[`references/preflight.md`](references/preflight.md)） |
 | `intentional_diffs.{keep,may_change,pending}` | 読 | 意図的差異レジストリ（正規化のノイズフィルタ）。`pending` 該当は落とさず要確認 |
 | `component_diffs` | 読 | コンポーネント系統差 T（クラス/トークン単位）。宣言者は `parity-replace`。T に合致すれば吸収、逸脱すれば回帰候補 |
 | `component_diff_exceptions` | 読・書 | T が引けない箇所のインスタンス単位フォールバック。**本スキルが形式を定義する**（スキーマ: [`references/normalize.md`](references/normalize.md)）。**書くのはユーザー承認済みのみ・非破壊追記** |
@@ -92,7 +95,8 @@ parity-diff [--feature <slug>] [--target <name>]
    選択 target の `new/<target>/replace-metadata.json` が無い・`suite.new_green` でなければ「**その環境ではまだ green 証跡が無い**」として停止し、同じ `--target` での `parity-replace` を案内する。欠ければ捏造せず停止し依存順に案内する
 2. **モード分岐**: `metadata.json.mode` で feature（3 経路）/ api-resource / batch に分岐する。api-resource / batch は画面系 3 経路を動かさない（[`references/api-batch.md`](references/api-batch.md)）
 3. **新側ベースライン取得**（[`references/capture-new.md`](references/capture-new.md)）: 選択 target の `url` / `api_url` を `PARITY_NEW_UI_URL` / `PARITY_NEW_API_URL` に解決して Playwright の `new` プロジェクトへ渡し、同一条件で新側だけを撮る。
-   **条件一致を先行検証**し、不一致なら差分報告せず停止する。新側の自己ノイズも測り、現側 `noise_baseline` との乖離が大きければ停止する
+   `url_command` の target は手順 1 の target 解決時に解決した URL を再利用する（工程ごとに再実行しない）。
+   **条件一致を先行検証**し、不一致なら差分報告せず停止する。新側の自己ノイズも測り（往復ループでは前回実行の測定値を組単位で再利用してよい。失効条件は同 reference）、現側 `noise_baseline` との乖離が大きければ停止する
 4. **決定論的差分検出**（[`references/detect.md`](references/detect.md)）: 画素・特性照合・aria の 3 経路。**LLM を介さない**
 5. **正規化・ノイズフィルタ**（[`references/normalize.md`](references/normalize.md)）: `intentional_diffs` → `component_diffs`（T）→ インスタンス例外 → ノイズ基準値（残余へ集計適用）→ 宣言できない構造差（`gaps.md`）は未検証として転記
 6. **LLM トリアージ**（[`references/triage.md`](references/triage.md)）: 正規化を生き残った候補だけを 1 件ずつ crop 対で。分類は要対応／許容／環境ノイズの 3 値。「許容」の確定はユーザー承認
@@ -119,11 +123,12 @@ parity-diff [--feature <slug>] [--target <name>]
 
 - **依存順**: `replace-strategy`（setup）→ `golden-dataset` → `parity-suite` → `parity-replace` → **`parity-diff`**（`parity-replace` と往復）
 - **`parity-suite` から引き継ぐもの**: 強度ゲートで健全性を確認済みの差分器（画素・特性照合・aria の 3 経路のツール・しきい値）、ノイズ基準値、撮影条件。すべて `.replace/parity/<slug>/metadata.json` 経由
-- **`parity-replace` から引き継ぐもの**: 新側 green の証拠（`suite.new_green`）・target 名と新側 URL（`new.{target,ui_url,api_url}`）・新側マッピング例外・実装時に前提としたデータセットバージョン（`dataset_version`）。
+- **`parity-replace` から引き継ぐもの**: 新側 green の証拠（`suite.new_green`）・target 名と新側 URL（`new.{target,ui_url,api_url}`。`url_command` の target は `"runtime"` が記録されるため target 設定から再解決する）・新側マッピング例外・実装時に前提としたデータセットバージョン（`dataset_version`）。
   すべて選択 target の `.replace/parity/<slug>/new/<target>/replace-metadata.json` から推測せず引く（スイートは再実行しない）。
   データセットバージョンの**陳腐化判定はこの値では行わない**——判定は [`references/preflight.md`](references/preflight.md) の三者一致（`metadata.json` / `.replace/dataset/metadata.json` / `phase_b.<slug>.<target>`）で行う
 - **`parity-replace` へ差し戻すもの**: 要対応差分が残り、target の `on_diff` が無い（既定）か、そのドキュメントが修正を指示するなら `diff.md` を差し戻し入力として**同じ target** で渡す。
-  反復回数の記録・上限管理（`--max-iterations` 既定 5）は `parity-replace` が当該 target の `replace-metadata.json` の `loop.*` で行う（環境ごとに独立）。上限超過時は差し戻さず停止してユーザーへ
+  反復回数の記録・上限管理（`--max-iterations` 既定 5）は `parity-replace` が当該 target の `replace-metadata.json` の `loop.*` で行う（環境ごとに独立）。上限超過時は差し戻さず停止してユーザーへ。
+  同 `loop.changed_scope`（直近の反復で描画に効く変更を入れた範囲）は自己ノイズ測定値を再利用してよい組の判定に使う（[`references/capture-new.md`](references/capture-new.md)「測定値の再利用」）
 - **`issue-create` へ委譲するもの**: target の `on_diff` ドキュメントが起票して停止する運用を指示するなら、差し戻しの代わりに要対応差分の要約（該当ページ・分類・根拠・`diff.md` のパス）を渡して起票し停止する（`gh` で直接起票しない）
 - **ブランチ作成・commit・PR は `issue-start` へ委譲**（`parity-replace` と同じ流儀。本スキルは実装フローを再実装しない）
 - **`replace-strategy status`** が `diff.md` / `diff-metadata.json` を読んで現況を導出する

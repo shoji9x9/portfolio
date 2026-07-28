@@ -4,10 +4,10 @@
 
 ## 対象 target の解決（前提確認より先）
 
-成果物のパスも疎通先も target で決まるため、最初に対象環境を確定する。候補は `skills.replace-strategy.targets` のうち **`side: new`** のものだけ（選択規則の正本は `replace-strategy` の `references/project-config.md`）。
+成果物のパスも疎通先も target で決まるため、最初に対象環境を確定する。候補は `skills.replace-strategy.targets` のうち **`side: new`** のものだけ。
 
-- `--target <name>` があればそれを使う。省略時は new 側の `default: true`、無ければ候補を提示してユーザーに確認する
-- 存在しない名前・`side: current` の名前は**停止**する（勝手に読み替えない）
+- **選択規則**（`--target` 省略時の既定・候補提示・存在しない名前や側違いでの停止）は `replace-strategy` の `references/project-config.md`「実行対象環境」の「選択規則」に従う（ここへ転記しない）
+- `url_command` の target は**ここで 1 回だけ**コマンドを実行して URL を解決する（失敗・空出力は停止）。以降の工程（疎通・撮影・API 発行）は解決済みの値を再利用する
 - 旧スキーマ・旧レイアウトは**フォールバックとして読まない**。見つけたら移行を案内して停止する（自動で移さない・両方を読まない）。
   検出対象の旧キー・旧レイアウトの一覧と移行手順は `replace-strategy` の `references/project-config.md`「移行」を正本として参照する（ここで個別に列挙しない）
 
@@ -16,7 +16,7 @@
 選択 target に `pre_commands` / `start` / `check_urls` があれば**この順**で実行・確認してから疎通確認へ進む
 （各キーの意味論と実行順・失敗時の早期停止の正本は `browser-test` の `references/project-config.md`）。
 
-- `pre_commands` の失敗、`check_urls`（省略時は `url`）の稼働確認失敗はいずれも**早期停止**する（撮り始めてから落ちるのを避ける）
+- `pre_commands` の失敗、`check_urls`（省略時は `url`。`url_command` の target は解決後の URL）の稼働確認失敗はいずれも**早期停止**する（撮り始めてから落ちるのを避ける）
 - `start` は稼働していないときだけ実行する（配信型 target は `start` を持たないため、稼働確認のみで判定する）
 - シークレットが要るコマンドには `secrets.wrapper` を前置する（値は表示しない）
 
@@ -31,7 +31,7 @@
 | parity-suite 完了 | `.replace/parity/<slug>/metadata.json` の `suite.current_green: true`・`differ.validated_by_strength_gate: true` | 対象 slug の `parity-suite` |
 | parity-replace 新側 green | `.replace/parity/<slug>/new/<target>/replace-metadata.json` の `suite.new_green: true` | `parity-replace`（**同じ `--target`** で新側 green にする） |
 | target 名の一致 | 同ファイルの `new.target` が解決した target 名と一致する | 停止（別環境の green 証跡を流用しない） |
-| Node.js と新側疎通 | Node.js が使える／選択 target の `url`（＝ `new.ui_url`）に疎通できる。api-resource モードは `api_url`（＝ `new.api_url`。省略時 `ui_url`）にも疎通できる | 停止（環境を整える） |
+| Node.js と新側疎通 | Node.js が使える／選択 target の `url`（＝ `new.ui_url`）に疎通できる。api-resource モードは `api_url`（＝ `new.api_url`。省略時 `ui_url`）にも疎通できる。`url_command` の target は解決後の URL へ疎通する（`new.ui_url` の記録は `"runtime"`） | 停止（環境を整える） |
 
 - 選択 target の `replace-metadata.json` が無い／`suite.new_green` が偽なら「**その環境ではまだ green 証跡が無い**」として停止する。別環境の証跡で代替しない（環境ごとに独立）
 - **parity-replace の「完了」を待つのではなく `suite.new_green` を前提とする。** 差分ゼロは本スキルとの往復で達成されるため、`parity-replace` 単体の完了条件に差分ゼロは含まれない
@@ -61,14 +61,21 @@
 
 - データ起因の差で `.replace/dataset/verification.md` のフェーズ B 節に説明済みのものは許容。説明されていないデータ差は `golden-dataset`（フェーズ B）へ差し戻す（[`api-batch.md`](api-batch.md)）
 
-### 選択 target が `db` を持たない場合（三者一致の免除）
+### 選択 target が投入対象でない場合（三者一致の免除）
 
-`db.env_vars` を書いていない target はゴールデンデータの投入対象外である（`db` の有無が契約であることの正本は `replace-strategy` の `references/project-config.md`）。
+免除するのは**その target がゴールデンデータの投入対象でないとき**だけである（投入契約の正本は `replace-strategy` の `references/project-config.md`）。設定の `dataset_mode` で判定が変わる。
 
-- **三者一致（`phase_b.<slug>.<target>`）を要求しない**。フェーズ B 未実施を理由に `golden-dataset` へ差し戻さない
+| `dataset_mode` | 選択した新側 target | 三者一致 |
+|---|---|---|
+| `db`（既定） | `db` 未定義（DB に触れない）／`db.env_vars` はあるが `seedable` が無い（読み取り専用） | **免除**（投入対象外） |
+| `db` | `db.seedable: true` | 要求する |
+| `static` | すべて | 要求する（データはリポジトリ内にあり、target の `db` に依存しない） |
+
+- 免除するときは**三者一致（`phase_b.<slug>.<target>`）を要求しない**。フェーズ B 未実施を理由に `golden-dataset` へ差し戻さない
 - 代わりに「**ゴールデンデータ未投入のため、データ依存の差分は実装差かデータ差か判別できない＝未検証**」を `diff.md` の未検証領域に明記し、
-  確認をデータ非依存の範囲（レイアウト・スタイル・構造など、投入データの内容に依存しない差分）に限定する
-- `metadata.json.dataset_version` ＝ `.replace/dataset/metadata.json.version`（ベースライン側の陳腐化）の確認は `db` の有無に関わらず行う
+  確認をデータ非依存の範囲（レイアウト・スタイル・構造など、投入データの内容に依存しない差分）に限定する。`diff-metadata.json.dataset_version_exempt` に免除理由（DB 未定義か読み取り専用か）を記録する
+- **`seedable` が無いだけの target を「投入対象にできる」と読み替えない**（設定の修正はユーザーの判断。免除して未検証と記録するか、ユーザーに `seedable: true` の追加を促して停止するかのどちらかで、勝手に投入しない）
+- `metadata.json.dataset_version` ＝ `.replace/dataset/metadata.json.version`（ベースライン側の陳腐化）の確認は**免除の有無に関わらず**行う
 
 ## 差分器バージョンの一致確認（feature モードのみ）
 
