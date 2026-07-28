@@ -1,0 +1,118 @@
+{
+  "slug": "static-page",
+  "mode": "feature",
+  "target": {
+    "name": "current-prod",
+    "ui_url": "https://shoji9x9.github.io/",
+    "api_url": "https://shoji9x9.github.io/",
+    "commit": "b10b54a489fbac94f7bf8beef1a005ffe19ee791"
+  },
+  "run": {
+    "started_at": "2026-07-28T18:40:00+09:00",
+    "finished_at": "2026-07-28T19:38:00+09:00",
+    "agent": "Claude Code",
+    "model": "Opus 5 (1M context)",
+    "effort": "標準",
+    "skill_version": "parity-suite v1.26.1"
+  },
+  "dataset_version": 2,
+  "suite": {
+    "dir": "e2e/",
+    "specs": "e2e/parity/static-page/{content,aria,states,baseline,strength}.spec.ts",
+    "locator_map": "e2e/parity/lib/locator-map/{types,current,portable}.ts",
+    "interactions": "e2e/parity/lib/interactions/index.ts",
+    "tools": "e2e/parity/lib/tools/",
+    "checks": "e2e/parity/lib/checks.ts",
+    "fixtures": "e2e/parity/lib/fixtures.ts",
+    "intentional_diffs_layer": "e2e/parity/lib/intentional-diffs.ts — 設定の intentional_diffs に宣言済みの差異について side ごとの期待値を解決する。現在の宣言は「GitHub の綴りの是正（新側のみ）」1 件。",
+    "playwright_config": "playwright.config.ts",
+    "auth_roles": [],
+    "current_green": true,
+    "current_test_count": 58,
+    "run_command": "PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current"
+  },
+  "capture_conditions": {
+    "environment": "Chromium (Playwright 1.61.1) / Linux (WSL2) / devicePixelRatio 1 / colorScheme light",
+    "viewports": [
+      { "width": 1280, "height": 900, "label": "desktop" },
+      { "width": 390, "height": 844, "label": "mobile" }
+    ],
+    "viewport_rationale": "現行 CSS に幅ベースのメディアクエリは 0 件（唯一のメディアクエリは prefers-color-scheme: dark）。固定幅 48rem のカードが収まる desktop と、収まらない mobile の 2 種を代表として選んだ。",
+    "animations": "disabled",
+    "full_page": true,
+    "masks": [
+      "getByRole('img', { name: 'AtCoder' }) — レーティングで内容・幅が変わる外部生成画像（環境ノイズ）",
+      "main 直下の LAPRAS セクション — 機能 lapras（Issue #23）の担当範囲で、外部プレビュー画像が差し替わりうる"
+    ],
+    "states": ["default", "hover", "focus"],
+    "state_samples": [
+      "desired-work.link",
+      "artifacts.card.portfolio.url-link",
+      "account.link.github"
+    ],
+    "color_schemes_checked": ["light", "dark"]
+  },
+  "traits": {
+    "tool": "e2e/parity/lib/tools/vendor/trait-capture.mjs (VERSION 1)",
+    "property_set_size": 33,
+    "property_set": [
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left",
+      "margin-top",
+      "margin-right",
+      "margin-bottom",
+      "margin-left",
+      "font-family",
+      "font-size",
+      "font-weight",
+      "line-height",
+      "color",
+      "background-color",
+      "border-top-width",
+      "border-top-style",
+      "border-top-color",
+      "border-right-width",
+      "border-right-style",
+      "border-right-color",
+      "border-bottom-width",
+      "border-bottom-style",
+      "border-bottom-color",
+      "border-left-width",
+      "border-left-style",
+      "border-left-color",
+      "border-top-left-radius",
+      "border-top-right-radius",
+      "border-bottom-right-radius",
+      "border-bottom-left-radius",
+      "text-align",
+      "display",
+      "visibility"
+    ],
+    "element_count": 136,
+    "elements": "論理名カタログ（e2e/parity/lib/locator-map/portable.ts の logicalEntries）が生成する 136 件。実体は baseline/<viewport>/default/traits.json の name 一覧が正本。"
+  },
+  "differ": {
+    "trait_compare": "e2e/parity/lib/tools/vendor/trait-compare.mjs (VERSION 1)",
+    "align_tolerance": 1,
+    "pixel_tool": "e2e/parity/lib/tools/pixel-compare.mjs (VERSION 1, pixelmatch 7.2.0 + pngjs 7.0.0)",
+    "pixel_threshold": 0.1,
+    "aria_compare": "e2e/parity/lib/tools/aria-compare.mjs (VERSION 1) — 採取した aria スナップショットの行単位構造比較",
+    "validated_by_strength_gate": true
+  },
+  "noise_baseline": [
+    { "page": "/", "state": "default", "viewport": "desktop", "pixel_diff": 0, "trait_diffs": 0 },
+    { "page": "/", "state": "hover", "viewport": "desktop", "pixel_diff": 0, "trait_diffs": 0 },
+    { "page": "/", "state": "focus", "viewport": "desktop", "pixel_diff": 0, "trait_diffs": 0 },
+    { "page": "/", "state": "default", "viewport": "mobile", "pixel_diff": 0, "trait_diffs": 0 },
+    { "page": "/", "state": "hover", "viewport": "mobile", "pixel_diff": 0, "trait_diffs": 0 },
+    { "page": "/", "state": "focus", "viewport": "mobile", "pixel_diff": 0, "trait_diffs": 0 }
+  ],
+  "artifacts_storage": {
+    "selected": "local",
+    "size_threshold_mb": 50,
+    "baseline_pointer": ".replace/parity/static-page/baseline/",
+    "committed": "テキスト成果物（traits.json / aria.txt / network.json / noise.json / files.txt）は Git 管理。スクリーンショット（*.png、約 1.9 MB）は .gitignore で除外し、baseline.spec.ts の再実行で作り直す。"
+  }
+}

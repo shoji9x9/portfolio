@@ -27,6 +27,8 @@
 - react / tailwindcss v4 / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
 - lefthook / commitlint / markdownlint-cli2 / knip / jscpd
+- Playwright（`@playwright/test`）/ pixelmatch + pngjs — 移行の等価性検証（パリティスイート）用。
+  実体は `e2e/`、実行方法は [docs/quality-checks.md](docs/quality-checks.md) を参照する
 
 **サプライチェーン対策** — 依存経由の攻撃への多層防御
 

@@ -1,0 +1,63 @@
+// Playwright 設定（パリティスイート専用）。
+//
+// projects は `current`（現行アプリ）と `new`（新側アプリ）の 2 つ。baseURL は URL を直書きせず、
+// 環境変数から解決する（`.config/skills/shoji9x9/skills.yml` の targets から呼び出し側が渡す）。
+//   - current: PARITY_CURRENT_UI_URL / PARITY_CURRENT_API_URL
+//   - new    : PARITY_NEW_UI_URL     / PARITY_NEW_API_URL
+// この配線が正本であり、parity-replace / parity-diff も同じ変数名に流す。
+//
+// parity-suite は `--project current` のみを実行する（新側の green 化は parity-replace の担当）。
+import { defineConfig, devices } from "@playwright/test";
+
+/** 実行対象環境の UI baseURL。未設定でも設定の読み込み自体は成功させ、spec 側で早期に失敗させる。 */
+const currentUiUrl = process.env["PARITY_CURRENT_UI_URL"];
+const newUiUrl = process.env["PARITY_NEW_UI_URL"];
+
+/** ベースライン採取・比較で共有する撮影条件。metadata.json の capture_conditions と対応する。 */
+export const VIEWPORTS = [
+  { label: "desktop", width: 1280, height: 900 },
+  { label: "mobile", width: 390, height: 844 },
+] as const;
+
+export default defineConfig({
+  testDir: "./e2e",
+  // 現行サイトは読み取り専用の静的サイトなので並列で問題ないが、ベースライン採取は
+  // 撮影条件を揃えるため spec 内で直列化する（describe.configure）。
+  fullyParallel: false,
+  forbidOnly: !!process.env["CI"],
+  retries: 0,
+  workers: 1,
+  reporter: [["list"], ["html", { open: "never" }]],
+  // 外部の画像 CDN（Shields.io・AtCoder）を待つため既定より長めに取る。
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
+  use: {
+    // 故障注入で論理名が解決しなくなったとき、テスト全体のタイムアウトまで待たずに落とす。
+    actionTimeout: 15_000,
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
+    // 現行アプリの既定表示（prefers-color-scheme: light）を基準にする。
+    // dark は状態として別途明示的に切り替えて確認する。
+    colorScheme: "light",
+    // 差分比較のため常にアニメーションを止める（現行にアニメーションは無いが条件を固定する）。
+    launchOptions: { args: ["--force-prefers-reduced-motion"] },
+  },
+  projects: [
+    {
+      name: "current",
+      use: {
+        ...devices["Desktop Chrome"],
+        ...(currentUiUrl === undefined ? {} : { baseURL: currentUiUrl }),
+        viewport: { width: VIEWPORTS[0].width, height: VIEWPORTS[0].height },
+      },
+    },
+    {
+      name: "new",
+      use: {
+        ...devices["Desktop Chrome"],
+        ...(newUiUrl === undefined ? {} : { baseURL: newUiUrl }),
+        viewport: { width: VIEWPORTS[0].width, height: VIEWPORTS[0].height },
+      },
+    },
+  ],
+});

@@ -85,6 +85,15 @@ skills:
         # UI コンポーネントは変更予定。ライブラリ変更に伴うコンポーネントレベルの機能・見た目の差異は許容する。
         - UI コンポーネントの実装・見た目（shadcn/ui 等への移行に伴う差異）
         - HTML の id/name とコンポーネント内部構造
+        # GitHub の綴りの是正（2026-07-28 決定）。現行は Github / GithubActions / logo=Github だが、
+        # 新側は公式表記へ揃える。ゴールデンデータセットは現行の実値を保持したままにし
+        # （フェーズ A は現行を忠実に再現する契約のため）、新側の期待値はパリティスイートの
+        # 意図的差異層 `e2e/parity/lib/intentional-diffs.ts` が side ごとに解決する。
+        - >-
+          GitHub の綴りの是正（新側のみ）:
+          バッジ表示名 Github → GitHub /
+          バッジ表示名 GithubActions → GitHub Actions（語の区切りも公式表記へ）/
+          アカウントバッジ画像 URL のクエリ logo=Github → logo=GitHub
       pending:
         - LAPRAS プレビューをビルド時に取得するか、Cloudflare Worker 実行時に取得するか
         - LAPRAS プレビュー取得失敗時の表示とキャッシュ方針

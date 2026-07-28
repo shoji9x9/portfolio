@@ -16,6 +16,10 @@ test-results/
 .playwright/
 reports/
 
+# パリティ成果物のバイナリ。設定 `artifacts.storage: local` に従いコミットしない
+# （テキスト成果物＝特性 JSON・aria・network・noise・metadata は Git 管理）。
+.replace/parity/**/*.png
+
 # caches
 *.tsbuildinfo
 .cache/
