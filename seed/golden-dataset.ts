@@ -26,9 +26,12 @@ function createImageBadges(values: readonly (readonly [string, string, string])[
 const accountBadges = createLinkedBadges([
   [
     "github",
-    "GitHub",
+    // 表記は現行アプリの実値をそのまま再現する（`services/badges.ts` のキー = img の alt）。
+    // 一般的な綴りは "GitHub" だが、正しい綴りへ直すのは意図的差異であり、レジストリで宣言せずに
+    // データセット側で正規化しない。
+    "Github",
     "https://github.com/shoji9x9",
-    "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=github&logoColor=white",
+    "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=Github&logoColor=white",
   ],
   [
     "twitter",
@@ -158,7 +161,8 @@ const frameworkBadges = createImageBadges([
   ],
   [
     "github-actions",
-    "GitHubActions",
+    // 現行アプリの実値（`frameworkBadges` のキー = img の alt）。上の "Github" と同じ理由で正規化しない。
+    "GithubActions",
     "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
   ],
 ]);
@@ -320,7 +324,7 @@ export const goldenDataset = {
         title: "GitHub PagesにNext.jsでポートフォリオ作ってみた",
         url: "https://zenn.dev/shoji9x9/articles/90897d3f772e8a",
       },
-      techStack: ["React", "TypeScript", "NextJS", "TailwindCSS", "GitHubActions"],
+      techStack: ["React", "TypeScript", "NextJS", "TailwindCSS", "GithubActions"],
     },
     {
       id: "qiita-search",
@@ -363,6 +367,9 @@ export const goldenDataset = {
       AWS: ["AWS Certified Cloud Practitioner"],
       その他: ["英語検定2級", "日商簿記検定2級"],
     },
+    // 希望条件セクションの唯一のリンク。リンク文言もページ上の静的テキストなので論理データに含める
+    // （URL だけだとパリティスイートがリンク文言を検証できない）。
+    desiredWorkTitle: "狩野モデルで考える、自分が希望する労働環境",
     desiredWorkUrl: "https://zenn.dev/shoji9x9/articles/741bba963942a6",
   },
   lapras: {

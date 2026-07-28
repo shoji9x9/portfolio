@@ -1,9 +1,9 @@
 # データ設計（design）
 
-- version: 1
+- version: 2
 - mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-07-28T17:31:24+09:00
+- 最終更新: 2026-07-28T18:51:11+09:00
 - 現行ソース: `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`
 
 ## 対象リソース
@@ -51,7 +51,22 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 
 ## gaps 由来の追加履歴
 
-現時点ではなし。後続の `parity-suite` でデータ不足が判明した場合、論理データを追加して version を 1 増やす。
+- 2026-07-28（version 1 → 2、`static-page` の `parity-suite`）: 現行サイトの実 DOM と照合したところ、
+  GitHub 関連 3 箇所の表記がフェーズ A で一般的な綴りへ正規化されていた。現行の実値へ戻した。
+  - `badges.account.github.label`: `GitHub` → `Github`（現行 `services/badges.ts` のキー = `img` の `alt`）
+  - `badges.account.github.imageSrc`: クエリの `logo=github` → `logo=Github`（現行の実 URL）
+  - `badges.framework.github-actions.label` と `artifacts.portfolio.techStack`: `GitHubActions` → `GithubActions`
+
+  データセットは現行の論理データを忠実に再現するものであり、綴りの是正は意図的差異である。
+  **2026-07-28 に新側での綴り是正が決定し、設定の `intentional_diffs.may_change` へ宣言済み**
+  （`Github` → `GitHub`、`GithubActions` → `GitHub Actions`、`logo=Github` → `logo=GitHub`）。
+  データセットは現行の実値を保持したままで、新側の期待値はパリティスイートの意図的差異層
+  `e2e/parity/lib/intentional-diffs.ts` が side ごとに解決する。フェーズ B で新側へ写像するときも
+  データセット側では正規化しない。
+
+  あわせて `staticContent.desiredWorkTitle`（希望条件セクションのリンク文言）を追加した。フェーズ A は
+  URL だけを収録していたため、パリティスイートがリンク文言を検証できなかった。件数・安定 ID・表示順は
+  変えていない。fingerprint は `8fd94077` → `f4c8d11a`。
 
 ## 契約移行の履歴
 

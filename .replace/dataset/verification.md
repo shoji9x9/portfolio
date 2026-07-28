@@ -1,23 +1,24 @@
 # 検証レポート（verification）
 
-- version: 1
+- version: 2
 - mode: `static`
-- 最終更新: 2026-07-28T17:31:24+09:00
+- 最終更新: 2026-07-28T18:51:11+09:00
 
 ## フェーズ A（現行フェーズ）
 
 ### 整合性
 
-| 検査               | 結果                                                                                                                                    |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| 現行ソースとの照合 | `services/badges.ts`、`services/careers.ts`、`services/artifacts.ts`、`app/page.tsx` をコミット `b10b54a…` で読み取り、値と定義順を転記 |
-| 安定 ID            | 41 個の ID が一意で、`^[a-z0-9-]+$` に一致                                                                                              |
-| 件数               | profile 4、account badges 5、language badges 7、framework badges 14、careers 2、projects 6、artifacts 3、自己 PR 4、資格分類 4          |
-| 形式妥当性         | 生成した 6 ファイルがすべて JSON として読み戻せ、末尾が改行で終わる（`seed/golden-dataset.test.ts`）                                    |
-| 参照整合           | 外部キーは存在しない。ID はすべてファイル内で自己完結し、ファイル間参照を持たない                                                       |
-| 決定性             | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `8fd94077` を出力                                                             |
-| 冪等性             | 連続 2 回実行して生成物・fingerprint が一致（削除 → 生成のため実行前の状態に依らない）                                                  |
-| 書き込み範囲       | 生成・削除はすべて `seed/data/` 配下。配下外を指すパスはツールが例外で停止する                                                          |
+| 検査                | 結果                                                                                                                                                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 現行ソースとの照合  | `services/badges.ts`、`services/careers.ts`、`services/artifacts.ts`、`app/page.tsx` をコミット `b10b54a…` で読み取り、値と定義順を転記                                                                                                                      |
+| 安定 ID             | 41 個の ID が一意で、`^[a-z0-9-]+$` に一致                                                                                                                                                                                                                   |
+| 件数                | profile 4、account badges 5、language badges 7、framework badges 14、careers 2、projects 6、artifacts 3、自己 PR 4、資格分類 4                                                                                                                               |
+| 形式妥当性          | 生成した 6 ファイルがすべて JSON として読み戻せ、末尾が改行で終わる（`seed/golden-dataset.test.ts`）                                                                                                                                                         |
+| 参照整合            | 外部キーは存在しない。ID はすべてファイル内で自己完結し、ファイル間参照を持たない                                                                                                                                                                            |
+| 決定性              | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `f4c8d11a` を出力                                                                                                                                                                                  |
+| 冪等性              | 連続 2 回実行して生成物・fingerprint が一致（削除 → 生成のため実行前の状態に依らない）                                                                                                                                                                       |
+| 書き込み範囲        | 生成・削除はすべて `seed/data/` 配下。配下外を指すパスはツールが例外で停止する                                                                                                                                                                               |
+| 現行実 DOM との照合 | `current-prod`（<https://shoji9x9.github.io/>）を Playwright で読み取り、プロフィール表・自己 PR・資格・希望条件・職務経歴 6 プロジェクト・製作物 3 件・バッジ 26 件の文言／URL／表示順を全件照合。version 2 で GitHub 表記 3 箇所を実値へ戻し、残りは全一致 |
 
 ### fingerprint の算出アルゴリズム
 
