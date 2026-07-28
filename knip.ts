@@ -19,6 +19,7 @@ export default {
     "e2e/parity/lib/tools/*.mjs",
     "scripts/**/*.{ts,mjs}",
     "seed/golden-dataset.ts",
+    "seed/phase-b.ts",
   ],
   project: [
     "src/**/*.{ts,tsx}",
@@ -48,5 +49,8 @@ export default {
   // knip が用途を静的検知できない依存を保持する。
   //   - oxlint-tailwindcss: oxlint.config.ts の jsPlugins に文字列で指定（実使用）
   //   - react-doctor: scripts/react-doctor-gate.sh（shell）から呼ぶため静的検知不可
-  ignoreDependencies: ["oxlint-tailwindcss", "react-doctor"],
+  //   - inter-ui: src/index.css の @font-face の url() から参照（CSS の url() は追跡対象外）。
+  //     実際に使われていることは pnpm build の出力（dist/assets/Inter-roman.var-*.woff2）と
+  //     パリティスイートのフォント幅判定が担保する
+  ignoreDependencies: ["oxlint-tailwindcss", "react-doctor", "inter-ui"],
 } satisfies KnipConfig;

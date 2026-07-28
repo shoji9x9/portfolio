@@ -42,6 +42,7 @@ pre-commit:
               # ゴールデンデータセットの生成物（oxfmt.config.ts でも ignore 済み。渡すと
               # 「対象ファイルなし」で異常終了するため、staged_files から除く）。
               - "seed/data/**"
+              - "src/data/generated/**"
               # パリティスイートの採取物（同上。正本は採取ツール）。
               - ".replace/parity/**"
             run: pnpm format {staged_files}
