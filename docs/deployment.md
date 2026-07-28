@@ -98,26 +98,36 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
   対応する Cloudflare Pages preview deployment を更新する。repository owner が作成した同一リポジトリ
   内 PR だけが対象であり、外部 fork・Dependabot・collaborator の PR では secret を安全に渡せないため
   preview deploy を実行しない。
+  **配信するのは PR ブランチの先頭コミット**である（checkout に `ref: github.event.pull_request.head.sha`
+  を指定）。`actions/checkout` の既定は `refs/pull/<n>/merge`、つまり PR を `main` へ試験マージした一時
+  コミットで、それを配信すると preview の中身が「ブランチのコード」ではなく「マージ結果」になる。
+  parity 検証では差分の原因をブランチの実装と `main` の変更に切り分けられなくなるため、ブランチ先頭を明示する。
 - `main`: repository secret で `pages deploy --branch main` を実行し、Cloudflare Pages の production を
   更新する。
 
 ### Preview URL
 
-Cloudflare Pages は preview deploy ごとに、変更されない deployment 固有 URL
-（`https://<hash>.<project-domain>.pages.dev/`）を発行する。この hash は deploy のたびに変わるため、
-継続して確認する URL には使わない。
-
-同時に、PR ブランチ名に対応する branch alias が作られ、常にそのブランチの最新 deployment を指す。
-これは設定項目ではなく、`pages deploy --branch <PR ブランチ>` が自動生成する。
+Cloudflare Pages は preview deploy ごとに deployment 固有 URL
+（`https://<hash>.<project-domain>.pages.dev/`）を発行する。この hash は deploy のたびに変わる。
+同時に PR ブランチ名に対応する branch alias が作られ、常にそのブランチの最新 deployment を指す。
+これは設定項目ではなく、`pages deploy --branch <PR ブランチ>` が自動生成する。branch 名は小文字化・
+記号の置換・長さの切り詰めが行われるため、URL を組み立てずに
 [Cloudflare の preview aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/#preview-aliases)
-に従い、Cloudflare Dashboard の deployment details で表示値を確認して使う。branch 名は小文字化・記号の
-置換・長さの切り詰めが行われるため、URL を組み立てずに表示値をコピーする。
+に従って Dashboard の表示値をコピーする。
 
-`browser-test` スキルの現行設定は `local` と `local-production` だけを登録している。PR ごとに変わる
-branch alias を同スキルや parity 系スキルへ共通の target として指定する仕組みは、まだない。環境別
-target の選択・成果物の分離は [skills#126](https://github.com/shoji9x9/skills/issues/126) で対応中であり、
-それまでは parity の比較をローカルに限定し、preview は branch alias に対するデプロイ後の最終確認に
-使う。
+parity 系スキルと `browser-test` は、`preview` を `targets` の 1 環境として `--target preview` で選べる。
+URL は固定値ではなく、`skills.yml` の `url_command`（`node scripts/preview-url.mjs`）が実行時に解決する。
+このスクリプトは **branch alias ではなく deployment 固有 URL を返す**。alias は「そのブランチの最新」を
+指すため検証の途中で別の deployment へ切り替わりうるのに対し、deployment 固有 URL は特定のビルドに
+固定されるためである。
+
+スクリプトは次の場合に URL を返さず停止する（`url_command` は失敗で呼び出し側スキルを止める契約）。
+
+| 停止条件                                                  | 理由                                                                                      |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 現ブランチの preview deployment が無い                    | preview は PR 作成時にのみデプロイされる。PR 作成前は解決できない                         |
+| 最新 deployment が未完了・失敗（`Active` / `Failure` 等） | エラーページや未完成のビルドを「新側」として比較させない                                  |
+| deployment のコミットが手元の HEAD と異なる               | push 前のコミットがある、またはデプロイ未完了。古いビルドを現在のコードとして検証させない |
 
 実装中は `pnpm dev` を起動し、<http://localhost:5173/> を browser-test スキルへ
 `--env local` を指定して確認する。これはシェルコマンドではない。production-like の確認には、
