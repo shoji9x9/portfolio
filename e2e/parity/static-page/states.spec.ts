@@ -14,7 +14,7 @@ import {
   checkFocusRing,
   checkTabOrder,
 } from "../lib/checks";
-import { expect, test } from "../lib/fixtures";
+import { test } from "../lib/fixtures";
 
 test.describe("static-page: 操作・状態", () => {
   test("本文リンクは hover で文字色が変わる", async ({ page, containers }) => {
@@ -29,10 +29,8 @@ test.describe("static-page: 操作・状態", () => {
     await checkFocusRing(page, containers);
   });
 
-  test("Tab の到達順が文書順と一致する（停止数は問わない）", async ({ page, containers }) => {
+  test("Tab の到達順が文書順と一致する（停止数は問わない）", async ({ page }) => {
     await checkTabOrder(page);
-    // LAPRAS リンク（機能 lapras の担当）が同じページに同居することを確認する。
-    await expect(containers.section("lapras").getByRole("link")).toHaveCount(1);
   });
 
   test("配色スキーム: dark で本文色と背景が切り替わる", async ({ page }) => {

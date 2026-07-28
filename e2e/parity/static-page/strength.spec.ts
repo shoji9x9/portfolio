@@ -104,6 +104,8 @@ async function runHandwritten(
     () => checks.checkQualifications(containers),
     () => checks.checkDesiredWork(containers),
     () => checks.checkExternalImagesRendered(containers),
+    () => checks.checkFontStackFallsThroughForCjk(page),
+    () => checks.checkFavicon(page),
     () => checks.checkAriaProfile(containers),
     () => checks.checkAriaAccount(containers),
     () => checks.checkAriaSelfPromotion(containers),

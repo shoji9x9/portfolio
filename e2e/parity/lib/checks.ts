@@ -13,6 +13,7 @@ import { expect } from "@playwright/test";
 import { allProjects, badgeByLabel, dataset } from "./dataset";
 import { expectedBadgeImageSrc, expectedBadgeLabel } from "./intentional-diffs";
 import { enterState, tabThrough } from "./interactions";
+import { sectionNameOptions } from "./locator-map/names";
 import {
   QUALIFICATION_GROUPS,
   qualificationItems,
@@ -63,19 +64,27 @@ export async function checkPageBasicsAndSectionOrder(
   await expect(page).toHaveTitle("Portfolio/shoji9x9");
   await expect(page.locator("html")).toHaveAttribute("lang", "ja");
 
-  // セクション見出し（h2）が仕様の順で並ぶこと。LAPRAS は機能 `lapras` の担当だが、
-  // 同じページに同居するため「static-page の 8 セクションの後ろに来る」ことまでを見る。
-  await expectAccessibleNamesInOrder(containers.main().getByRole("heading", { level: 2 }), [
-    "プロフィールDotHiyoko",
-    "アカウント",
-    "自己PR",
-    "保有スキル",
-    "職務経歴詳細",
-    "資格",
-    "製作物",
-    "希望条件",
-    "LAPRAS",
-  ]);
+  // セクション見出し（h2）が仕様の順で並ぶこと。
+  //
+  // **他機能のセクションを判定に含めない。** 同じページに機能 `lapras`（Issue #23）の
+  // LAPRAS セクションが同居するが、それを要求すると `static-page` を単独で green にできなくなり、
+  // 機能ごとに作り切る前提が崩れる。そこで期待列から LAPRAS だけを外し、**判定の強さは落とさない**
+  // ——アクセシブルネームで引き、プロフィール以外は完全一致のままにする（文言を変えたら赤くなる）。
+  // 他機能の見出しが増えても赤くならないよう、`static-page` のセクションだけを抜き出して順序を見る。
+  const ownSections = STATIC_PAGE_SECTIONS.map((id) => sectionNameOptions(id));
+  const headings = await containers.main().getByRole("heading", { level: 2 }).all();
+  const matched: string[] = [];
+  for (const heading of headings) {
+    const name = (await heading.getAttribute("aria-label")) ?? (await heading.innerText());
+    const normalized = name.replaceAll(/\s+/g, "");
+    const own = ownSections.find((section) =>
+      section.exact ? normalized === section.name : normalized.startsWith(section.name),
+    );
+    if (own !== undefined) matched.push(own.name);
+  }
+  expect(matched, "static-page のセクション見出しが仕様の順で並んでいない").toEqual(
+    ownSections.map((section) => section.name),
+  );
 
   for (const id of STATIC_PAGE_SECTIONS) {
     await expect(containers.section(id), `セクション ${id} が一意に解決しない`).toHaveCount(1);
@@ -271,6 +280,68 @@ export async function checkExternalImagesRendered(containers: ContainerLocators)
   }
 }
 
+/**
+ * 日本語がブラウザーの既定フォントへ落ちること。
+ *
+ * 現行のフォントスタックは `Inter, Inter Fallback` の 2 つだけで、**総称ファミリーを持たない**。
+ * どちらも日本語グリフを持たないため、日本語はブラウザーの既定フォントで描画される。
+ * ここに `system-ui` や `sans-serif` を混ぜると、日本語グリフを持つファミリー（Windows なら
+ * Yu Gothic UI）で止まり、現行と別のフォントで日本語が描画される。
+ *
+ * **この差は環境をまたがないと表面化しない。** Linux では総称ファミリーの解決先が既定フォントと
+ * 同じになり幅が一致してしまうため、実測では気づけない。そのため「スタックに日本語グリフを持ちうる
+ * 指定を入れない」という形で決定論的に判定する。
+ */
+export async function checkFontStackFallsThroughForCjk(page: Page): Promise<void> {
+  const stack = await page
+    .locator("body")
+    .evaluate((element) => getComputedStyle(element).fontFamily);
+  const families = stack.split(",").map((name) => name.trim().replaceAll(/^["']|["']$/g, ""));
+
+  // 総称ファミリーとシステムフォントのキーワード。いずれも日本語環境で CJK 対応フォントに解決される。
+  const cjkCapable = [
+    "sans-serif",
+    "serif",
+    "monospace",
+    "cursive",
+    "fantasy",
+    "system-ui",
+    "ui-sans-serif",
+    "ui-serif",
+    "ui-monospace",
+    "ui-rounded",
+    "-apple-system",
+    "BlinkMacSystemFont",
+  ];
+  const found = families.filter((name) => cjkCapable.includes(name));
+  expect(
+    found,
+    `フォントスタックに日本語グリフを持ちうる指定が入っている（現行は総称ファミリーを持たない）: ${stack}`,
+  ).toEqual([]);
+}
+
+/**
+ * favicon（ブラウザーのタブに出るアイコン）。
+ *
+ * ページ本文には現れないが利用者に見える要素なので、宣言（`rel="icon"` の href / type / sizes）と
+ * **実際に配信されているバイト列**の両方を判定する。宣言だけだと 404 や別画像に差し替わっても通る。
+ */
+export async function checkFavicon(page: Page): Promise<void> {
+  const icon = page.locator('link[rel="icon"]');
+  await expect(icon, "rel=icon の宣言が 1 つでない").toHaveCount(1);
+  await expect(icon).toHaveAttribute("href", "/favicon.ico");
+  await expect(icon).toHaveAttribute("type", "image/x-icon");
+  await expect(icon).toHaveAttribute("sizes", "32x32");
+
+  const response = await page.request.get("/favicon.ico");
+  expect(response.status(), "favicon.ico が配信されていない").toBe(200);
+  const body = await response.body();
+  // 現行が配信している ICO（32x32・1 画像）と同じ内容であること。サイズと ICO ヘッダーで確かめる。
+  expect(body.byteLength, "favicon.ico のサイズが現行と違う").toBe(4286);
+  expect(body.readUInt16LE(4), "ICO に含まれる画像数が違う").toBe(1);
+  expect([body[6], body[7]], "favicon の寸法が 32x32 でない").toEqual([32, 32]);
+}
+
 // ---------------------------------------------------------------------------
 // 構造パリティ（手書きの寛容な aria スナップショット）
 // ---------------------------------------------------------------------------
@@ -347,16 +418,13 @@ export async function checkAriaSkills(containers: ContainerLocators): Promise<vo
 }
 
 export async function checkAriaCareers(containers: ContainerLocators): Promise<void> {
+  // セクション直下の見出し階層（h2 → 会社の h3）だけを契約にする。
+  // プロジェクトカードの内部構造はカードにアンカーした checkAriaCareerCard が担う——
+  // カードを article 等で包むかは実装の裁量で、包むと入れ子の深さが変わるため
+  // （toMatchAriaSnapshot の部分一致は深さを飛ばせない）ここに書くと実装を縛ってしまう。
   await expect(containers.section("careers")).toMatchAriaSnapshot(`
     - heading "職務経歴詳細" [level=2]
     - heading "フリーランス (2022年1月～現在)" [level=3]
-    - heading "自動車会社基幹システム（商品販売システム）の再構築" [level=4]
-    - heading "期間" [level=5]
-    - heading "ロールとタスク" [level=5]
-    - list:
-      - listitem
-    - heading "メンバー数" [level=5]
-    - heading "技術スタック" [level=5]
     - heading "トヨタ自動車株式会社 (2005年4月～2021年6月)" [level=3]
   `);
 }
@@ -487,7 +555,8 @@ export async function checkFocusRing(page: Page, containers: ContainerLocators):
 
 export async function checkTabOrder(page: Page): Promise<void> {
   const expectedOrder = [
-    ...dataset.badges.account.map((badge) => badge.label),
+    // アカウントバッジの表示名は意図的差異の対象（新側のみ綴りが変わる）。side ごとの期待値を使う。
+    ...dataset.badges.account.map((badge) => expectedBadgeLabel(badge)),
     ...dataset.artifacts.flatMap((artifact) => [
       artifact.url,
       artifact.repositoryUrl,

@@ -6,6 +6,8 @@ import {
   checkCareerProject,
   checkDesiredWork,
   checkExternalImagesRendered,
+  checkFavicon,
+  checkFontStackFallsThroughForCjk,
   checkPageBasicsAndSectionOrder,
   checkProfileTable,
   checkQualifications,
@@ -23,6 +25,16 @@ import { test } from "../lib/fixtures";
 test.describe("static-page: 表示パリティ", () => {
   test("ページの基本属性とセクションの表示順", async ({ page, containers }) => {
     await checkPageBasicsAndSectionOrder(page, containers);
+  });
+
+  test("favicon が現行と同じ", async ({ page }) => {
+    await checkFavicon(page);
+  });
+
+  test("日本語がブラウザーの既定フォントへ落ちる（フォントスタックに総称ファミリーを入れない）", async ({
+    page,
+  }) => {
+    await checkFontStackFallsThroughForCjk(page);
   });
 
   test("プロフィール表の見出しと 4 行", async ({ containers }) => {

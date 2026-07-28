@@ -53,6 +53,11 @@ export default defineConfig({
     },
     {
       name: "new",
+      // 現側専用のスペックは新側で走らせない。ベースライン採取と強度ゲートはどちらも
+      // 「現側ベースラインを作る／それを相手に照合する」工程で、新側で走らせると
+      // 意味を持たないうえ現側の証跡（baseline/・strength-results.json）を上書きしてしまう。
+      // 新側の採取と現新比較は parity-diff が `new/<target>/` に対して行う。
+      testIgnore: [/static-page\/baseline\.spec\.ts$/, /static-page\/strength\.spec\.ts$/],
       use: {
         ...devices["Desktop Chrome"],
         ...(newUiUrl === undefined ? {} : { baseURL: newUiUrl }),

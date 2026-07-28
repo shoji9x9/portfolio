@@ -9,6 +9,7 @@ import { test as base, expect } from "@playwright/test";
 
 import { currentContainers } from "./locator-map/current";
 import { logicalEntries } from "./locator-map/portable";
+import { newContainers } from "./locator-map/static-page.new";
 
 export type ParityFixtures = {
   /** 側ごとのコンテナー解決。 */
@@ -30,11 +31,8 @@ export const test = base.extend<ParityFixtures>({
       return;
     }
     if (side === "new") {
-      // 新側マッピング（例外のみ）の充填は parity-replace の担当。ここで暫定実装を置くと
-      // 「新側が green になった」という完了条件の証拠が偽になるため、明示的に停止する。
-      throw new Error(
-        "新側（project=new）のコンテナーマッピングは未実装です。parity-replace で e2e/parity/lib/locator-map/new.ts を追加してください。",
-      );
+      await use(newContainers(page));
+      return;
     }
     throw new Error(`未知の project 名です: ${side}（current / new のいずれかを指定する）`);
   },

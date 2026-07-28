@@ -12,33 +12,26 @@ import type { Locator } from "@playwright/test";
 
 import { allProjects, badgeByLabel, dataset } from "../dataset";
 import { expectedBadgeLabel } from "../intentional-diffs";
+import { SECTION_HEADING_TEXT } from "./names";
 
 /** 論理名とロケータの対。トレイト採取・アサーションの双方でこの順序を使う（決定論的）。 */
 export type LogicalEntry = { name: string; locator: Locator };
 
-/** `static-page` が担当するセクション（`lapras` は機能 `lapras` の担当でスコープ外）。 */
+/**
+ * `static-page` が担当するセクション（`lapras` は機能 `lapras` の担当でスコープ外）。
+ * **並びは現行 `/` の表示順そのもの**で、`checkPageBasicsAndSectionOrder` の期待列に使う。
+ * 並べ替えるとセクション順の契約を変えることになるので、現行を確認せずに触らない。
+ */
 export const STATIC_PAGE_SECTIONS: readonly SectionId[] = [
   "profile",
   "account",
   "self-promotion",
   "skills",
   "careers",
-  "artifacts",
   "qualifications",
+  "artifacts",
   "desired-work",
 ];
-
-const SECTION_HEADING_TEXT: Record<SectionId, string> = {
-  profile: "プロフィール",
-  account: "アカウント",
-  "self-promotion": "自己PR",
-  skills: "保有スキル",
-  careers: "職務経歴詳細",
-  artifacts: "製作物",
-  qualifications: "資格",
-  "desired-work": "希望条件",
-  lapras: "LAPRAS",
-};
 
 /** 資格セクションの分類名（表示順）。 */
 export const QUALIFICATION_GROUPS: readonly string[] = Object.keys(

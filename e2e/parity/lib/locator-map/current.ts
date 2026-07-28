@@ -12,44 +12,7 @@
 import type { ContainerLocators, SectionId } from "./types";
 import type { Locator, Page } from "@playwright/test";
 
-import { allProjects, dataset } from "../dataset";
-
-/** セクション見出し（h2）のアクセシブルネーム。 */
-const SECTION_HEADING: Record<SectionId, string> = {
-  profile: "プロフィール",
-  account: "アカウント",
-  "self-promotion": "自己PR",
-  skills: "保有スキル",
-  careers: "職務経歴詳細",
-  artifacts: "製作物",
-  qualifications: "資格",
-  "desired-work": "希望条件",
-  lapras: "LAPRAS",
-};
-
-/**
- * `プロフィール` の見出しはインライン画像（alt="DotHiyoko"）を子に持つため、
- * アクセシブルネームが "プロフィールDotHiyoko" になる。ここだけ部分一致で引く。
- * 見出しに装飾画像を含めるかは新側の裁量なので、完全一致を契約にしない。
- */
-const INEXACT_HEADING: ReadonlySet<SectionId> = new Set<SectionId>(["profile"]);
-
-/** カード見出しの文言はデータセットが正本。ロケータ側で直書きしない。 */
-function projectName(projectId: string): string {
-  const found = allProjects.find((entry) => entry.project.id === projectId);
-  if (found === undefined) {
-    throw new Error(`careers.json に project.id="${projectId}" がありません`);
-  }
-  return found.project.name;
-}
-
-function artifactTitle(artifactId: string): string {
-  const found = dataset.artifacts.find((artifact) => artifact.id === artifactId);
-  if (found === undefined) {
-    throw new Error(`artifacts.json に artifact.id="${artifactId}" がありません`);
-  }
-  return found.title;
-}
+import { artifactTitle, projectName, sectionNameOptions } from "./names";
 
 export function currentContainers(page: Page): ContainerLocators {
   const main = (): Locator => page.getByRole("main");
@@ -58,13 +21,7 @@ export function currentContainers(page: Page): ContainerLocators {
     main()
       // 例外: セクションが role を持たないため「main 直下の div」で絞る。
       .locator("> div")
-      .filter({
-        has: page.getByRole("heading", {
-          level: 2,
-          name: SECTION_HEADING[id],
-          exact: !INEXACT_HEADING.has(id),
-        }),
-      });
+      .filter({ has: page.getByRole("heading", { level: 2, ...sectionNameOptions(id) }) });
 
   const careerProjectCard = (projectId: string): Locator =>
     section("careers")
