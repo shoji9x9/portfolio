@@ -5,7 +5,7 @@
 #   - vp（vite+ / viteplus）は mise 管理で PATH 上にある。lint/format/test は vp で実行する。
 #   - mise 管理バイナリ（PATH 上）を直接呼ぶもの:
 #       gitleaks / shfmt / shellcheck / actionlint / ghalint / pinact
-#   - vendored の .agents/ .claude/ は lint/format 対象から除外（exclude 正規表現）。
+#   - vendored の .agents/ .claude/ は lint/format 対象から除外（exclude glob リスト）。
 #
 # 前提の pnpm scripts（package.json 側で用意されている想定・notes 参照）:
 #   format(=vp fmt -c oxfmt.config.ts) / lint(=vp lint -c oxlint.config.ts --type-aware)
@@ -32,14 +32,22 @@ pre-commit:
             glob:
               - "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
               - "*.{json,jsonc,css}"
-            exclude: '(^|/)\.(agents|claude)/'
+            exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
+              - ".agents/**"
+              - ".claude/**"
+              - "**/.agents/**"
+              - "**/.claude/**"
             run: pnpm format {staged_files}
             stage_fixed: true
 
           # shfmt: シェルスクリプトを整形（-w で書き換え）
           - name: shfmt
             glob: "*.{sh,bash}"
-            exclude: '(^|/)\.(agents|claude)/'
+            exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
+              - ".agents/**"
+              - ".claude/**"
+              - "**/.agents/**"
+              - "**/.claude/**"
             # 整形オプションは .editorconfig を単一の設定源とする（フラグを重複させない）。
             run: shfmt -w {staged_files}
             stage_fixed: true
@@ -52,19 +60,31 @@ pre-commit:
           # oxlint: type-aware lint（変更ファイル）
           - name: oxlint
             glob: "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
-            exclude: '(^|/)\.(agents|claude)/'
+            exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
+              - ".agents/**"
+              - ".claude/**"
+              - "**/.agents/**"
+              - "**/.claude/**"
             run: pnpm lint {staged_files}
 
           # markdownlint-cli2: Markdown 検査
           - name: markdownlint
             glob: "*.md"
-            exclude: '(^|/)\.(agents|claude)/'
+            exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
+              - ".agents/**"
+              - ".claude/**"
+              - "**/.agents/**"
+              - "**/.claude/**"
             run: pnpm lint:md {staged_files}
 
           # shellcheck: シェルスクリプト静的解析
           - name: shellcheck
             glob: "*.{sh,bash}"
-            exclude: '(^|/)\.(agents|claude)/'
+            exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
+              - ".agents/**"
+              - ".claude/**"
+              - "**/.agents/**"
+              - "**/.claude/**"
             run: shellcheck --external-sources {staged_files}
 
     # 3. scan — 並列実行。シークレット/未使用/循環依存/コピペ検査。
