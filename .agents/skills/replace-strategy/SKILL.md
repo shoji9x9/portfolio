@@ -4,9 +4,9 @@ description: 仕様を変えないアプリケーションリプレイスの入�
 license: MIT
 metadata:
     github-path: skills/replace-strategy
-    github-ref: refs/tags/v1.21.4
+    github-ref: refs/tags/v1.23.0
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: fac1ae233fcf52baf66c6d234f5d5ec73b6682b6
+    github-tree-sha: c34c4485ae9c68ec5bfc992cd68057339851482d
 name: replace-strategy
 ---
 # Replace Strategy
@@ -44,7 +44,7 @@ replace-strategy status
   - `golden-dataset` の投入ツール: TypeScript（SQL 可）
   - テキスト成果物: Git
   - Issue・PR・委譲先: GitHub（`gh`）
-- **利用者が選ぶもの**（設定・references で受け取る。スキル本体に固有名を書かない）: 新 UI コンポーネントライブラリと design token、現行・新の DB とその型・意味論の差、静的解析ツール一式、環境変数の用意方法。現行アプリのスタックは測定で把握する
+- **利用者が選ぶもの**（設定・references で受け取る。スキル本体に固有名を書かない）: 新 UI コンポーネントライブラリと design token、現行・新の DB とその型・意味論の差、検証コマンド一式（静的解析・テスト）、実行対象環境（`targets`）、環境変数の用意方法。現行アプリのスタックは測定で把握する
 
 ## 厳守の制約（禁止事項）
 
@@ -59,7 +59,7 @@ replace-strategy status
 
 ## プロジェクト設定の解決
 
-現・新のリポジトリ／URL、DB 接続の環境変数名、成果物の保存方針、意図的差異レジストリ、references（利用者が選ぶ知識の注入）はリポジトリごとに異なる。
+現・新のリポジトリ、実行対象環境（`targets`。環境名で複数定義し `--target` で選択）、DB 接続の環境変数名、成果物の保存方針、意図的差異レジストリ、references（利用者が選ぶ知識の注入）はリポジトリごとに異なる。
 設定ファイル `.config/skills/shoji9x9/skills.yml` の `skills.replace-strategy` のスキーマと解決手順は [`references/project-config.md`](references/project-config.md) を参照する。
 
 設定は対象プロジェクトに 1 つで全スキルが読めるため、**下流スキル（姉妹スキル）はこのキーを直接読む**（転記しない）。
@@ -69,13 +69,21 @@ replace-strategy status
 依存確認 → 対話セットアップ → 測定 → 戦略決定 → レジストリ作成 → 機能インベントリ、の順に進める。
 
 1. **依存の確認**: 前提スキル（`issue-create` / `browser-test`）のインストール状況と chrome-devtools MCP の有効性を確認する。未導入・無効なら導入手順（`gh skill install shoji9x9/skills <name>`、MCP の設定）を示す。**MCP が無いままでは測定できないため、手順を示したうえで停止する**
-2. **対話セットアップ**: 現・新のリポジトリ／URL、DB 接続（環境変数名のみ）、環境、禁止操作、起動ラッパーを対話で確認し設定ファイルへ保存する。**技術スタックはスキル本体に書かず、設定で受け取る。** シークレットの扱いは [`references/project-config.md`](references/project-config.md) の「シークレットの扱い」に従い、**接続確認を最初に行い、繋がらなければ早期に失敗する**
+2. **対話セットアップ**: 次を対話で確認し設定ファイルへ保存する。**技術スタックはスキル本体に書かず、設定で受け取る。** シークレットの扱いは [`references/project-config.md`](references/project-config.md) の「シークレットの扱い」に従い、**接続確認を最初に行い、繋がらなければ早期に失敗する**
+   - 現・新のリポジトリ、起動ラッパー
+   - **実行対象環境（`targets`）**: 現側は測定対象のテスト環境、新側は local-dev / develop 等。環境ごとに `side`（必須）・`url`・`api_url`（UI と API が別 origin のときだけ）・
+     DB・認証（ロールごとの環境変数名のみ）・禁止操作・`pre_commands` / `start` / `check_urls`・`commit_check`（`start` を持たない配信型環境で稼働中コミットを確認するコマンド）・
+     **側ごとの `default`**（`current` / `new` で 1 つずつ）・`on_diff` を確認する。スキーマ不変条件と選択規則は [`references/project-config.md`](references/project-config.md) の「実行対象環境」に従う
+   - **検証コマンド列（`verification_commands`）**: 完了前に実行する静的解析・テスト等。`parity-replace` の完了判定に必須のため、無いままにせずここで確定する
+     （環境準備・起動は含めない。それらは target の `pre_commands` / `start`）
+   - **`on_diff` のドキュメント**: 内容はプロジェクトが持つものだが、`references` と同様に **`setup` が下書きを生成し、人間がレビューして確定する**（既定挙動で足りる環境には作らない）
 3. **測定**: すべて実測する。手順は [`references/measurement.md`](references/measurement.md)。
    セマンティクス測定（同梱の [`scripts/role-probe.mjs`](scripts/role-probe.mjs) を使用）・DB 復元可否・現行コードの入手性・副作用の棚卸し・既存テストの評価を行い、`.replace/survey.md` に記録する。**測れない場合はここで停止する**
 4. **戦略の提示とユーザー承認**: 測定結果から、パリティスイート戦略・ゴールデンデータセットの作り方・フロント／バックの非対称設計（バックエンドは現行コードからの直接移植、フロントエンドはパリティスイート＋ベースライン駆動）・未検証領域の扱いを提示し、承認を得て `.replace/strategy.md` に記録する
 5. **成果物の扱いの決定**（設定ファイルへ）: 保持方針（ワークツリーは最新のみ。履歴は Git が持つ）・保存先（`local`（既定・コミットしない）／`git`／`git-lfs` に限る。それ以外の外部保管は対象外とし、選ぶ場合はポインタ記録のみで**検証しないことを明示する**）・容量閾値を決める。ここで決めるのは既定値であり、**機能ごとに上書きできる**
 6. **意図的差異レジストリの作成**（設定ファイルへ）: 「変えない」「変えてよい」「保留（測定結果で決める）」の 3 分類。references（`ui_library` / `db_semantics`）から注入された差（例: 空文字と NULL の扱い、collation による並び順）もレジストリに落とし込む。references の下書きは DDL・測定結果・技術スタックから生成し、**人間がレビューして確定する**
-7. **機能インベントリ**: 現アプリを機能単位に分解し、各機能のページ・API・テーブル・副作用出力、横断 API の fan-out、slug を `.replace/features.md` に記録する。規則は [`references/features-issues.md`](references/features-issues.md)
+7. **機能インベントリ**: 現アプリを機能単位に分解し、各機能のページ・API・テーブル・副作用出力、横断 API の fan-out、slug を `.replace/features.md` に記録する。
+   **機能は画面内の表示セクションではなく、利用者目的・データ境界・依存関係・副作用の所有者で分解する**（複数ページの機能は 1 行）。規則は [`references/features-issues.md`](references/features-issues.md)
 
 ## issues モード
 
@@ -83,7 +91,8 @@ replace-strategy status
 手順・Issue 種類（ゴールデンデータセット／横断 API／機能／バッチの 4 種）・本文構成は [`references/features-issues.md`](references/features-issues.md) を参照する。
 
 - `.replace/features.md` が無い（`setup` 未完了）場合は起票せず停止し、`setup` の実行を促す
-- 起票は `issue-create` スキルへ委譲する。**起票対象を提示してまとめて承認を得てから 1 件ずつ委譲する**（issue-create は 1 件ずつ承認を得る設計のため、本モードで先にまとめて承認を得る）
+- 起票は `issue-create` スキルへ委譲する。**候補・依存関係・各 Issue の本文ドラフトを提示して明示承認を得てから 1 件ずつ委譲する**（issue-create は 1 件ずつ承認を得る設計のため、本モードで先にまとめて承認を得る）
+- **明示承認が得られない場合——利用者が不在（非対話実行）・無応答・応答が承認以外——は起票せず停止する**（`gh issue create` も `issue-create` への委譲も行わない）
 - 重複チェックはページネーションに留意する（既定件数で打ち切らない）
 
 ## status モード
@@ -101,7 +110,7 @@ replace-strategy status
 
 | 成果物 | 場所 | 内容 |
 |---|---|---|
-| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリ／URL／環境／DB 接続の環境変数名／起動ラッパー／禁止操作／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
+| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリ／実行対象環境（`targets`。環境ごとの URL・DB・認証・禁止操作・起動・`on_diff`）／起動ラッパー／検証コマンド列／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
 | 測定レポート | `.replace/survey.md` | セマンティクス測定値、DB 復元可否、コード入手性、副作用棚卸し、既存テスト評価。すべて実測値 |
 | 戦略書 | `.replace/strategy.md` | 非対称設計、パリティスイート戦略、ゴールデンデータセットの方針、未検証領域の扱い |
 | 機能インベントリ | `.replace/features.md` | 機能一覧、依存順、ページ／API／テーブル／副作用出力、横断 API の fan-out とリソースグルーピング、slug、Issue 化の状態 |
