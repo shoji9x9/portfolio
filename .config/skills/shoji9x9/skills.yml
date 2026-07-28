@@ -46,11 +46,13 @@ skills:
         start: &local-production-start pnpm preview # build は pre_commands が担う（pnpm start だと build が二重になる）
         check_urls: &local-production-check-urls
           - http://localhost:4173/
-      - name: preview # Cloudflare Pages のプレビュー環境（ブランチ別 URL: https://<branch alias>.shoji9x9.pages.dev）
+      - name: preview # Cloudflare Pages のプレビュー環境（デプロイ固有 URL: https://<デプロイ ID 先頭 8 桁>.shoji9x9.pages.dev）
         side: new
-        # URL がブランチごとに変わるため固定 URL を書けない。skills 側の動的 URL 対応
-        # （shoji9x9/skills#131）が入り次第、対応するキーへ書き換える。
-        url: none
+        # URL がデプロイごとに変わるため固定値を書けない。wrangler に現ブランチの最新プレビューデプロイを
+        # 問い合わせて 1 行で返す（wrangler の --json はブランチ alias を返さないため、デプロイ固有 URL を使う。
+        # 検証の途中で別デプロイへすり替わらない点で alias より確実）。
+        # プレビューは PR 作成時にのみデプロイされるため、PR 作成前のブランチでは解決できず停止する。
+        url_command: node scripts/preview-url.mjs
         forbidden_actions: # 共有のデプロイ環境（インターネット公開）のため書き込み系は行わない
           - プレビュー環境への書き込み・変更操作
       - name: production # Cloudflare Pages の本番環境。デプロイ開始後に commit_check / on_diff の追加を検討する
@@ -60,6 +62,11 @@ skills:
           - 本番サイトへの書き込み・変更操作
     parity_suite_dir: e2e/ # パリティスイートの配置（parity-suite が読む）
     dataset_tool_dir: seed/ # golden-dataset の投入ツールの配置先
+    # ゴールデンデータセットの実体。本プロジェクトは DB を持たない静的サイトのため static を選ぶ
+    # （db では投入先 target に db.seedable を要求し、フェーズ A の再実行がデッドロックする）。
+    dataset_mode: static
+    dataset_static_paths: # 投入ツールが生成・削除してよい範囲。この配下以外へ書いたら停止する
+      - seed/data/ # フェーズ A: 現行ソースから起こした正本データの生成先
     verification_commands: # 完了前に実行する検証コマンド列（parity-replace が読む）
       - pnpm typecheck
       - pnpm lint
