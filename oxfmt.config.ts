@@ -15,6 +15,9 @@ export default {
       "coverage",
       "reports",
       "pnpm-lock.yaml",
+      // ゴールデンデータセットの生成物。整形すると `seed/golden-dataset.ts` の決定論的な出力と
+      // 食い違い、再生成のたびに差分が出るため対象外にする（正本は生成ツール）。
+      "seed/data",
     ],
     // import 文のグルーピング + 並び替え（ESLint 不要。oxfmt が
     // eslint-plugin-perfectionist/sort-imports 相当のアルゴリズムで整列する）。
