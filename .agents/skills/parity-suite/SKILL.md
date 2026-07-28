@@ -4,9 +4,9 @@ description: 仕様を変えないアプリケーションリプレイスで、�
 license: MIT
 metadata:
     github-path: skills/parity-suite
-    github-ref: refs/tags/v1.23.0
+    github-ref: refs/tags/v1.26.1
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: 946e56d039d43277a04cb03c93d287024bb46ad5
+    github-tree-sha: 8c48622dc0cf8e72a540780f24f839b4cdcb54e2
 name: parity-suite
 ---
 # Parity Suite
@@ -23,7 +23,8 @@ parity-suite [--feature <slug>] [--target <name>]
 
 - **1 回の実行につき 1 機能。** 複数機能を並行して進めない（調査・特性化・強度検証が浅くなるため）
 - `slug` は `.replace/features.md` が採番したもの。**自分で採番しない。** 省略時は features.md の未着手から対話選択する
-- `--target <name>` は実行対象の現行環境。設定の `targets` のうち **`side: current` のものだけを候補**にする。省略時はその側の `default: true` の target を使い、無ければ候補を提示して確認する（存在しない名前・側違いは停止。選択規則の正本は `replace-strategy` の `references/project-config.md`）
+- `--target <name>` は実行対象の現行環境。設定の `targets` のうち **`side: current` のものだけを候補**にする（本スキルが対象とする側の宣言はここが正本）。
+  省略時の既定・候補提示・存在しない名前や側違いでの停止といった**選択規則は `replace-strategy` の `references/project-config.md`「実行対象環境」の「選択規則」に従う**（ここへ転記しない）
 - **モードは slug の種別で決まる**（フラグは無い）。features.md の 機能／横断 API リソース／バッチ のどの表にあるかで下表のモードになる
 
 | モード | 起点 | 内容 |
@@ -67,9 +68,9 @@ parity-suite [--feature <slug>] [--target <name>]
 | `parity_suite_dir` | パリティスイートの配置（未指定時 `e2e/`） |
 | `artifacts.{retention,storage,size_threshold_mb,overrides.<slug>}` | 大きなバイナリの保存先既定と機能ごとの上書き |
 | `secrets.wrapper` | シークレットが要るコマンドの前置ラッパー |
-| `targets` | 実行対象環境。`side: current` から `--target` で選ぶ。選択した target の `url` が UI、`api_url`（省略時 `url`）が API 特性化の baseURL。`pre_commands` / `start` / `check_urls` があれば実行フロー 1 で起動・稼働確認に使う |
+| `targets` | 実行対象環境。`side: current` から `--target` で選ぶ。選択した target の `url`（`url_command` の target はコマンド実行で解決した URL）が UI、`api_url`（省略時はその UI URL）が API 特性化の baseURL。`pre_commands` / `start` / `check_urls` があれば実行フロー 1 で起動・稼働確認に使う |
 | `targets[].auth.roles` | ロール別の認証情報の環境変数**名**（認証不要の環境では `auth` ごと省略。扱いは [`references/auth.md`](references/auth.md)） |
-| `targets[].db.env_vars` | 現行 DB 接続の環境変数名。選択した current target のもの（DB を持たない環境では省略可） |
+| `targets[].db.env_vars` | 現行 DB 接続の環境変数名。選択した current target のもの（DB を持たない環境では省略可）。本スキルは**読むだけ**で投入しないため `db.seedable` は見ない |
 | `targets[].forbidden_actions` | 選択した target に実施しない UI / API 操作（空リスト・未定義の意味論は正本に従う） |
 | `intentional_diffs` | 意図的差異レジストリ。故障カタログの導出で読む（[`references/strength-gate.md`](references/strength-gate.md)） |
 | `references.db_semantics` | DB 意味論の差（並び順の特性化で読む） |
@@ -84,12 +85,14 @@ parity-suite [--feature <slug>] [--target <name>]
 
 1. **前提検証と早期失敗**: `.replace/features.md`・設定が無ければ `replace-strategy setup` を促して停止。`.replace/dataset/metadata.json` が無ければ `golden-dataset`（フェーズ A）を促して停止。
    Playwright が使えない（Node が無い・導入不可）なら設計不成立を明示して停止。
-   `--target` から現行環境を確定し、その target に `pre_commands` / `start` / `check_urls` があればその順で起動・稼働確認する（意味論と実行順の正本は `browser-test` の `references/project-config.md`。失敗したらそこで停止し、後続工程へ進まない）。
+   `--target` から現行環境を確定し（`url_command` の target はここで 1 回だけコマンドを実行して URL を解決する。失敗・空出力は停止し、以降は解決済みの値を再利用する）、
+   その target に `pre_commands` / `start` / `check_urls` があればその順で起動・稼働確認する（意味論と実行順の正本は `browser-test` の `references/project-config.md`。失敗したらそこで停止し、後続工程へ進まない）。
    選択した target の `url` / `api_url` への疎通と認証環境変数の存在確認（値は出さない）で早期に失敗する
 2. **対象決定**: `slug` を features.md と突き合わせる（無い slug は停止。自分で採番しない）。種別からモードを決める
 3. **保存先検証**: `artifacts`（`overrides.<slug>` を考慮）の書き込み可否を**撮影前に**検証し、不可なら早期に失敗する（詳細: [`references/baseline.md`](references/baseline.md)）
 4. **データセットの投入先・バージョン確認**: `.replace/dataset/metadata.json` の `current.target`（`golden-dataset` がフェーズ A で投入した current target 名）が手順 1 で確定した target と一致することを確認する。
    一致しなければ「ベースラインとシードの環境不一致」として停止し、同じ target へ投入するか target 選択を変えるようユーザーに促す。
+   **`current.target` が `null` のときは照合しない**（`mode: static` ＝ ゴールデンデータがリポジトリ内の静的データで、特定の環境に紐づかないため。契約の正本は `replace-strategy` の `references/project-config.md`）。
    続けて `version` を読み、成果物に `dataset_version` として記録する。既存の `.replace/parity/<slug>/metadata.json` の `dataset_version` が古ければ陳腐化として再取得を宣言する
 5. **authoring**: ロケータマッピング（現側）→ 操作差分の吸収 → スイート（表示＋操作・状態カバレッジ）→ 手書き aria → API 特性化。
    詳細: [`references/locator-mapping.md`](references/locator-mapping.md) / [`references/coverage.md`](references/coverage.md) / [`references/api-batch.md`](references/api-batch.md) / [`references/auth.md`](references/auth.md)。

@@ -37,6 +37,9 @@ pre-commit:
               - ".claude/**"
               - "**/.agents/**"
               - "**/.claude/**"
+              # ゴールデンデータセットの生成物（oxfmt.config.ts でも ignore 済み。渡すと
+              # 「対象ファイルなし」で異常終了するため、staged_files から除く）。
+              - "seed/data/**"
             run: pnpm format {staged_files}
             stage_fixed: true
 

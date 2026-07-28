@@ -371,10 +371,6 @@ export const goldenDataset = {
   },
 } as const;
 
-export function canonicalJson(): string {
-  return JSON.stringify(goldenDataset);
-}
-
 function fingerprint(value: string): string {
   let hash = 0x811c9dc5;
   for (const character of value) {
@@ -382,6 +378,34 @@ function fingerprint(value: string): string {
     hash = Math.imul(hash, 0x01000193);
   }
   return (hash >>> 0).toString(16).padStart(8, "0");
+}
+
+/**
+ * 生成物を「相対パス → 内容」の写像として組み立てる。純粋関数なのでファイルへ書かずに検証・
+ * fingerprint 算出ができる。キー順・インデント・末尾改行を固定しているため決定論的である。
+ */
+export function serializeDataset(): Map<string, string> {
+  const entries: [string, unknown][] = [
+    ["profile.json", goldenDataset.profile],
+    ["badges.json", goldenDataset.badges],
+    ["careers.json", goldenDataset.careers],
+    ["artifacts.json", goldenDataset.artifacts],
+    ["static-content.json", goldenDataset.staticContent],
+    ["lapras.json", goldenDataset.lapras],
+  ];
+  return new Map(entries.map(([path, value]) => [path, `${JSON.stringify(value, null, 2)}\n`]));
+}
+
+/**
+ * 生成物の決定論的ハッシュ。パス順に正規化し、パスと内容の両方を混ぜる
+ * （内容が同じでもファイル構成が変われば別の値になる）。
+ */
+export function fingerprintOf(files: Map<string, string>): string {
+  const normalized = [...files.entries()]
+    .toSorted(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
+    .map(([path, content]) => `${path}\0${content}`)
+    .join("\0");
+  return fingerprint(normalized);
 }
 
 export function verifyGoldenDataset(): {
@@ -405,7 +429,7 @@ export function verifyGoldenDataset(): {
     throw new Error("職務経歴の件数が現行ソースと一致しません。");
   }
   return {
-    fingerprint: fingerprint(canonicalJson()),
+    fingerprint: fingerprintOf(serializeDataset()),
     counts: {
       profile: goldenDataset.profile.length,
       accountBadges: goldenDataset.badges.account.length,
@@ -420,6 +444,42 @@ export function verifyGoldenDataset(): {
   };
 }
 
+/**
+ * 生成・削除を許された唯一の範囲。設定 `skills.replace-strategy.dataset_static_paths` の `seed/data/` と
+ * 一致していなければならない（この配下以外へ書こうとしたら停止する、という設定由来ゲートの実装）。
+ */
+const dataDirectory = new URL("data/", import.meta.url);
+
+function assertWithinDataDirectory(target: URL): void {
+  // `new URL()` は `..` を解決済みのため、正規化後の href が生成先ディレクトリ配下かだけを見れば足りる
+  // （絶対パス・上位への相対パスはここで配下から外れる）。
+  if (!target.href.startsWith(dataDirectory.href)) {
+    throw new Error(`生成先が dataset_static_paths の外です: ${target.pathname}`);
+  }
+}
+
+/** 削除 → 生成。冪等で、実行前の `seed/data/` の中身に依らず同じ結果になる。 */
+export async function generateDataset(): Promise<{ fingerprint: string; files: string[] }> {
+  const { mkdir, rm, writeFile } = await import("node:fs/promises");
+  if (!dataDirectory.pathname.endsWith("/seed/data/")) {
+    throw new Error(`生成先の解決結果が想定と異なります: ${dataDirectory.pathname}`);
+  }
+  const files = serializeDataset();
+  for (const path of files.keys()) {
+    assertWithinDataDirectory(new URL(path, dataDirectory));
+  }
+
+  await rm(dataDirectory, { recursive: true, force: true });
+  await mkdir(dataDirectory, { recursive: true });
+  for (const [path, content] of files) {
+    await writeFile(new URL(path, dataDirectory), content, "utf8");
+  }
+  return { fingerprint: fingerprintOf(files), files: [...files.keys()].toSorted() };
+}
+
 if (import.meta.main) {
-  process.stdout.write(`${JSON.stringify(verifyGoldenDataset())}\n`);
+  // 検証 → 生成の順に実行する（安定 ID・件数の検証に落ちる論理データを `seed/data/` へ書き出さないため）。
+  const verified = verifyGoldenDataset();
+  const generated = await generateDataset();
+  process.stdout.write(`${JSON.stringify({ ...verified, ...generated })}\n`);
 }

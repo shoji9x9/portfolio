@@ -1,24 +1,30 @@
 # データ設計（design）
 
 - version: 1
+- mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-07-27T10:49:38+09:00
+- 最終更新: 2026-07-28T17:31:24+09:00
 - 現行ソース: `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`
 
 ## 対象リソース
 
-| リソース                | features.md の機能 |                 件数 | 安定 ID と表示順                        |
-| ----------------------- | ------------------ | -------------------: | --------------------------------------- |
-| プロフィール            | profile            |                    4 | `occupation` から `education` の順      |
-| アカウントバッジ        | badges             |                    5 | 現行オブジェクトの定義順                |
-| 言語バッジ              | badges             |                    7 | 現行オブジェクトの定義順                |
-| フレームワーク等バッジ  | badges             |                   14 | 現行オブジェクトの定義順                |
-| 職務経歴                | careers            | 2 社・6 プロジェクト | `freelance`、`toyota` と現行配列順      |
-| 製作物                  | artifacts          |                    3 | `portfolio`、`qiita-search`、`memo-app` |
-| 自己 PR・資格・希望条件 | static-content     |              4・4・1 | ページ内の記述順                        |
-| LAPRAS                  | lapras             |                1 URL | `publicUrl` のみ。プレビュー本文は gap  |
+| リソース                | features.md の機能 |                 件数 | 生成先                | 安定 ID と表示順                        |
+| ----------------------- | ------------------ | -------------------: | --------------------- | --------------------------------------- |
+| プロフィール            | `static-page`      |                    4 | `profile.json`        | `occupation` から `education` の順      |
+| アカウントバッジ        | `static-page`      |                    5 | `badges.json`         | 現行オブジェクトの定義順                |
+| 言語バッジ              | `static-page`      |                    7 | `badges.json`         | 現行オブジェクトの定義順                |
+| フレームワーク等バッジ  | `static-page`      |                   14 | `badges.json`         | 現行オブジェクトの定義順                |
+| 職務経歴                | `static-page`      | 2 社・6 プロジェクト | `careers.json`        | `freelance`、`toyota` と現行配列順      |
+| 製作物                  | `static-page`      |                    3 | `artifacts.json`      | `portfolio`、`qiita-search`、`memo-app` |
+| 自己 PR・資格・希望条件 | `static-page`      |              4・4・1 | `static-content.json` | ページ内の記述順                        |
+| LAPRAS                  | `lapras`           |                1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap  |
 
-DB・テーブル・外部キーは存在しない。`seed/golden-dataset.ts` は外部環境を書き換えず、固定データを出力して件数・ID・32-bit fingerprint を検証する静的データ移送方式である。
+DB・テーブル・外部キーは存在しない。投入先は `dataset_static_paths`（`seed/data/`）で、`seed/golden-dataset.ts` が
+検証 → 削除 → 生成の順に実行する（検証に落ちる論理データを生成先へ書き出さないため）。生成物はキー順・インデント・末尾改行を固定した JSON で、
+`seed/data/` 配下以外へ書こうとするとツールが停止する（設定由来ゲートの実装）。
+生成物は整形の対象外にする（`oxfmt.config.ts` の `ignorePatterns` と `lefthook.yml` の oxfmt ジョブ）。
+整形すると生成ツールの出力と食い違い、再生成のたびに差分が出るため、書式の正本は生成ツールに一本化する。
+生成物が論理データと一致することは `seed/golden-dataset.test.ts` が検証する（再生成し忘れの検出）。
 
 ## 含めたエッジケース
 
@@ -46,3 +52,13 @@ DB・テーブル・外部キーは存在しない。`seed/golden-dataset.ts` �
 ## gaps 由来の追加履歴
 
 現時点ではなし。後続の `parity-suite` でデータ不足が判明した場合、論理データを追加して version を 1 増やす。
+
+## 契約移行の履歴
+
+- 2026-07-28（Issue #21）: `dataset_mode: static` の契約へ移行した。投入ツールがデータを出力するだけの
+  検証ツールだったものを、`seed/data/` 配下へ**生成する**形に変えた（`static` の「投入」は生成であり、
+  生成先が無いままではフェーズ A の再実行が成立しないため）。あわせて `metadata.json` を新しい記録形
+  （`mode` / `current.target: null` / `current.fingerprint`）へ移した。
+  **論理データは 1 件も変えていないため `version` は 1 のまま据え置いた**（件数・安定 ID・表示順はすべて再実行前と一致）。
+  fingerprint は `711a2cc4` から `8fd94077` へ変わっているが、これは算出対象が「メモリ上の JSON 文字列」から
+  「生成物のパスと内容」へ変わったためで、データの変更ではない。

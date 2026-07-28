@@ -30,6 +30,12 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # 既定（ref 省略）は refs/pull/<n>/merge、つまり PR を main へ試験マージした一時コミットを
+          # checkout する。それを配信すると preview の中身が「ブランチのコード」ではなく「マージ結果」に
+          # なり、--branch に渡すブランチ名とラベルが食い違う。またその一時コミットは通常の clone に
+          # 存在しないため、parity 系の検証で「配信中のコミット = 手元の HEAD」を照合できない
+          # （scripts/preview-url.mjs）。ブランチ先頭を明示して配信対象を手元のコードに一致させる。
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up mise tools
         uses: jdx/mise-action@dad1bfd3df957f44999b559dd69dc1671cb4e9ea # v4.2.1
         with:

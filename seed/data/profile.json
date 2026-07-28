@@ -1,0 +1,22 @@
+[
+  {
+    "id": "occupation",
+    "label": "職業",
+    "value": "フリーランスのソフトウェアエンジニア (2022年～)"
+  },
+  {
+    "id": "residence",
+    "label": "居住地",
+    "value": "愛知県"
+  },
+  {
+    "id": "birth-year",
+    "label": "生まれ",
+    "value": "1982年"
+  },
+  {
+    "id": "education",
+    "label": "最終学歴",
+    "value": "大阪大学 基礎工学部 情報科学科 卒業"
+  }
+]
