@@ -1,0 +1,54 @@
+{
+  "slug": "static-page",
+  "mode": "feature",
+  "run": {
+    "started_at": "2026-07-28T20:20:00+09:00",
+    "finished_at": "2026-07-28T22:07:00+09:00",
+    "agent": "Claude Code",
+    "model": "Opus 5 (1M context)",
+    "effort": "標準",
+    "skill_version": "parity-replace v1.26.1"
+  },
+  "dataset_version": 2,
+  "new": {
+    "target": "local-dev",
+    "ui_url": "http://localhost:5173",
+    "api_url": "http://localhost:5173",
+    "commit": "f0814de0b3da09e5042dd980ae69298acdf95b72",
+    "dirty": true
+  },
+  "suite": {
+    "locator_map_new": "e2e/parity/lib/locator-map/static-page.new.ts",
+    "new_green": true,
+    "new_green_at": "2026-07-28T22:02:00+09:00",
+    "new_test_count": 42,
+    "run_command": "PARITY_NEW_UI_URL=http://localhost:5173 pnpm exec playwright test --project=new",
+    "note": "現側専用スペック（baseline.spec.ts / strength.spec.ts）は playwright.config.ts の new プロジェクトで testIgnore している。新側の採取と現新比較は parity-diff が new/<target>/ に対して行う。"
+  },
+  "verification": {
+    "commands": ["pnpm typecheck", "pnpm lint"],
+    "passed_at": "2026-07-28T22:05:00+09:00",
+    "additional": [
+      "pnpm test（20 件・カバレッジ 89.36% ≥ 80%）",
+      "pnpm lint:md",
+      "pnpm knip",
+      "pnpm jscpd",
+      "pnpm format:check",
+      "現側スイート 58 件 green（assertion を変えたため強度ゲートも再実行）"
+    ]
+  },
+  "review": {
+    "adversarial_review": ".replace/parity/static-page/review.md",
+    "rounds": 1,
+    "findings": 12,
+    "resolved": 6,
+    "recorded": 6
+  },
+  "loop": {
+    "iterations": 0,
+    "max_iterations": 5,
+    "last_diff_report": "none",
+    "on_diff_doc": "none",
+    "changed_scope": null
+  }
+}
