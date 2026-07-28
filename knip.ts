@@ -5,9 +5,34 @@
 import type { KnipConfig } from "knip";
 
 export default {
-  entry: ["src/main.tsx!"],
-  project: ["src/**/*.{ts,tsx}"],
-  ignore: ["**/*.d.ts"],
+  // パリティスイート（Playwright）は src とは別のエントリー系統。スペックと設定を入口にして、
+  // ロケータマッピング・判定・採取ツールのデッドコードを検出できるようにする。
+  // 決定論的ツール（`e2e/parity/lib/tools/*.mjs`）は CLI としても実行するためエントリーに含める
+  // （VERSION / main は CLI と metadata.json の記録に使う契約で、静的な参照は現れない）。
+  // CLI スクリプトとゴールデンデータセット生成ツールもエントリーに含める。
+  // いずれも import されず、package.json の scripts・ワークフロー・スキル設定
+  // （`.config/skills/shoji9x9/skills.yml` の `url_command`）から起動される。
+  entry: [
+    "src/main.tsx!",
+    "playwright.config.ts",
+    "e2e/**/*.spec.ts",
+    "e2e/parity/lib/tools/*.mjs",
+    "scripts/**/*.{ts,mjs}",
+    "seed/golden-dataset.ts",
+  ],
+  project: [
+    "src/**/*.{ts,tsx}",
+    "e2e/**/*.{ts,mjs}",
+    "playwright.config.ts",
+    "scripts/**/*.{ts,mjs}",
+    "seed/**/*.ts",
+  ],
+  ignore: [
+    "**/*.d.ts",
+    // parity-suite が配布する決定論的ツールのコピー（正本はスキル側。修正しない規約）。
+    // CLI としても使えるよう未使用の export（VERSION・main など）を持つため対象外にする。
+    "e2e/parity/lib/tools/vendor/**",
+  ],
   // mise / vite+ 由来の外部バイナリ（pnpm 依存ではない）は未登録として扱わない。
   ignoreBinaries: [
     "vp",

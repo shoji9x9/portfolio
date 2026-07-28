@@ -12,24 +12,25 @@
 
 ## ツール × ステージ × 対象ファイル
 
-| ツール                        | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                   |
-| ----------------------------- | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | ------------------------------------------------------------------------------ |
-| oxfmt                         | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外） |
-| oxlint（type-aware）          | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                           |
-| markdownlint-cli2             | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                        |
-| shfmt                         | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                  |
-| shellcheck                    | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                  |
-| gitleaks                      | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                              |
-| knip                          | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | プロジェクト全体（entry `src/main.tsx`）                                       |
-| jscpd                         | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` ほか                                                                     |
-| commitlint                    | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                             |
-| tsc                           | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src`・各 config）                                              |
-| vitest                        | テスト                           | –                        | ✓ 全体   | ✓                                          | `*.{test,spec}.*`                                                              |
-| react-doctor (`react:doctor`) | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                          |
-| actionlint / ghalint / pinact | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                         |
-| pnpm audit signatures         | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                       |
-| check-licenses.ts             | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                    |
-| Dependency Review             | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                      |
+| ツール                         | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                           |
+| ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | -------------------------------------------------------------------------------------- |
+| oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）         |
+| oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                   |
+| markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                |
+| shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                          |
+| shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                          |
+| gitleaks                       | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                                      |
+| knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言） |
+| jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                             |
+| commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                     |
+| tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）  |
+| vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `seed/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                     |
+| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/**/*.spec.ts`                                                                     |
+| react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                  |
+| actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                 |
+| pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                               |
+| check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                            |
+| Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                              |
 
 ## CI ジョブ構成
 
@@ -40,6 +41,53 @@
 - `outdated.yml`: 週次で `mise outdated` を検出し Issue で通知。
 - `dependency-review.yml`: 依存マニフェスト変更 PR の既知脆弱性・拒否ライセンスを検査する。拒否ライセンスは `.github/license-policy.json` を正本としてローカル検査と共有する。
 - `dependabot-automerge.yml`: 対象の Dependabot PR が CI と Dependency Review を通過した場合だけ merge commit で自動マージする。
+
+## パリティスイート（Playwright）の実行
+
+移行の等価性検証（`parity-suite` / `parity-replace` / `parity-diff`）で使う。URL は設定
+（`.config/skills/shoji9x9/skills.yml` の `targets`）から解決して環境変数で渡す。設定ファイルに
+URL を直書きしない。
+
+```bash
+# 現行（current-prod）に対して全件実行
+PARITY_CURRENT_UI_URL=https://shoji9x9.github.io/ pnpm exec playwright test --project=current
+
+# ベースライン採取とノイズ基準値の測定（.replace/parity/<slug>/baseline/ を作り直す）
+PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/parity/static-page/baseline.spec.ts
+```
+
+ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
+CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
+
+## 新しいファイル種別を追加するときの確認
+
+リポジトリーへ新しい種類のファイル・ディレクトリ（生成物・採取物・CLI・スクリプト・E2E など）を
+足したら、品質チェック各ツールの対象範囲を**両方向**で確認してから追加を完了する。ズレは 2 方向で
+起きる——「対象にすべきなのに外れている」（テスト・デッドコード検出・型検査）と、「対象にすべきで
+ないのに入っている」（生成物の整形）。
+
+- **生成物・採取物は整形・lint の対象外にする**。整形すると生成ツールの出力と食い違い、再生成の
+  たびに差分が出る。書式の正本は生成ツールに一本化し、代わりに「再生成しても差分ゼロ」を
+  決定論的に検証するテストを置く（例: `seed/data/` と `seed/golden-dataset.test.ts`）。
+- **vendored（外部スキル配布物のコピー）は整形・lint・knip の対象外にする**。このリポジトリーで
+  修正しない規約のため（例: `e2e/parity/lib/tools/vendor/`）。
+- **整形の対象に入れたら、整形後の差分まで確認して完了とする**。自分が書いた形のまま残る前提で
+  判断しない。とくに oxfmt の `sortImports` は**コメントを直後の import 文に付随させて一緒に
+  並び替える**ため、ファイル冒頭のモジュール説明コメントは「並び替え後に先頭へ来る import」
+  （型 import があればその先頭）の直前へ置く。値 import の直前に書くと、その import が型グループの
+  後ろへ移る際にコメントも運ばれ、ファイル先頭が `import` 行になる。
+
+現状の分類:
+
+| 種別                    | 例                             | oxfmt / oxlint | tsc | vitest                    | knip            | jscpd          |
+| ----------------------- | ------------------------------ | -------------- | --- | ------------------------- | --------------- | -------------- |
+| アプリコード            | `src/`                         | ✓              | ✓   | ✓                         | ✓               | ✓              |
+| E2E（パリティスイート） | `e2e/`                         | ✓              | ✓   | –                         | ✓               | ✓（spec 除く） |
+| CLI スクリプト          | `scripts/`                     | ✓              | ✓   | –                         | ✓（entry 宣言） | –              |
+| 生成ツール              | `seed/*.ts`                    | ✓              | ✓   | ✓                         | ✓（entry 宣言） | –              |
+| 生成物                  | `seed/data/`                   | –              | –   | –（生成一致テストで担保） | –               | –              |
+| 採取物                  | `.replace/parity/`             | –              | –   | –                         | –               | –              |
+| vendored ツール         | `e2e/parity/lib/tools/vendor/` | –              | ✓   | –                         | –               | –              |
 
 ## 備考
 

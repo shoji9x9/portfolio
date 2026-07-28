@@ -18,6 +18,12 @@ export default {
       // ゴールデンデータセットの生成物。整形すると `seed/golden-dataset.ts` の決定論的な出力と
       // 食い違い、再生成のたびに差分が出るため対象外にする（正本は生成ツール）。
       "seed/data",
+      // パリティスイートの採取物（特性 JSON・ノイズ基準値・強度ゲート結果）。同じ理由で対象外にする
+      // （正本は採取ツール。整形すると再採取のたびに差分が出る）。`.replace/` の手書きドキュメントは対象。
+      ".replace/parity",
+      // parity-suite が配布する決定論的ツールのコピー（正本はスキル側）。
+      // 外部スキルの成果物はこのリポジトリーで修正しない規約のため、整形の対象外にする。
+      "e2e/parity/lib/tools/vendor",
     ],
     // import 文のグルーピング + 並び替え（ESLint 不要。oxfmt が
     // eslint-plugin-perfectionist/sort-imports 相当のアルゴリズムで整列する）。

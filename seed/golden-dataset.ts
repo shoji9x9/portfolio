@@ -466,7 +466,7 @@ function assertWithinDataDirectory(target: URL): void {
 }
 
 /** 削除 → 生成。冪等で、実行前の `seed/data/` の中身に依らず同じ結果になる。 */
-export async function generateDataset(): Promise<{ fingerprint: string; files: string[] }> {
+async function generateDataset(): Promise<{ fingerprint: string; files: string[] }> {
   const { mkdir, rm, writeFile } = await import("node:fs/promises");
   if (!dataDirectory.pathname.endsWith("/seed/data/")) {
     throw new Error(`生成先の解決結果が想定と異なります: ${dataDirectory.pathname}`);
