@@ -56,10 +56,17 @@ export default {
     // oxlint-tailwindcss は oxlint.config.ts の `jsPlugins` に「文字列参照」で
     // 使用中（静的 import されないため deslop が未使用と誤検知）。実使用であり誤検知。
     // 未使用依存の検知は per-dependency ignore を持つ knip に委譲済み
-    // （knip.ts の `ignoreDependencies: [..., "oxlint-tailwindcss"]`）。react-doctor の
-    // unused-dev-dependency は per-dependency 抑制手段が無く粒度不足かつ knip と重複する
-    // ため無効化する（prod 側 deslop/unused-dependency は有効のまま）。
+    // （knip.ts の `ignoreDependencies`）。react-doctor の未使用依存ルールは
+    // per-dependency 抑制手段が無く（`ignore.overrides` はファイル glob 単位で、
+    // 依存の検出は package.json に紐づくため実質ルール全体の無効化になる）粒度不足かつ
+    // knip と重複するため、dev / prod とも無効化する。
     "deslop/unused-dev-dependency": "off",
+
+    // prod 側も同じ理由で無効化する。inter-ui は `src/index.css` の `@font-face` から
+    // `url("inter-ui/...woff2")` で参照しており、JS/TS の import 解析だけを見る deslop は
+    // 未使用と誤検知する。実使用は `pnpm build` の出力
+    // （`dist/assets/Inter-roman.var-*.woff2`）とパリティスイートのフォント幅検査が担保する。
+    "deslop/unused-dependency": "off",
 
     // require-pnpm-hardening は pnpm-workspace.yaml に `trustPolicy: no-downgrade` を
     // 追加するよう促す妥当なハードニング提案だが、現状これを追加すると pnpm 自身の
