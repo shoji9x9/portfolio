@@ -1,18 +1,11 @@
 import { createRootRoute, createRoute, createRouter, Outlet } from "@tanstack/react-router";
 
 import App from "@/App";
-import { AppShell } from "@/components/layout/AppShell";
 
-function RootLayout() {
-  return (
-    <AppShell>
-      <Outlet />
-    </AppShell>
-  );
-}
-
+// 現行 `/` は <main> だけの単一ページで、ヘッダー・ナビゲーション・フッターを持たない。
+// 共通レイアウトを挟まないのは現行の構成に合わせた意図的な判断（Issue #22 で決定）。
 const rootRoute = createRootRoute({
-  component: RootLayout,
+  component: Outlet,
 });
 
 const indexRoute = createRoute({

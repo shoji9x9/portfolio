@@ -1,69 +1,123 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * 本文フォント（Inter）。
+ *
+ * **現行アプリと同じビルドを使う。** 現行は Next.js の next/font が Google Fonts から取得した
+ * Inter 3.019 を焼き込んでおり、そのファイルは TrueType のヒンティング命令（`prep` テーブル）を
+ * 持たない。ヒンティングの有無は 16px 程度の小サイズで送り幅の整数丸めを変えるため、同じ
+ * Inter 3.019 でもヒンティング有りのビルドを使うと本文の幅が変わる（実測で 26 文字あたり 215px と
+ * 224px）。`inter-ui`（サードパーティー配布。rsms 本人の npm パッケージは存在しない）は
+ * rsms のリリース由来のビルド（ヒンティング無し）を同梱しており、**送り幅は 18 サンプルすべてで
+ * 現行と一致する**。Google Fonts 由来の配布（fontsource）はヒンティング有りなので、どのバージョンに
+ * 固定しても一致しない。
+ *
+ * ただし現行と同一のファイルではない。現行は Google Fonts 由来のサブセット（`gasp` テーブルあり）、
+ * こちらは rsms のリリース由来（`gasp` なし）で、**weight 600 のラスタライズだけ数画素違う**
+ * （16px:2px / 18px:2px / 20px:6px。weight 400 は 0px）。ページ全体では 2000 万画素中 17px。
+ *
+ * バージョンを 3.19.3 に固定しているのは現行と同じ版だから。上げると Inter 4.x になり字形が変わる
+ * （移行が済み、現行との比較が不要になった時点で更新を検討する）。ライセンスは OFL で、
+ * パッケージに LICENSE.txt が含まれる。
+ */
+@font-face {
+  font-family: "Inter var";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("inter-ui/Inter (web latin)/Inter-roman.var.woff2") format("woff2");
+}
 
+/*
+ * 現行のフォールバック定義をそのまま再現する（next/font が CLS を抑えるために生成しているもの）。
+ * `local("Arial")` にメトリクスの上書きを掛けたフェイスで、Inter の読み込み前に使われる。
+ */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+  size-adjust: 107.4%;
+}
+
+/*
+ * design token は現行アプリ（shoji9x9.github.io）の実測値へ寄せている。
+ * 見た目の系統差を差分器側の宣言だけで説明するのではなく、源流で縮めるため。
+ *
+ * 現行は Tailwind CSS v3、新側は v4 でパレットの既定値が異なる。現行が使っていた
+ * v3 のパレット値（blue-500 / blue-700 / gray-500 / gray-300）をトークンとして固定し、
+ * コンポーネント側は素のパレットユーティリティではなくこのトークンを使う。
+ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  --color-link: var(--link);
+  --color-link-hover: var(--link-hover);
+  --color-rule: var(--rule);
+  --color-card-border: var(--card-border);
+  --font-sans: var(--font-inter);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  /* 現行 globals.css の --background-start-rgb / --foreground-rgb と同値 */
+  --background: rgb(241 238 231);
+  --foreground: rgb(0 0 0);
+  /* 現行が使っていた Tailwind v3 のパレット値 */
+  --link: #3b82f6; /* blue-500 */
+  --link-hover: #1d4ed8; /* blue-700 */
+  --rule: #6b7280; /* gray-500: プロフィール表の罫線 */
+  --card-border: #d1d5db; /* gray-300: カードの枠線 */
+  /*
+   * **総称ファミリー（sans-serif / system-ui 等）を意図的に付けない。** 現行のフォントスタックは
+   * `Inter, Inter Fallback` の 2 つだけで、どちらも日本語グリフを持たない。そのため日本語は
+   * ブラウザーの既定フォントへ落ちる。ここに `system-ui` を混ぜると、Windows では Yu Gothic UI
+   * （日本語グリフを持つ）で止まってしまい、現行と別のフォントで日本語が描画される
+   * （実測: プロフィールの値セルが 383px と 305px）。Linux では既定フォントが同じに解決されるため
+   * 差が出ず、環境をまたいで初めて表面化する。
+   */
+  --font-inter: "Inter var", "Inter Fallback";
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+/*
+ * 現行の唯一のメディアクエリ（prefers-color-scheme: dark）に追従する。
+ * OS の配色設定で本文色と背景が反転する振る舞いは現行の仕様なので保つ。
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: rgb(0 0 0);
+    --foreground: rgb(255 255 255);
+  }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  /*
+   * 境界色の既定を Tailwind CSS v3 に合わせる。
+   *
+   * v3 の preflight は全要素へ `border-color: #e5e7eb`（gray-200）を敷くが、v4 は
+   * `currentColor` に変わった。現行は v3 なので、色指定のない `border` は現行が灰色、新側は
+   * その要素の文字色（本文なら黒、リンクなら青）になる。いまは border-width 0 の要素ばかりで
+   * 描画に出ないが、computed style は全 124 要素で食い違っており（parity-diff で検出）、
+   * 今後 `border` を色指定なしで使うと実際の見た目の差になる。
+   * 差分器側で宣言して吸収するのではなく源流で揃える。
+   */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #e5e7eb;
   }
 
   body {
-    @apply bg-background text-foreground;
+    /*
+     * 現行 globals.css の body 宣言をそのまま再現する。
+     *   background: linear-gradient(to bottom, transparent, <end>) <start>
+     * start と end が同色のためグラデーションは視覚的に現れないが、
+     * 画素比較の条件を揃えるため宣言ごと合わせる。
+     */
+    background: linear-gradient(to bottom, transparent, var(--background)) var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
   }
 }

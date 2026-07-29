@@ -67,6 +67,11 @@ skills:
     dataset_mode: static
     dataset_static_paths: # 投入ツールが生成・削除してよい範囲。この配下以外へ書いたら停止する
       - seed/data/ # フェーズ A: 現行ソースから起こした正本データの生成先
+      - src/data/ # フェーズ B: 新側の静的データ形式へ写像した生成先（スキーマは src/data/types.ts）
+    references: # スキル群が読むプロジェクト知識の配置
+      # static モードにおける「静的データ形式の対応と意味論差」。golden-dataset のフェーズ B が
+      # 写像設計と現新一致検証で読む（db モードの DB 意味論に相当するもの）。
+      db_semantics: .replace/references/static-data-semantics.md
     verification_commands: # 完了前に実行する検証コマンド列（parity-replace が読む）
       - pnpm typecheck
       - pnpm lint
@@ -81,15 +86,151 @@ skills:
         - プロフィール、バッジ、職務経歴、製作物、静的テキストの内容
         - 既存の外部リンク先
         - 読み取り専用の公開サイトとしての振る舞い
+        # 2026-07-29 決定。現行 / はヘッダー・ナビ・フッターを持たない単一ページで、新側もそれに合わせる。
+        # Issue #4 で作った AppShell は / へ適用せず、コードごと削除した（git 履歴から復元可能）。
+        - ヘッダー・ナビゲーション・フッターを持たない単一ページ構成
+        # 2026-07-29 決定。本文フォントは現行と同じ Inter 3.019・ヒンティング無しのビルドを使う
+        # （npm パッケージ inter-ui@3.19.3）。実測で送り幅が現行と全サンプル一致する。
+        # 経緯と原因調査は .replace/parity/static-page/gaps.md「フォント差の原因調査」を参照。
+        - >-
+          本文フォントの字形・送り幅:
+          現行と同じ Inter 3.019・ヒンティング命令なしのビルドを使い、送り幅を一致させる
+          （サブセットのビルドは別で、weight 600 のラスタライズのみ数画素違う。下記 pending）
       may_change:
         # UI コンポーネントは変更予定。ライブラリ変更に伴うコンポーネントレベルの機能・見た目の差異は許容する。
         - UI コンポーネントの実装・見た目（shadcn/ui 等への移行に伴う差異）
         - HTML の id/name とコンポーネント内部構造
+        # 以下 3 件は static-page の parity-replace（2026-07-28）で新側に入れ、2026-07-29 に許容と決定した。
+        - >-
+          セクション・カードのランドマーク化（新側のみ）:
+          現行は role を持たない div。新側は section + aria-labelledby（role=region）、
+          プロジェクト／製作物カードは article + aria-labelledby（role=article）。
+          支援技術でセクション・カード単位に移動できるようになる
+        - >-
+          外部リンクへの rel="noreferrer" 付与（新側のみ）:
+          現行は target="_blank" のみ。表示・リンク先は変わらず、リンク先が参照元を受け取らなくなる
+        - >-
+          技術スタックのデータ不整合時の失敗の仕方（新側のみ）:
+          現行は未知のバッジキーで壊れた画像を 1 個出す。新側は該当バッジだけを落として
+          console.warn を出す（ページ全体は表示され続ける）
+        # GitHub の綴りの是正（2026-07-28 決定）。現行は Github / GithubActions / logo=Github だが、
+        # 新側は公式表記へ揃える。ゴールデンデータセットは現行の実値を保持したままにし
+        # （フェーズ A は現行を忠実に再現する契約のため）、新側の期待値はパリティスイートの
+        # 意図的差異層 `e2e/parity/lib/intentional-diffs.ts` が side ごとに解決する。
+        - >-
+          GitHub の綴りの是正（新側のみ）:
+          バッジ表示名 Github → GitHub /
+          バッジ表示名 GithubActions → GitHub Actions（語の区切りも公式表記へ）/
+          アカウントバッジ画像 URL のクエリ logo=Github → logo=GitHub
+        # PR #25 の Copilot レビュー指摘を採用して追加（2026-07-29 にユーザー承認）。
+        # 差分器では検出されない（computed style にも aria スナップショットにも現れず、
+        # role は両側とも columnheader）。上の 2 件と同じ「新側のみの安全側・アクセシビリティ改善」。
+        - >-
+          プロフィール表の th への scope="col" 付与（新側のみ）:
+          現行は scope を持たない。列見出しであることを明示する（WCAG H63）。
+          表示・role は変わらない
       pending:
         - LAPRAS プレビューをビルド時に取得するか、Cloudflare Worker 実行時に取得するか
         - LAPRAS プレビュー取得失敗時の表示とキャッシュ方針
-    component_diffs: [] # コンポーネント系統差レジストリ（parity-replace が宣言）
-    component_diff_exceptions: [] # インスタンス単位の例外（parity-diff が宣言）
+    component_diffs: # コンポーネント系統差レジストリ（parity-replace が宣言）
+      # 2026-07-29、static-page の parity-diff 反復 1 で検出した系統差。
+      # いずれも実体は同じだが値の表現が変わるもので、クラス/トークン単位で 1 回宣言すれば
+      # 全インスタンスに効く。parity-diff はこの宣言からの逸脱だけを回帰候補として浮かせる。
+      - component: 本文フォント（全要素）
+        property: font-family
+        current: "__Inter_e66fe9, __Inter_Fallback_e66fe9"
+        new: '"Inter var", "Inter Fallback"'
+        reason: >-
+          現行は next/font がフォント名をハッシュ付きで生成する。新側は自分で @font-face を書くため
+          名前が変わる。指すフォントは同じ Inter 3.019 でどちらもヒンティング命令（prep）を持たず、
+          送り幅は 18 サンプルすべてで実測一致する。ただしサブセットのビルドは別で
+          （現行は gasp テーブルを持ち inter-ui は持たない）、weight 600 のラスタライズだけ
+          数画素違う（この画素差はここでは吸収されない。下記 pending を参照）
+    component_diff_exceptions: # インスタンス単位の例外（parity-diff が宣言）
+      # 2026-07-29 ユーザー承認済み。本文フォントのサブセットビルド差による weight 600 の
+      # ラスタライズ差。同じ Inter 3.019 でどちらもヒンティング命令を持たず送り幅も一致するが、
+      # 現行は Google Fonts 由来（gasp テーブルあり）、新側は rsms のリリース由来（gasp なし）で、
+      # weight 600 のときだけグリッドフィッティングが変わる（実測 16px:2px / 18px:2px / 20px:6px、
+      # weight 400 は全サイズ 0px）。グリフの位置・並びは 1/16px まで一致し、輪郭の濃度だけが違う。
+      # 消すには現行の woff2 を vendoring するしかなく pnpm 管理外になるため採らない。
+      # property: pixel は画素経路のみで拾った差であることを表す（component_diffs では照合できない）。
+      - slug: static-page
+        page: /
+        element: careers.project.toyota-outsystems.heading
+        state: default
+        viewport: desktop
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 6px（20px / weight 600 の見出し 2 箇所 × 3px）。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: careers.project.toyota-outsystems.heading
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 6px（同上）。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: self-promotion.item.3
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: careers.project.freelance-sales
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: careers.project.toyota-outsystems
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: qualifications.group.2.item.1
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
+      - slug: static-page
+        page: /
+        element: qualifications.group.3.item.1
+        state: default
+        viewport: mobile
+        property: pixel
+        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
+        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
+        reason: >-
+          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
+          crop 対で目視確認済み（差分画像は採取物として残していない）
 
   # dependabot-alert-issue:
   #   リポジトリ固有の alert 特別処理（dismiss ルール等）が必要になったらここに記述する。

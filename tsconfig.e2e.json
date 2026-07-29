@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.e2e.tsbuildinfo",
+    // page.evaluate 内のコードはブラウザーで動くため DOM 型が要る。
+    // Node 型はスペックが直接使う（node:fs/promises 等）。
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    // 決定論的ツール（`e2e/parity/lib/tools/*.mjs`）は JSDoc 型の素の JS。
+    // checkJs は無効なので型検査はせず、JSDoc からの型推論だけを利用する。
+    "allowJs": true
+  },
+  "include": ["e2e", "playwright.config.ts"]
+}

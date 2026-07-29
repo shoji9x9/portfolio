@@ -1,0 +1,244 @@
+- main:
+  - heading "プロフィールDotHiyoko" [level=2]:
+    - text: プロフィール
+    - img "DotHiyoko"
+  - table:
+    - rowgroup:
+      - row "キー バリュー":
+        - columnheader "キー"
+        - columnheader "バリュー"
+    - rowgroup:
+      - row "職業 フリーランスのソフトウェアエンジニア (2022年～)":
+        - cell "職業"
+        - cell "フリーランスのソフトウェアエンジニア (2022年～)"
+      - row "居住地 愛知県":
+        - cell "居住地"
+        - cell "愛知県"
+      - row "生まれ 1982年":
+        - cell "生まれ"
+        - cell "1982年"
+      - row "最終学歴 大阪大学 基礎工学部 情報科学科 卒業":
+        - cell "最終学歴"
+        - cell "大阪大学 基礎工学部 情報科学科 卒業"
+  - heading "アカウント" [level=2]
+  - link "Github":
+    - /url: https://github.com/shoji9x9
+    - img "Github"
+  - link "Twitter":
+    - /url: https://twitter.com/shoji9x9
+    - img "Twitter"
+  - link "Qiita":
+    - /url: https://qiita.com/shoji9x9
+    - img "Qiita"
+  - link "Zenn":
+    - /url: https://zenn.dev/shoji9x9
+    - img "Zenn"
+  - link "AtCoder":
+    - /url: https://atcoder.jp/users/shoji9x9
+    - img "AtCoder"
+  - heading "自己PR" [level=2]
+  - list:
+    - listitem: 数百万円～十億円以上の大小50以上のプロジェクトを立ち上げてきた経験を持ち、問題点の把握、原因の分析、ROIの高い対策の立案が得意です
+    - listitem: また、これらのプロジェクトの上流～下流の各局面の成果物のレビューを行い、時には自身で成果物を作成してきました (Java、COBOLがメイン)
+    - listitem: 日頃より現状に課題意識を持ちOutSystemsやアジャイル (Scrum、SAFe) の情報を集めプロジェクトに導入してきた行動力も特徴の一つと考えます
+    - listitem: 今後はこれまで培ってきた経験を活かしながらも、製品やサービスの開発を行っていきたいと考えており、特にフロントエンド開発 (Reactやコンポーネント駆動開発) への関心が高いです
+  - heading "保有スキル" [level=2]
+  - heading "言語" [level=3]
+  - img "JavaScript"
+  - img "Python"
+  - img "TypeScript"
+  - img "CSharp"
+  - img "PHP"
+  - img "Java"
+  - img "COBOL"
+  - heading "フレームワーク・ミドルウェア等" [level=3]
+  - img "OutSystems"
+  - img "TensorFlow"
+  - img "React"
+  - img "Recoil"
+  - img "NextJS"
+  - img "TailwindCSS"
+  - img "Storybook"
+  - img "Drupal"
+  - img "Firebase"
+  - img "Oracle"
+  - img "DB2"
+  - img "Azure"
+  - img "Vercel"
+  - img "GithubActions"
+  - heading "職務経歴詳細" [level=2]
+  - heading "フリーランス (2022年1月～現在)" [level=3]
+  - heading "自動車会社基幹システム（商品販売システム）の再構築" [level=4]
+  - heading "期間" [level=5]
+  - text: 2023年1月～2023年9月
+  - heading "ロールとタスク" [level=5]
+  - text: アーキテクトチームのメンバーとして以下を担当。
+  - list:
+    - listitem: フロントエンドのアーキテクチャー検討と検証 (Drupal、React)
+    - listitem: 検証計画書、検証結果報告書の作成と顧客への報告
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 10名 プロジェクト全体: 50名"
+  - heading "技術スタック" [level=5]
+  - img "TypeScript"
+  - img "PHP"
+  - img "React"
+  - img "Drupal"
+  - img "Azure"
+  - text: 上記以外にプロジェクトで採用しているDDD、CQRS、マイクロサービス等の技術も学んだ。
+  - heading "自動車会社基幹システム（工事管理システム）の再構築" [level=4]
+  - heading "期間" [level=5]
+  - text: 2022年1月～2023年3月
+  - heading "ロールとタスク" [level=5]
+  - text: アーキテクトチームのリーダーとして以下を担当。
+  - list:
+    - listitem: システム/ソフトウェアアーキテクチャー設計
+    - listitem: 開発標準策定
+    - listitem: 開発者の技術支援、レビュー
+    - listitem: アプリケーション全体のテーブル設計 (ER図作成など)
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 3名 プロジェクト全体: 30名"
+  - heading "技術スタック" [level=5]
+  - img "JavaScript"
+  - img "CSharp"
+  - img "OutSystems"
+  - img "Oracle"
+  - heading "トヨタ自動車株式会社 (2005年4月～2021年6月)" [level=3]
+  - heading "中国ライドシェア会社向け車両管理システムの新規開発" [level=4]
+  - heading "期間" [level=5]
+  - text: 2020年1月～2021年6月
+  - heading "ロールとタスク" [level=5]
+  - text: プロダクトオーナーとして以下を担当。
+  - list:
+    - listitem: 事業計画立案
+    - listitem: 要件定義、受入テスト
+    - listitem: 顧客との折衝
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 20名 プロジェクト全体: 20名"
+  - heading "技術スタック" [level=5]
+  - text: プロジェクトとしてはJava、Hadoop、Kafka等を利用していた。
+  - heading "自社基幹システム（試作車生産管理、部品調達、生産システム）の再構築" [level=4]
+  - heading "期間" [level=5]
+  - text: 2017年4月～2019年12月
+  - heading "ロールとタスク" [level=5]
+  - text: 2017年4月～2018年12月はプロジェクトマネージャーとして以下を担当。
+  - list:
+    - listitem: 企画 (SAFeを導入)
+    - listitem: 構想検討、要件定義のマネジメント (方針検討、成果物のレビュー、プロジェクト運営)
+  - text: 2019年1月～2019年12月はアーキテクトチームのリーダーとして以下を担当。
+  - list:
+    - listitem: システム/ソフトウェアアーキテクチャー設計
+    - listitem: 開発標準策定
+    - listitem: 開発者の技術支援、レビュー
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 5名 プロジェクト全体: 30名"
+  - heading "技術スタック" [level=5]
+  - img "JavaScript"
+  - img "CSharp"
+  - img "OutSystems"
+  - img "Oracle"
+  - heading "OutSystemsを利用したアプリケーション開発のトライアル、展開" [level=4]
+  - heading "期間" [level=5]
+  - text: 2014年1月～2018年12月
+  - heading "ロールとタスク" [level=5]
+  - text: プロジェクトマネージャーとして以下を担当。
+  - list:
+    - listitem: 段階的なトライアルと評価の企画
+    - listitem: 他部署への展開とサポートの企画、実行時のマネジメント
+    - listitem: 開発元 (OutSystems社) との製品改善交渉、要件定義
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 10名 プロジェクト全体: 10名"
+  - heading "技術スタック" [level=5]
+  - img "JavaScript"
+  - img "OutSystems"
+  - text: OutSystems用データグリッドを作るため、ag-GridやWijmoも利用した。
+  - heading "自社基幹システム（試作車生産管理、部品調達、生産システム）の改善、保守運用" [level=4]
+  - heading "期間" [level=5]
+  - text: 2007年1月～2017年12月
+  - heading "ロールとタスク" [level=5]
+  - text: プロジェクトマネージャーとして以下を担当。
+  - list:
+    - listitem: 企画、構想検討、要件定義
+    - listitem: 各局面におけるにおけるマネジメント (成果物のレビュー、プロジェクト運営、トラブル時の陣頭指揮)
+  - heading "メンバー数" [level=5]
+  - text: "チーム: 15名 プロジェクト全体: 15名"
+  - heading "技術スタック" [level=5]
+  - img "Java"
+  - img "COBOL"
+  - img "DB2"
+  - heading "資格" [level=2]
+  - list:
+    - listitem:
+      - text: 情報処理推進機構 (IPA)
+      - list:
+        - listitem: 基本情報技術者
+        - listitem: 応用情報技術者
+        - listitem: システムアーキテクト
+        - listitem: プロジェクトマネージャ
+    - listitem:
+      - text: 日本ディープラーニング協会 (JDLA)
+      - list:
+        - listitem: G検定
+        - listitem: E資格
+    - listitem:
+      - text: AWS
+      - list:
+        - listitem: AWS Certified Cloud Practitioner
+    - listitem:
+      - text: その他
+      - list:
+        - listitem: 英語検定2級
+        - listitem: 日商簿記検定2級
+  - heading "製作物" [level=2]
+  - heading "ポートフォリオ（このページ）" [level=4]
+  - heading "URL" [level=5]
+  - link "https://shoji9x9.github.io/":
+    - /url: https://shoji9x9.github.io/
+  - heading "リポジトリー" [level=5]
+  - link "https://github.com/shoji9x9/shoji9x9.github.io":
+    - /url: https://github.com/shoji9x9/shoji9x9.github.io
+  - heading "技術スタック" [level=5]
+  - img "React"
+  - img "TypeScript"
+  - img "NextJS"
+  - img "TailwindCSS"
+  - img "GithubActions"
+  - heading "記事" [level=5]
+  - link "GitHub PagesにNext.jsでポートフォリオ作ってみた":
+    - /url: https://zenn.dev/shoji9x9/articles/90897d3f772e8a
+  - heading "Qiita記事検索" [level=4]
+  - heading "URL" [level=5]
+  - link "https://search-components-mui.vercel.app/":
+    - /url: https://search-components-mui.vercel.app/
+  - heading "リポジトリー" [level=5]
+  - link "https://github.com/shoji9x9/search_components_mui":
+    - /url: https://github.com/shoji9x9/search_components_mui
+  - heading "技術スタック" [level=5]
+  - img "React"
+  - img "TypeScript"
+  - img "Storybook"
+  - img "Vercel"
+  - heading "記事" [level=5]
+  - link "React、TypeScriptでQiita記事検索機能作ってみた":
+    - /url: https://zenn.dev/shoji9x9/articles/cdc688518da3f8
+  - heading "メモアプリ" [level=4]
+  - heading "URL" [level=5]
+  - link "https://vite-react-f4c90.web.app/":
+    - /url: https://vite-react-f4c90.web.app/
+  - heading "リポジトリー" [level=5]
+  - link "https://github.com/shoji9x9/memo-app":
+    - /url: https://github.com/shoji9x9/memo-app
+  - heading "技術スタック" [level=5]
+  - img "React"
+  - img "TypeScript"
+  - img "Recoil"
+  - img "Firebase"
+  - heading "記事" [level=5]
+  - link "React（TypeScript） + Firebaseでメモアプリ開発":
+    - /url: https://zenn.dev/shoji9x9/articles/eb185b3d66567b
+  - heading "希望条件" [level=2]
+  - link "狩野モデルで考える、自分が希望する労働環境":
+    - /url: https://zenn.dev/shoji9x9/articles/741bba963942a6
+  - heading "LAPRAS" [level=2]
+  - link "shoji9x9さんのLAPRAS Profile":
+    - /url: https://lapras.com/public/shoji9x9
+    - img "shoji9x9さんのLAPRAS Profile"

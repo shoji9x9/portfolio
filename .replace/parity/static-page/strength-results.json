@@ -1,0 +1,145 @@
+[
+  {
+    "id": "control-no-injection",
+    "fault_class": "（対照）注入なし",
+    "injection": "なし",
+    "detected_by": []
+  },
+  {
+    "id": "F1-value-upstream",
+    "fault_class": "値・件数・並び（データ由来）",
+    "injection": "上流摂動: document 応答の文字列置換（愛知県 → 東京都）",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel",
+      "aria"
+    ]
+  },
+  {
+    "id": "F2-order-dom",
+    "fault_class": "値・件数・並び（データ由来）",
+    "injection": "DOM 摂動: アカウントバッジの 1 番目と 2 番目を入れ替え",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel",
+      "aria"
+    ]
+  },
+  {
+    "id": "F3-count-dom",
+    "fault_class": "値・件数・並び（データ由来）",
+    "injection": "DOM 摂動: 自己 PR の最終項目を削除",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel",
+      "aria"
+    ]
+  },
+  {
+    "id": "F4-href-dom",
+    "fault_class": "静的ラベル・placeholder・role",
+    "injection": "DOM 摂動: 希望条件リンクの href を別 URL へ",
+    "detected_by": [
+      "handwritten",
+      "aria"
+    ]
+  },
+  {
+    "id": "F5-structure-dom",
+    "fault_class": "構造（aria）",
+    "injection": "DOM 摂動: 資格の入れ子リストを平坦化",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel",
+      "aria"
+    ]
+  },
+  {
+    "id": "F6-label-dom",
+    "fault_class": "静的ラベル・placeholder・role",
+    "injection": "DOM 摂動: 小見出し「期間」→「機関」",
+    "detected_by": [
+      "handwritten",
+      "pixel",
+      "aria"
+    ]
+  },
+  {
+    "id": "F7-accname-dom",
+    "fault_class": "構造（aria）",
+    "injection": "DOM 摂動: 保有スキルの TypeScript バッジから alt を削除",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "aria"
+    ]
+  },
+  {
+    "id": "F8-heading-level-dom",
+    "fault_class": "構造（aria）",
+    "injection": "DOM 摂動: 「アカウント」見出しを h2 → h3",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "aria"
+    ]
+  },
+  {
+    "id": "F9-style-color",
+    "fault_class": "要素スタイル（色・余白・フォント・罫線）",
+    "injection": "スタイル注入: 本文リンクの color を赤へ",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel"
+    ]
+  },
+  {
+    "id": "F10-style-padding",
+    "fault_class": "要素スタイル（色・余白・フォント・罫線）",
+    "injection": "スタイル注入: カードの padding を 1rem → 2rem",
+    "detected_by": [
+      "traits",
+      "pixel"
+    ]
+  },
+  {
+    "id": "F11-geometry",
+    "fault_class": "要素スタイル（色・余白・フォント・罫線）",
+    "injection": "スタイル注入: カード幅を 48rem → 20rem（要素対の相対関係が変わる）",
+    "detected_by": [
+      "traits",
+      "pixel"
+    ]
+  },
+  {
+    "id": "F12-external-image",
+    "fault_class": "副作用出力（外部画像 GET）",
+    "injection": "上流摂動: img.shields.io へのリクエストを abort",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "pixel"
+    ]
+  },
+  {
+    "id": "F13-hover-lost",
+    "fault_class": "要素スタイル（状態）",
+    "injection": "スタイル注入: 本文リンクの hover 色を既定色と同じにする",
+    "detected_by": [
+      "handwritten"
+    ]
+  },
+  {
+    "id": "F14-dark-lost",
+    "fault_class": "要素スタイル（状態）",
+    "injection": "スタイル注入: dark の配色変数を light と同値にする",
+    "detected_by": [
+      "handwritten"
+    ]
+  }
+]

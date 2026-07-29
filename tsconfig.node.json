@@ -15,10 +15,12 @@
     "vite.config.mts",
     "vitest.config.ts",
     "vitest.workspace.ts",
-    "playwright.config.ts",
     "*.config.ts",
     "scripts/**/*.ts",
     "scripts/**/*.mjs",
     "seed/**/*.ts"
-  ]
+  ],
+  // playwright.config.ts は e2e プロジェクト（tsconfig.e2e.json）が持つ。
+  // スペックが VIEWPORTS を import するため、同じプロジェクトに入っている必要がある。
+  "exclude": ["playwright.config.ts"]
 }

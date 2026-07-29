@@ -15,6 +15,9 @@ export default {
       "coverage",
       "reports",
       "pnpm-lock.yaml",
+      // parity-suite が配布する決定論的ツールのコピー（正本はスキル側）。
+      // 外部スキルの成果物はこのリポジトリーで修正しない規約のため、整形・lint の対象外にする。
+      "e2e/parity/lib/tools/vendor",
     ],
     plugins: [
       "typescript",
@@ -99,6 +102,15 @@ export default {
         files: ["scripts/**"],
         rules: {
           "no-console": "off",
+        },
+      },
+      {
+        // パリティスイート（Playwright）は React を含まない。Playwright のフィクスチャ引数名
+        // `use` を react-hooks が Hook 呼び出しと誤検出するため、当該ルールを無効化する。
+        files: ["e2e/**"],
+        rules: {
+          "react-hooks/rules-of-hooks": "off",
+          "react-hooks/exhaustive-deps": "off",
         },
       },
       {

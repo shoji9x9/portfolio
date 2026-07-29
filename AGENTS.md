@@ -27,6 +27,8 @@
 - react / tailwindcss v4 / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
 - lefthook / commitlint / markdownlint-cli2 / knip / jscpd
+- Playwright（`@playwright/test`）/ pixelmatch + pngjs — 移行の等価性検証（パリティスイート）用。
+  実体は `e2e/`、実行方法は [docs/quality-checks.md](docs/quality-checks.md) を参照する
 
 **サプライチェーン対策** — 依存経由の攻撃への多層防御
 
@@ -70,6 +72,10 @@ pnpm install       # 依存パッケージを導入
 - PR には関連 Issue・変更概要・確認内容を含める。
 - AI 再レビューは `review_tool`（既定 `copilot`）に依頼する（`.config/skills/shoji9x9/skills.yml`）。
 - PR 仕上げ・レビュー対応は `pr-finalize-loop` / `pr-review-handle` を用いる。
+- レビュー・自動解析の**効率系所見**（スキップ・キャッシュ・省略などの最適化）は、採用するときも
+  外部へ提案するときも、**「冗長が実在するか」とは別に「省いて正しさが保たれるか」**を対象
+  ワークフローの一次情報と突き合わせて検証する。所見が「検証済み」でも、それは前者の検証でしか
+  ない。誤スキップの代償（偽の green・古い成果物の検証）が節約に見合うかも評価する。
 
 ### 記述言語
 
@@ -80,6 +86,16 @@ pnpm install       # 依存パッケージを導入
 静的解析・検査ツールと、実行タイミング（pre-commit / pre-push / CI）・対象ファイルの一覧は
 [docs/quality-checks.md](docs/quality-checks.md) を参照する。lint は最初から厳格（ラチェットなし）で、
 検出はすべて error として扱う。
+
+### 調査と実験
+
+原因調査で仮説を「否定した」「一致した」と結論する前に、**差分・不具合が実際に観測された条件を列挙し、
+その条件そのもので測る**。
+
+- 測りやすい代表値 1 点で測って全体に一般化しない（例: 差が出ているのが太字だけなのに標準ウェイトで測る）。
+- 比較の相手は常に正解（現行の実測値・報告された事象）であって、実験変種どうしではない。
+  「両者を同じ土俵に乗せる」ことを優先した結果、土俵から正解が抜け落ちていないか確かめる。
+- 結論を成果物へ書くときは、**どの条件で測ったか**を併記する。条件を書けない結論は、まだ結論ではない。
 
 ### エージェントの自己設定編集について
 

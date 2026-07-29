@@ -4,9 +4,16 @@
   "minTokens": 50,
   "reporters": ["console", "html"],
   "output": "./reports/jscpd",
-  "path": ["src"],
+  "path": ["src", "e2e"],
   "format": ["typescript", "tsx", "javascript", "jsx", "css"],
-  "ignore": ["**/node_modules/**", "**/dist/**", "**/*.test.*", "**/*.spec.*", "**/*.d.ts"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/*.test.*",
+    "**/*.spec.*",
+    "**/*.d.ts",
+    "e2e/parity/lib/tools/vendor/**"
+  ],
   "gitignore": true,
   "absolute": true
 }

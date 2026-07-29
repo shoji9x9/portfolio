@@ -1,0 +1,178 @@
+[
+  {
+    "id": "freelance",
+    "company": "フリーランス (2022年1月～現在)",
+    "projects": [
+      {
+        "id": "freelance-sales",
+        "name": "自動車会社基幹システム（商品販売システム）の再構築",
+        "term": "2023年1月～2023年9月",
+        "roleTasks": [
+          {
+            "summary": "アーキテクトチームのメンバーとして以下を担当。",
+            "items": [
+              "フロントエンドのアーキテクチャー検討と検証 (Drupal、React)",
+              "検証計画書、検証結果報告書の作成と顧客への報告"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "typescript",
+            "php",
+            "react",
+            "drupal",
+            "azure"
+          ],
+          "comment": "上記以外にプロジェクトで採用しているDDD、CQRS、マイクロサービス等の技術も学んだ。"
+        },
+        "members": {
+          "team": 10,
+          "project": 50
+        }
+      },
+      {
+        "id": "freelance-construction",
+        "name": "自動車会社基幹システム（工事管理システム）の再構築",
+        "term": "2022年1月～2023年3月",
+        "roleTasks": [
+          {
+            "summary": "アーキテクトチームのリーダーとして以下を担当。",
+            "items": [
+              "システム/ソフトウェアアーキテクチャー設計",
+              "開発標準策定",
+              "開発者の技術支援、レビュー",
+              "アプリケーション全体のテーブル設計 (ER図作成など)"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "javascript",
+            "csharp",
+            "outsystems",
+            "oracle"
+          ]
+        },
+        "members": {
+          "team": 3,
+          "project": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "toyota",
+    "company": "トヨタ自動車株式会社 (2005年4月～2021年6月)",
+    "projects": [
+      {
+        "id": "toyota-rideshare",
+        "name": "中国ライドシェア会社向け車両管理システムの新規開発",
+        "term": "2020年1月～2021年6月",
+        "roleTasks": [
+          {
+            "summary": "プロダクトオーナーとして以下を担当。",
+            "items": [
+              "事業計画立案",
+              "要件定義、受入テスト",
+              "顧客との折衝"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [],
+          "comment": "プロジェクトとしてはJava、Hadoop、Kafka等を利用していた。"
+        },
+        "members": {
+          "team": 20,
+          "project": 20
+        }
+      },
+      {
+        "id": "toyota-core-rebuild",
+        "name": "自社基幹システム（試作車生産管理、部品調達、生産システム）の再構築",
+        "term": "2017年4月～2019年12月",
+        "roleTasks": [
+          {
+            "summary": "2017年4月～2018年12月はプロジェクトマネージャーとして以下を担当。",
+            "items": [
+              "企画 (SAFeを導入)",
+              "構想検討、要件定義のマネジメント (方針検討、成果物のレビュー、プロジェクト運営)"
+            ]
+          },
+          {
+            "summary": "2019年1月～2019年12月はアーキテクトチームのリーダーとして以下を担当。",
+            "items": [
+              "システム/ソフトウェアアーキテクチャー設計",
+              "開発標準策定",
+              "開発者の技術支援、レビュー"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "javascript",
+            "csharp",
+            "outsystems",
+            "oracle"
+          ]
+        },
+        "members": {
+          "team": 5,
+          "project": 30
+        }
+      },
+      {
+        "id": "toyota-outsystems",
+        "name": "OutSystemsを利用したアプリケーション開発のトライアル、展開",
+        "term": "2014年1月～2018年12月",
+        "roleTasks": [
+          {
+            "summary": "プロジェクトマネージャーとして以下を担当。",
+            "items": [
+              "段階的なトライアルと評価の企画",
+              "他部署への展開とサポートの企画、実行時のマネジメント",
+              "開発元 (OutSystems社) との製品改善交渉、要件定義"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "javascript",
+            "outsystems"
+          ],
+          "comment": "OutSystems用データグリッドを作るため、ag-GridやWijmoも利用した。"
+        },
+        "members": {
+          "team": 10,
+          "project": 10
+        }
+      },
+      {
+        "id": "toyota-core-operations",
+        "name": "自社基幹システム（試作車生産管理、部品調達、生産システム）の改善、保守運用",
+        "term": "2007年1月～2017年12月",
+        "roleTasks": [
+          {
+            "summary": "プロジェクトマネージャーとして以下を担当。",
+            "items": [
+              "企画、構想検討、要件定義",
+              "各局面におけるにおけるマネジメント (成果物のレビュー、プロジェクト運営、トラブル時の陣頭指揮)"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "java",
+            "cobol",
+            "db2"
+          ]
+        },
+        "members": {
+          "team": 15,
+          "project": 15
+        }
+      }
+    ]
+  }
+]

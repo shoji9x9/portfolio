@@ -1,0 +1,50 @@
+[
+  {
+    "page": "/",
+    "state": "default",
+    "viewport": "desktop",
+    "pixel_diff": 0,
+    "pixel_total": 8340480,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "hover",
+    "viewport": "desktop",
+    "pixel_diff": 0,
+    "pixel_total": 12789,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "focus",
+    "viewport": "desktop",
+    "pixel_diff": 0,
+    "pixel_total": 12789,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "default",
+    "viewport": "mobile",
+    "pixel_diff": 0,
+    "pixel_total": 12778200,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "hover",
+    "viewport": "mobile",
+    "pixel_diff": 0,
+    "pixel_total": 13449,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "focus",
+    "viewport": "mobile",
+    "pixel_diff": 0,
+    "pixel_total": 13449,
+    "trait_diffs": 0
+  }
+]

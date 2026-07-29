@@ -1,0 +1,51 @@
+[
+  {
+    "id": "portfolio",
+    "title": "ポートフォリオ（このページ）",
+    "url": "https://shoji9x9.github.io/",
+    "repositoryUrl": "https://github.com/shoji9x9/shoji9x9.github.io",
+    "article": {
+      "title": "GitHub PagesにNext.jsでポートフォリオ作ってみた",
+      "url": "https://zenn.dev/shoji9x9/articles/90897d3f772e8a"
+    },
+    "techStack": [
+      "react",
+      "typescript",
+      "nextjs",
+      "tailwindcss",
+      "github-actions"
+    ]
+  },
+  {
+    "id": "qiita-search",
+    "title": "Qiita記事検索",
+    "url": "https://search-components-mui.vercel.app/",
+    "repositoryUrl": "https://github.com/shoji9x9/search_components_mui",
+    "article": {
+      "title": "React、TypeScriptでQiita記事検索機能作ってみた",
+      "url": "https://zenn.dev/shoji9x9/articles/cdc688518da3f8"
+    },
+    "techStack": [
+      "react",
+      "typescript",
+      "storybook",
+      "vercel"
+    ]
+  },
+  {
+    "id": "memo-app",
+    "title": "メモアプリ",
+    "url": "https://vite-react-f4c90.web.app/",
+    "repositoryUrl": "https://github.com/shoji9x9/memo-app",
+    "article": {
+      "title": "React（TypeScript） + Firebaseでメモアプリ開発",
+      "url": "https://zenn.dev/shoji9x9/articles/eb185b3d66567b"
+    },
+    "techStack": [
+      "react",
+      "typescript",
+      "recoil",
+      "firebase"
+    ]
+  }
+]

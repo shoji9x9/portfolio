@@ -5,9 +5,35 @@
 import type { KnipConfig } from "knip";
 
 export default {
-  entry: ["src/main.tsx!"],
-  project: ["src/**/*.{ts,tsx}"],
-  ignore: ["**/*.d.ts"],
+  // パリティスイート（Playwright）は src とは別のエントリー系統。スペックと設定を入口にして、
+  // ロケータマッピング・判定・採取ツールのデッドコードを検出できるようにする。
+  // 決定論的ツール（`e2e/parity/lib/tools/*.mjs`）は CLI としても実行するためエントリーに含める
+  // （VERSION / main は CLI と metadata.json の記録に使う契約で、静的な参照は現れない）。
+  // CLI スクリプトとゴールデンデータセット生成ツールもエントリーに含める。
+  // いずれも import されず、package.json の scripts・ワークフロー・スキル設定
+  // （`.config/skills/shoji9x9/skills.yml` の `url_command`）から起動される。
+  entry: [
+    "src/main.tsx!",
+    "playwright.config.ts",
+    "e2e/**/*.spec.ts",
+    "e2e/parity/lib/tools/*.mjs",
+    "scripts/**/*.{ts,mjs}",
+    "seed/golden-dataset.ts",
+    "seed/phase-b.ts",
+  ],
+  project: [
+    "src/**/*.{ts,tsx}",
+    "e2e/**/*.{ts,mjs}",
+    "playwright.config.ts",
+    "scripts/**/*.{ts,mjs}",
+    "seed/**/*.ts",
+  ],
+  ignore: [
+    "**/*.d.ts",
+    // parity-suite が配布する決定論的ツールのコピー（正本はスキル側。修正しない規約）。
+    // CLI としても使えるよう未使用の export（VERSION・main など）を持つため対象外にする。
+    "e2e/parity/lib/tools/vendor/**",
+  ],
   // mise / vite+ 由来の外部バイナリ（pnpm 依存ではない）は未登録として扱わない。
   ignoreBinaries: [
     "vp",
@@ -23,5 +49,8 @@ export default {
   // knip が用途を静的検知できない依存を保持する。
   //   - oxlint-tailwindcss: oxlint.config.ts の jsPlugins に文字列で指定（実使用）
   //   - react-doctor: scripts/react-doctor-gate.sh（shell）から呼ぶため静的検知不可
-  ignoreDependencies: ["oxlint-tailwindcss", "react-doctor"],
+  //   - inter-ui: src/index.css の @font-face の url() から参照（CSS の url() は追跡対象外）。
+  //     実際に使われていることは pnpm build の出力（dist/assets/Inter-roman.var-*.woff2）と
+  //     パリティスイートのフォント幅判定が担保する
+  ignoreDependencies: ["oxlint-tailwindcss", "react-doctor", "inter-ui"],
 } satisfies KnipConfig;

@@ -37,9 +37,14 @@ pre-commit:
               - ".claude/**"
               - "**/.agents/**"
               - "**/.claude/**"
+              # parity-suite が配布する決定論的ツールのコピー（正本はスキル側。修正しない規約）。
+              - "e2e/parity/lib/tools/vendor/**"
               # ゴールデンデータセットの生成物（oxfmt.config.ts でも ignore 済み。渡すと
               # 「対象ファイルなし」で異常終了するため、staged_files から除く）。
               - "seed/data/**"
+              - "src/data/generated/**"
+              # パリティスイートの採取物（同上。正本は採取ツール）。
+              - ".replace/parity/**"
             run: pnpm format {staged_files}
             stage_fixed: true
 
@@ -68,6 +73,8 @@ pre-commit:
               - ".claude/**"
               - "**/.agents/**"
               - "**/.claude/**"
+              # parity-suite が配布する決定論的ツールのコピー（正本はスキル側。修正しない規約）。
+              - "e2e/parity/lib/tools/vendor/**"
             run: pnpm lint {staged_files}
 
           # markdownlint-cli2: Markdown 検査
