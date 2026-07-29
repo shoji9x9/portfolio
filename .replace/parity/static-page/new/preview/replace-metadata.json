@@ -1,0 +1,61 @@
+{
+  "slug": "static-page",
+  "mode": "feature",
+  "run": {
+    "started_at": "2026-07-29T10:50:00+09:00",
+    "finished_at": "2026-07-29T11:05:00+09:00",
+    "agent": "Claude Code",
+    "model": "Opus 5 (1M context)",
+    "effort": "標準",
+    "skill_version": "parity-replace v1.26.1"
+  },
+  "dataset_version": 2,
+  "new": {
+    "target": "preview",
+    "ui_url": "runtime",
+    "api_url": "runtime",
+    "commit": "b0cedeb49d947b9c2547a727fffa23d7a0119417",
+    "dirty": false
+  },
+  "path": "軽量経路（実装・敵対的レビューは行わない。local-dev で green 済みの同一コミットを別環境で確認するのみ）",
+  "deployed_commit_check": {
+    "method": "scripts/preview-url.mjs",
+    "note": "url_command 自身がデプロイ元コミットと HEAD の一致を検証し、不一致なら URL を返さず停止する契約。URL が返った時点で稼働中コミット＝HEAD が確定する",
+    "verified": true
+  },
+  "suite": {
+    "locator_map_new": "e2e/parity/lib/locator-map/static-page.new.ts",
+    "new_green": true,
+    "new_green_at": "2026-07-29T10:58:00+09:00",
+    "new_test_count": 46,
+    "run_command": "PARITY_NEW_UI_URL=<url_command で解決> PARITY_NEW_TARGET=preview pnpm exec playwright test --project=new",
+    "note": "46 passed / 1 skipped（skip は機能 lapras の在席チェック test.fixme）。ベースライン採取スペックを含む"
+  },
+  "verification": {
+    "commands": [
+      "pnpm typecheck",
+      "pnpm lint"
+    ],
+    "passed_at": "2026-07-29T10:45:00+09:00",
+    "additional": [
+      "軽量経路のため実装は変更していない。同一コミットの検証結果は new/local-dev/replace-metadata.json を参照"
+    ]
+  },
+  "review": {
+    "adversarial_review": null,
+    "rounds": 0,
+    "findings": 0,
+    "recorded": 0,
+    "note": "軽量経路では実施しない（差分が無いため）"
+  },
+  "loop": {
+    "iterations": 0,
+    "max_iterations": 5,
+    "last_diff_report": ".replace/parity/static-page/new/preview/diff.md",
+    "on_diff": "none",
+    "changed_scope": {
+      "pages": [],
+      "global": false
+    }
+  }
+}
