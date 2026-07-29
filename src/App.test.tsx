@@ -14,23 +14,48 @@ function attr(value: string): string {
   return value.replaceAll("&", "&amp;").replaceAll('"', "&quot;");
 }
 
+/**
+ * セクション見出しの id（パリティスイートの論理名と揃えてある）と文言。並びも仕様。
+ *
+ * `decorated` はプロフィールだけ。現行に合わせて見出しへ装飾画像を含めるため、
+ * 見出しの中身が素のテキストにならない。
+ */
+const SECTION_HEADINGS: readonly { id: string; text: string; decorated?: boolean }[] = [
+  { id: "profile-heading", text: "プロフィール", decorated: true },
+  { id: "account-heading", text: "アカウント" },
+  { id: "self-promotion-heading", text: "自己PR" },
+  { id: "skills-heading", text: "保有スキル" },
+  { id: "careers-heading", text: "職務経歴詳細" },
+  { id: "qualifications-heading", text: "資格" },
+  { id: "artifacts-heading", text: "製作物" },
+  { id: "desired-work-heading", text: "希望条件" },
+];
+
 describe("App", () => {
   const html = renderToStaticMarkup(<App />);
 
   it("セクション見出しを仕様の順で描画する", () => {
-    const headings = [...html.matchAll(/<h2[^>]*>(.*?)<\/h2>/gs)].map((match) =>
-      match[1]?.replaceAll(/<[^>]*>/g, ""),
+    // タグを剥がして本文だけを取り出す形にはしない。HTML を正規表現で除去する処理は、
+    // 入力が信頼できても不完全なサニタイズとして検出される（CodeQL
+    // js/incomplete-multi-character-sanitization）。id の並びと中身を直接見る。
+    const headings = [...html.matchAll(/<h2\b[^>]*\bid="([^"]*)"[^>]*>(.*?)<\/h2>/gs)].map(
+      (match) => ({ id: match[1], inner: match[2] ?? "" }),
     );
-    expect(headings).toEqual([
-      "プロフィール",
-      "アカウント",
-      "自己PR",
-      "保有スキル",
-      "職務経歴詳細",
-      "資格",
-      "製作物",
-      "希望条件",
-    ]);
+
+    expect(headings.map((heading) => heading.id)).toEqual(
+      SECTION_HEADINGS.map((section) => section.id),
+    );
+
+    for (const [index, section] of SECTION_HEADINGS.entries()) {
+      const inner = headings[index]?.inner ?? "";
+      if (section.decorated) {
+        // 前後をタグ境界で挟み、文言の後ろに別の語が続いても通らないようにする。
+        expect(inner, `${section.id} の文言`).toContain(`>${section.text}<`);
+        expect(inner, `${section.id} の装飾画像`).toContain('alt="DotHiyoko"');
+      } else {
+        expect(inner, `${section.id} の文言`).toBe(section.text);
+      }
+    }
   });
 
   it("プロフィールの全項目を表に描画する", () => {
