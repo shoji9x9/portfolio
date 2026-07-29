@@ -11,8 +11,13 @@ export function ProfileTable({ entries }: { entries: readonly ProfileEntry[] }) 
     <table className="table-fixed border border-rule">
       <thead>
         <tr>
-          <th className="w-1/4 border border-rule p-1">キー</th>
-          <th className="w-3/4 border border-rule p-1">バリュー</th>
+          {/* 列見出しであることを明示する（WCAG H63）。現行は scope を持たない。 */}
+          <th className="w-1/4 border border-rule p-1" scope="col">
+            キー
+          </th>
+          <th className="w-3/4 border border-rule p-1" scope="col">
+            バリュー
+          </th>
         </tr>
       </thead>
       <tbody>

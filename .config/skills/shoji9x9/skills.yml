@@ -125,6 +125,12 @@ skills:
       pending:
         - LAPRAS プレビューをビルド時に取得するか、Cloudflare Worker 実行時に取得するか
         - LAPRAS プレビュー取得失敗時の表示とキャッシュ方針
+        # PR #25 の Copilot レビュー指摘を採用して追加（2026-07-29）。差分器では検出されない
+        # （computed style にも aria スナップショットにも現れず、role は両側とも columnheader）。
+        - >-
+          プロフィール表の th への scope="col" 付与（新側のみ）:
+          現行は scope を持たない。列見出しであることを明示する（WCAG H63）。
+          表示・role は変わらない
     component_diffs: # コンポーネント系統差レジストリ（parity-replace が宣言）
       # 2026-07-29、static-page の parity-diff 反復 1 で検出した系統差。
       # いずれも実体は同じだが値の表現が変わるもので、クラス/トークン単位で 1 回宣言すれば
