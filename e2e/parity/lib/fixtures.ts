@@ -1,6 +1,6 @@
 // パリティスイート共通のフィクスチャ。
 //
-// Playwright の project 名（`current` / `new`）から側を決め、その側のコンテナーマッピングを注入する。
+// Playwright の project 名（`current` / `new` / `new-capture`）から側を決め、その側のコンテナーマッピングを注入する。
 // スペック本体は論理名と操作意図だけを書き、どちらの側で走っているかを意識しない。
 import type { LogicalEntry } from "./locator-map/portable";
 import type { ContainerLocators } from "./locator-map/types";
@@ -30,11 +30,13 @@ export const test = base.extend<ParityFixtures>({
       await use(currentContainers(page));
       return;
     }
-    if (side === "new") {
+    if (side === "new" || side === "new-capture") {
       await use(newContainers(page));
       return;
     }
-    throw new Error(`未知の project 名です: ${side}（current / new のいずれかを指定する）`);
+    throw new Error(
+      `未知の project 名です: ${side}（current / new / new-capture のいずれかを指定する）`,
+    );
   },
 
   entries: async ({ containers }, use) => {

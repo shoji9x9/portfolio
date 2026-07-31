@@ -1,12 +1,12 @@
 ---
 argument-hint: <setup | issues | status> [--feature <slug>...]
-description: 仕様を変えないアプリケーションリプレイスの入口として、現行アプリを実測して戦略を決め、機能に分解して姉妹スキル（golden-dataset / parity-suite / parity-replace / parity-diff）へ振り分けるスキル。自分では実装しない。setup（依存確認・対話セットアップ・測定・戦略決定・意図的差異レジストリ・機能インベントリ）／issues（対象機能を選択して GitHub Issue を起票。issue-create へ委譲）／status（Issue とリポジトリ内成果物から現況と未検証領域を導出）の 3 モードを持つ。測定できない場合は戦略へ進まず停止する。「リプレイス戦略を立てて」「リプレイスを始めたい」「現行アプリを測定して」「replace-strategy」や、setup / issues / status・--feature を伴う依頼で発動する。
+description: 仕様を変えないアプリケーションリプレイスの入口として、現行アプリを実測して戦略を決め、機能に分解して姉妹スキル（golden-dataset / parity-suite / parity-replace / parity-diff）へ振り分けるスキル。自分では実装しない。setup（依存確認・対話セットアップ・測定・戦略決定・意図的差異レジストリ・機能インベントリ・パッケージ選定）／issues（対象機能を選択して GitHub Issue を起票。issue-create へ委譲）／status（Issue とリポジトリ内成果物から現況と未検証領域を導出）の 3 モードを持つ。測定できない場合は戦略へ進まず停止する。「リプレイス戦略を立てて」「リプレイスを始めたい」「現行アプリを測定して」「replace-strategy」や、setup / issues / status・--feature を伴う依頼で発動する。
 license: MIT
 metadata:
     github-path: skills/replace-strategy
-    github-ref: refs/tags/v1.26.1
+    github-ref: refs/tags/v1.34.0
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: 4bd37a23cef44c2d2232266a3c16840c330fccba
+    github-tree-sha: e01b5f7a6770828ad7dde05ff26f5421aa63a667
 name: replace-strategy
 ---
 # Replace Strategy
@@ -25,7 +25,7 @@ replace-strategy status
 
 | モード | 内容 | 実行タイミング |
 |---|---|---|
-| `setup` | 依存確認 → 対話セットアップ → 測定 → 戦略決定 → レジストリ作成 → 機能インベントリ | 最初に 1 回 |
+| `setup` | 依存確認 → 対話セットアップ → 測定 → 戦略決定 → レジストリ作成 → 機能インベントリ → 共通部品の依存決定 | 最初に 1 回 |
 | `issues` | 対象機能を選択して Issue 起票。未起票の機能だけが候補に出る | 何度でも |
 | `status` | Issue の状態とリポジトリ内の成果物から現況を導出し、未検証領域の一覧を出す | 何度でも。切替判断の前に |
 
@@ -44,7 +44,12 @@ replace-strategy status
   - `golden-dataset` の投入ツール: TypeScript（SQL 可）
   - テキスト成果物: Git
   - Issue・PR・委譲先: GitHub（`gh`）
-- **利用者が選ぶもの**（設定・references で受け取る。スキル本体に固有名を書かない）: 新 UI コンポーネントライブラリと design token、現行・新の DB とその型・意味論の差、検証コマンド一式（静的解析・テスト）、実行対象環境（`targets`）、環境変数の用意方法。現行アプリのスタックは測定で把握する
+- **利用者が選ぶもの**（設定・references で受け取る。スキル本体に固有名を書かない）: 新側アプリの骨格（下記）、新 UI コンポーネントライブラリと design token、現行・新の DB とその型・意味論の差、検証コマンド一式（静的解析・テスト）、実行対象環境（`targets`）、環境変数の用意方法。現行アプリのスタックは測定で把握する
+- **新側アーキテクチャは本スキル群の対象外**（フレームワーク・バックエンド構成・ORM・レイヤ／ディレクトリ構成・API 設計方針・ホスティング／リリース構成）。
+  **言語は上記のとおり TypeScript 固定であり、骨格はその上の選択**（言語まで利用者が選べる意味ではない）。
+  **事前に決定済みで、新側リポジトリは骨格がスキャフォールド済み**である前提に立つ。
+  骨格は現行アプリの測定からは決まらず（組織の制約・運用・既存資産・人員で決まる）、スキルが決めれば「測定できなければ停止する」規律が崩れるため、
+  `setup` は決定の**確認と記録だけ**を行う（`new.stack` / `references.architecture`。正本は [`references/project-config.md`](references/project-config.md) の「新側アーキテクチャ」）
 
 ## 厳守の制約（禁止事項）
 
@@ -55,6 +60,9 @@ replace-strategy status
 - **id・name を比較のアンカーにしない。** 原則は role ＋アクセシブルネーム
 - **カタログサイトを比較の正解にしない。** カタログは「確認すべき状態の網羅リスト」の生成源であり、正解は動いている現行アプリ
 - **現行アプリを変更しない。** 比較のために現行アプリのコード変更（ログ挿入・SMTP 迂回・プロキシ挿入など）が必要なもの、または比較自体が現実的でないものはスコープ外とし、`gaps` に「手動検証が必要」として記録する（確認済みにしない）
+- **対応範囲を推測で決めない。また一覧を各所へ転記しない。** 対象・対象外・条件付きの一覧は [`references/scope.md`](references/scope.md) が正本で、各スキル・各 references は実行時の行動だけを持つ。
+  判断に迷ったら同ファイルで引き、**読めない環境では対象外と断定せず** `gaps` に未検証として残す
+- **依存の判断基準を、リポジトリに無い土台の存在を前提に組まない。** ライセンス拒否リスト・供給網ポリシー・バンドルサイズ上限などは、あればそれに従い、無ければ方針の要否をユーザーに確認する（スキル既定の拒否リスト・閾値・待機日数を持ち込まない）
 - **シークレットの値をログ・標準出力・成果物・設定ファイルに出さない。** 設定ファイルには環境変数名だけを持つ。ユーザーが値を提示してきた場合も**復唱しない**（コマンド例にも埋め込まず、環境変数名で置き換える）
 
 ## プロジェクト設定の解決
@@ -66,27 +74,42 @@ replace-strategy status
 
 ## setup モード
 
-依存確認 → 対話セットアップ → 測定 → 戦略決定 → レジストリ作成 → 機能インベントリ、の順に進める。
+依存確認 → 対話セットアップ → 測定 → 戦略決定 → レジストリ作成 → 機能インベントリ → 共通部品の依存決定、の順に進める。
 
 1. **依存の確認**: 前提スキル（`issue-create` / `browser-test`）のインストール状況と chrome-devtools MCP の有効性を確認する。未導入・無効なら導入手順（`gh skill install shoji9x9/skills <name>`、MCP の設定）を示す。**MCP が無いままでは測定できないため、手順を示したうえで停止する**
 2. **対話セットアップ**: 次を対話で確認し設定ファイルへ保存する。**技術スタックはスキル本体に書かず、設定で受け取る。** シークレットの扱いは [`references/project-config.md`](references/project-config.md) の「シークレットの扱い」に従い、**接続確認を最初に行い、繋がらなければ早期に失敗する**
    - 現・新のリポジトリ、起動ラッパー
+   - **新側アーキテクチャの確認と記録**: 事前に決定済みの骨格を確認し、スタックの列挙を `new.stack` に、決定記録のドキュメントのパスを `references.architecture` に記録する。
+     **骨格を決めず、下書きも生成しない**（未決なら決定を促し、`references.architecture` は空値の枠だけを残す。正本は [`references/project-config.md`](references/project-config.md) の「新側アーキテクチャ」）
    - **実行対象環境（`targets`）**: 現側は測定対象のテスト環境、新側は local-dev / develop 等。環境ごとに `side`（必須）・`url`・
      `url_command`（URL が実行ごとに決まる環境で `url` の代わりに）・`api_url`（UI と API が別 origin のときだけ）・
      DB（環境変数名と**投入してよいかの `seedable`**）・認証（ロールごとの環境変数名のみ）・禁止操作・`pre_commands` / `start` / `check_urls`・`commit_check`（`start` を持たない配信型環境で稼働中コミットを確認するコマンド）・
      **側ごとの `default`**（`current` / `new` で 1 つずつ）・`on_diff` を確認する。スキーマ不変条件は [`references/project-config.md`](references/project-config.md)「実行対象環境」、選択規則は同節の「選択規則」に従う
    - **ゴールデンデータセットの実体（`dataset_mode`）**: DB なら `db`（既定）、リポジトリ内の静的データなら `static` を選び、`static` では投入ツールが生成・削除してよい `dataset_static_paths` を確定する。
      **`seedable` と `dataset_static_paths` は投入の設定由来ゲート**であり、既定は deny（書かなければ投入されない）。実データを持つ環境は `seedable` を付けずに読み取り専用として登録する。正本は [`references/project-config.md`](references/project-config.md) の「データセットの実体」
+   - **ファイルストレージ（`uses_storage` / `targets[].storage`）**: アップロード先・ファイル出力先のストレージを使うかを確認し（**`dataset_mode` とは直交する別軸**——`dataset_mode` に第 3 の値を足さない）、
+     使うなら環境ごとに接続の環境変数名・書き込み範囲（パスまたは `<bucket>/<prefix>`）・アップロード経路（`direct` / `presigned`）を確認する。
+     **投入ゲート（`storage.seedable`）は既定 deny で、ストレージ実体へのゴールデンデータ投入は v1 スコープ外**（宣言だけを残し、ストレージ依存の検証は `gaps` に未検証として記録させる）。正本は [`references/project-config.md`](references/project-config.md) の「ファイルストレージ」
    - **検証コマンド列（`verification_commands`）**: 完了前に実行する静的解析・テスト等。`parity-replace` の完了判定に必須のため、無いままにせずここで確定する
      （環境準備・起動は含めない。それらは target の `pre_commands` / `start`）
    - **`on_diff` のドキュメント**: 内容はプロジェクトが持つものだが、`references` と同様に **`setup` が下書きを生成し、人間がレビューして確定する**（既定挙動で足りる環境には作らない）
+   - **`references`（知識の注入）**: パス型キー（`architecture` / `ui_library` / `db_semantics` / `env_setup`）を**キーごと生成する**。この時点でパスが決まらないキーも省略せず空値で置き、「どのスキルがいつ読むか」をコメントで添える。
+     **未整備で下流が停止するのは正しい挙動**であり、枠を作るのは停止を避けるためではなく**不足を `setup` 時点で見えるようにするため**（キーごと無いと、下流のスキルが停止して初めて不足が分かる）。
+     **`dependency_policy` だけは空値で生成しない**——キーの有無自体が「未確認」を表す三値のため、空値の枠を置くと下流の確認が発火しなくなる
+     （手順 8 の確認結果としてパスか `none` を書き、確認まで至らなければキーごと書かない）。正本は [`references/project-config.md`](references/project-config.md) の「references（知識の注入）」
 3. **測定**: すべて実測する。手順は [`references/measurement.md`](references/measurement.md)。
-   セマンティクス測定（同梱の [`scripts/role-probe.mjs`](scripts/role-probe.mjs) を使用）・DB 復元可否・現行コードの入手性・副作用の棚卸し・既存テストの評価を行い、`.replace/survey.md` に記録する。**測れない場合はここで停止する**
+   セマンティクス測定（同梱の [`scripts/role-probe.mjs`](scripts/role-probe.mjs) を使用）・DB 復元可否・現行コードの入手性・副作用の棚卸し・**ファイル入出力の到達性**（画面駆動の捕捉可否・バッチ出力のファイルシステム到達性・ストレージ）・既存テストの評価を行い、
+   `.replace/survey.md` に記録する。**測れない場合はここで停止する**
 4. **戦略の提示とユーザー承認**: 測定結果から、パリティスイート戦略・ゴールデンデータセットの作り方・フロント／バックの非対称設計（バックエンドは現行コードからの直接移植、フロントエンドはパリティスイート＋ベースライン駆動）・未検証領域の扱いを提示し、承認を得て `.replace/strategy.md` に記録する
 5. **成果物の扱いの決定**（設定ファイルへ）: 保持方針（ワークツリーは最新のみ。履歴は Git が持つ）・保存先（`local`（既定・コミットしない）／`git`／`git-lfs` に限る。それ以外の外部保管は対象外とし、選ぶ場合はポインタ記録のみで**検証しないことを明示する**）・容量閾値を決める。ここで決めるのは既定値であり、**機能ごとに上書きできる**
-6. **意図的差異レジストリの作成**（設定ファイルへ）: 「変えない」「変えてよい」「保留（測定結果で決める）」の 3 分類。references（`ui_library` / `db_semantics`）から注入された差（例: 空文字と NULL の扱い、collation による並び順）もレジストリに落とし込む。references の下書きは DDL・測定結果・技術スタックから生成し、**人間がレビューして確定する**
+6. **意図的差異レジストリの作成**（設定ファイルへ）: 「変えない」「変えてよい」「保留（測定結果で決める）」の 3 分類。references（`ui_library` / `db_semantics`）から注入された差（例: 空文字と NULL の扱い、collation による並び順）もレジストリに落とし込む。references の下書き（`architecture` を除く）は DDL・測定結果・技術スタックから生成し、**人間がレビューして確定する**
 7. **機能インベントリ**: 現アプリを機能単位に分解し、各機能のページ・API・テーブル・副作用出力、横断 API の fan-out、slug を `.replace/features.md` に記録する。
-   **機能は画面内の表示セクションではなく、利用者目的・データ境界・依存関係・副作用の所有者で分解する**（複数ページの機能は 1 行）。規則は [`references/features-issues.md`](references/features-issues.md)
+   **機能は画面内の表示セクションではなく、利用者目的・データ境界・依存関係・副作用の所有者で分解する**（複数ページの機能は 1 行）。
+   併せて**ページ一覧（ページ × そのページに乗る機能）**を記録する——機能単位に分けた裏返しとして、同じページに乗る別機能のセクションが丸ごと欠けてもどのスイートも赤くならないため、`parity-suite` が在席チェックの根拠に使う。規則は [`references/features-issues.md`](references/features-issues.md)
+8. **共通部品の依存決定**: 複数機能で使う部品（UI ライブラリ・フォント・状態管理・日付処理等）を洗い出し、**自前で書くか／どのパッケージを使うか**を実装が始まる前に決めて `.replace/dependencies.md` に記録する。
+   判断材料・確認手段・決める順序は [`references/dependency-selection.md`](references/dependency-selection.md)。
+   **ライセンス方針・供給網ポリシーの有無はリポジトリごとに違うため、あればそれに従い、未確認なら方針の要否そのものをユーザーに確認**して結果を設定（`references.dependency_policy`）へ記録する（`none` ＝確認済みで方針なしは再確認しない）。
+   機能固有の部品は `parity-replace` が実装フェーズ前に同じ基準で決める（ここで全部を洗い出そうとしない）
 
 ## issues モード
 
@@ -109,14 +132,16 @@ replace-strategy status
 
 ## 成果物
 
-すべて対象プロジェクト側に置く。**成果物スキーマの正本は生産側スキルが定義する**——本スキルは設定・`survey.md`・`strategy.md`・`features.md` の正本を定義し（テンプレート: [`assets/`](assets/)）、下流スキルの成果物（`.replace/parity/<slug>/` や `.replace/dataset/` の形式）は各スキルが定義する。同じ形式を複数スキルで重複定義しない。
+すべて対象プロジェクト側に置く。**成果物スキーマの正本は生産側スキルが定義する**——本スキルは設定・`survey.md`・`strategy.md`・`features.md`・`dependencies.md` の正本を定義し（テンプレート: [`assets/`](assets/)）、
+下流スキルの成果物（`.replace/parity/<slug>/` や `.replace/dataset/` の形式）は各スキルが定義する。同じ形式を複数スキルで重複定義しない。
 
 | 成果物 | 場所 | 内容 |
 |---|---|---|
-| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリ／実行対象環境（`targets`。環境ごとの URL・DB（`env_vars` と `seedable`）・認証・禁止操作・起動・`on_diff`）／データセットの実体（`dataset_mode` / `dataset_static_paths`）／起動ラッパー／検証コマンド列／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
+| 設定 | `.config/skills/shoji9x9/skills.yml` | 現・新のリポジトリとスタック（`new.stack` は事前定義の骨格の記録）／実行対象環境（`targets`。環境ごとの URL・DB（`env_vars` と `seedable`）・**ストレージ（`storage`）**・認証・禁止操作・起動・`on_diff`）／データセットの実体（`dataset_mode` / `dataset_static_paths`）／**ファイルストレージ利用の有無（`uses_storage`）**／起動ラッパー／検証コマンド列／成果物の保持方針・保存先・容量閾値／パリティスイートの配置／意図的差異レジストリ／references |
 | 測定レポート | `.replace/survey.md` | セマンティクス測定値、DB 復元可否、コード入手性、副作用棚卸し、既存テスト評価。すべて実測値 |
 | 戦略書 | `.replace/strategy.md` | 非対称設計、パリティスイート戦略、ゴールデンデータセットの方針、未検証領域の扱い |
-| 機能インベントリ | `.replace/features.md` | 機能一覧、依存順、ページ／API／テーブル／副作用出力、横断 API の fan-out とリソースグルーピング、slug、Issue 化の状態 |
+| 機能インベントリ | `.replace/features.md` | 機能一覧、依存順、ページ／API／テーブル／副作用出力、**ページ一覧（ページ × 乗る機能）**、横断 API の fan-out とリソースグルーピング、slug、Issue 化の状態 |
+| 依存パッケージの決定記録 | `.replace/dependencies.md` | 部品ごとの決定（自前実装／採用パッケージ）と判断材料・代替候補・不採用理由。本スキルが共通部品を、`parity-replace` が機能固有・実装中の追加を非破壊追記する |
 | Issue | GitHub | 選択した機能分（`issues` モード） |
 
 ## 姉妹スキルと依存順

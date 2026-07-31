@@ -41,9 +41,11 @@ skills:
         side: new
         url: &local-production-url http://localhost:4173
         forbidden_actions: []
-        pre_commands: &local-production-pre-commands # サーバー稼働の有無に依らず毎回 build する（start は未稼働時のみ実行のため）
+        # v1.30.1 以降、pre_commands は check_urls が落ちたときだけ実行される。
+        # ソース変更後は稼働中の preview を停止してから検証し、この build を必ず通す。
+        pre_commands: &local-production-pre-commands
           - pnpm build
-        start: &local-production-start pnpm preview # build は pre_commands が担う（pnpm start だと build が二重になる）
+        start: &local-production-start pnpm preview # build は未稼働時の pre_commands が担う
         check_urls: &local-production-check-urls
           - http://localhost:4173/
       - name: preview # Cloudflare Pages のプレビュー環境（デプロイ固有 URL: https://<デプロイ ID 先頭 8 桁>.shoji9x9.pages.dev）
@@ -68,10 +70,15 @@ skills:
     dataset_static_paths: # 投入ツールが生成・削除してよい範囲。この配下以外へ書いたら停止する
       - seed/data/ # フェーズ A: 現行ソースから起こした正本データの生成先
       - src/data/ # フェーズ B: 新側の静的データ形式へ写像した生成先（スキーマは src/data/types.ts）
+    uses_storage: false # アップロード先・ファイル出力先となるストレージは使わない静的サイト
     references: # スキル群が読むプロジェクト知識の配置
+      architecture: docs/architecture.md # 新側アーキテクチャの決定記録（parity-replace が実装前に読む）
+      ui_library: "" # 新 UI ライブラリと旧→新 design token 対応。未整備を明示する
       # static モードにおける「静的データ形式の対応と意味論差」。golden-dataset のフェーズ B が
       # 写像設計と現新一致検証で読む（db モードの DB 意味論に相当するもの）。
       db_semantics: .replace/references/static-data-semantics.md
+      env_setup: "" # 環境変数の用意方法。未整備を明示する
+      dependency_policy: docs/dependency-policy.md
     verification_commands: # 完了前に実行する検証コマンド列（parity-replace が読む）
       - pnpm typecheck
       - pnpm lint
@@ -146,92 +153,6 @@ skills:
           送り幅は 18 サンプルすべてで実測一致する。ただしサブセットのビルドは別で
           （現行は gasp テーブルを持ち inter-ui は持たない）、weight 600 のラスタライズだけ
           数画素違う（この画素差はここでは吸収されない。下記 pending を参照）
-    component_diff_exceptions: # インスタンス単位の例外（parity-diff が宣言）
-      # 2026-07-29 ユーザー承認済み。本文フォントのサブセットビルド差による weight 600 の
-      # ラスタライズ差。同じ Inter 3.019 でどちらもヒンティング命令を持たず送り幅も一致するが、
-      # 現行は Google Fonts 由来（gasp テーブルあり）、新側は rsms のリリース由来（gasp なし）で、
-      # weight 600 のときだけグリッドフィッティングが変わる（実測 16px:2px / 18px:2px / 20px:6px、
-      # weight 400 は全サイズ 0px）。グリフの位置・並びは 1/16px まで一致し、輪郭の濃度だけが違う。
-      # 消すには現行の woff2 を vendoring するしかなく pnpm 管理外になるため採らない。
-      # property: pixel は画素経路のみで拾った差であることを表す（component_diffs では照合できない）。
-      - slug: static-page
-        page: /
-        element: careers.project.toyota-outsystems.heading
-        state: default
-        viewport: desktop
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 6px（20px / weight 600 の見出し 2 箇所 × 3px）。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: careers.project.toyota-outsystems.heading
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 6px（同上）。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: self-promotion.item.3
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: careers.project.freelance-sales
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: careers.project.toyota-outsystems
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: qualifications.group.2.item.1
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-      - slug: static-page
-        page: /
-        element: qualifications.group.3.item.1
-        state: default
-        viewport: mobile
-        property: pixel
-        current: 輪郭画素の濃度（Google Fonts 由来のサブセット）
-        new: 輪郭画素の濃度（rsms のリリース由来のサブセット）
-        reason: >-
-          weight 600 のラスタライズ差 1px。位置・並びは一致し輪郭の濃度のみ違う。
-          crop 対で目視確認済み（差分画像は採取物として残していない）
-
   # dependabot-alert-issue:
   #   リポジトリ固有の alert 特別処理（dismiss ルール等）が必要になったらここに記述する。
   #   現時点では規約は common.conventions_doc に従う。
@@ -250,7 +171,7 @@ skills:
       - name: local-production
         url: *local-production-url
         auth: none
-        pre_commands: *local-production-pre-commands # サーバー稼働の有無に依らず毎回 build する（start はサーバー未稼働時のみ実行のため）
-        start: *local-production-start # build は pre_commands が担う（pnpm start だと build が二重になる）
+        pre_commands: *local-production-pre-commands # 稼働中 preview は停止後に検証し、確実に build する
+        start: *local-production-start # build は未稼働時の pre_commands が担う
         check_urls: *local-production-check-urls
         forbidden_actions: []

@@ -1,25 +1,82 @@
 {
   "slug": "static-page",
-  "target": "local-dev",
   "mode": "feature",
   "run": {
-    "started_at": "2026-07-29T07:30:00+09:00",
-    "finished_at": "2026-07-29T07:55:00+09:00",
-    "agent": "Claude Code",
-    "model": "Opus 5 (1M context)",
-    "effort": "標準",
-    "skill_version": "parity-diff v1.26.1"
+    "started_at": "2026-07-31T10:18:00+09:00",
+    "finished_at": "2026-07-31T10:22:03+09:00",
+    "agent": "Codex",
+    "model": "GPT-5",
+    "effort": "高",
+    "skill_version": "parity-diff v1.34.0"
   },
   "dataset_version": 2,
-  "new_commit": "60f5d1ed38213674a52c30e4e5d622cc8f52a16d",
-  "loop_iteration": 1,
-  "capture_conditions_verified": {
-    "viewports": "一致（desktop 1280x900 / mobile 390x844）",
-    "animations": "一致（animations: disabled を新側でも適用）",
-    "masks": "一致（AtCoder バッジ・LAPRAS セクションのロケータは新側でも解決。新側に LAPRAS セクションは存在せずマスク対象 0 件）",
-    "states": "一致（default / hover / focus へ操作アダプタで遷移）",
-    "environment": "unverified: 現側は自由記述で機械照合できない。両側とも Linux(WSL) の Chromium・devicePixelRatio 1・colorScheme light で撮影したが、利用者の閲覧環境（Windows）とは異なる"
+  "dataset_version_exempt": null,
+  "new": {
+    "target": "local-dev",
+    "ui_url": "http://localhost:5173",
+    "api_url": "http://localhost:5173",
+    "commit": "f0814de0b3da09e5042dd980ae69298acdf95b72"
   },
+  "capture_conditions_verified": {
+    "viewports": "一致（desktop 1280x900 / mobile 390x844。metadata.json から読み込んで適用）",
+    "animations": "一致（animations: disabled を新側でも適用）",
+    "masks": "一致（account.image.atcoder / section.lapras をロケータマッピングで解決。新側に LAPRAS セクションは存在しないため後者の対象は 0 件）",
+    "states": "一致（default / hover / focus へ現側と同じ操作アダプタで遷移）",
+    "environment": "unverified: capture_conditions.environment は自由記述で機械照合できない。採取は Linux (WSL2) の Chromium・devicePixelRatio 1・colorScheme light で実施し、想定利用者の Windows Chrome とは異なる"
+  },
+  "differ_versions": {
+    "trait_capture": "e2e/parity/lib/tools/vendor/trait-capture.mjs (VERSION 1)",
+    "trait_compare": "e2e/parity/lib/tools/vendor/trait-compare.mjs (VERSION 1)",
+    "pixel_tool": "e2e/parity/lib/tools/pixel-compare.mjs (VERSION 1, pixelmatch 7.2.0 + pngjs 7.0.0)",
+    "aria_compare": "e2e/parity/lib/tools/aria-compare.mjs (VERSION 1) — 採取した aria スナップショットの行単位構造比較",
+    "align_tolerance": 1,
+    "pixel_crops": ".agents/skills/parity-diff/scripts/pixel-crops.mjs (VERSION 1)",
+    "diff_normalize": ".agents/skills/parity-diff/scripts/diff-normalize.mjs (VERSION 2)"
+  },
+  "noise_baseline_applied": [
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "hover",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "focus",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "hover",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "focus",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    }
+  ],
   "noise_baseline_new": [
     {
       "page": "/",
@@ -28,7 +85,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     },
     {
       "page": "/",
@@ -37,7 +94,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     },
     {
       "page": "/",
@@ -46,7 +103,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     },
     {
       "page": "/",
@@ -55,7 +112,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     },
     {
       "page": "/",
@@ -64,7 +121,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     },
     {
       "page": "/",
@@ -73,84 +130,80 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-29T07:40:00+09:00"
+      "measured_at": "2026-07-31T10:22:03+09:00"
     }
   ],
   "noise_measurement": {
-    "measured_pairs": 6,
-    "reused_pairs": 0,
-    "reason": "初回実行のため再利用元（前回の diff-metadata.json）が無い。あわせて replace-metadata.json の loop.changed_scope が null で範囲を辿れないため、いずれにせよ全組を測定する",
-    "measured_at_commit": "60f5d1ed38213674a52c30e4e5d622cc8f52a16d",
-    "loop_iteration": 0,
+    "measured_at": "2026-07-31T10:22:03+09:00",
+    "measured_at_commit": "f0814de0b3da09e5042dd980ae69298acdf95b72",
+    "loop_iteration": 1,
     "fingerprint": {
-      "capture_conditions": "viewports=[1280x900,390x844] states=[default,hover,focus] animations=disabled masks=[AtCoder バッジ, LAPRAS セクション]",
-      "differ": "trait-capture v1 / trait-compare v1 / pixel-compare v1 (pixelmatch 7.2.0, threshold 0.1) / aria-compare v1 / align_tolerance 1",
+      "capture_conditions": "viewports=[desktop:1280x900,mobile:390x844] states=[default,hover,focus] animations=disabled full_page=true masks=[account.image.atcoder,section.lapras]",
+      "differ": "trait-capture VERSION 1 / trait-compare VERSION 1 / pixel-compare VERSION 1 (pixelmatch 7.2.0, threshold 0.1) / aria-compare VERSION 1 / align_tolerance 1",
       "dataset_version": 2,
       "pairs": [
         "/|default|desktop",
-        "/|hover|desktop",
-        "/|focus|desktop",
         "/|default|mobile",
-        "/|hover|mobile",
-        "/|focus|mobile"
+        "/|focus|desktop",
+        "/|focus|mobile",
+        "/|hover|desktop",
+        "/|hover|mobile"
       ]
-    }
-  },
-  "differ_versions": {
-    "trait_capture": "1",
-    "trait_compare": "1",
-    "pixel_tool": "e2e/parity/lib/tools/pixel-compare.mjs v1 (pixelmatch 7.2.0 + pngjs 7.0.0)",
-    "pixel_threshold": 0.1,
-    "align_tolerance": 1,
-    "aria_compare": "e2e/parity/lib/tools/aria-compare.mjs v1",
-    "diff_normalize": ".claude/skills/parity-diff/scripts/diff-normalize.mjs",
-    "pixel_crops": ".claude/skills/parity-diff/scripts/pixel-crops.mjs"
+    },
+    "reused_pairs": 0,
+    "remeasured_pairs": 6,
+    "remeasure_reason": [
+      "--remeasure-noise 相当の全組再測定",
+      "採取スペックと撮影条件メタデータを parity-diff v1.34.0 契約へ移行"
+    ]
   },
   "paths": {
-    "baseline_current": ".replace/parity/static-page/baseline/",
-    "baseline_new": ".replace/parity/static-page/new/local-dev/baseline-new/",
-    "diff_report": ".replace/parity/static-page/new/local-dev/diff.md"
+    "diff_report": ".replace/parity/static-page/new/local-dev/diff.md",
+    "baseline_new": ".replace/parity/static-page/new/local-dev/baseline-new/"
   },
   "results": {
-    "total": 10,
+    "total": 20,
     "actionable": 0,
     "accepted": 9,
     "noise": 0,
-    "unexplained": 1,
-    "unverified": 7,
-    "out_of_scope": 4
+    "unexplained": 11,
+    "unverified": [
+      "LAPRAS セクション自体は新側に未実装であり、機能 lapras（Issue #23）の実装後に再検証する",
+      "capture_conditions.environment は自由記述のため機械照合していない",
+      "想定利用者の Windows Chrome では採取していない",
+      "animations: disabled のためアニメーション中の見た目は検証していない",
+      "特性照合の固定プロパティ集合外は画素経路のみで検出する",
+      "gaps.md の宣言できない構造差は現時点で空であり、構造差の網羅性は未検証"
+    ]
   },
-  "detection_counts": {
-    "pixel_regions": {
-      "desktop": 3,
-      "mobile": 9
-    },
-    "pixel_diff_excluding_lapras": {
-      "desktop": 6,
-      "mobile": 11
-    },
-    "pixel_state_elements_all_equal": true,
-    "trait_diffs": {
-      "desktop_default": 137,
-      "mobile_default": 136,
-      "per_state_per_element": 3,
-      "after_normalization": {
-        "desktop_default_unexplained": 1,
-        "mobile_default_unexplained": 0
-      }
-    },
-    "aria_lines_raw": 256,
-    "aria_lines_after_normalization": 7
+  "accepted_exceptions": {
+    "causes": 1,
+    "instances": 9,
+    "unresolved": 0
   },
+  "iteration": 1,
   "on_diff_doc": "none",
-  "converged": false,
-  "handoff": {
-    "to": "none",
-    "reason": "要対応ゼロ。残差は他機能（Issue #23）待ちのため parity-replace へ差し戻さない"
-  },
-  "blocked_by": {
-    "issue": "#23",
-    "feature": "lapras",
-    "reason": "残る unexplained 1 件は LAPRAS セクションが新側に無いことに由来する相対幾何の反転。static-page の範囲では解消できない"
-  }
+  "filed_issue": null,
+  "blocked_by": [
+    {
+      "feature": "lapras",
+      "issue": "#23",
+      "reason": "同じページの末尾にある LAPRAS セクションが新側に無いため main の高さとスクロール可能範囲が 483px 短く、default の親子間相対幾何 1 件と、hover / focus で scrollIntoView 後に採取する要素間相対幾何 10 件が変わる",
+      "diff_ids": [
+        "TD-001",
+        "THD-001",
+        "THD-002",
+        "THD-003",
+        "TFD-001",
+        "TFD-002",
+        "TFD-003",
+        "THM-001",
+        "THM-002",
+        "TFM-001",
+        "TFM-002"
+      ],
+      "evidence": ".replace/features.md で lapras は Issue #23 に割り当て済み。同じ target の .replace/parity/lapras/new/local-dev/replace-metadata.json が存在しないことを 2026-07-31 に確認"
+    }
+  ],
+  "converged": false
 }

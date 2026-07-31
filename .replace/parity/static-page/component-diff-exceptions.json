@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "slug": "static-page",
+  "component_diff_exception_causes": [
+    {
+      "id": "font-subset-weight600",
+      "reason": "フォントのサブセットビルド差による weight 600 のラスタライズ差",
+      "evidence": "component-diff-exceptions.md#font-subset-weight600"
+    }
+  ],
+  "component_diff_exceptions": [
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.toyota-outsystems.heading",
+      "state": "default",
+      "viewport": "desktop",
+      "property": "pixel",
+      "bbox": "189,3096,3,1",
+      "current": "new/local-dev/crops/desktop/crop-1-current.png",
+      "new": "new/local-dev/crops/desktop/crop-1-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.toyota-outsystems.heading",
+      "state": "default",
+      "viewport": "desktop",
+      "property": "pixel",
+      "bbox": "237,3096,3,1",
+      "current": "new/local-dev/crops/desktop/crop-2-current.png",
+      "new": "new/local-dev/crops/desktop/crop-2-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "self-promotion.item.3",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "170,1002,1,1",
+      "current": "new/local-dev/crops/mobile/crop-1-current.png",
+      "new": "new/local-dev/crops/mobile/crop-1-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.freelance-sales",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "232,2208,1,1",
+      "current": "new/local-dev/crops/mobile/crop-2-current.png",
+      "new": "new/local-dev/crops/mobile/crop-2-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.toyota-outsystems.heading",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "189,5793,3,1",
+      "current": "new/local-dev/crops/mobile/crop-3-current.png",
+      "new": "new/local-dev/crops/mobile/crop-3-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.toyota-outsystems.heading",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "237,5793,3,1",
+      "current": "new/local-dev/crops/mobile/crop-4-current.png",
+      "new": "new/local-dev/crops/mobile/crop-4-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "careers.project.toyota-outsystems",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "221,6667,1,1",
+      "current": "new/local-dev/crops/mobile/crop-5-current.png",
+      "new": "new/local-dev/crops/mobile/crop-5-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "qualifications.group.2.item.1",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "136,7993,1,1",
+      "current": "new/local-dev/crops/mobile/crop-6-current.png",
+      "new": "new/local-dev/crops/mobile/crop-6-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "qualifications.group.3.item.1",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "142,8098,1,1",
+      "current": "new/local-dev/crops/mobile/crop-7-current.png",
+      "new": "new/local-dev/crops/mobile/crop-7-new.png",
+      "cause": "font-subset-weight600",
+      "approved_at": "2026-07-29"
+    }
+  ]
+}

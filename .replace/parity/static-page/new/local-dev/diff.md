@@ -3,7 +3,7 @@
 - 対象 slug: `static-page`
 - 対象 target: `local-dev`（<http://localhost:5173>）
 - モード: feature
-- 実施日時: 2026-07-29T07:55:00+09:00（反復 1 の修正後に再検出: 2026-07-29T08:55:00+09:00）
+- 実施日時: 2026-07-29T07:55:00+09:00（反復 1 の修正後に再検出: 2026-07-29T08:55:00+09:00、v1.34.0 契約で再検証: 2026-07-31T10:22:03+09:00）
 - 読んだ同 target の `replace-metadata.json` の `loop.iterations`: 0 → 反復 1 の修正を受けて再検出済み
 
 ## 1. 前提確認の結果
@@ -132,12 +132,58 @@ weight 600 のときだけラスタライズが数画素変わる。desktop の 
 
 ## 7. 収束判定
 
-- 未説明差分: **1 件**（反復 1 の修正後。`page.main` と職務経歴見出しの相対幾何。LAPRAS 不在に由来し Issue #23 待ち）
-- 未修正回帰（deviates_T / actionable）: 0 件（`component_diffs` が空のため T からの逸脱は判定していない）
-- 「許容」例外の確定（ユーザー承認）: **済**（ID 3・4 を 2026-07-29 に承認し `component_diff_exceptions` へ 7 件を非破壊追記）
+- 未説明差分: **11 件**（default 1 件、hover / focus 10 件。いずれも LAPRAS 不在に由来し Issue #23 待ち）
+- 未修正回帰（`deviates_T` / actionable）: 0 件（宣言済みの特性差からの逸脱は検出していない）
+- 「許容」例外の確定（ユーザー承認）: **済**（2026-07-29 に承認。旧設定の 7 行は v1.34.0 移行時に bbox 単位の 9 インスタンスへ分解）
 - 収束: **converged: false**
 
 根拠: 反復 1 で要対応 2 件は解消し、許容の承認も済んだが、`diff-normalize.mjs` が desktop default で
-`unexplained` を 1 件返し続けている（`page.main` と職務経歴見出しの相対幾何）。**これは LAPRAS
-セクションが新側に無いことに由来し、`static-page` の範囲では解消できない。** 機能 `lapras`
-（Issue #23）の実装後に再判定する。差分器の判定を主観で上書きせず、未収束のまま残す。
+`unexplained` を 1 件、hover / focus で合計 10 件返している。**いずれも LAPRAS セクションが新側に
+無いため main の高さとスクロール可能範囲が 483px 短いことに由来し、`static-page` の範囲では
+解消できない。** 機能 `lapras`（Issue #23）の実装後に再判定する。`blocked_by` へ帰属させても
+未説明差分から差し引かず、未収束のまま残す。
+
+## 8. v1.34.0 契約への移行検証（2026-07-31）
+
+`local-dev` を `new-capture` project で baseline / noise の別パスとして再採取し、v1.34.0 の決定論的差分器で再照合した。旧設定の例外 7 行は、ワイルドカードを使わず実測 bbox ごとの **9 インスタンス**へ分解して `.replace/parity/static-page/component-diff-exceptions.json` に移した。原因は `font-subset-weight600` に 1 回だけ定義し、全インスタンスが参照する。台帳の不整合は 0 件だった。
+
+| 経路     | 検証結果                                                                                                                                                                                                                |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 画素     | desktop 2 / mobile 7 の bbox が台帳の 9 インスタンスと一致。LAPRAS 領域は例外へ入れない。                                                                                                                               |
+| 特性照合 | default は desktop `absorbed_T: 136` と LAPRAS 由来の相対幾何 1 件、mobile `absorbed_T: 136`。hover/focus は `absorbed_T: 12` のほか、LAPRAS 不在で `scrollIntoView` 後の位置関係が変わる相対幾何候補 10 件を検出した。 |
+| aria     | desktop / mobile とも生 256 行。従来の GitHub 表記とランドマーク化の宣言を適用する補助経路である。                                                                                                                      |
+
+新側の自己ノイズは 2026-07-31 に全 6 組を測り直し、画素・特性とも全組ゼロ、default の aria も
+両ビューポートで一致した。`PARITY_NOISE_PAIRS=/|default|desktop` の再実行では指定した 1 組だけを
+採取し、指定外の古い `noise-pass2` 成果物が除去されることも確認した。
+
+### v1.34.0 の正式差分 ID
+
+| ID      | 経路     | 状態    | ビューポート | 内容                                                                     | 分類                         |
+| ------- | -------- | ------- | ------------ | ------------------------------------------------------------------------ | ---------------------------- |
+| TD-001  | 特性照合 | default | desktop      | `page.main` と職務経歴見出しの相対幾何 `vertical` が `gt` → `lt`         | unexplained / Issue #23 待ち |
+| THD-001 | 特性照合 | hover   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop hover 3 件中 1 件） | unexplained / Issue #23 待ち |
+| THD-002 | 特性照合 | hover   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop hover 3 件中 2 件） | unexplained / Issue #23 待ち |
+| THD-003 | 特性照合 | hover   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop hover 3 件中 3 件） | unexplained / Issue #23 待ち |
+| TFD-001 | 特性照合 | focus   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop focus 3 件中 1 件） | unexplained / Issue #23 待ち |
+| TFD-002 | 特性照合 | focus   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop focus 3 件中 2 件） | unexplained / Issue #23 待ち |
+| TFD-003 | 特性照合 | focus   | desktop      | `scrollIntoView` 後の代表要素間相対幾何候補（desktop focus 3 件中 3 件） | unexplained / Issue #23 待ち |
+| THM-001 | 特性照合 | hover   | mobile       | `scrollIntoView` 後の代表要素間相対幾何候補（mobile hover 2 件中 1 件）  | unexplained / Issue #23 待ち |
+| THM-002 | 特性照合 | hover   | mobile       | `scrollIntoView` 後の代表要素間相対幾何候補（mobile hover 2 件中 2 件）  | unexplained / Issue #23 待ち |
+| TFM-001 | 特性照合 | focus   | mobile       | `scrollIntoView` 後の代表要素間相対幾何候補（mobile focus 2 件中 1 件）  | unexplained / Issue #23 待ち |
+| TFM-002 | 特性照合 | focus   | mobile       | `scrollIntoView` 後の代表要素間相対幾何候補（mobile focus 2 件中 2 件）  | unexplained / Issue #23 待ち |
+
+hover / focus の 10 件は v1.34.0 の正規化器が明示したもので、別の回帰ではない。いずれも
+`.replace/features.md` にある `lapras`（Issue #23）に帰属し、同じ `local-dev` の
+`.replace/parity/lapras/new/local-dev/replace-metadata.json` が存在しないことを確認した。
+LAPRAS 実装後に再判定するまで、`static-page` は収束させない。
+
+### 正式な結果件数
+
+| 項目                         | 件数 |
+| ---------------------------- | ---: |
+| 検出候補合計                 |   20 |
+| 要対応（actionable）         |    0 |
+| 承認済み画素例外（accepted） |    9 |
+| 環境ノイズ（noise）          |    0 |
+| 未説明（unexplained）        |   11 |
