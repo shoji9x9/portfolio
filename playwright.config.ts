@@ -1,6 +1,7 @@
 // Playwright 設定（パリティスイート専用）。
 //
-// projects は `current`（現行アプリ）と `new`（新側アプリ）の 2 つ。baseURL は URL を直書きせず、
+// projects は `current`（現行アプリ）・`new`（新側 green 検証）・`new-capture`（新側採取）の 3 つ。
+// baseURL は URL を直書きせず、
 // 環境変数から解決する（`.config/skills/shoji9x9/skills.yml` の targets から呼び出し側が渡す）。
 //   - current: PARITY_CURRENT_UI_URL / PARITY_CURRENT_API_URL
 //   - new    : PARITY_NEW_UI_URL     / PARITY_NEW_API_URL
@@ -59,7 +60,22 @@ export default defineConfig({
       // 「現側ベースラインを作る／それを相手に照合する」工程で、新側で走らせると
       // 意味を持たないうえ現側の証跡（baseline/・strength-results.json）を上書きしてしまう。
       // 新側の採取と現新比較は parity-diff が `new/<target>/` に対して行う。
-      testIgnore: [/static-page\/baseline\.spec\.ts$/, /static-page\/strength\.spec\.ts$/],
+      testIgnore: [
+        /static-page\/baseline\.spec\.ts$/,
+        /static-page\/baseline-new\.spec\.ts$/,
+        /static-page\/strength\.spec\.ts$/,
+      ],
+      use: {
+        ...devices["Desktop Chrome"],
+        ...(newUiUrl === undefined ? {} : { baseURL: newUiUrl }),
+        viewport: { width: VIEWPORTS[0].width, height: VIEWPORTS[0].height },
+      },
+    },
+    {
+      // parity-diff が新側ベースラインと自己ノイズを採取する専用 project。
+      // 採取スペックを new の green 検証から除外し、環境変数の未設定で収集が落ちないようにする。
+      name: "new-capture",
+      testMatch: /static-page\/baseline-new\.spec\.ts$/,
       use: {
         ...devices["Desktop Chrome"],
         ...(newUiUrl === undefined ? {} : { baseURL: newUiUrl }),

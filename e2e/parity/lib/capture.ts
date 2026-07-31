@@ -94,17 +94,24 @@ export function parseTraits(json: string, source: string): Trait[] {
   });
 }
 
-type StateArtifacts = {
+export type StateArtifacts = {
   /** 論理名 → 要素スクリーンショット。 */
   screenshots: Map<string, Buffer>;
   traits: Trait[];
 };
 
-export type ViewportArtifacts = {
+export type DefaultArtifacts = {
   conditions: CaptureConditions;
   pageScreenshot: Buffer;
   traits: Trait[];
   aria: string;
+};
+
+export type ViewportArtifacts = {
+  conditions: DefaultArtifacts["conditions"];
+  pageScreenshot: DefaultArtifacts["pageScreenshot"];
+  traits: DefaultArtifacts["traits"];
+  aria: DefaultArtifacts["aria"];
   hover: StateArtifacts;
   focus: StateArtifacts;
 };
@@ -126,7 +133,7 @@ export function dynamicMasks(page: Page): Locator[] {
 }
 
 /** hover / focus を採る代表要素（論理名）。スタイル系統ごとに 1 つ選ぶ。 */
-const INTERACTIVE_SAMPLES: readonly string[] = [
+export const INTERACTIVE_SAMPLES: readonly string[] = [
   "desired-work.link",
   "artifacts.card.portfolio.url-link",
   "account.link.github",
@@ -140,7 +147,7 @@ function findEntry(entries: readonly LogicalEntry[], name: string): LogicalEntry
   return found;
 }
 
-async function collectState(
+export async function collectStateArtifacts(
   page: Page,
   entries: readonly LogicalEntry[],
   state: "hover" | "focus",
@@ -164,6 +171,27 @@ async function collectState(
   return { screenshots, traits };
 }
 
+/** default 状態の 3 点セットを採取する。マスク未指定時は現行側の既定マスクを使う。 */
+export async function collectDefaultArtifacts(
+  page: Page,
+  entries: readonly LogicalEntry[],
+  conditions: CaptureConditions,
+  options: { fullPage?: boolean; masks?: readonly Locator[] } = {},
+): Promise<DefaultArtifacts> {
+  await enterState(page, page.locator("body"), "default");
+
+  const pageScreenshot = await page.screenshot({
+    fullPage: options.fullPage ?? true,
+    animations: "disabled",
+    caret: "hide",
+    mask: [...(options.masks ?? dynamicMasks(page))],
+  });
+  const traits = await captureTraits(entries.map(({ name, locator }) => ({ name, locator })));
+  // 参考 aria（assertion ではない）。強度ゲートの aria 比較経路がこれを相手に構造比較する。
+  const aria = await page.getByRole("main").ariaSnapshot();
+  return { conditions, pageScreenshot, traits, aria };
+}
+
 /**
  * 1 ビューポート分の 3 点セットをメモリ上に採取する。
  * 呼び出し前にページを開き、ビューポートを設定済みであること。
@@ -173,26 +201,62 @@ export async function collectArtifacts(
   entries: readonly LogicalEntry[],
   conditions: CaptureConditions,
 ): Promise<ViewportArtifacts> {
-  await enterState(page, page.locator("body"), "default");
+  const defaults = await collectDefaultArtifacts(page, entries, conditions);
+  const hover = await collectStateArtifacts(page, entries, "hover");
+  const focus = await collectStateArtifacts(page, entries, "focus");
 
-  const pageScreenshot = await page.screenshot({
-    fullPage: true,
-    animations: "disabled",
-    caret: "hide",
-    mask: dynamicMasks(page),
-  });
-  const traits = await captureTraits(entries.map(({ name, locator }) => ({ name, locator })));
-  // 参考 aria（assertion ではない）。強度ゲートの aria 比較経路がこれを相手に構造比較する。
-  const aria = await page.getByRole("main").ariaSnapshot();
-
-  const hover = await collectState(page, entries, "hover");
-  const focus = await collectState(page, entries, "focus");
-
-  return { conditions, pageScreenshot, traits, aria, hover, focus };
+  return { ...defaults, hover, focus };
 }
 
 async function writeJson(path: string, value: unknown): Promise<void> {
   await writeFile(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+/** default 状態の採取物を `outputDir/<viewport>/default/` へ書き出す。 */
+export async function writeDefaultArtifacts(
+  artifacts: DefaultArtifacts,
+  outputDir: string,
+): Promise<string[]> {
+  const label = artifacts.conditions.viewport.label;
+  const base = `${outputDir}/${label}/default`;
+  await mkdir(base, { recursive: true });
+  await writeFile(`${base}/screenshot.png`, artifacts.pageScreenshot);
+  await writeJson(`${base}/traits.json`, artifacts.traits);
+  await writeFile(`${base}/aria.txt`, `${artifacts.aria}\n`, "utf8");
+  return [
+    `${label}/default/screenshot.png`,
+    `${label}/default/traits.json`,
+    `${label}/default/aria.txt`,
+  ];
+}
+
+/** hover / focus 状態の採取物を `outputDir/<viewport>/<state>/` へ書き出す。 */
+export async function writeStateArtifacts(
+  artifacts: StateArtifacts,
+  outputDir: string,
+  viewport: string,
+  state: "hover" | "focus",
+): Promise<string[]> {
+  const base = `${outputDir}/${viewport}/${state}`;
+  const written = [`${viewport}/${state}/traits.json`];
+  await mkdir(base, { recursive: true });
+  await writeJson(`${base}/traits.json`, artifacts.traits);
+  for (const [name, buffer] of artifacts.screenshots) {
+    await writeFile(`${base}/${name}.png`, buffer);
+    written.push(`${viewport}/${state}/${name}.png`);
+  }
+  return written;
+}
+
+/** ネットワークログを `outputDir/<viewport>/network.json` へ書き出す。 */
+export async function writeNetworkEntries(
+  network: readonly NetworkEntry[],
+  outputDir: string,
+  viewport: string,
+): Promise<string[]> {
+  await mkdir(`${outputDir}/${viewport}`, { recursive: true });
+  await writeJson(`${outputDir}/${viewport}/network.json`, network);
+  return [`${viewport}/network.json`];
 }
 
 /** 採取物を `outputDir/<viewport>/…` へ書き出し、書いた相対パスを返す。 */
@@ -202,31 +266,17 @@ export async function writeArtifacts(
   outputDir: string,
 ): Promise<string[]> {
   const label = artifacts.conditions.viewport.label;
-  const base = `${outputDir}/${label}`;
   const written: string[] = [];
 
-  await mkdir(`${base}/default`, { recursive: true });
-  await writeFile(`${base}/default/screenshot.png`, artifacts.pageScreenshot);
-  written.push(`${label}/default/screenshot.png`);
-  await writeJson(`${base}/default/traits.json`, artifacts.traits);
-  written.push(`${label}/default/traits.json`);
-  await writeFile(`${base}/default/aria.txt`, `${artifacts.aria}\n`, "utf8");
-  written.push(`${label}/default/aria.txt`);
+  written.push(...(await writeDefaultArtifacts(artifacts, outputDir)));
 
   for (const [state, stateArtifacts] of [
     ["hover", artifacts.hover],
     ["focus", artifacts.focus],
   ] as const) {
-    await mkdir(`${base}/${state}`, { recursive: true });
-    await writeJson(`${base}/${state}/traits.json`, stateArtifacts.traits);
-    written.push(`${label}/${state}/traits.json`);
-    for (const [name, buffer] of stateArtifacts.screenshots) {
-      await writeFile(`${base}/${state}/${name}.png`, buffer);
-      written.push(`${label}/${state}/${name}.png`);
-    }
+    written.push(...(await writeStateArtifacts(stateArtifacts, outputDir, label, state)));
   }
 
-  await writeJson(`${base}/network.json`, network);
-  written.push(`${label}/network.json`);
+  written.push(...(await writeNetworkEntries(network, outputDir, label)));
   return written;
 }

@@ -4,9 +4,9 @@ description: フロントエンド／バックエンドの変更が画面表示�
 license: MIT
 metadata:
     github-path: skills/browser-test
-    github-ref: refs/tags/v1.26.1
+    github-ref: refs/tags/v1.34.0
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: 4a90dbd10eae0e5247a23028cc53c409d58427ba
+    github-tree-sha: 985adcf9ada984c92d96821ad244560f8d99d9c3
 name: browser-test
 ---
 # Browser Test
@@ -56,7 +56,9 @@ browser-test setup
 1. **環境とスコープの確定**: 呼び出し元スキルから環境を渡されたときは環境の解決を行わず（設定ファイルを開かない・存在確認もしない）、渡された環境をそのまま使う（「厳守の制約」参照）。
    それ以外はプロジェクト設定を解決し、環境（既定は設定で `default` とされた環境）をユーザーに確認する。確認スコープはいずれの場合もユーザーに確認する。
    認証が必要な環境はユーザーがログインを実施する。「ログインが完了したら教えてください」と伝え、完了の合図を待ってから確認を始める
-2. **サーバ稼働確認（ローカル選択時）**: 起動前に環境の `pre_commands` があれば順に実行し、失敗したらそこで停止する。続いて解決した URL 群に `curl -s -o /dev/null -w "%{http_code}"` で疎通確認する。落ちていれば確認を始めず、解決済みの起動コマンドを提示してユーザーに起動を促す
+2. **サーバ稼働確認（ローカル選択時）**: まず解決した URL 群（`check_urls`。省略時は `url`）に `curl -s -o /dev/null -w "%{http_code}"` で疎通確認する。稼働していれば `pre_commands` / `start` は実行せず次へ進む。
+   落ちていれば確認を始めず、解決済みの `pre_commands`（あれば）と起動コマンドを**まとめて提示してユーザーに実行を促す**。本スキルはこれらを自動実行しない（build / codegen 等の副作用を承認なく起こさない）。
+   起動完了の合図を受けたら疎通確認をやり直し、通らなければそこで停止する
 3. **確認スコープの取得と影響ページの導出**:
    - スコープ: `uncommitted`（既定。`git status --short` / `git diff --name-only` ＋ untracked）／`branch`（`git diff --name-only <ベースブランチ>...HEAD`）／`custom`（ユーザーが指定したページ・観点）
    - フロントエンド変更: ルーター定義（React Router の Route 定義、Next.js の `pages/`・`app/` ディレクトリ、Vue Router 等）から変更ファイルをページに対応づける。

@@ -1,6 +1,7 @@
 // 特性照合（正本）。trait-capture.mjs の採取結果 2 つを決定論的に比較する。
 // 正本はこのスキル側にあり、実行時はプロジェクトの
-// `<parity_suite_dir>/parity/lib/tools/` へコピーして使う（配布スキルの成果物同梱規約）。
+// `<parity_suite_dir>/parity/lib/tools/vendor/` へコピーして使う（配布スキルの成果物同梱規約）。
+// コピー先はコピー専用のサブディレクトリで、プロジェクト自作ツールと同居させない（修正しない規約のため）。
 //
 // 使いどころ:
 //   - ノイズ基準値の測定: 現行を同一条件で 2 回採り、その差分量を metadata.json に記録する
@@ -13,8 +14,8 @@
 // 決定論的: 乱数・現在時刻に依存しない。Playwright に依存しない（純粋な JS）。
 // TypeScript 構文は使わない（型は JSDoc）。
 
-import { readFileSync } from "node:fs";
-import { pathToFileURL } from "node:url";
+import { readFileSync, realpathSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 
 /**
  * ツールのバージョン（正本）。比較ロジック・差分形状を変えたら上げる。
@@ -267,6 +268,23 @@ export function main(argv) {
   return diffs.length > 0 ? 1 : 0;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] || "").href) {
+// CLI エントリ判定は両辺を実パスに解決してから突き合わせる。
+// process.argv[1] は起動時のパスのまま、import.meta.url も --preserve-symlinks(-main)
+// （NODE_OPTIONS 経由でも付く）では未解決のままなので、片側だけ解決すると
+// シンボリックリンク経由（.claude/skills/<name> → .agents/skills/<name>）の起動で条件が偽になり、
+// main() が呼ばれず何も出力せず exit 0 になる（サイレント no-op）。
+const invokedAsCli = (() => {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  const self = fileURLToPath(import.meta.url);
+  try {
+    return realpathSync(entry) === realpathSync(self);
+  } catch {
+    // 実パス解決に失敗したら生パスで突き合わせる（サイレント no-op より誤検出を選ぶ）。
+    return entry === self;
+  }
+})();
+
+if (invokedAsCli) {
   process.exit(main(process.argv.slice(2)));
 }

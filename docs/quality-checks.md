@@ -59,6 +59,10 @@ PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/pari
 ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
 CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
 
+### local-production を検証するとき
+
+`local-production` の `pre_commands` は、v1.30.1 以降、`check_urls` が失敗したときだけ実行される。ソースを変更した後に既存の preview サーバーが稼働している場合は、先に停止してから `local-production` の検証を開始する。これにより `pnpm build` が実行され、古い `dist/` を検証対象にしない。
+
 ## 新しいファイル種別を追加するときの確認
 
 リポジトリーへ新しい種類のファイル・ディレクトリ（生成物・採取物・CLI・スクリプト・E2E など）を

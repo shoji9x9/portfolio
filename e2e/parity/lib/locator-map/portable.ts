@@ -18,6 +18,23 @@ import { SECTION_HEADING_TEXT } from "./names";
 export type LogicalEntry = { name: string; locator: Locator };
 
 /**
+ * `metadata.json` の capture_conditions.masks から解決できる動的領域。
+ * 通常の特性採取対象には含めず、スクリーンショットのマスク契約だけを論理名で共有する。
+ */
+export function captureMaskEntries(containers: ContainerLocators): LogicalEntry[] {
+  return [
+    {
+      name: "account.image.atcoder",
+      locator: containers.section("account").getByRole("img", { name: "AtCoder", exact: true }),
+    },
+    {
+      name: "section.lapras",
+      locator: containers.section("lapras"),
+    },
+  ];
+}
+
+/**
  * `static-page` が担当するセクション（`lapras` は機能 `lapras` の担当でスコープ外）。
  * **並びは現行 `/` の表示順そのもの**で、`checkPageBasicsAndSectionOrder` の期待列に使う。
  * 並べ替えるとセクション順の契約を変えることになるので、現行を確認せずに触らない。

@@ -10,7 +10,7 @@
 // **現・新どちらに当てても green** でなければならない。両立させるには「データセット = 現行の真」
 // 「意図的差異層 = 宣言済みの側差」と役割を分けるしかない。
 //
-// side は Playwright の project 名（`current` / `new`）から解決する。スイート本体の関数シグネチャに
+// side は Playwright の project 名（`current` / `new` / `new-capture`）から解決する。スイート本体の関数シグネチャに
 // side を通さずに済ませるため、実行中のテスト情報から引く。
 import type { Badge } from "./dataset";
 
@@ -22,7 +22,10 @@ export type Side = "current" | "new";
 function currentSide(): Side {
   const name = test.info().project.name;
   if (name === "current" || name === "new") return name;
-  throw new Error(`未知の project 名です: ${name}（current / new のいずれかを指定する）`);
+  if (name === "new-capture") return "new";
+  throw new Error(
+    `未知の project 名です: ${name}（current / new / new-capture のいずれかを指定する）`,
+  );
 }
 
 /**
