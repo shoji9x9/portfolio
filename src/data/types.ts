@@ -87,3 +87,8 @@ export type StaticContent = {
     url: string;
   };
 };
+
+/** LAPRAS 公開プロフィール。プレビュー内容は実行時 API が返すため静的データへ含めない。 */
+export type Lapras = {
+  publicUrl: string;
+};

@@ -5,9 +5,7 @@
 // その代償として「まだ実装していない機能のセクションが欠けている」ことを誰も見なくなる。
 //
 // このスペックはその隙間だけを埋める。`.replace/features.md` が `/` に紐づけた機能のセクションが
-// **すべて揃っているか**を見る。未実装の機能があるうちは `test.fixme` にしておき、
-// 実行のたびに「保留」として報告へ出し続ける（green は妨げない）。
-// 担当 Issue が実装したら `fixme` を外すと本物の assertion になる。
+// **すべて揃っているか**を見る。
 import { expect, test } from "./lib/fixtures";
 
 /**
@@ -23,10 +21,8 @@ const SECTIONS_ON_ROOT = [
   { heading: "資格", feature: "static-page", owner: "#22", implemented: true },
   { heading: "製作物", feature: "static-page", owner: "#22", implemented: true },
   { heading: "希望条件", feature: "static-page", owner: "#22", implemented: true },
-  { heading: "LAPRAS", feature: "lapras", owner: "#23", implemented: false },
+  { heading: "LAPRAS", feature: "lapras", owner: "#23", implemented: true },
 ] as const;
-
-const pending = SECTIONS_ON_ROOT.filter((section) => !section.implemented);
 
 test.describe("ページ `/` の在席チェック（機能をまたぐ）", () => {
   test("実装済み機能のセクションが features.md の順で揃っている", async ({ page }) => {
@@ -36,26 +32,7 @@ test.describe("ページ `/` の在席チェック（機能をまたぐ）", () 
       .allInnerTexts();
     const normalized = headings.map((text) => text.replaceAll(/\s+/g, ""));
 
-    for (const section of SECTIONS_ON_ROOT.filter((entry) => entry.implemented)) {
-      expect(
-        normalized.some((text) => text.startsWith(section.heading)),
-        `${section.feature}（${section.owner}）のセクション「${section.heading}」が無い`,
-      ).toBe(true);
-    }
-  });
-
-  // 未実装の機能が残っている間だけ fixme。担当 Issue が実装したら `SECTIONS_ON_ROOT` の
-  // `implemented` を true にして、この test.fixme を test に戻す。
-  test.fixme(`未実装の機能のセクションが揃っている（残り: ${pending.map((s) => `${s.heading}=${s.owner}`).join(", ")}）`, async ({
-    page,
-  }) => {
-    const headings = await page
-      .getByRole("main")
-      .getByRole("heading", { level: 2 })
-      .allInnerTexts();
-    const normalized = headings.map((text) => text.replaceAll(/\s+/g, ""));
-
-    for (const section of pending) {
+    for (const section of SECTIONS_ON_ROOT) {
       expect(
         normalized.some((text) => text.startsWith(section.heading)),
         `${section.feature}（${section.owner}）のセクション「${section.heading}」が無い`,

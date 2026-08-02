@@ -37,6 +37,7 @@ export type StaticContent = {
   desiredWorkTitle: string;
   desiredWorkUrl: string;
 };
+export type Lapras = { publicUrl: string; preview: string };
 
 function readJson(fileName: string): unknown {
   return JSON.parse(readFileSync(fileURLToPath(new URL(fileName, dataDirectory)), "utf8"));
@@ -205,12 +206,22 @@ function loadStaticContent(): StaticContent {
   };
 }
 
+function loadLapras(): Lapras {
+  const raw = readJson("lapras.json");
+  assertShape(isRecord(raw), "lapras.json", "オブジェクトではない");
+  const { publicUrl, preview } = raw;
+  assertShape(typeof publicUrl === "string", "lapras.json", "publicUrl が string でない");
+  assertShape(typeof preview === "string", "lapras.json", "preview が string でない");
+  return { publicUrl, preview };
+}
+
 export const dataset = {
   profile: loadProfile(),
   badges: loadBadges(),
   careers: loadCareers(),
   artifacts: loadArtifacts(),
   staticContent: loadStaticContent(),
+  lapras: loadLapras(),
 } as const;
 
 /** 職務経歴を「会社をまたいだ 6 プロジェクト」として平坦化する（論理名の生成に使う）。 */

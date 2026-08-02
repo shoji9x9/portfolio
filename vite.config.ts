@@ -5,12 +5,15 @@ import tailwindcss from "@tailwindcss/vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
+import { laprasPreviewDevPlugin } from "./vite/lapras-preview-plugin";
+
 // Vite+ (vite-plus) unified config. The `vp` CLI is provided by mise (viteplus).
 // Vite 8 dropped Babel from @vitejs/plugin-react v6 (JSX/Fast Refresh now run on
 // oxc). React Compiler therefore runs through @rolldown/plugin-babel, and it must
 // execute *before* react() so the compiler sees untransformed source.
 export default defineConfig({
   plugins: [
+    laprasPreviewDevPlugin(),
     babel({
       presets: [reactCompilerPreset()],
     }),
@@ -23,14 +26,38 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  server: {
+    // パリティ採取中に生成される成果物で HMR / page reload を起こさない。
+    // desktop の保存直後に mobile の navigation が中断されるため、実行時成果物を監視対象外にする。
+    watch: {
+      ignored: [
+        "**/.replace/**",
+        "**/coverage/**",
+        "**/playwright-report/**",
+        "**/reports/**",
+        "**/test-results/**",
+      ],
+    },
+  },
   test: {
     environment: "node",
-    include: ["src/**/*.{test,spec}.{ts,tsx}", "seed/**/*.{test,spec}.{ts,tsx}"],
+    include: [
+      "src/**/*.{test,spec}.{ts,tsx}",
+      "seed/**/*.{test,spec}.{ts,tsx}",
+      "functions/**/*.{test,spec}.{ts,tsx}",
+      "scripts/**/*.{test,spec}.{ts,tsx}",
+      "vite/**/*.{test,spec}.{ts,tsx}",
+    ],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "coverage",
-      include: ["src/**/*.{ts,tsx}"],
+      include: [
+        "src/**/*.{ts,tsx}",
+        "functions/**/*.ts",
+        "scripts/tailwind-canonical.ts",
+        "vite/**/*.ts",
+      ],
       // エントリ（main.tsx）・テスト・型定義はカバレッジ対象外。
       exclude: ["src/main.tsx", "**/*.{test,spec}.*", "**/*.d.ts"],
       // 自律エージェントに「変更にはテスト」を機械的に課すための閾値。

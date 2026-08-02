@@ -8,7 +8,7 @@
 #   - vendored の .agents/ .claude/ は lint/format 対象から除外（exclude glob リスト）。
 #
 # 前提の pnpm scripts（package.json 側で用意されている想定・notes 参照）:
-#   format(=vp fmt -c oxfmt.config.ts) / lint(=vp lint -c oxlint.config.ts --type-aware)
+#   format(=vp fmt -c oxfmt.config.ts) / lint(=oxlint type-aware + Tailwind canonical 検査)
 #   lint:md(=markdownlint-cli2) / knip / jscpd
 #   typecheck(=tsc -b) / test(=vp test --passWithNoTests) / react:doctor(=react-doctor)
 #

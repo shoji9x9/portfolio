@@ -3,6 +3,8 @@
 このリポジトリは Cloudflare Pages に静的サイトをデプロイする。PR ではプレビュー、
 `main` へのマージ後は production をデプロイする。ローカル開発では Cloudflare へ
 デプロイせず、`pnpm dev` を使う。
+`pnpm dev` はViteの開発用アダプターで `GET /api/lapras-preview` も提供し、Pages Functionと同じ
+取得・検証・キャッシュ中核を呼ぶ。Cloudflareランタイム固有の最終確認はPreviewスモークで行う。
 
 ## 初回設定
 
@@ -97,7 +99,9 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
 - PR の作成・更新: repository secret で `pages deploy --branch <PR ブランチ>` を実行し、PR ブランチに
   対応する Cloudflare Pages preview deployment を更新する。repository owner が作成した同一リポジトリ
   内 PR だけが対象であり、外部 fork・Dependabot・collaborator の PR では secret を安全に渡せないため
-  preview deploy を実行しない。
+  preview deploy を実行しない。デプロイ後は発行された deployment 固有 URL に対して Preview スモーク
+  テストを実行し、実 Pages Function・LAPRAS 公開ページ・ブラウザー上の画像表示まで成功した場合だけ
+  `Deploy / Preview` を成功とする。
   **配信するのは PR ブランチの先頭コミット**である（checkout に `ref: github.event.pull_request.head.sha`
   を指定）。`actions/checkout` の既定は `refs/pull/<n>/merge`、つまり PR を `main` へ試験マージした一時
   コミットで、それを配信すると preview の中身が「ブランチのコード」ではなく「マージ結果」になる。

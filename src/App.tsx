@@ -1,18 +1,18 @@
 import { ArtifactSection } from "@/components/portfolio/ArtifactSection";
 import { BadgeRow } from "@/components/portfolio/BadgeImage";
 import { CareerSection } from "@/components/portfolio/CareerSection";
+import { LaprasSection } from "@/components/portfolio/LaprasSection";
 import { PortfolioSection } from "@/components/portfolio/PortfolioSection";
 import { ProfileTable } from "@/components/portfolio/ProfileTable";
 import { Qualifications } from "@/components/portfolio/Qualifications";
 import { TextLink } from "@/components/portfolio/TextLink";
-import { artifacts, badges, careers, profile, staticContent } from "@/data";
+import { artifacts, badges, careers, lapras, profile, staticContent } from "@/data";
 
 /**
  * ポートフォリオの単一ページ。
  *
  * セクションの並びは現行 `/` と同じで、意図的差異レジストリの `keep`
- * （公開ルートと単一ページのセクション順）に従う。LAPRAS セクションは機能 `lapras`
- * （Issue #23）の担当で、このページに後から重ねる。
+ * （公開ルートと単一ページのセクション順）に従う。
  */
 function App() {
   return (
@@ -74,6 +74,8 @@ function App() {
       <PortfolioSection heading="希望条件" id="desired-work">
         <TextLink href={staticContent.desiredWork.url}>{staticContent.desiredWork.title}</TextLink>
       </PortfolioSection>
+
+      <LaprasSection lapras={lapras} />
     </main>
   );
 }

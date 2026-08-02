@@ -2,8 +2,8 @@
   "slug": "static-page",
   "mode": "feature",
   "run": {
-    "started_at": "2026-07-31T10:18:00+09:00",
-    "finished_at": "2026-07-31T10:22:03+09:00",
+    "started_at": "2026-07-31T12:18:00+09:00",
+    "finished_at": "2026-07-31T12:20:58+09:00",
     "agent": "Codex",
     "model": "GPT-5",
     "effort": "高",
@@ -13,9 +13,10 @@
   "dataset_version_exempt": null,
   "new": {
     "target": "local-dev",
-    "ui_url": "http://localhost:5173",
-    "api_url": "http://localhost:5173",
-    "commit": "f0814de0b3da09e5042dd980ae69298acdf95b72"
+    "ui_url": "http://localhost:5174",
+    "api_url": "http://localhost:8788",
+    "commit": "e6494eca5695a11f32d54b0a1204c00d3f096fc5",
+    "source_state": "上記 commit 上の Issue #23 未コミット作業ツリー"
   },
   "capture_conditions_verified": {
     "viewports": "一致（desktop 1280x900 / mobile 390x844。metadata.json から読み込んで適用）",
@@ -85,7 +86,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     },
     {
       "page": "/",
@@ -94,7 +95,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     },
     {
       "page": "/",
@@ -103,7 +104,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     },
     {
       "page": "/",
@@ -112,7 +113,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     },
     {
       "page": "/",
@@ -121,7 +122,7 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     },
     {
       "page": "/",
@@ -130,12 +131,12 @@
       "pixel_diff": 0,
       "trait_diffs": 0,
       "source": "measured",
-      "measured_at": "2026-07-31T10:22:03+09:00"
+      "measured_at": "2026-07-31T12:20:00+09:00"
     }
   ],
   "noise_measurement": {
-    "measured_at": "2026-07-31T10:22:03+09:00",
-    "measured_at_commit": "f0814de0b3da09e5042dd980ae69298acdf95b72",
+    "measured_at": "2026-07-31T12:20:00+09:00",
+    "measured_at_commit": "e6494eca5695a11f32d54b0a1204c00d3f096fc5",
     "loop_iteration": 1,
     "fingerprint": {
       "capture_conditions": "viewports=[desktop:1280x900,mobile:390x844] states=[default,hover,focus] animations=disabled full_page=true masks=[account.image.atcoder,section.lapras]",
@@ -153,8 +154,7 @@
     "reused_pairs": 0,
     "remeasured_pairs": 6,
     "remeasure_reason": [
-      "--remeasure-noise 相当の全組再測定",
-      "採取スペックと撮影条件メタデータを parity-diff v1.34.0 契約へ移行"
+      "依存機能 lapras（Issue #23）の実装でページ全体の高さと scrollIntoView 条件が変わったため全組再測定"
     ]
   },
   "paths": {
@@ -162,13 +162,12 @@
     "baseline_new": ".replace/parity/static-page/new/local-dev/baseline-new/"
   },
   "results": {
-    "total": 20,
+    "total": 10,
     "actionable": 0,
-    "accepted": 9,
+    "accepted": 10,
     "noise": 0,
-    "unexplained": 11,
+    "unexplained": 0,
     "unverified": [
-      "LAPRAS セクション自体は新側に未実装であり、機能 lapras（Issue #23）の実装後に再検証する",
       "capture_conditions.environment は自由記述のため機械照合していない",
       "想定利用者の Windows Chrome では採取していない",
       "animations: disabled のためアニメーション中の見た目は検証していない",
@@ -177,33 +176,13 @@
     ]
   },
   "accepted_exceptions": {
-    "causes": 1,
-    "instances": 9,
+    "causes": 2,
+    "instances": 10,
     "unresolved": 0
   },
   "iteration": 1,
   "on_diff_doc": "none",
   "filed_issue": null,
-  "blocked_by": [
-    {
-      "feature": "lapras",
-      "issue": "#23",
-      "reason": "同じページの末尾にある LAPRAS セクションが新側に無いため main の高さとスクロール可能範囲が 483px 短く、default の親子間相対幾何 1 件と、hover / focus で scrollIntoView 後に採取する要素間相対幾何 10 件が変わる",
-      "diff_ids": [
-        "TD-001",
-        "THD-001",
-        "THD-002",
-        "THD-003",
-        "TFD-001",
-        "TFD-002",
-        "TFD-003",
-        "THM-001",
-        "THM-002",
-        "TFM-001",
-        "TFM-002"
-      ],
-      "evidence": ".replace/features.md で lapras は Issue #23 に割り当て済み。同じ target の .replace/parity/lapras/new/local-dev/replace-metadata.json が存在しないことを 2026-07-31 に確認"
-    }
-  ],
-  "converged": false
+  "blocked_by": [],
+  "converged": true
 }

@@ -226,3 +226,29 @@ export function logicalEntries(containers: ContainerLocators): LogicalEntry[] {
 
   return entries;
 }
+
+/** `lapras` 機能だけの特性採取対象。外部プレビュー値は測定スナップショットから解決する。 */
+export function laprasEntries(containers: ContainerLocators): LogicalEntry[] {
+  const section = containers.section("lapras");
+  return [
+    { name: "section.lapras", locator: section },
+    {
+      name: "section.lapras.heading",
+      locator: section.getByRole("heading", { level: 2, name: "LAPRAS", exact: true }),
+    },
+    {
+      name: "lapras.link",
+      locator: section.getByRole("link", {
+        name: "shoji9x9さんのLAPRAS Profile",
+        exact: true,
+      }),
+    },
+    {
+      name: "lapras.image",
+      locator: section.getByRole("img", {
+        name: "shoji9x9さんのLAPRAS Profile",
+        exact: true,
+      }),
+    },
+  ];
+}

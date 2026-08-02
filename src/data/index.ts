@@ -3,11 +3,20 @@
 // `src/data/generated/*.json` はゴールデンデータセットのフェーズ B（`seed/phase-b.ts`）が
 // 論理データから写像して生成する。手で編集しない——編集すると再生成で失われ、現新一致の検証も
 // すり抜ける。写像規則の正本は `.replace/references/static-data-semantics.md`。
-import type { Artifact, Badge, BadgeGroups, Career, ProfileEntry, StaticContent } from "./types";
+import type {
+  Artifact,
+  Badge,
+  BadgeGroups,
+  Career,
+  Lapras,
+  ProfileEntry,
+  StaticContent,
+} from "./types";
 
 import artifactsJson from "./generated/artifacts.json";
 import badgesJson from "./generated/badges.json";
 import careersJson from "./generated/careers.json";
+import laprasJson from "./generated/lapras.json";
 import profileJson from "./generated/profile.json";
 import staticContentJson from "./generated/static-content.json";
 
@@ -16,6 +25,7 @@ export const badges: BadgeGroups = badgesJson;
 export const careers: Career[] = careersJson;
 export const artifacts: Artifact[] = artifactsJson;
 export const staticContent: StaticContent = staticContentJson;
+export const lapras: Lapras = laprasJson;
 
 /** 技術スタックが参照する安定 ID からバッジを引く。言語とフレームワークを横断して探す。 */
 const techStackBadges = new Map<string, Badge>(
@@ -48,6 +58,7 @@ export type {
   Artifact,
   Badge,
   Career,
+  Lapras,
   ProfileEntry,
   Project,
   QualificationGroup,

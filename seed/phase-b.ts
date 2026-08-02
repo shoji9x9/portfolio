@@ -135,11 +135,15 @@ function mapStaticContent() {
   };
 }
 
+function mapLapras() {
+  return { publicUrl: goldenDataset.lapras.publicUrl };
+}
+
 /**
  * 新側生成物を「相対パス → 内容」の写像として組み立てる。純粋関数なのでファイルへ書かずに
  * 検証・fingerprint 算出ができる。書式（キー順・インデント・末尾改行）はフェーズ A と揃える。
  *
- * `lapras.json` は写像しない。機能 `lapras`（Issue #23）の担当範囲のため。
+ * `lapras.preview` は外部 API の gap 記録なので、公開 URL だけを新側へ写像する。
  */
 export function serializeNewSideDataset(): Map<string, string> {
   const entries: [string, unknown][] = [
@@ -148,6 +152,7 @@ export function serializeNewSideDataset(): Map<string, string> {
     ["careers.json", mapCareers()],
     ["artifacts.json", mapArtifacts()],
     ["static-content.json", mapStaticContent()],
+    ["lapras.json", mapLapras()],
   ];
   return new Map(entries.map(([path, value]) => [path, `${JSON.stringify(value, null, 2)}\n`]));
 }
@@ -204,6 +209,7 @@ export function verifyNewSideMatchesLogical(): { checked: string[]; declaredDiff
   const careers = mapCareers();
   const artifacts = mapArtifacts();
   const staticContent = mapStaticContent();
+  const lapras = mapLapras();
 
   /** 新側と論理データで実際に食い違った箇所（path・両側の値）。 */
   const observed: { path: string; logical: string; newSide: string }[] = [];
@@ -289,6 +295,8 @@ export function verifyNewSideMatchesLogical(): { checked: string[]; declaredDiff
     "staticContent",
   );
 
+  expectEqual(lapras, { publicUrl: goldenDataset.lapras.publicUrl }, "lapras");
+
   // --- 観測した差が宣言済みの一覧と完全に一致するか ---
   expectEqual(
     sortByPath(observed),
@@ -297,7 +305,7 @@ export function verifyNewSideMatchesLogical(): { checked: string[]; declaredDiff
   );
 
   return {
-    checked: ["profile", "badges", "careers", "artifacts", "staticContent"],
+    checked: ["profile", "badges", "careers", "artifacts", "staticContent", "lapras"],
     declaredDiffs: DECLARED_DIFFS.length,
   };
 }

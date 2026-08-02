@@ -4,7 +4,7 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "lib": ["ES2023"],
+    "lib": ["ES2023", "DOM"],
     "types": ["node"],
     // preinstall 用の素の Node スクリプト（.mjs）に型情報を与えるため許可する
     // （checkJs は無効なので型検査はせず、oxlint の型認識に Node 型を供給するだけ）。
@@ -18,7 +18,9 @@
     "*.config.ts",
     "scripts/**/*.ts",
     "scripts/**/*.mjs",
-    "seed/**/*.ts"
+    "seed/**/*.ts",
+    "functions/**/*.ts",
+    "vite/**/*.ts"
   ],
   // playwright.config.ts は e2e プロジェクト（tsconfig.e2e.json）が持つ。
   // スペックが VIEWPORTS を import するため、同じプロジェクトに入っている必要がある。

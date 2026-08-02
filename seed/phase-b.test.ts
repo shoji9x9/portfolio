@@ -32,7 +32,7 @@ const EXPECTED_DECLARED_DIFFS = [
 describe("ゴールデンデータセット フェーズ B（新側への写像）", () => {
   it("新側と論理データの差が、宣言済みの意図的差異と完全に一致する", () => {
     expect(verifyNewSideMatchesLogical()).toEqual({
-      checked: ["profile", "badges", "careers", "artifacts", "staticContent"],
+      checked: ["profile", "badges", "careers", "artifacts", "staticContent", "lapras"],
       declaredDiffs: EXPECTED_DECLARED_DIFFS.length,
     });
   });

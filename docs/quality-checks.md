@@ -12,25 +12,27 @@
 
 ## ツール × ステージ × 対象ファイル
 
-| ツール                         | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                           |
-| ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | -------------------------------------------------------------------------------------- |
-| oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）         |
-| oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                   |
-| markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                |
-| shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                          |
-| shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                          |
-| gitleaks                       | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                                      |
-| knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言） |
-| jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                             |
-| commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                     |
-| tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）  |
-| vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `seed/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                     |
-| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/**/*.spec.ts`                                                                     |
-| react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                  |
-| actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                 |
-| pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                               |
-| check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                            |
-| Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                              |
+| ツール                         | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                                         |
+| ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）                       |
+| oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                                 |
+| Tailwind canonical 検査        | 非 canonical クラス名の検出      | ✓ 全体（関連 staged 時） | –        | ✓ `lint` 内                                | oxlint と同じ `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored・生成物等を除外）                        |
+| markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                              |
+| shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
+| shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
+| gitleaks                       | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                                                    |
+| knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `functions` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言） |
+| jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `functions` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                             |
+| commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                   |
+| tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）  |
+| vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `functions/**` / `seed/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                  |
+| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/parity/**/*.spec.ts`                                                                            |
+| Playwright（Preview smoke）    | 実 API・画像・ブラウザー表示確認 | –                        | –        | ✓ Preview デプロイ直後                     | `e2e/preview/**/*.spec.ts`                                                                           |
+| react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                                |
+| actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                               |
+| pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                                             |
+| check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                                          |
+| Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                                            |
 
 ## CI ジョブ構成
 
@@ -58,6 +60,18 @@ PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/pari
 
 ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
 CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
+
+## Preview スモークテスト
+
+Cloudflare Pages の Preview デプロイ直後に `deploy.yml` が自動実行する。パリティスイートの固定レスポンスは
+使わず、デプロイ固有 URL に対して実際の Pages Function・LAPRAS 公開ページ・
+プレビュー画像を Chromium で確認する。ローカルから同じ確認を行う場合は次のように実行する。
+
+```bash
+PREVIEW_UI_URL=<deployment-url> pnpm run test:preview
+```
+
+外部ページを利用するため通常の CI には含めず、対象 Preview を作成した `Deploy / Preview` ジョブだけで実行する。
 
 ### local-production を検証するとき
 
@@ -93,6 +107,7 @@ CI では実行しない（現行サイト・外部画像 CDN への到達性に
 | 種別                    | 例                             | oxfmt / oxlint | tsc | vitest                    | knip            | jscpd          |
 | ----------------------- | ------------------------------ | -------------- | --- | ------------------------- | --------------- | -------------- |
 | アプリコード            | `src/`                         | ✓              | ✓   | ✓                         | ✓               | ✓              |
+| Pages Functions         | `functions/`                   | ✓              | ✓   | ✓                         | ✓               | ✓              |
 | E2E（パリティスイート） | `e2e/`                         | ✓              | ✓   | –                         | ✓               | ✓（spec 除く） |
 | CLI スクリプト          | `scripts/`                     | ✓              | ✓   | –                         | ✓（entry 宣言） | –              |
 | 生成ツール              | `seed/*.ts`                    | ✓              | ✓   | ✓                         | ✓（entry 宣言） | –              |
@@ -103,6 +118,10 @@ CI では実行しない（現行サイト・外部画像 CDN への到達性に
 ## 備考
 
 - lint は最初から厳格（ラチェットなし）。検出はすべて error として失敗させる。
+- Tailwind canonical 検査は Tailwind 本体の抽出器と `canonicalizeCandidates()` を使う。
+  `oxlint-tailwindcss` の事前計算一覧に含まれない動的数値クラスも対象になり、たとえば
+  `w-192` は `w-3xl` を提示して失敗する。
+  対象 glob と除外パターンは `scripts/oxlint-scope.ts` を oxlint と共有する。
 - `.agents/` / `.claude/`（vendored スキル実体）は lint/format 対象外。
 - 循環依存は oxlint `import/no-cycle` で検査する（dependency-cruiser は TypeScript 7 未対応のため撤去）。
 - 関数の循環的複雑度は oxlint `complexity`（上限 15）で検査する。

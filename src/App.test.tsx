@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
 import App from "@/App";
-import { artifacts, badges, careers, profile, staticContent } from "@/data";
+import { artifacts, badges, careers, lapras, profile, staticContent } from "@/data";
 
 /**
  * 描画の網羅的な検証はパリティスイート（Playwright）が実ブラウザーで行う。
@@ -29,6 +29,7 @@ const SECTION_HEADINGS: readonly { id: string; text: string; decorated?: boolean
   { id: "qualifications-heading", text: "資格" },
   { id: "artifacts-heading", text: "製作物" },
   { id: "desired-work-heading", text: "希望条件" },
+  { id: "lapras-heading", text: "LAPRAS" },
 ];
 
 describe("App", () => {
@@ -146,5 +147,10 @@ describe("App", () => {
     }
     expect(html).toContain(staticContent.desiredWork.title);
     expect(html).toContain(`href="${attr(staticContent.desiredWork.url)}"`);
+  });
+
+  it("LAPRAS 取得前は公開プロフィールへのフォールバックを描画する", () => {
+    expect(html).toContain("LAPRAS 公開プロフィール");
+    expect(html).toContain(`href="${attr(lapras.publicUrl)}"`);
   });
 });

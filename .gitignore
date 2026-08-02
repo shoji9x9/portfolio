@@ -29,6 +29,8 @@ reports/
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
 
 # editor / os
 .DS_Store

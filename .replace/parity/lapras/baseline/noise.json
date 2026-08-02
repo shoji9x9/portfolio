@@ -1,0 +1,18 @@
+[
+  {
+    "page": "/",
+    "state": "default",
+    "viewport": "desktop",
+    "pixel_diff": 0,
+    "pixel_total": 931328,
+    "trait_diffs": 0
+  },
+  {
+    "page": "/",
+    "state": "default",
+    "viewport": "mobile",
+    "pixel_diff": 0,
+    "pixel_total": 657408,
+    "trait_diffs": 0
+  }
+]
