@@ -16,6 +16,7 @@ export default {
     "src/main.tsx!",
     "functions/api/**/*.ts!",
     "playwright.config.ts",
+    "playwright.preview.config.ts",
     "e2e/**/*.spec.ts",
     "e2e/parity/lib/tools/*.mjs",
     "scripts/**/*.{ts,mjs}",

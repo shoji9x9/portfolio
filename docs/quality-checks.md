@@ -25,7 +25,8 @@
 | commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                   |
 | tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）  |
 | vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `functions/**` / `seed/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                  |
-| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/**/*.spec.ts`                                                                                   |
+| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/parity/**/*.spec.ts`                                                                            |
+| Playwright（Preview smoke）    | 実 API・画像・ブラウザー表示確認 | –                        | –        | ✓ Preview デプロイ直後                     | `e2e/preview/**/*.spec.ts`                                                                           |
 | react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                                |
 | actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                               |
 | pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                                             |
@@ -58,6 +59,18 @@ PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/pari
 
 ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
 CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
+
+## Preview スモークテスト
+
+Cloudflare Pages の Preview デプロイ直後に `deploy.yml` が自動実行する。パリティスイートの固定レスポンスは
+使わず、デプロイ固有 URL に対して実際の Pages Function・`LINK_PREVIEW_API_KEY` binding・LinkPreview API・
+プレビュー画像を Chromium で確認する。ローカルから同じ確認を行う場合は次のように実行する。
+
+```bash
+PREVIEW_UI_URL=<deployment-url> pnpm run test:preview
+```
+
+外部 API を利用するため通常の CI には含めず、対象 Preview を作成した `Deploy / Preview` ジョブだけで実行する。
 
 ### local-production を検証するとき
 

@@ -20,6 +20,8 @@ export default {
     "**/dist/**",
     "**/.wrangler/**",
     "**/reports/**",
+    // Playwright の失敗時に生成される error-context.md はテスト成果物なので検査しない。
+    "**/test-results/**",
     "**/CHANGELOG.md",
     "**/pnpm-lock.yaml",
     // vendored なスキル実体（自プロジェクト外）はスコープ外にする。

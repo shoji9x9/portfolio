@@ -53,6 +53,12 @@ jobs:
           command: >-
             pages deploy dist --project-name shoji9x9
             --branch ${{ github.event.pull_request.head.ref }}
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Verify preview
+        env:
+          PREVIEW_UI_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: pnpm run test:preview
 
   production:
     name: Production

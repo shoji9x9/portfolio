@@ -11,6 +11,7 @@
     "start": "pnpm run build && vp preview",
     "preview": "vp preview",
     "test": "vitest run --coverage",
+    "test:preview": "playwright test --config playwright.preview.config.ts",
     "typecheck": "tsc -b",
     "lint": "vp lint -c oxlint.config.ts --type-aware",
     "lint:fix": "vp lint -c oxlint.config.ts --type-aware --fix",

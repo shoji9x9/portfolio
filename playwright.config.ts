@@ -13,6 +13,7 @@ import { defineConfig, devices } from "@playwright/test";
 /** 実行対象環境の UI baseURL。未設定でも設定の読み込み自体は成功させ、spec 側で早期に失敗させる。 */
 const currentUiUrl = process.env["PARITY_CURRENT_UI_URL"];
 const newUiUrl = process.env["PARITY_NEW_UI_URL"];
+const previewSmokeTest = /preview\/.*\.spec\.ts$/;
 
 /** new-capture では指定 slug の採取スペックだけを収集する。 */
 function newCaptureTestMatch(slug: string | undefined): string {
@@ -55,7 +56,11 @@ export default defineConfig({
     {
       name: "current",
       // 新側専用のスペック。新側ベースラインの採取は parity-diff の工程で、現側では走らせない。
-      testIgnore: [/static-page\/baseline-new\.spec\.ts$/, /lapras\/baseline-new\.spec\.ts$/],
+      testIgnore: [
+        previewSmokeTest,
+        /static-page\/baseline-new\.spec\.ts$/,
+        /lapras\/baseline-new\.spec\.ts$/,
+      ],
       use: {
         ...devices["Desktop Chrome"],
         ...(currentUiUrl === undefined ? {} : { baseURL: currentUiUrl }),
@@ -69,6 +74,7 @@ export default defineConfig({
       // 意味を持たないうえ現側の証跡（baseline/・strength-results.json）を上書きしてしまう。
       // 新側の採取と現新比較は parity-diff が `new/<target>/` に対して行う。
       testIgnore: [
+        previewSmokeTest,
         /static-page\/baseline\.spec\.ts$/,
         /static-page\/baseline-new\.spec\.ts$/,
         /static-page\/strength\.spec\.ts$/,
