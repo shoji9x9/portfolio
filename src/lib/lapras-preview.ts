@@ -29,6 +29,7 @@ export function parseLaprasPreview(value: unknown, publicUrl: string): LaprasPre
   return { title, image, url };
 }
 
+/** 固定 API から取得し、publicUrl と一致するプロフィール応答だけを返す。 */
 export async function fetchLaprasPreview(
   publicUrl: string,
   signal: AbortSignal,
