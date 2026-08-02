@@ -45,13 +45,19 @@ export default defineConfig({
       "src/**/*.{test,spec}.{ts,tsx}",
       "seed/**/*.{test,spec}.{ts,tsx}",
       "functions/**/*.{test,spec}.{ts,tsx}",
+      "scripts/**/*.{test,spec}.{ts,tsx}",
       "vite/**/*.{test,spec}.{ts,tsx}",
     ],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "coverage",
-      include: ["src/**/*.{ts,tsx}", "functions/**/*.ts", "vite/**/*.ts"],
+      include: [
+        "src/**/*.{ts,tsx}",
+        "functions/**/*.ts",
+        "scripts/tailwind-canonical.ts",
+        "vite/**/*.ts",
+      ],
       // エントリ（main.tsx）・テスト・型定義はカバレッジ対象外。
       exclude: ["src/main.tsx", "**/*.{test,spec}.*", "**/*.d.ts"],
       // 自律エージェントに「変更にはテスト」を機械的に課すための閾値。

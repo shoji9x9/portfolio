@@ -19,7 +19,7 @@ export function LaprasPreviewContent({ lapras, preview, onImageError }: LaprasPr
     return <TextLink href={lapras.publicUrl}>{FALLBACK_LABEL}</TextLink>;
   }
   return (
-    <div className="w-192">
+    <div className="w-3xl">
       <a href={lapras.publicUrl} rel="noreferrer" target="_blank">
         <img alt={preview.title} onError={onImageError} src={preview.image} />
       </a>
