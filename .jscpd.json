@@ -4,7 +4,7 @@
   "minTokens": 50,
   "reporters": ["console", "html"],
   "output": "./reports/jscpd",
-  "path": ["src", "e2e"],
+  "path": ["src", "functions", "e2e"],
   "format": ["typescript", "tsx", "javascript", "jsx", "css"],
   "ignore": [
     "**/node_modules/**",

@@ -1,0 +1,114 @@
+{
+  "slug": "lapras",
+  "mode": "feature",
+  "run": {
+    "started_at": "2026-07-31T12:12:00+09:00",
+    "finished_at": "2026-07-31T12:41:00+09:00",
+    "agent": "Codex",
+    "model": "GPT-5",
+    "effort": "標準",
+    "skill_version": "parity-diff v1.34.0"
+  },
+  "dataset_version": 2,
+  "dataset_version_exempt": null,
+  "new": {
+    "target": "local-dev",
+    "ui_url": "http://localhost:5174",
+    "api_url": "http://localhost:8788",
+    "commit": "e6494eca5695a11f32d54b0a1204c00d3f096fc5",
+    "source_state": "上記 commit 上の Issue #23 未コミット作業ツリー"
+  },
+  "capture_conditions_verified": {
+    "viewports": "desktop 1280x900 / mobile 390x844。section.lapras 本体と lapras.image 全体を両側で別々に撮影して縦に連結し、現側 metadata と一致",
+    "animations": "Playwright screenshot の animations=disabled を両側へ適用",
+    "masks": "なし。section.lapras 本体に加えて、mobile で枠からはみ出す lapras.image も全幅を別キャプチャとして含む",
+    "states": "metadata の default を同条件で採取。focus / error は手書き assertion で検証",
+    "environment": "unverified: 現側の自由記述と機械照合できない。同一 Playwright Chromium / Linux プロセス条件で採取"
+  },
+  "differ_versions": {
+    "trait_capture": "e2e/parity/lib/tools/vendor/trait-capture.mjs VERSION 1",
+    "trait_compare": "e2e/parity/lib/tools/vendor/trait-compare.mjs VERSION 1",
+    "pixel_tool": "e2e/parity/lib/tools/pixel-compare.mjs VERSION 1 / pixelmatch 7.2.0 / threshold 0.1",
+    "aria_compare": "e2e/parity/lib/tools/aria-compare.mjs VERSION 1",
+    "align_tolerance": 1,
+    "pixel_crops": "未使用（画素差 0）",
+    "diff_normalize": ".agents/skills/parity-diff/scripts/diff-normalize.mjs VERSION 2 (parity-diff v1.34.0)"
+  },
+  "noise_baseline_applied": [
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    }
+  ],
+  "noise_baseline_new": [
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0,
+      "source": "measured",
+      "measured_at": "2026-07-31T12:40:00+09:00"
+    },
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0,
+      "source": "measured",
+      "measured_at": "2026-07-31T12:40:00+09:00"
+    }
+  ],
+  "noise_measurement": {
+    "measured_at": "2026-07-31T12:40:00+09:00",
+    "measured_at_commit": "e6494eca5695a11f32d54b0a1204c00d3f096fc5",
+    "loop_iteration": 0,
+    "fingerprint": {
+      "capture_conditions": "viewports=[desktop:1280x900,mobile:390x844] states=[default] animations=disabled screenshot_scope=[section.lapras,lapras.image] composition=vertical masks=[]",
+      "differ": "trait-capture VERSION 1 / trait-compare VERSION 1 / pixel-compare VERSION 1 threshold 0.1 / aria-compare VERSION 1 / align_tolerance 1",
+      "dataset_version": 2,
+      "pairs": ["/|default|desktop", "/|default|mobile"]
+    },
+    "reused_pairs": 0,
+    "remeasured_pairs": 2,
+    "remeasure_reason": ["前回記録なし"]
+  },
+  "paths": {
+    "diff_report": ".replace/parity/lapras/new/local-dev/diff.md",
+    "baseline_new": ".replace/parity/lapras/new/local-dev/baseline-new/"
+  },
+  "results": {
+    "total": 8,
+    "actionable": 0,
+    "accepted": 8,
+    "noise": 0,
+    "unexplained": 0,
+    "unverified": [
+      "LinkPreview API の実通信と Cloudflare Cache API のデータセンター間伝播",
+      "capture_conditions.environment は自由記述のため機械照合していない",
+      "想定利用者の Windows Chrome では採取していない",
+      "animations: disabled のためアニメーション中の見た目は検証していない"
+    ]
+  },
+  "accepted_exceptions": {
+    "causes": 0,
+    "instances": 0,
+    "unresolved": 0
+  },
+  "iteration": 0,
+  "on_diff_doc": "none",
+  "filed_issue": null,
+  "blocked_by": [],
+  "converged": true
+}

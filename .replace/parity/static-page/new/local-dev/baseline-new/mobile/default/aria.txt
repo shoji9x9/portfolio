@@ -255,3 +255,8 @@
     - heading "希望条件" [level=2]
     - link "狩野モデルで考える、自分が希望する労働環境":
       - /url: https://zenn.dev/shoji9x9/articles/741bba963942a6
+  - region "LAPRAS":
+    - heading "LAPRAS" [level=2]
+    - link "shoji9x9さんのLAPRAS Profile":
+      - /url: https://lapras.com/public/shoji9x9
+      - img "shoji9x9さんのLAPRAS Profile"

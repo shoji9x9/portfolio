@@ -136,9 +136,19 @@ skills:
           プロフィール表の th への scope="col" 付与（新側のみ）:
           現行は scope を持たない。列見出しであることを明示する（WCAG H63）。
           表示・role は変わらない
-      pending:
-        - LAPRAS プレビューをビルド時に取得するか、Cloudflare Worker 実行時に取得するか
-        - LAPRAS プレビュー取得失敗時の表示とキャッシュ方針
+        # Issue #23（2026-07-31）でユーザー承認。現行のビルド時取得から、
+        # 秘密値を保持する Cloudflare Pages Function の実行時取得へ変更する。
+        - >-
+          LAPRAS プレビューの取得時点（新側のみ）:
+          Cloudflare Pages Function の GET /api/lapras-preview が実行時に LinkPreview API を HTTPS で呼び、
+          検証済みの成功レスポンスを Cloudflare Cache API へ 24 時間保存する。
+          現行は静的エクスポートのビルド時取得で、更新には再ビルドが必要
+        - >-
+          LAPRAS プレビュー取得失敗時のフォールバック（新側のみ）:
+          API は秘密値不足・上流失敗・不正レスポンスを安全な固定 503 JSON にし、
+          UI はセクションを残して画像を隠し、LAPRAS 公開プロフィールへのテキストリンクを表示する。
+          現行は明示的な失敗表示を持たない
+      pending: []
     component_diffs: # コンポーネント系統差レジストリ（parity-replace が宣言）
       # 2026-07-29、static-page の parity-diff 反復 1 で検出した系統差。
       # いずれも実体は同じだが値の表現が変わるもので、クラス/トークン単位で 1 回宣言すれば

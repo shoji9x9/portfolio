@@ -1,0 +1,124 @@
+{
+  "slug": "lapras",
+  "mode": "feature",
+  "target": {
+    "name": "current-prod",
+    "ui_url": "https://shoji9x9.github.io/",
+    "api_url": "https://shoji9x9.github.io/",
+    "commit": "b10b54a489fbac94f7bf8beef1a005ffe19ee791"
+  },
+  "run": {
+    "started_at": "2026-07-31T11:52:00+09:00",
+    "finished_at": "2026-07-31T12:40:00+09:00",
+    "agent": "Codex",
+    "model": "GPT-5",
+    "effort": "標準",
+    "skill_version": "parity-suite v1.34.0"
+  },
+  "dataset_version": 2,
+  "suite": {
+    "dir": "e2e/",
+    "specs": "e2e/parity/lapras/{content,aria,states,baseline,strength}.spec.ts と e2e/parity/page-composition.spec.ts",
+    "current_only": "e2e/parity/lapras/{baseline,strength}.spec.ts。new project の testIgnore に登録",
+    "new_only": "e2e/parity/lapras/baseline-new.spec.ts。current / new project の testIgnore に登録、採取専用 project: new-capture",
+    "locator_map": "e2e/parity/lib/locator-map/{types,current,portable}.ts",
+    "expectations": "seed/data/lapras.json と e2e/parity/lib/lapras-fixture.ts",
+    "interactions": "e2e/parity/lapras/states.spec.ts",
+    "tools": "e2e/parity/lib/tools/",
+    "auth_roles": [],
+    "current_green": true,
+    "current_test_count": 11,
+    "current_skipped": "承認済みの新側専用 503 フォールバック 1 件",
+    "run_command": "PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/parity/lapras e2e/parity/page-composition.spec.ts"
+  },
+  "capture_conditions": {
+    "environment": "Chromium (Playwright 1.61.1) / Linux (WSL2) / devicePixelRatio 1 / colorScheme light",
+    "viewer_environment": "採取環境は Linux (WSL2) Chromium、想定利用者の表示環境は Windows Chrome。環境差は gaps.md に残す。",
+    "viewports": [
+      { "width": 1280, "height": 900, "label": "desktop" },
+      { "width": 390, "height": 844, "label": "mobile" }
+    ],
+    "animations": "disabled",
+    "full_page": false,
+    "screenshot_scope": "section.lapras 本体と lapras.image 全体を別々に撮影し、縦に連結",
+    "pages": [{ "name": "/", "path": "/" }],
+    "masks": [],
+    "states": ["default"],
+    "handwritten_states": ["focus", "error"],
+    "state_samples": ["lapras.link"]
+  },
+  "traits": {
+    "tool": "e2e/parity/lib/tools/vendor/trait-capture.mjs (VERSION 1)",
+    "property_set_size": 33,
+    "property_set": [
+      "padding-top",
+      "padding-right",
+      "padding-bottom",
+      "padding-left",
+      "margin-top",
+      "margin-right",
+      "margin-bottom",
+      "margin-left",
+      "font-family",
+      "font-size",
+      "font-weight",
+      "line-height",
+      "color",
+      "background-color",
+      "border-top-width",
+      "border-top-style",
+      "border-top-color",
+      "border-right-width",
+      "border-right-style",
+      "border-right-color",
+      "border-bottom-width",
+      "border-bottom-style",
+      "border-bottom-color",
+      "border-left-width",
+      "border-left-style",
+      "border-left-color",
+      "border-top-left-radius",
+      "border-top-right-radius",
+      "border-bottom-right-radius",
+      "border-bottom-left-radius",
+      "text-align",
+      "display",
+      "visibility"
+    ],
+    "elements": [
+      "section.lapras",
+      "section.lapras.heading",
+      "lapras.link",
+      "lapras.image"
+    ]
+  },
+  "differ": {
+    "trait_compare": "e2e/parity/lib/tools/vendor/trait-compare.mjs (VERSION 1)",
+    "align_tolerance": 1,
+    "pixel_tool": "e2e/parity/lib/tools/pixel-compare.mjs (VERSION 1, pixelmatch 7.2.0 + pngjs 7.0.0)",
+    "pixel_threshold": 0.1,
+    "aria_compare": "e2e/parity/lib/tools/aria-compare.mjs (VERSION 1)",
+    "validated_by_strength_gate": true
+  },
+  "noise_baseline": [
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "desktop",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    },
+    {
+      "page": "/",
+      "state": "default",
+      "viewport": "mobile",
+      "pixel_diff": 0,
+      "trait_diffs": 0
+    }
+  ],
+  "artifacts_storage": {
+    "selected": "local",
+    "size_threshold_mb": 50,
+    "baseline_pointer": ".replace/parity/lapras/baseline/"
+  }
+}

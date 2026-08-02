@@ -187,3 +187,38 @@ LAPRAS 実装後に再判定するまで、`static-page` は収束させない�
 | 承認済み画素例外（accepted） |    9 |
 | 環境ノイズ（noise）          |    0 |
 | 未説明（unexplained）        |   11 |
+
+## 9. LAPRAS 実装後の再検出（2026-07-31）
+
+Issue #23 の LAPRAS セクション実装後に、`local-dev` の baseline / noise を全 6 組で再採取した。
+新側自己ノイズは画素・特性とも全組 0。従来 LAPRAS 不在に帰属していた相対幾何 11 件はすべて消え、
+特性照合の生差分は宣言済み `font-family` だけになった。
+
+| 経路 | 再検出結果 |
+| --- | --- |
+| 特性照合 | default は desktop / mobile 各 `font-family` 136 件、hover / focus は各 3 件。すべて既承認 `component_diffs` で吸収。相対幾何差 0 |
+| 画素 | desktop 6px は承認済み 2 bbox と一致。mobile は 12px / 8 bbox のうち 7 bbox（11px）が承認済み、1 bbox（1px）が未承認 |
+| ARIA | LAPRAS の見出し・リンク・画像が新側にも存在。残る生差分は既承認のランドマーク化と GitHub 表記差による行ずれ |
+
+新たに観測した未説明差分は mobile default の
+`self-promotion.item.4`、bbox `157,1218,1,1` の 1px。条件は 16px / weight 400 の Inter 本文で、
+crop 対では文字輪郭の濃度だけが異なり位置・特性は一致する。既存の
+`font-subset-weight600` 原因とは weight 条件が違い、既存 9 インスタンスの承認をこの bbox へ
+自動拡張できないため、ユーザー承認前は未説明として扱った。
+
+2026-07-31T15:58:19+09:00 にユーザーが「上記は目視では気付けない程度なので許容します」と承認した。
+原因を推測せず、`component-diff-exceptions.json` の
+`self-promotion-mobile-1px-rasterization` に、この bbox だけの画素例外として記録した。
+
+### 再検出後の正式な結果件数
+
+| 項目 | 件数 |
+| --- | ---: |
+| 検出候補合計 | 10 |
+| 要対応（actionable） | 0 |
+| 承認済み画素例外（accepted） | 10 |
+| 環境ノイズ（noise） | 0 |
+| 未説明（unexplained） | 0 |
+
+- `blocked_by`: 空。Issue #23 待ちの 11 件は解消
+- 収束: `converged: true`（未説明差分・未修正回帰ともに 0）

@@ -1,0 +1,392 @@
+[
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/",
+    "resourceType": "document",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/main.tsx?t=1785469142620",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/@react-refresh",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/@vite/client",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/@tanstack_react-router.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/router.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/@fs/home/shoji9x9/.local/share/mise/installs/viteplus/0.2.6/lib/node_modules/vite-plus/node_modules/@voidzero-dev/vite-plus-core/dist/vite/client/env.mjs",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/index.css?t=1785469142620",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/rolldown-runtime-FDOR9p9I.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react-dom.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react_jsx-runtime.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react-dom_client.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/App.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/react_compiler-runtime.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/ArtifactSection.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/CareerSection.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/BadgeImage.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/LaprasSection.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/PortfolioSection.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/Qualifications.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/ProfileTable.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/components/portfolio/TextLink.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/index.ts",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/lib/utils.ts",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/lib/lapras-preview.ts",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/lapras.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/artifacts.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/badges.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/profile.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/careers.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/src/data/generated/static-content.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/clsx.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.vite/deps/tailwind-merge.js?v=283316b7",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/dot_hiyoko.png",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/api/lapras-preview",
+    "resourceType": "fetch",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=GitHub&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/@shoji9x9-%231DA1F2.svg?&style=flat-square&logo=twitter&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/shoji9x9-55C500.svg?&style=flat-square&logo=qiita&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5174/node_modules/.pnpm/inter-ui@3.19.3/node_modules/inter-ui/Inter%20(web%20latin)/Inter-roman.var.woff2",
+    "resourceType": "font",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2Fshoji9x9",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/PHP-ccc.svg?logo=php&color=777BB4&style=flat-square&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/shoji9x9-3EA8FF.svg?&style=flat-square&logo=Zenn&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/COBOL-ccc.svg?logo=cobol&color=1572B6&style=flat-square&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-OutSystems-fa173d.svg?logo=&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/DB2-ccc.svg?logo=db2&color=0F4D92&style=flat-square&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/drupal-%230678BE.svg?style=for-the-badge&logo=drupal&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Oracle-F80000.svg?logo=oracle&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://media.lapras.com/media/public_setting/ZABL0NU/7724307d3f3342b783ba0af59bf6f02c.png",
+    "resourceType": "image",
+    "status": 200
+  }
+]

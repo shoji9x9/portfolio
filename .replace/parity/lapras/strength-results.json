@@ -1,0 +1,35 @@
+[
+  {
+    "id": "control",
+    "fault_class": "対照",
+    "injection": "なし",
+    "detected_by": []
+  },
+  {
+    "id": "F1-link",
+    "fault_class": "リンク先",
+    "injection": "DOM 摂動: href を別 URL へ変更",
+    "detected_by": [
+      "handwritten",
+      "aria"
+    ]
+  },
+  {
+    "id": "F2-aria",
+    "fault_class": "構造（aria）",
+    "injection": "DOM 摂動: img alt を変更",
+    "detected_by": [
+      "handwritten",
+      "traits",
+      "aria"
+    ]
+  },
+  {
+    "id": "F3-visual",
+    "fault_class": "要素スタイル",
+    "injection": "スタイル摂動: opacity を 0 に変更",
+    "detected_by": [
+      "pixel"
+    ]
+  }
+]

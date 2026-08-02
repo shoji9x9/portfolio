@@ -6,6 +6,11 @@
       "id": "font-subset-weight600",
       "reason": "フォントのサブセットビルド差による weight 600 のラスタライズ差",
       "evidence": "component-diff-exceptions.md#font-subset-weight600"
+    },
+    {
+      "id": "self-promotion-mobile-1px-rasterization",
+      "reason": "自己PR本文の目視で識別できない 1px ラスタライズ差",
+      "evidence": "component-diff-exceptions.md#self-promotion-mobile-1px-rasterization"
     }
   ],
   "component_diff_exceptions": [
@@ -125,6 +130,19 @@
       "new": "new/local-dev/crops/mobile/crop-7-new.png",
       "cause": "font-subset-weight600",
       "approved_at": "2026-07-29"
+    },
+    {
+      "slug": "static-page",
+      "page": "/",
+      "element": "self-promotion.item.4",
+      "state": "default",
+      "viewport": "mobile",
+      "property": "pixel",
+      "bbox": "157,1218,1,1",
+      "current": "new/local-dev/crops/mobile/crop-8-current.png",
+      "new": "new/local-dev/crops/mobile/crop-8-new.png",
+      "cause": "self-promotion-mobile-1px-rasterization",
+      "approved_at": "2026-07-31T15:58:19+09:00"
     }
   ]
 }

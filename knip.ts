@@ -14,6 +14,7 @@ export default {
   // （`.config/skills/shoji9x9/skills.yml` の `url_command`）から起動される。
   entry: [
     "src/main.tsx!",
+    "functions/api/**/*.ts!",
     "playwright.config.ts",
     "e2e/**/*.spec.ts",
     "e2e/parity/lib/tools/*.mjs",
@@ -27,6 +28,7 @@ export default {
     "playwright.config.ts",
     "scripts/**/*.{ts,mjs}",
     "seed/**/*.ts",
+    "functions/**/*.ts",
   ],
   ignore: [
     "**/*.d.ts",

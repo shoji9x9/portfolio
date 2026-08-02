@@ -1,0 +1,4 @@
+- heading "LAPRAS" [level=2]
+- link "shoji9x9さんのLAPRAS Profile":
+  - /url: https://lapras.com/public/shoji9x9
+  - img "shoji9x9さんのLAPRAS Profile"

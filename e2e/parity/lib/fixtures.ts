@@ -7,6 +7,7 @@ import type { ContainerLocators } from "./locator-map/types";
 
 import { test as base, expect } from "@playwright/test";
 
+import { routeLaprasPreview } from "./lapras-fixture";
 import { currentContainers } from "./locator-map/current";
 import { logicalEntries } from "./locator-map/portable";
 import { newContainers } from "./locator-map/static-page.new";
@@ -51,6 +52,9 @@ export const test = base.extend<ParityFixtures>({
           `project=${testInfo.project.name} の baseURL が未解決です。` +
             "PARITY_CURRENT_UI_URL / PARITY_NEW_UI_URL を設定して実行してください（URL は設定の targets から解決する）。",
         );
+      }
+      if (testInfo.project.name === "new" || testInfo.project.name === "new-capture") {
+        await routeLaprasPreview(page);
       }
       await page.goto("/", { waitUntil: NAVIGATION_WAIT });
       await use();

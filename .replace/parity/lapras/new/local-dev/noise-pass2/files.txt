@@ -1,0 +1,6 @@
+desktop/default/aria.txt
+desktop/default/screenshot.png
+desktop/default/traits.json
+mobile/default/aria.txt
+mobile/default/screenshot.png
+mobile/default/traits.json

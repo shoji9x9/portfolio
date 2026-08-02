@@ -1,0 +1,52 @@
+{
+  "slug": "lapras",
+  "mode": "feature",
+  "run": {
+    "started_at": "2026-07-31T11:47:00+09:00",
+    "finished_at": "2026-07-31T12:08:00+09:00",
+    "agent": "Codex",
+    "model": "GPT-5",
+    "effort": "標準",
+    "skill_version": "parity-replace v1.34.0"
+  },
+  "dataset_version": 2,
+  "new": {
+    "target": "local-dev",
+    "ui_url": "http://localhost:5174",
+    "api_url": "http://localhost:8788",
+    "commit": "e6494eca5695a11f32d54b0a1204c00d3f096fc5",
+    "dirty": true,
+    "url_note": "設定値 5173 は別アプリが使用中だったため、今回起動した portfolio の Vite は 5174。Pages Function の実配線確認は Wrangler 8788。"
+  },
+  "suite": {
+    "locator_map_new": "none",
+    "new_green": true,
+    "new_green_at": "2026-07-31T12:02:00+09:00",
+    "run_result": "new project 全 50 tests passed。lapras の成功・focus・503 fallback と既存 static-page 回帰を含む。"
+  },
+  "verification": {
+    "commands": [
+      "pnpm typecheck",
+      "pnpm lint",
+      "pnpm test",
+      "pnpm build",
+      "pnpm knip",
+      "pnpm jscpd",
+      "pnpm lint:md",
+      "pnpm lint:sh",
+      "wrangler pages dev dist --port 8788 --compatibility-date=2026-07-29 と GET /api/lapras-preview"
+    ],
+    "passed_at": "2026-07-31T12:08:00+09:00",
+    "note": "react:doctor は外部スコア API へのコード由来データ送信リスクにより実行権限が拒否され、完了していない。"
+  },
+  "loop": {
+    "iterations": 0,
+    "max_iterations": 5,
+    "last_diff_report": "none",
+    "on_diff_doc": "none",
+    "changed_scope": {
+      "pages": ["/"],
+      "global": false
+    }
+  }
+}

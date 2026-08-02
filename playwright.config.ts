@@ -14,6 +14,14 @@ import { defineConfig, devices } from "@playwright/test";
 const currentUiUrl = process.env["PARITY_CURRENT_UI_URL"];
 const newUiUrl = process.env["PARITY_NEW_UI_URL"];
 
+/** new-capture では指定 slug の採取スペックだけを収集する。 */
+function newCaptureTestMatch(slug: string | undefined): string {
+  if (slug === undefined || !/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(slug)) {
+    return "**/__parity_slug_not_set__/baseline-new.spec.ts";
+  }
+  return `**/${slug}/baseline-new.spec.ts`;
+}
+
 /** ベースライン採取・比較で共有する撮影条件。metadata.json の capture_conditions と対応する。 */
 export const VIEWPORTS = [
   { label: "desktop", width: 1280, height: 900 },
@@ -47,7 +55,7 @@ export default defineConfig({
     {
       name: "current",
       // 新側専用のスペック。新側ベースラインの採取は parity-diff の工程で、現側では走らせない。
-      testIgnore: [/static-page\/baseline-new\.spec\.ts$/],
+      testIgnore: [/static-page\/baseline-new\.spec\.ts$/, /lapras\/baseline-new\.spec\.ts$/],
       use: {
         ...devices["Desktop Chrome"],
         ...(currentUiUrl === undefined ? {} : { baseURL: currentUiUrl }),
@@ -64,6 +72,9 @@ export default defineConfig({
         /static-page\/baseline\.spec\.ts$/,
         /static-page\/baseline-new\.spec\.ts$/,
         /static-page\/strength\.spec\.ts$/,
+        /lapras\/baseline\.spec\.ts$/,
+        /lapras\/baseline-new\.spec\.ts$/,
+        /lapras\/strength\.spec\.ts$/,
       ],
       use: {
         ...devices["Desktop Chrome"],
@@ -73,9 +84,9 @@ export default defineConfig({
     },
     {
       // parity-diff が新側ベースラインと自己ノイズを採取する専用 project。
-      // 採取スペックを new の green 検証から除外し、環境変数の未設定で収集が落ちないようにする。
+      // 採取スペックを new の green 検証から除外し、PARITY_SLUG の対象だけを収集する。
       name: "new-capture",
-      testMatch: /static-page\/baseline-new\.spec\.ts$/,
+      testMatch: newCaptureTestMatch(process.env["PARITY_SLUG"]),
       use: {
         ...devices["Desktop Chrome"],
         ...(newUiUrl === undefined ? {} : { baseURL: newUiUrl }),

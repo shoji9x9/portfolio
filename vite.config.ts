@@ -23,14 +23,31 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  server: {
+    // パリティ採取中に生成される成果物で HMR / page reload を起こさない。
+    // desktop の保存直後に mobile の navigation が中断されるため、実行時成果物を監視対象外にする。
+    watch: {
+      ignored: [
+        "**/.replace/**",
+        "**/coverage/**",
+        "**/playwright-report/**",
+        "**/reports/**",
+        "**/test-results/**",
+      ],
+    },
+  },
   test: {
     environment: "node",
-    include: ["src/**/*.{test,spec}.{ts,tsx}", "seed/**/*.{test,spec}.{ts,tsx}"],
+    include: [
+      "src/**/*.{test,spec}.{ts,tsx}",
+      "seed/**/*.{test,spec}.{ts,tsx}",
+      "functions/**/*.{test,spec}.{ts,tsx}",
+    ],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
       reportsDirectory: "coverage",
-      include: ["src/**/*.{ts,tsx}"],
+      include: ["src/**/*.{ts,tsx}", "functions/**/*.ts"],
       // エントリ（main.tsx）・テスト・型定義はカバレッジ対象外。
       exclude: ["src/main.tsx", "**/*.{test,spec}.*", "**/*.d.ts"],
       // 自律エージェントに「変更にはテスト」を機械的に課すための閾値。
