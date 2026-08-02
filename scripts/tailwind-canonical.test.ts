@@ -10,6 +10,10 @@ const designSystem = await __unstable__loadDesignSystem(await readFile(styleshee
   base: new URL("../src/", import.meta.url).pathname,
 });
 
+// Tailwind は初回の canonicalizeCandidates() で内部表を遅延構築する。CI は品質チェックを
+// 並列実行してCPU競合が大きいため、その初期化だけは個々のテストのタイムアウト外で済ませる。
+findCanonicalClassViolations('<div className="w-3xl" />', "tsx", designSystem);
+
 describe("findCanonicalClassViolations", () => {
   it("動的数値クラスを canonical な名前へ正規化する", () => {
     const source = '<div className="w-192 max-w-192" />';
