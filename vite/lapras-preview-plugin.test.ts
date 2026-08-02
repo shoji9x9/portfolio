@@ -35,10 +35,11 @@ describe("Vite LAPRASプレビューアダプター", () => {
   });
 
   it("Pages Functionの中核を呼び、成功応答をローカルキャッシュする", async () => {
-    const fetchImplementation = vi.fn().mockResolvedValue(
-      new Response(previewHtml, {
-        headers: { "Content-Type": "text/html; charset=utf-8" },
-      }),
+    const fetchImplementation = vi.fn().mockImplementation(
+      async () =>
+        new Response(previewHtml, {
+          headers: { "Content-Type": "text/html; charset=utf-8" },
+        }),
     );
     const handle = createLaprasPreviewDevHandler({
       fetch: fetchImplementation,
@@ -57,6 +58,28 @@ describe("Vite LAPRASプレビューアダプター", () => {
     });
     expect(second?.status).toBe(200);
     expect(fetchImplementation).toHaveBeenCalledOnce();
+  });
+
+  it("開発用キャッシュを24時間で失効させる", async () => {
+    let now = 0;
+    const fetchImplementation = vi.fn().mockImplementation(
+      async () =>
+        new Response(previewHtml, {
+          headers: { "Content-Type": "text/html; charset=utf-8" },
+        }),
+    );
+    const handle = createLaprasPreviewDevHandler({
+      fetch: fetchImplementation,
+      now: () => now,
+      warn: vi.fn(),
+    });
+    const request = new Request("http://localhost:5173/api/lapras-preview");
+
+    expect((await handle(request))?.status).toBe(200);
+    now = 86_400_000;
+    expect((await handle(request))?.status).toBe(200);
+
+    expect(fetchImplementation).toHaveBeenCalledTimes(2);
   });
 
   it("対象外のリクエストはViteミドルウェアへ渡す", async () => {

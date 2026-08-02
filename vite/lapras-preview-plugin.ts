@@ -5,7 +5,11 @@ import {
   type LaprasPreviewDependencies,
 } from "../functions/_lib/lapras-preview";
 
-type DevHandlerDependencies = Pick<LaprasPreviewDependencies, "fetch" | "warn">;
+const DEV_CACHE_TTL_MS = 86_400_000;
+
+type DevHandlerDependencies = Pick<LaprasPreviewDependencies, "fetch" | "warn"> & {
+  now?: (() => number) | undefined;
+};
 type DevHandler = (request: Request) => Promise<Response | null>;
 type MiddlewareRequest = {
   headers: { host?: string | undefined };
@@ -24,14 +28,24 @@ function requestKey(request: RequestInfo | URL): string {
   return request instanceof URL ? request.href : request.url;
 }
 
-function memoryCache(): Pick<Cache, "match" | "put"> {
-  const responses = new Map<string, Response>();
+function memoryCache(now: () => number): Pick<Cache, "match" | "put"> {
+  const responses = new Map<string, { expiresAt: number; response: Response }>();
   return {
     async match(request): Promise<Response | undefined> {
-      return responses.get(requestKey(request))?.clone();
+      const key = requestKey(request);
+      const cached = responses.get(key);
+      if (cached === undefined) return undefined;
+      if (cached.expiresAt <= now()) {
+        responses.delete(key);
+        return undefined;
+      }
+      return cached.response.clone();
     },
     async put(request, response): Promise<void> {
-      responses.set(requestKey(request), response.clone());
+      responses.set(requestKey(request), {
+        expiresAt: now() + DEV_CACHE_TTL_MS,
+        response: response.clone(),
+      });
     },
   };
 }
@@ -48,7 +62,7 @@ export function createLaprasPreviewDevHandler(
     },
   },
 ): DevHandler {
-  const cache = memoryCache();
+  const cache = memoryCache(dependencies.now ?? Date.now);
   return async (request) => {
     if (new URL(request.url).pathname !== "/api/lapras-preview") return null;
     if (request.method !== "GET") {
