@@ -17,7 +17,8 @@
 - LAPRAS 公開ページの取得失敗やメタデータの不正では `GET /api/lapras-preview` が安全な固定エラーを
   `503` で返す。外部レスポンス本文はログへ出さない。UI は LAPRAS セクション自体を残し、
   プレビュー画像を表示せずに公開プロフィールへのテキストリンクへフォールバックする。
-- 開発は `pnpm dev`、本番相当は `pnpm build` と `pnpm preview` を使う。Vitest と Playwright は各々単体・パリティ検証を担う。
+- 開発は `pnpm dev` を使い、Vite開発サーバーの薄いアダプターからPages Functionと同じ中核処理を呼ぶ。
+  本番相当は `pnpm build` と `pnpm preview` を使う。Vitest と Playwright は各々単体・パリティ検証を担う。
 - 配信は GitHub Actions から Cloudflare Pages へ静的成果物を直接アップロードする。PR は preview、`main` は production へデプロイする。
 
 ## LAPRAS 機能の意図的差異

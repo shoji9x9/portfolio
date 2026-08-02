@@ -3,6 +3,8 @@
 このリポジトリは Cloudflare Pages に静的サイトをデプロイする。PR ではプレビュー、
 `main` へのマージ後は production をデプロイする。ローカル開発では Cloudflare へ
 デプロイせず、`pnpm dev` を使う。
+`pnpm dev` はViteの開発用アダプターで `GET /api/lapras-preview` も提供し、Pages Functionと同じ
+取得・検証・キャッシュ中核を呼ぶ。Cloudflareランタイム固有の最終確認はPreviewスモークで行う。
 
 ## 初回設定
 
