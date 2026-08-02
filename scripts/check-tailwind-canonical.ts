@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 import { glob, readFile } from "node:fs/promises";
-import { extname, relative } from "node:path";
+import { extname } from "node:path";
 
 import { __unstable__loadDesignSystem } from "@tailwindcss/node";
 
@@ -21,7 +21,7 @@ for await (const file of glob("src/**/*.{html,js,jsx,ts,tsx}", { cwd: root })) {
   for (const violation of findCanonicalClassViolations(source, extension, designSystem)) {
     violationCount++;
     console.error(
-      `${relative(process.cwd(), file)}:${violation.line}:${violation.column} ` +
+      `${file}:${violation.line}:${violation.column} ` +
         `Tailwind class \`${violation.candidate}\` can be written as \`${violation.canonical}\``,
     );
   }
