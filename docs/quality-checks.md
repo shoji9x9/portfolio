@@ -16,7 +16,7 @@
 | ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
 | oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）                       |
 | oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                                 |
-| Tailwind canonical 検査        | 非 canonical クラス名の検出      | ✓ 全体（関連 staged 時） | –        | ✓ `lint` 内                                | `src/**/*.{html,js,jsx,ts,tsx}`                                                                      |
+| Tailwind canonical 検査        | 非 canonical クラス名の検出      | ✓ 全体（関連 staged 時） | –        | ✓ `lint` 内                                | oxlint と同じ `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored・生成物等を除外）                        |
 | markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                              |
 | shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
 | shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
@@ -121,6 +121,7 @@ PREVIEW_UI_URL=<deployment-url> pnpm run test:preview
 - Tailwind canonical 検査は Tailwind 本体の抽出器と `canonicalizeCandidates()` を使う。
   `oxlint-tailwindcss` の事前計算一覧に含まれない動的数値クラスも対象になり、たとえば
   `w-192` は `w-3xl` を提示して失敗する。
+  対象 glob と除外パターンは `scripts/oxlint-scope.ts` を oxlint と共有する。
 - `.agents/` / `.claude/`（vendored スキル実体）は lint/format 対象外。
 - 循環依存は oxlint `import/no-cycle` で検査する（dependency-cruiser は TypeScript 7 未対応のため撤去）。
 - 関数の循環的複雑度は oxlint `complexity`（上限 15）で検査する。

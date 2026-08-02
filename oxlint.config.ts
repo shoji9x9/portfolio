@@ -1,24 +1,14 @@
 // oxlint 設定（https://oxc.rs/docs/guide/usage/linter）
 // TypeScript 設定ファイル。`vp lint -c oxlint.config.ts --type-aware` で読み込む。
 // 型認識（type-aware）は CLI の `--type-aware` フラグで有効化する。
-// ルート直下の設定/ドキュメントと `src` のみを対象にし、vendored な
+// リポジトリー全体の JavaScript / TypeScript 系ファイルを対象にし、vendored な
 // `.agents` / `.claude`（スキル実体）はスコープ外にする。
+import { oxlintIgnorePatterns } from "./scripts/oxlint-scope";
+
 export default {
   lint: {
     // 対象を自プロジェクトに限定する（vendored スキル・生成物を除外）。
-    ignorePatterns: [
-      "node_modules",
-      "dist",
-      ".agents",
-      ".claude",
-      ".wrangler",
-      "coverage",
-      "reports",
-      "pnpm-lock.yaml",
-      // parity-suite が配布する決定論的ツールのコピー（正本はスキル側）。
-      // 外部スキルの成果物はこのリポジトリーで修正しない規約のため、整形・lint の対象外にする。
-      "e2e/parity/lib/tools/vendor",
-    ],
+    ignorePatterns: oxlintIgnorePatterns,
     plugins: [
       "typescript",
       "unicorn",

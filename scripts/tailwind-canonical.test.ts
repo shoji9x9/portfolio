@@ -1,14 +1,12 @@
-import { readFile } from "node:fs/promises";
-
-import { __unstable__loadDesignSystem } from "@tailwindcss/node";
 import { describe, expect, it } from "vitest";
 
-import { findCanonicalClassViolations } from "./tailwind-canonical";
+import { findCanonicalClassViolations, loadTailwindDesignSystem } from "./tailwind-canonical";
 
 const stylesheetUrl = new URL("../src/index.css", import.meta.url);
-const designSystem = await __unstable__loadDesignSystem(await readFile(stylesheetUrl, "utf8"), {
-  base: new URL("../src/", import.meta.url).pathname,
-});
+const designSystem = await loadTailwindDesignSystem(
+  stylesheetUrl,
+  new URL("../src/", import.meta.url).pathname,
+);
 
 // Tailwind は初回の canonicalizeCandidates() で内部表を遅延構築する。CI は品質チェックを
 // 並列実行してCPU競合が大きいため、その初期化だけは個々のテストのタイムアウト外で済ませる。
@@ -16,11 +14,15 @@ findCanonicalClassViolations('<div className="w-3xl" />', "tsx", designSystem);
 
 describe("findCanonicalClassViolations", () => {
   it("動的数値クラスを canonical な名前へ正規化する", () => {
-    const source = '<div className="w-192 max-w-192" />';
+    // この負例を含むテストファイル自体も canonical 検査の対象になる。違反候補は実行時に
+    // 組み立て、テスト入力として検出させつつ、リポジトリー上のソースには違反を残さない。
+    const widthCandidate = ["w", "192"].join("-");
+    const maxWidthCandidate = ["max-w", "192"].join("-");
+    const source = `<div className="${widthCandidate} ${maxWidthCandidate}" />`;
 
     expect(findCanonicalClassViolations(source, "tsx", designSystem)).toEqual([
-      { candidate: "w-192", canonical: "w-3xl", column: 17, line: 1 },
-      { candidate: "max-w-192", canonical: "max-w-3xl", column: 23, line: 1 },
+      { candidate: widthCandidate, canonical: "w-3xl", column: 17, line: 1 },
+      { candidate: maxWidthCandidate, canonical: "max-w-3xl", column: 23, line: 1 },
     ]);
   }, 15_000);
 
