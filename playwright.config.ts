@@ -58,6 +58,7 @@ export default defineConfig({
       // 新側専用のスペック。新側ベースラインの採取は parity-diff の工程で、現側では走らせない。
       testIgnore: [
         previewSmokeTest,
+        /__parity_slug_not_set__\/baseline-new\.spec\.ts$/,
         /static-page\/baseline-new\.spec\.ts$/,
         /lapras\/baseline-new\.spec\.ts$/,
       ],
@@ -75,6 +76,7 @@ export default defineConfig({
       // 新側の採取と現新比較は parity-diff が `new/<target>/` に対して行う。
       testIgnore: [
         previewSmokeTest,
+        /__parity_slug_not_set__\/baseline-new\.spec\.ts$/,
         /static-page\/baseline\.spec\.ts$/,
         /static-page\/baseline-new\.spec\.ts$/,
         /static-page\/strength\.spec\.ts$/,

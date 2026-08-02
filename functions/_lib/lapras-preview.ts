@@ -1,4 +1,6 @@
-const PUBLIC_PROFILE_URL = "https://lapras.com/public/shoji9x9";
+import lapras from "../../src/data/generated/lapras.json";
+
+const PUBLIC_PROFILE_URL = lapras.publicUrl;
 const CACHE_TTL_SECONDS = 86_400;
 const MAX_HTML_BYTES = 262_144;
 
