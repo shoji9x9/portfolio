@@ -95,7 +95,7 @@
     "noise": 0,
     "unexplained": 0,
     "unverified": [
-      "LinkPreview API の実通信と Cloudflare Cache API のデータセンター間伝播",
+      "LAPRAS 公開ページの実通信と Cloudflare Cache API のデータセンター間伝播",
       "capture_conditions.environment は自由記述のため機械照合していない",
       "想定利用者の Windows Chrome では採取していない",
       "animations: disabled のためアニメーション中の見た目は検証していない"

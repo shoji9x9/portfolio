@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 const previewUiUrl = process.env["PREVIEW_UI_URL"];
 
-/** Cloudflare Pages へのデプロイ後に、実 binding と外部 API を含めて確認する設定。 */
+/** Cloudflare Pages へのデプロイ後に、実 Function と外部ページ取得を含めて確認する設定。 */
 export default defineConfig({
   testDir: "./e2e/preview",
   fullyParallel: false,

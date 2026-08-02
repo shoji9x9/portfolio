@@ -53,7 +53,7 @@ ARIA は LAPRAS 見出しと画像リンクの機能境界で両側とも 0。
 
 | 箇所 | 理由 |
 | --- | --- |
-| LinkPreview API の実応答・エラー別本文 | 秘密鍵を要する外部連携。固定依存の単体テストで代替 |
+| LAPRAS 公開ページの実応答・エラー別本文 | 外部ページ取得。固定依存の単体テストとPreviewスモークで検証 |
 | Cloudflare Cache API のデータセンター間伝播 | ローカルでは分散状態を作れない |
 | 撮影環境の自由記述 | 機械照合できない。同一 Linux Chromium 条件での比較のみ |
 | 想定利用者の Windows Chrome | 今回は Linux Chromium のみ |

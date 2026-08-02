@@ -1,8 +1,7 @@
-import { handleLaprasPreview, type LaprasPreviewEnvironment } from "../_lib/lapras-preview";
+import { handleLaprasPreview } from "../_lib/lapras-preview";
 
 type PagesFunctionContext = {
   request: Request;
-  env: LaprasPreviewEnvironment;
   waitUntil: (promise: Promise<unknown>) => void;
 };
 
@@ -14,7 +13,7 @@ declare global {
 
 /** `GET /api/lapras-preview` の Cloudflare Pages Function。 */
 export function onRequestGet(context: PagesFunctionContext): Promise<Response> {
-  return handleLaprasPreview(context.request, context.env, {
+  return handleLaprasPreview(context.request, {
     cache: caches.default,
     fetch: (input, init) => globalThis.fetch(input, init),
     waitUntil: (promise) => {

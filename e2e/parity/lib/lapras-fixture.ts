@@ -3,8 +3,8 @@ import type { Page } from "@playwright/test";
 /**
  * 2026-07-31 に現行公開サイトから実測したプレビュー。
  *
- * LinkPreview API の応答は秘密鍵を要するためゴールデンデータセットへ収録しない。この値は
- * 新側 UI を同じ表示状態へ置くための測定スナップショットであり、上流 API の契約ではない。
+ * 外部ページから実行時に取得するOGメタデータはゴールデンデータセットへ収録しない。この値は
+ * 新側 UI を同じ表示状態へ置くための測定スナップショットであり、上流ページの契約ではない。
  */
 export const OBSERVED_LAPRAS_PREVIEW = {
   title: "shoji9x9さんのLAPRAS Profile",

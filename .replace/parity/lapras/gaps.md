@@ -11,16 +11,30 @@
 `url` / `image` / `title` を検証せず表示する。非 2xx・JSON 解析失敗・秘密値不足を個別に扱う
 分岐、キャッシュ制御、画面上のフォールバックは存在しない。
 
-新側の実行時取得、HTTPS とヘッダー認証、24 時間キャッシュ、検証済みフィールドだけの返却、
+新側のLAPRAS公開ページからの実行時取得、HTTPS、24時間キャッシュ、検証済みOGフィールドだけの返却、
 固定 503 とテキストリンクへのフォールバックは、2026-07-31 に承認された意図的差異である。
 新側 API の成功・失敗・キャッシュ特性は `functions/_lib/lapras-preview.test.ts`、
 画面の 503 フォールバックは `e2e/parity/lapras/states.spec.ts` で検証する。
+
+## Preview 環境での外部取得再検証
+
+2026-08-02、Cloudflare Pages Preview で実際に差が出た条件を使って再検証した。
+
+- 同じ32バイトのAPIキーはローカル `curl` からLinkPreview APIへ送ると200、Pages Functionからは403
+- salted SHA-256 fingerprint はローカルとSecret bindingで一致し、ダミー値による受信確認でも
+  `X-Linkpreview-Api-Key` は欠落・変換されなかった
+- `Accept` と `User-Agent` をローカル成功時に揃えてもPages Functionからの403は継続した
+- Pages FunctionからLAPRAS公開ページを直接取得すると200で、必要なOGメタデータ3件を取得できた
+
+この結果から新側はLinkPreview APIを使わず、固定したLAPRAS公開URLのHTMLからOGメタデータを取得する方式へ
+変更した。実デプロイに対する非モックのPreviewスモークで、Function 200、画像200、desktop/mobile表示、
+console errorゼロを検証する。
 
 ## 特性化できなかった箇所と理由
 
 | 箇所 | 種別 | 理由 | 対応 |
 | --- | --- | --- | --- |
-| LinkPreview API の実応答・エラー別本文 | スコープ外の外部連携 | 秘密鍵を要し、現行公開ページの閲覧ではビルド時通信へ到達できない | 応答を推測せず gap として残す。新側は固定した依存による単体テストで 429・不正 JSON・接続失敗を検証 |
+| 現行 LinkPreview API の実応答・エラー別本文 | スコープ外の外部連携 | 秘密鍵を要し、現行公開ページの閲覧ではビルド時通信へ到達できない | 応答を推測せず gap として残す。新側はLinkPreviewへ依存せず、LAPRAS公開ページのHTTPエラー・不正HTML・接続失敗を単体テストで検証 |
 | 現行の取得失敗画面 | 到達不可 | 失敗分岐がなく、公開済み静的成果物からビルド失敗状態を再現できない | 未検証として残し、新側だけ承認済みフォールバックを検証 |
 | Cloudflare Cache API のデータセンター間伝播 | 実行環境依存 | Cache API はデータセンターごとのキャッシュで、ローカル Playwright から分散状態を作れない | 24 時間 TTL と hit/miss は単体テスト、実環境の伝播は未検証 |
 | 明示的な loading indicator | 明示的な loading UI 無し | 現行はビルド済み画像を即時表示し、新側も取得中はフォールバックリンクを表示する設計 | indicator 自体は対象外。取得中もリンクが残ることは単体描画で検証 |

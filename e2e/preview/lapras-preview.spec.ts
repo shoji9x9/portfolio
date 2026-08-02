@@ -21,7 +21,7 @@ test("実 API から取得した LAPRAS プレビューを表示する", async (
     }
   });
 
-  // パリティスイートとは異なり route.fulfill() を使わず、デプロイ先の実 Function と binding を検証する。
+  // パリティスイートとは異なり route.fulfill() を使わず、実 Function と外部ページ取得を検証する。
   const apiResponsePromise = page.waitForResponse((response) => {
     return new URL(response.url()).pathname === LAPRAS_API_PATH;
   });

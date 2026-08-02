@@ -63,14 +63,14 @@ CI では実行しない（現行サイト・外部画像 CDN への到達性に
 ## Preview スモークテスト
 
 Cloudflare Pages の Preview デプロイ直後に `deploy.yml` が自動実行する。パリティスイートの固定レスポンスは
-使わず、デプロイ固有 URL に対して実際の Pages Function・`LINK_PREVIEW_API_KEY` binding・LinkPreview API・
+使わず、デプロイ固有 URL に対して実際の Pages Function・LAPRAS 公開ページ・
 プレビュー画像を Chromium で確認する。ローカルから同じ確認を行う場合は次のように実行する。
 
 ```bash
 PREVIEW_UI_URL=<deployment-url> pnpm run test:preview
 ```
 
-外部 API を利用するため通常の CI には含めず、対象 Preview を作成した `Deploy / Preview` ジョブだけで実行する。
+外部ページを利用するため通常の CI には含めず、対象 Preview を作成した `Deploy / Preview` ジョブだけで実行する。
 
 ### local-production を検証するとき
 
