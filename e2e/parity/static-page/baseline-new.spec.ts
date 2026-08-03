@@ -23,7 +23,7 @@ import {
 } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
 import { captureMaskEntries } from "../lib/locator-map/portable";
-import { parityDir } from "../lib/paths";
+import { assertSafeSegment, parityDir } from "../lib/paths";
 
 type CaptureState = "default" | "hover" | "focus";
 
@@ -147,10 +147,7 @@ function requireEnv(name: string): string {
 }
 
 const slug = requireEnv("PARITY_SLUG");
-const target = requireEnv("PARITY_NEW_TARGET");
-if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(target)) {
-  throw new Error(`PARITY_NEW_TARGET にパスとして安全でない値が含まれています: "${target}"`);
-}
+const target = assertSafeSegment(requireEnv("PARITY_NEW_TARGET"), "PARITY_NEW_TARGET");
 const pass = process.env["PARITY_CAPTURE_PASS"] ?? "baseline";
 if (pass !== "baseline" && pass !== "noise") {
   throw new Error(

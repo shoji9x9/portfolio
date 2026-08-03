@@ -7,7 +7,7 @@ import { VIEWPORTS } from "../../../playwright.config";
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { writeDefaultArtifacts, writeNetworkEntries } from "../lib/capture";
 import { test } from "../lib/fixtures";
-import { parityDir } from "../lib/paths";
+import { assertSafeSegment, parityDir } from "../lib/paths";
 import { collectLaprasDefaultArtifacts } from "./capture";
 
 function requireEnvironment(name: string): string {
@@ -18,10 +18,7 @@ function requireEnvironment(name: string): string {
 
 const slug = requireEnvironment("PARITY_SLUG");
 if (slug !== "lapras") throw new Error(`PARITY_SLUG は lapras である必要があります: ${slug}`);
-const target = requireEnvironment("PARITY_NEW_TARGET");
-if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(target)) {
-  throw new Error(`PARITY_NEW_TARGET にパスとして安全でない値があります: ${target}`);
-}
+const target = assertSafeSegment(requireEnvironment("PARITY_NEW_TARGET"), "PARITY_NEW_TARGET");
 const pass = process.env["PARITY_CAPTURE_PASS"] ?? "baseline";
 if (pass !== "baseline" && pass !== "noise") {
   throw new Error(`PARITY_CAPTURE_PASS が不正です: ${pass}`);
