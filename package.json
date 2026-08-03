@@ -49,7 +49,7 @@
     "@vitejs/plugin-react": "^6.0.4",
     "@vitest/coverage-v8": "^4.1.10",
     "babel-plugin-react-compiler": "^1.0.0",
-    "jscpd": "^4.0.0",
+    "jscpd": "^5.0.12",
     "knip": "^6.29.0",
     "lefthook": "^2.1.10",
     "markdownlint-cli2": "^0.23.1",
