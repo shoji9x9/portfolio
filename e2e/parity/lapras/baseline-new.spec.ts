@@ -4,6 +4,7 @@ import { mkdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import { VIEWPORTS } from "../../../playwright.config";
+import { assertBaselineBrowser } from "../lib/browser-version";
 import { writeDefaultArtifacts, writeNetworkEntries } from "../lib/capture";
 import { test } from "../lib/fixtures";
 import { collectLaprasDefaultArtifacts } from "./capture";
@@ -34,8 +35,12 @@ const outputDirectory = join(
   pass === "baseline" ? "baseline-new" : "noise-pass2",
 );
 
-test(`lapras: 新側 ${pass} ベースラインを採取する`, async ({ page, containers }) => {
+test(`lapras: 新側 ${pass} ベースラインを採取する`, async ({ browser, page, containers }) => {
   test.setTimeout(600_000);
+
+  // 現行側ベースラインと違うブラウザーで新側を採ると、比較結果に実装差でない差分が混ざる。
+  await assertBaselineBrowser(browser, slug, "new");
+
   await rm(outputDirectory, { recursive: true, force: true });
 
   const written: string[] = [];

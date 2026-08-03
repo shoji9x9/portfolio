@@ -12,6 +12,7 @@ import { readFileSync } from "node:fs";
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { isAbsolute, join, relative } from "node:path";
 
+import { assertBaselineBrowser } from "../lib/browser-version";
 import {
   collectDefaultArtifacts,
   collectStateArtifacts,
@@ -223,8 +224,16 @@ test.beforeEach(async ({ page }, testInfo) => {
 });
 
 test.describe("static-page: 新側ベースライン採取", () => {
-  test(`${pass} パスを metadata.json の条件で採取する`, async ({ page, entries, containers }) => {
+  test(`${pass} パスを metadata.json の条件で採取する`, async ({
+    browser,
+    page,
+    entries,
+    containers,
+  }) => {
     test.setTimeout(600_000);
+
+    // 現行側ベースラインと違うブラウザーで新側を採ると、比較結果に実装差でない差分が混ざる。
+    await assertBaselineBrowser(browser, slug, "new");
 
     expect(entries.map(({ name }) => name)).toEqual(metadata.traits.elements);
     const maskCatalog = captureMaskEntries(containers);

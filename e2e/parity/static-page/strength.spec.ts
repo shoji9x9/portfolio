@@ -23,6 +23,7 @@ import type { Page } from "@playwright/test";
 
 import { readFile, writeFile } from "node:fs/promises";
 
+import { assertBaselineBrowser } from "../lib/browser-version";
 import { dynamicMasks, parseTraits } from "../lib/capture";
 import * as checks from "../lib/checks";
 import { expect, test } from "../lib/fixtures";
@@ -147,6 +148,12 @@ async function detect(
 test.describe.configure({ mode: "serial" });
 
 test.describe("static-page: 強度ゲート（故障注入）", () => {
+  // 差分器 3 経路はベースライン相手に照合する。ブラウザーがベースラインと違えば、
+  // 注入していない差まで赤くなり（無注入の対照が落ちる）、強度の測定にならない。
+  test.beforeAll(async ({ browser }) => {
+    await assertBaselineBrowser(browser, "static-page", "current");
+  });
+
   test("ポジティブコントロール: 無注入なら 4 経路すべて緑", async ({
     page,
     containers,
@@ -402,6 +409,9 @@ test.describe("static-page: 強度ゲート（故障注入）", () => {
   });
 
   test.afterAll(async () => {
+    // beforeAll のガードが落ちるとテストは 1 件も走らないが、afterAll は走る。そのまま書くと
+    // 記録済みの強度結果を空配列で潰してしまうため、1 件も採れていなければ既存の証跡を残す。
+    if (results.length === 0) return;
     await writeFile(RESULT_PATH, `${JSON.stringify(results, null, 2)}\n`, "utf8");
   });
 });
