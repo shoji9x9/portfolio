@@ -7,9 +7,19 @@ const LAPRAS_IMAGE_HOST = "media.lapras.com";
 const LAPRAS_PUBLIC_URL = "https://lapras.com/public/shoji9x9";
 
 // Cloudflare Pages は Web Analytics のビーコン（static.cloudflareinsights.com/beacon.min.js）を
-// **エッジで注入**する。リポジトリーにも dist にも存在せず、こちらのコードでは止められない。
-// ビーコンの送信先 cloudflareinsights.com/cdn-cgi/rum は CORS ヘッダーを返さないため、
-// ブラウザーが CORS エラーと net::ERR_FAILED を出し、console クリーンの検証が必ず落ちる。
+// エッジで注入する。リポジトリーにも dist にも無く、配信時に差し込まれる。
+//
+// Web Analytics は登録ホスト名と完全一致するオリジンからのビーコンだけを受け付ける。本プロジェクトの
+// 登録は shoji9x9.pages.dev 単体で、ダッシュボードにホスト名を追加する手段が無い。プレビューは
+// デプロイごとにホスト名が変わるため受け付けられず、ビーコンの POST が 404 になる。その 404 応答に
+// CORS ヘッダーが付かないので、ブラウザーが CORS エラーと net::ERR_FAILED を報告する。
+//
+// 実測（2026-08-03、実ブラウザーが送った本物のペイロードを再送して確認）:
+//   origin=shoji9x9.pages.dev                       -> 204（本番。コンソールもクリーン）
+//   origin=<デプロイ>.shoji9x9.pages.dev            -> 404
+//   origin=www.shoji9x9.pages.dev                   -> 404
+// 送信先を cloudflareinsights.com/cdn-cgi/rum と自ドメインの /cdn-cgi/rum のどちらにしても同じ。
+// つまり**プレビュー環境固有の事象で、本番では発生しない**（本番の計測は正常に動作している）。
 //
 // 除外は**このホストだけ**に限定する。「第三者由来は全部無視」にすると、アプリが読み込む
 // 外部リソース（LAPRAS の画像等）の失敗まで見逃すため。ホスト以外のエラーは従来どおり失敗させる。
