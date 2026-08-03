@@ -33,7 +33,12 @@ jobs:
           UPDATES: ${{ steps.metadata.outputs.updated-dependencies-json }}
         run: |
           node -e '
-            const updates = JSON.parse(process.env.UPDATES);
+            // メタデータが空・不正 JSON でもここで例外を投げない。判定ステップが落ちると
+            // 「なぜマージされなかったか」を伝える Report outcome まで到達できないため。
+            // 取得できなければ updates は空のままとなり、eligible=false（マージしない）に倒れる。
+            let updates = [];
+            try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch { updates = []; }
+            if (!Array.isArray(updates)) updates = [];
             // dependabot/fetch-metadata が返すエコシステム名。npm は "npm_and_yarn"、
             // GitHub Actions は "github_actions"。"npm" という値は返らない。
             const NPM = ["npm", "npm_and_yarn"];
@@ -132,7 +137,11 @@ jobs:
             if (!updates.length) lines.push("- 更新内容を取得できませんでした。");
             lines.push("");
             const eligible = process.env.ELIGIBLE === "true";
-            if (!eligible) {
+            if (!updates.length) {
+              // 「ポリシー上の対象外」と区別する。取得不能は設定どおりの結果ではなく異常なので、
+              // 同じ文言に丸めると原因の切り分けができない。
+              lines.push("**結果: 更新内容を取得できず、自動マージしていない**（fetch-metadata の出力が空か不正）。手動でレビューしてください。");
+            } else if (!eligible) {
               lines.push("**結果: 自動マージの対象外**（patch、またはメジャー 1 以上のマイナーの直接依存のみが対象）。手動でレビューしてください。");
             } else if (process.env.MERGE_OUTCOME === "success") {
               lines.push("**結果: 自動マージした。**");
