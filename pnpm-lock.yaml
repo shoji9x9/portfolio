@@ -214,8 +214,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       inter-ui:
-        specifier: 3.19.3
-        version: 3.19.3
+        specifier: 4.1.1
+        version: 4.1.1
       react:
         specifier: ^19.2.8
         version: 19.2.8
@@ -2744,8 +2744,9 @@ packages:
       react-devtools-core:
         optional: true
 
-  inter-ui@3.19.3:
-    resolution: {integrity: sha512-5FG9fjuYOXocIfjzcCBhICL5cpvwEetseL3FU6tP3d6Bn7g8wODhB+I9RNGRTizCT7CUG4GOK54OPxqq3msQgg==}
+  inter-ui@4.1.1:
+    resolution: {integrity: sha512-451h0J29HyOmA+JXgSi/6M12tL7ZCZ8arYKZUXiOXTJpJbAKqJvFh3k5SiV3x7tKe0C0KyrKUUiQIvvZ2PQDcA==}
+    engines: {node: '>=16.0.0'}
 
   is-alphabetical@2.0.1:
     resolution: {integrity: sha512-FWyyY60MeTNyeSRpkM2Iry0G9hpr7/9kD40mD/cGQEuilcZYS4okz8SN2Q6rLCJ8gbCt6fN+rC+6tMGS99LaxQ==}
@@ -5981,7 +5982,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  inter-ui@3.19.3: {}
+  inter-ui@4.1.1: {}
 
   is-alphabetical@2.0.1: {}
 
