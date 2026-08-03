@@ -1,8 +1,38 @@
+import type { ConsoleMessage } from "@playwright/test";
+
 import { expect, test } from "@playwright/test";
 
 const LAPRAS_API_PATH = "/api/lapras-preview";
 const LAPRAS_IMAGE_HOST = "media.lapras.com";
 const LAPRAS_PUBLIC_URL = "https://lapras.com/public/shoji9x9";
+
+// Cloudflare Pages は Web Analytics のビーコン（static.cloudflareinsights.com/beacon.min.js）を
+// エッジで注入する。リポジトリーにも dist にも無く、配信時に差し込まれる。
+//
+// Web Analytics は登録ホスト名と完全一致するオリジンからのビーコンだけを受け付ける。本プロジェクトの
+// 登録は shoji9x9.pages.dev 単体で、ダッシュボードにホスト名を追加する手段が無い。プレビューは
+// デプロイごとにホスト名が変わるため受け付けられず、ビーコンの POST が 404 になる。その 404 応答に
+// CORS ヘッダーが付かないので、ブラウザーが CORS エラーと net::ERR_FAILED を報告する。
+//
+// 実測（2026-08-03、実ブラウザーが送った本物のペイロードを再送して確認）:
+//   origin=shoji9x9.pages.dev                       -> 204（本番。コンソールもクリーン）
+//   origin=<デプロイ>.shoji9x9.pages.dev            -> 404
+//   origin=www.shoji9x9.pages.dev                   -> 404
+// 送信先を cloudflareinsights.com/cdn-cgi/rum と自ドメインの /cdn-cgi/rum のどちらにしても同じ。
+// つまり**プレビュー環境固有の事象で、本番では発生しない**（本番の計測は正常に動作している）。
+//
+// 除外は**このホストだけ**に限定する。「第三者由来は全部無視」にすると、アプリが読み込む
+// 外部リソース（LAPRAS の画像等）の失敗まで見逃すため。ホスト以外のエラーは従来どおり失敗させる。
+const IGNORED_CONSOLE_ERROR_HOSTS = ["cloudflareinsights.com"];
+
+/** Cloudflare が注入したビーコン由来の console エラーかどうか。 */
+function isInjectedBeaconError(message: ConsoleMessage): boolean {
+  // net::ERR_FAILED は本文に URL を含まないため location().url も見る。
+  const haystacks = [message.text(), message.location().url];
+  return IGNORED_CONSOLE_ERROR_HOSTS.some((host) =>
+    haystacks.some((haystack) => haystack.includes(host)),
+  );
+}
 
 test("実 API から取得した LAPRAS プレビューを表示する", async ({ page }, testInfo) => {
   const baseURL = testInfo.project.use.baseURL;
@@ -13,7 +43,9 @@ test("実 API から取得した LAPRAS プレビューを表示する", async (
   const consoleErrors: string[] = [];
   let imageResponseStatus: number | undefined;
   page.on("console", (message) => {
-    if (message.type() === "error") consoleErrors.push(message.text());
+    if (message.type() !== "error") return;
+    if (isInjectedBeaconError(message)) return;
+    consoleErrors.push(message.text());
   });
   page.on("response", (response) => {
     if (new URL(response.url()).hostname === LAPRAS_IMAGE_HOST) {

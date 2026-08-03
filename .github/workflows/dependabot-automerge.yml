@@ -33,15 +33,32 @@ jobs:
           UPDATES: ${{ steps.metadata.outputs.updated-dependencies-json }}
         run: |
           node -e '
-            const updates = JSON.parse(process.env.UPDATES);
+            // メタデータが空・不正 JSON でもここで例外を投げない。判定ステップが落ちると
+            // 「なぜマージされなかったか」を伝える Report outcome まで到達できないため。
+            // 取得できなければ updates は空のままとなり、eligible=false（マージしない）に倒れる。
+            let updates = [];
+            try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch { updates = []; }
+            if (!Array.isArray(updates)) updates = [];
+            // dependabot/fetch-metadata が返すエコシステム名。実測では npm は "npm_and_yarn"、
+            // GitHub Actions は "github_actions" で、"npm" は返らない（この取り違えが本バグの原因）。
+            // それでも "npm" を許容リストに残すのは、将来 fetch-metadata の表記が変わったときに
+            // 再び全 PR が黙って対象外へ落ちるのを避けるため。許容を広げても、後続の
+            // dependencyType / updateType の判定は変わらないので安全側は保たれる。
+            const NPM = ["npm", "npm_and_yarn"];
+            const ACTIONS = ["github_actions"];
             const eligible = updates.length > 0 && updates.every((update) => {
-              if (update.packageEcosystem !== "npm") return false;
+              if (![...NPM, ...ACTIONS].includes(update.packageEcosystem)) return false;
               if (!["direct:production", "direct:development"].includes(update.dependencyType)) return false;
               if (update.updateType === "version-update:semver-patch") return true;
               return update.updateType === "version-update:semver-minor"
                 && /^[1-9][0-9]*\./.test(update.newVersion);
             });
+            // Dependency Review は package.json / pnpm-lock.yaml / pnpm-workspace.yaml の変更でのみ
+            // 起動する（dependency-review.yml の paths）。それらに触れない Actions のみの更新で
+            // 完了を待つと、起動しないワークフローを待ち続けてタイムアウトする。
+            const needsDependencyReview = updates.some((update) => NPM.includes(update.packageEcosystem));
             process.stdout.write("eligible=" + eligible + "\n");
+            process.stdout.write("needs-dependency-review=" + needsDependencyReview + "\n");
           ' >> "$GITHUB_OUTPUT"
       - name: Wait for CI and dependency review
         id: gates
@@ -49,6 +66,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          NEEDS_DEPENDENCY_REVIEW: ${{ steps.policy.outputs.needs-dependency-review }}
         run: |
           set -euo pipefail
 
@@ -56,20 +74,28 @@ jobs:
           while [ "$remaining" -gt 0 ]; do
             runs="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs?head_sha=${HEAD_SHA}&per_page=100")"
             ci="$(printf '%s' "$runs" | jq -r '[.workflow_runs[] | select(.name == "CI") | .conclusion][0] // empty')"
-            dependency_review="$(printf '%s' "$runs" | jq -r '[.workflow_runs[] | select(.name == "Dependency Review") | .conclusion][0] // empty')"
+            if [ "$NEEDS_DEPENDENCY_REVIEW" = "true" ]; then
+              dependency_review="$(printf '%s' "$runs" | jq -r '[.workflow_runs[] | select(.name == "Dependency Review") | .conclusion][0] // empty')"
+            else
+              # 起動しないワークフローは待たない（依存マニフェストに触れない更新）。
+              dependency_review="success"
+            fi
 
             if [ "$ci" = "success" ] && [ "$dependency_review" = "success" ]; then
               echo "ready=true" >> "$GITHUB_OUTPUT"
+              echo "reason=ready" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if [ -n "$ci" ] && [ "$ci" != "success" ]; then
               echo "CI concluded with ${ci}; leaving the PR for review."
               echo "ready=false" >> "$GITHUB_OUTPUT"
+              echo "reason=ci-${ci}" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if [ -n "$dependency_review" ] && [ "$dependency_review" != "success" ]; then
               echo "Dependency Review concluded with ${dependency_review}; leaving the PR for review."
               echo "ready=false" >> "$GITHUB_OUTPUT"
+              echo "reason=dependency-review-${dependency_review}" >> "$GITHUB_OUTPUT"
               exit 0
             fi
 
@@ -79,11 +105,57 @@ jobs:
 
           echo "Timed out waiting for CI and Dependency Review; leaving the PR for review."
           echo "ready=false" >> "$GITHUB_OUTPUT"
+          echo "reason=timeout" >> "$GITHUB_OUTPUT"
           exit 0
       - name: Merge eligible update
+        id: merge
         if: steps.policy.outputs.eligible == 'true' && steps.gates.outputs.ready == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: gh pr merge --merge --match-head-commit "$HEAD_SHA" "$PR_URL"
+      # 結末を必ずジョブサマリーへ残す。判定・ゲートのどちらで止まってもジョブ自体は success で
+      # 終わるため、これが無いと「対象外で何もしなかった」と「マージした」を外から区別できない。
+      - name: Report outcome
+        if: always()
+        env:
+          UPDATES: ${{ steps.metadata.outputs.updated-dependencies-json }}
+          ELIGIBLE: ${{ steps.policy.outputs.eligible }}
+          NEEDS_DEPENDENCY_REVIEW: ${{ steps.policy.outputs.needs-dependency-review }}
+          GATE_REASON: ${{ steps.gates.outputs.reason }}
+          MERGE_OUTCOME: ${{ steps.merge.outcome }}
+        run: |
+          node -e '
+            const lines = ["### Dependabot auto-merge", ""];
+            let updates = [];
+            try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch { updates = []; }
+            // 判定ステップと同じく配列であることまで確かめる。null や {} は JSON として妥当なので
+            // catch に入らず、for...of で TypeError になってサマリー自体が出力されなくなる。
+            if (!Array.isArray(updates)) updates = [];
+            // テンプレートリテラルと Markdown のコードスパンは使わない。shellcheck は単一引用符内の
+            // ドル記号つき波括弧とバッククォートを展開の意図と見なして SC2016 を出す（actionlint 経由で検出）。
+            for (const u of updates) {
+              const type = (u.updateType || "?").replace("version-update:semver-", "");
+              lines.push("- " + u.dependencyName + " " + u.prevVersion + " → " + u.newVersion
+                + " (" + u.packageEcosystem + " / " + u.dependencyType + " / " + type + ")");
+            }
+            if (!updates.length) lines.push("- 更新内容を取得できませんでした。");
+            lines.push("");
+            const eligible = process.env.ELIGIBLE === "true";
+            if (!updates.length) {
+              // 「ポリシー上の対象外」と区別する。取得不能は設定どおりの結果ではなく異常なので、
+              // 同じ文言に丸めると原因の切り分けができない。
+              lines.push("**結果: 更新内容を取得できず、自動マージしていない**（fetch-metadata の出力が空か不正）。手動でレビューしてください。");
+            } else if (!eligible) {
+              lines.push("**結果: 自動マージの対象外**（patch、またはメジャー 1 以上のマイナーの直接依存のみが対象）。手動でレビューしてください。");
+            } else if (process.env.MERGE_OUTCOME === "success") {
+              lines.push("**結果: 自動マージした。**");
+            } else {
+              const reason = process.env.GATE_REASON || "unknown";
+              lines.push("**結果: 対象だがマージしていない**（ゲート: " + reason + "）。手動でレビューしてください。");
+            }
+            lines.push("");
+            lines.push("Dependency Review を待った: " + (process.env.NEEDS_DEPENDENCY_REVIEW || "false"));
+            require("node:fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, lines.join("\n") + "\n");
+          '

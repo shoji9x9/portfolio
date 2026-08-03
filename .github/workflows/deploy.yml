@@ -55,6 +55,40 @@ jobs:
             --branch ${{ github.event.pull_request.head.ref }}
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
+      # wrangler がデプロイ URL を返した直後は Pages Function のルーティングがまだ行き渡らず、
+      # /api/* が 404 を返す時間帯がある。この状態で検証すると実装と無関係にテストが落ちるため、
+      # Function が応答を返し始めるまで待つ。
+      #
+      # 判定に content-type を使う理由: Pages は未知パスへ SPA フォールバックとして index.html を
+      # 200 text/html で返す。ステータスだけで判定すると、Function 未配信でも「404 でない」を
+      # 満たして素通りする（実測: 存在しないパス配下の /api/lapras-preview が 200 text/html）。
+      # Function は成功時も外部取得失敗時（503）も JSON を返すため、JSON が返ることを条件にする。
+      # 200 を待たないのは 503 を待ち続けないため（応答の中身の妥当性はテスト側が検証する）。
+      - name: Wait for preview functions to be routable
+        env:
+          PREVIEW_UI_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          set -euo pipefail
+
+          # 1 試行あたりの上限を固定する。curl は既定で全体タイムアウトを持たないため、DNS や接続が
+          # 詰まると 1 回の試行が長時間ブロックし、下の 30 回 × 5 秒という待機上限が意味をなさなくなる。
+          # 最悪でも 30 × (10 + 5) = 450 秒で、ジョブの timeout-minutes: 15 に収まる。
+          for attempt in $(seq 1 30); do
+            response="$(curl -s --connect-timeout 5 --max-time 10 -o /dev/null -w '%{http_code} %{content_type}' "${PREVIEW_UI_URL}/api/lapras-preview" || true)"
+            status="${response%% *}"
+            content_type="${response#* }"
+            case "$content_type" in
+              application/json*)
+                echo "Preview functions routable after ${attempt} attempt(s) (status=${status})."
+                exit 0
+                ;;
+            esac
+            echo "attempt ${attempt}: status=${status} content-type=${content_type}; waiting for the deployment to propagate..."
+            sleep 5
+          done
+
+          echo "Preview functions did not become routable within the timeout." >&2
+          exit 1
       - name: Verify preview
         env:
           PREVIEW_UI_URL: ${{ steps.deploy.outputs.deployment-url }}
