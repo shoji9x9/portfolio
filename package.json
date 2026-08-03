@@ -16,6 +16,7 @@
     "lint": "vp lint -c oxlint.config.ts --type-aware && node --import tsx scripts/check-tailwind-canonical.ts",
     "lint:fix": "vp lint -c oxlint.config.ts --type-aware --fix",
     "lint:md": "markdownlint-cli2",
+    "check:node-version": "tsx scripts/check-node-version-parity.ts",
     "lint:sh": "git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 sh -c 'test \"$#\" -eq 0 || shellcheck --external-sources \"$@\"' _ && git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 sh -c 'test \"$#\" -eq 0 || shfmt -d \"$@\"' _",
     "format": "vp fmt -c oxfmt.config.ts",
     "format:check": "vp fmt -c oxfmt.config.ts --check",
@@ -42,7 +43,7 @@
     "@tailwindcss/node": "^4.3.3",
     "@tailwindcss/oxide": "^4.3.3",
     "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.0.0",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
@@ -72,7 +73,7 @@
     }
   },
   "engines": {
-    "node": ">=24.18.0"
+    "node": ">=26.5.0"
   },
   "packageManager": "pnpm@11.17.0"
 }

@@ -39,6 +39,15 @@ updates:
       - dependency-name: "inter-ui"
         update-types:
           - "version-update:semver-major"
+      # @types/node は**意図的に ignore しない**。実行環境（mise.toml の node）と対で上げる
+      # 必要がある依存だが、ignore すると Dependabot が沈黙する。mise 管理ツール側の通知は
+      # outdated.yml が担うので、両側から通知が来る状態を保ち、整合そのものは CI の
+      # `pnpm check:node-version` で機械的に落とす（scripts/node-version-parity.ts。Issue #45）。
+      # 検査は「メジャーの一致」と「型の minor が実行環境の minor を超えない」の両方を見る。
+      # 後者が要るのは dependabot-automerge.yml が semver-minor を自動マージ対象にしているため
+      # （型だけ先の minor へ進むと、実行環境に無い API が型検査を通る。実測は
+      # docs/quality-checks.md「3 を等値ではなく片側にする理由」）。
+      # 型が先行する PR が来たら単独でマージせず、mise.toml の node 更新を同じ PR に足す。
     groups:
       # playwright 系は**必ず同時に**上げる。片方だけ上げると型検査が壊れる。
       #   - e2e/parity/lib/capture.ts は Locator を "@playwright/test" から取る

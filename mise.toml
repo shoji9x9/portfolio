@@ -2,7 +2,7 @@
 # バージョンは再現性のため厳密にピン留めする（更新は Dependabot / mise up で行う）。
 [tools]
 # ランタイム / パッケージマネージャ
-node = "24.18.0"
+node = "26.5.0"
 pnpm = "11.17.0"
 
 # セキュリティ / lint（シェル・GitHub Actions）

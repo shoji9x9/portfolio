@@ -12,35 +12,37 @@
 
 ## ツール × ステージ × 対象ファイル
 
-| ツール                         | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                                         |
-| ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）                       |
-| oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                                 |
-| Tailwind canonical 検査        | 非 canonical クラス名の検出      | ✓ 全体（関連 staged 時） | –        | ✓ `lint` 内                                | oxlint と同じ `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored・生成物等を除外）                        |
-| markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                              |
-| shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
-| shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                        |
-| gitleaks                       | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                                                    |
-| knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `functions` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言） |
-| jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `functions` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                             |
-| commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                   |
-| tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）  |
-| vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `functions/**` / `seed/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                  |
-| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/parity/**/*.spec.ts`                                                                            |
-| Playwright（Preview smoke）    | 実 API・画像・ブラウザー表示確認 | –                        | –        | ✓ Preview デプロイ直後                     | `e2e/preview/**/*.spec.ts`                                                                           |
-| react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                                |
-| actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                               |
-| pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                                             |
-| check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                                          |
-| Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                                            |
+| ツール                         | 目的                             | pre-commit               | pre-push | CI                                         | 対象ファイル                                                                                                   |
+| ------------------------------ | -------------------------------- | ------------------------ | -------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| oxfmt                          | 整形                             | ✓ staged（自動再 stage） | –        | ✓ `format:check` 全体                      | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx,json,jsonc,css}`（`.agents`/`.claude` 除外）                                 |
+| oxlint（type-aware）           | 静的解析・循環的複雑度           | ✓ staged                 | –        | ✓ `lint` 全体                              | `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored 除外）                                                           |
+| Tailwind canonical 検査        | 非 canonical クラス名の検出      | ✓ 全体（関連 staged 時） | –        | ✓ `lint` 内                                | oxlint と同じ `*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}`（vendored・生成物等を除外）                                  |
+| markdownlint-cli2              | Markdown 検査                    | ✓ staged                 | –        | ✓ 全体                                     | `*.md`（vendored 除外）                                                                                        |
+| shfmt                          | シェル整形                       | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                                  |
+| shellcheck                     | シェル静的解析                   | ✓ staged                 | –        | ✓ `lint:sh` 内                             | `*.{sh,bash}`                                                                                                  |
+| gitleaks                       | 秘密情報検出                     | ✓ staged 差分            | –        | ✓ `secret-scan`（全履歴 `fetch-depth: 0`） | git 差分 / 全履歴                                                                                              |
+| knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `functions` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言）           |
+| jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `functions` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                                       |
+| check-node-version-parity.ts   | Node 実行環境と型の整合          | ✓ 全体（関連 staged 時） | –        | ✓                                          | `mise.toml` / `package.json`                                                                                   |
+| commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                             |
+| tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）            |
+| vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `functions/**` / `seed/**` / `scripts/**` / `vite/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外） |
+| Playwright（パリティスイート） | 現行／新側の等価性検証           | –                        | –        | –（手動実行）                              | `e2e/parity/**/*.spec.ts`                                                                                      |
+| Playwright（Preview smoke）    | 実 API・画像・ブラウザー表示確認 | –                        | –        | ✓ Preview デプロイ直後                     | `e2e/preview/**/*.spec.ts`                                                                                     |
+| react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                                          |
+| actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                                         |
+| pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                                                       |
+| check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                                                    |
+| Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                                                      |
 
 ## CI ジョブ構成
 
-- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/react:doctor/署名検証/ライセンス）を
+- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/check:node-version/react:doctor/署名検証/ライセンス）を
   **ネイティブの step 並列（`parallel:`）** で実行し、`secret-scan` ジョブ（全履歴 gitleaks）を並列実行。
   ※ `parallel:` は actionlint 未対応のため `.github/actionlint.yaml` で ci.yml のみ該当メッセージを ignore。
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。
-- `outdated.yml`: 週次で `mise outdated` を検出し Issue で通知。
+- `outdated.yml`: 週次で `mise outdated` を検出し Issue で通知。minor/patch とメジャーを節に分けて両方通知する
+  （メジャーを落とすと Dependabot だけがメジャー PR を出す非対称な状態になり、対で上げるべき依存の片側しか届かない）。
 - `dependency-review.yml`: 依存マニフェスト変更 PR の既知脆弱性・拒否ライセンスを検査する。拒否ライセンスは `.github/license-policy.json` を正本としてローカル検査と共有する。
 - `dependabot-automerge.yml`: 対象の Dependabot PR が CI と Dependency Review を通過した場合だけ merge commit で自動マージする。
 
@@ -89,6 +91,62 @@ PREVIEW_UI_URL=<deployment-url> pnpm run test:preview
 ### local-production を検証するとき
 
 `local-production` の `pre_commands` は、v1.30.1 以降、`check_urls` が失敗したときだけ実行される。ソースを変更した後に既存の preview サーバーが稼働している場合は、先に停止してから `local-production` の検証を開始する。これにより `pnpm build` が実行され、古い `dist/` を検証対象にしない。
+
+## Node 実行環境と型の整合検査
+
+Node の実行環境は mise（`mise.toml` の `node`）、型は pnpm（`package.json` の `@types/node`）が管理して
+おり、管理主体が分かれている。`tsc -b` は「型と実行環境が一致していること」を検査しないため、型だけ
+メジャーを上げると**型検査は通るのに実行時に存在しない API を使える**状態になる。実測: `@types/node`
+24 → 26 単独の PR #36 は CI が green だった。
+
+`pnpm check:node-version`（`scripts/check-node-version-parity.ts`）が次の 3 点を検査する。
+
+1. `mise.toml` の `node` / `engines.node` / `@types/node` の**メジャーが一致**すること
+2. mise が入れる Node が `engines.node` の下限を**満たす**こと
+3. `@types/node` の minor が mise の Node の minor を**超えない**こと（片側の制約）
+
+patch は比較しない。`@types/node` の patch は DefinitelyTyped 側の型修正で Node の patch リリースとは
+対応しないため。形式は `engines.node` が `>=<x>.<y>.<z>`、`@types/node` が `^<x>.<y>.<z>` に固定されて
+いる（形式が違えば検査自身が失敗して知らせる）。参照するのは `package.json` の宣言範囲であり
+`pnpm-lock.yaml` の解決済みバージョンではない。Dependabot は範囲ごと書き換えるので更新 PR は捕まえられるが、
+lockfile だけが更新される経路（`pnpm update` 等）は対象外。
+
+### 3 を等値ではなく片側にする理由
+
+`@types/node` の minor は Node の minor の API 追加を追う。2026-08-03 の実測（26.0.0 と 26.1.1 の
+`.d.ts` 差分と、mise で両 Node を入れて確認）:
+
+| API                                  | Node 26.0.0                     | Node 26.5.0        | `@types/node` 26.1.1 の型 |
+| ------------------------------------ | ------------------------------- | ------------------ | ------------------------- |
+| `crypto.randomUUIDv7`                | `undefined`                     | `function`         | あり                      |
+| `diagnostics_channel.boundedChannel` | `undefined`                     | `function`         | あり                      |
+| `node:ffi`                           | `--experimental-ffi` 自体が無い | フラグ付きで利用可 | あり（新規 `ffi.d.ts`）   |
+
+`@types/node` 26.1.1 の型で `randomUUIDv7` を呼ぶコードは `tsc` を通り、Node 26.0.0 では
+`SyntaxError: The requested module 'node:crypto' does not provide an export named 'randomUUIDv7'` で
+落ちる。メジャーの場合と種類が同じ不整合で、粒度が minor なだけ。逆向き（型のマイナーが古い）は使える
+API に型が付かないだけで誤った通過は起きないため許容する。この非対称性ゆえに等値ではなく片側にする。
+
+この検査が必要なのは `dependabot-automerge.yml` が `semver-minor` を自動マージ対象にしているため。
+`@types/node` の minor 更新 PR は人のレビューを経ずに入り得るので、機械的な歯止めが要る。
+型が先行する更新 PR は、`mise.toml` の `node` を同じ PR で上げるまで CI が red のまま残る。
+
+### なぜ型を mise 側へ寄せないか
+
+mise の npm backend が公開するのは PATH 上の実行ファイルだけで、型定義のみのパッケージは TypeScript から
+解決できない（`typeRoots` にユーザー固有の絶対パスを書くことになり可搬性がない）。さらに `@types/node` は
+`vite` / `vitest` / `cosmiconfig-typescript-loader` の peer dependency、`@types/pngjs` の実依存であり、
+node_modules から外すと peer 解決が壊れる。逆方向（pnpm の `use-node-version` でランタイムも pnpm 管理に
+する）も、mise が行っている GPG 署名検証と `minimum_release_age` のゲートを失い、かつ pnpm 経由で起動した
+コマンドにしか効かないため採らない。したがって「同じ場所で管理する」のではなく「ずれを機械が検出する」。
+
+### 通知経路を片側だけにしない
+
+この不整合が生まれた原因は検査の不在だけではなく、**通知の非対称性**でもある。Dependabot は npm 依存の
+メジャー更新 PR を出すのに、`outdated.yml` は mise 管理ツールのメジャー更新を落としていたため、
+`@types/node` 26 系の PR だけが届き Node 26 への更新を促す通知は来なかった。対で上げる依存を扱うときは、
+**両側から通知が来る状態を保つ**（`@types/node` のメジャーを Dependabot で ignore しない／`outdated.yml`
+はメジャーも通知する）。
 
 ## 新しいファイル種別を追加するときの確認
 

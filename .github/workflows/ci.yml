@@ -63,6 +63,10 @@ jobs:
             run: pnpm run lint:md
           - name: Lint shell scripts
             run: pnpm run lint:sh
+          # 実行環境の Node（mise.toml）と型（@types/node）のメジャーが揃っているか。
+          # tsc はこの一致を見ないため、型だけ上げた PR は他のチェックでは緑になる。
+          - name: Node version parity
+            run: pnpm run check:node-version
           - name: Knip (unused files / deps)
             run: pnpm run knip
           - name: Copy-paste detection (jscpd)

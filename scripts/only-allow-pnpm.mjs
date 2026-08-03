@@ -2,7 +2,7 @@
 // `npx only-allow pnpm` は毎回外部からパッケージを取得して実行するため、
 // ネットワーク制限環境で失敗しやすく lockfile / minimumReleaseAge の管理外になる。
 // ここでは外部依存を取得せず、package manager が設定する npm_config_user_agent
-// （例: "pnpm/11.17.0 npm/? node/v24.18.0 ..."）だけで判定する。
+// （例: "pnpm/11.17.0 npm/? node/v26.5.0 ..."）だけで判定する。
 const userAgent = process.env.npm_config_user_agent ?? "";
 
 if (!userAgent.startsWith("pnpm/")) {
