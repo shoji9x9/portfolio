@@ -12,6 +12,7 @@ import { readFileSync } from "node:fs";
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { isAbsolute, join, relative } from "node:path";
 
+import { assertBaselineBrowser } from "../lib/browser-version";
 import {
   collectDefaultArtifacts,
   collectStateArtifacts,
@@ -22,6 +23,7 @@ import {
 } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
 import { captureMaskEntries } from "../lib/locator-map/portable";
+import { assertSafeSegment, parityDir } from "../lib/paths";
 
 type CaptureState = "default" | "hover" | "focus";
 
@@ -145,10 +147,7 @@ function requireEnv(name: string): string {
 }
 
 const slug = requireEnv("PARITY_SLUG");
-const target = requireEnv("PARITY_NEW_TARGET");
-if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(target)) {
-  throw new Error(`PARITY_NEW_TARGET にパスとして安全でない値が含まれています: "${target}"`);
-}
+const target = assertSafeSegment(requireEnv("PARITY_NEW_TARGET"), "PARITY_NEW_TARGET");
 const pass = process.env["PARITY_CAPTURE_PASS"] ?? "baseline";
 if (pass !== "baseline" && pass !== "noise") {
   throw new Error(
@@ -156,8 +155,7 @@ if (pass !== "baseline" && pass !== "noise") {
   );
 }
 
-const repoRoot = process.env["PARITY_REPO_ROOT"] ?? process.cwd();
-const metadataPath = join(repoRoot, ".replace", "parity", slug, "metadata.json");
+const metadataPath = join(parityDir(slug), "metadata.json");
 const metadata = parseMetadata(readFileSync(metadataPath, "utf8"), metadataPath);
 if (metadata.slug !== slug || slug !== "static-page") {
   throw new Error(
@@ -179,10 +177,7 @@ if (
 expect(metadata.capture_conditions.state_samples).toEqual(INTERACTIVE_SAMPLES);
 
 const outRoot = join(
-  repoRoot,
-  ".replace",
-  "parity",
-  slug,
+  parityDir(slug),
   "new",
   target,
   pass === "noise" ? "noise-pass2" : "baseline-new",
@@ -223,8 +218,16 @@ test.beforeEach(async ({ page }, testInfo) => {
 });
 
 test.describe("static-page: 新側ベースライン採取", () => {
-  test(`${pass} パスを metadata.json の条件で採取する`, async ({ page, entries, containers }) => {
+  test(`${pass} パスを metadata.json の条件で採取する`, async ({
+    browser,
+    page,
+    entries,
+    containers,
+  }) => {
     test.setTimeout(600_000);
+
+    // 現行側ベースラインと違うブラウザーで新側を採ると、比較結果に実装差でない差分が混ざる。
+    await assertBaselineBrowser(browser, slug, "new");
 
     expect(entries.map(({ name }) => name)).toEqual(metadata.traits.elements);
     const maskCatalog = captureMaskEntries(containers);

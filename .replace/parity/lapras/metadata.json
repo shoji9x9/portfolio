@@ -32,7 +32,12 @@
     "run_command": "PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/parity/lapras e2e/parity/page-composition.spec.ts"
   },
   "capture_conditions": {
-    "environment": "Chromium (Playwright 1.61.1) / Linux (WSL2) / devicePixelRatio 1 / colorScheme light",
+    "browser": {
+      "engine": "chromium",
+      "playwright_version": "1.61.1",
+      "browser_version": "149.0.7827.55"
+    },
+    "environment": "Linux (WSL2) / devicePixelRatio 1 / colorScheme light（ブラウザーは browser を参照。自由記述に版を重複させない）",
     "viewer_environment": "採取環境は Linux (WSL2) Chromium、想定利用者の表示環境は Windows Chrome。環境差は gaps.md に残す。",
     "viewports": [
       { "width": 1280, "height": 900, "label": "desktop" },

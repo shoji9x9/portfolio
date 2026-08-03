@@ -22,17 +22,21 @@ import type { ContainerLocators } from "../lib/locator-map/types";
 import type { Page } from "@playwright/test";
 
 import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
+import { assertBaselineBrowser } from "../lib/browser-version";
 import { dynamicMasks, parseTraits } from "../lib/capture";
 import * as checks from "../lib/checks";
 import { expect, test } from "../lib/fixtures";
+import { parityDir } from "../lib/paths";
 import { compareAria } from "../lib/tools/aria-compare.mjs";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { captureTraits } from "../lib/tools/vendor/trait-capture.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 
-const BASELINE_DIR = ".replace/parity/static-page/baseline/desktop/default";
-const RESULT_PATH = ".replace/parity/static-page/strength-results.json";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const BASELINE_DIR = join(parityDir("static-page"), "baseline", "desktop", "default");
+const RESULT_PATH = join(parityDir("static-page"), "strength-results.json");
 const ALIGN_TOLERANCE = 1;
 
 /** 検出経路。手書き assertion と差分器 3 経路の 4 つ。 */
@@ -147,6 +151,12 @@ async function detect(
 test.describe.configure({ mode: "serial" });
 
 test.describe("static-page: 強度ゲート（故障注入）", () => {
+  // 差分器 3 経路はベースライン相手に照合する。ブラウザーがベースラインと違えば、
+  // 注入していない差まで赤くなり（無注入の対照が落ちる）、強度の測定にならない。
+  test.beforeAll(async ({ browser }) => {
+    await assertBaselineBrowser(browser, "static-page", "current");
+  });
+
   test("ポジティブコントロール: 無注入なら 4 経路すべて緑", async ({
     page,
     containers,
@@ -402,6 +412,9 @@ test.describe("static-page: 強度ゲート（故障注入）", () => {
   });
 
   test.afterAll(async () => {
+    // beforeAll のガードが落ちるとテストは 1 件も走らないが、afterAll は走る。そのまま書くと
+    // 記録済みの強度結果を空配列で潰してしまうため、1 件も採れていなければ既存の証跡を残す。
+    if (results.length === 0) return;
     await writeFile(RESULT_PATH, `${JSON.stringify(results, null, 2)}\n`, "utf8");
   });
 });

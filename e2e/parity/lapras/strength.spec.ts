@@ -2,19 +2,23 @@ import type { LogicalEntry } from "../lib/locator-map/portable";
 import type { Locator } from "@playwright/test";
 
 import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
+import { assertBaselineBrowser } from "../lib/browser-version";
 import { parseTraits } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
 import { OBSERVED_LAPRAS_PREVIEW } from "../lib/lapras-fixture";
 import { laprasEntries } from "../lib/locator-map/portable";
+import { parityDir } from "../lib/paths";
 import { compareAria } from "../lib/tools/aria-compare.mjs";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { captureTraits } from "../lib/tools/vendor/trait-capture.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 import { laprasAria, laprasScreenshot } from "./capture";
 
-const BASELINE = ".replace/parity/lapras/baseline/desktop/default";
-const RESULT_PATH = ".replace/parity/lapras/strength-results.json";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const BASELINE = join(parityDir("lapras"), "baseline", "desktop", "default");
+const RESULT_PATH = join(parityDir("lapras"), "strength-results.json");
 
 type Detection = "handwritten" | "traits" | "pixel" | "aria";
 type FaultResult = {
@@ -83,7 +87,16 @@ async function runFault(
 test.describe.configure({ mode: "serial" });
 
 test.describe("lapras: 強度ゲート", () => {
+  // 差分器 3 経路はベースライン相手に照合する。ブラウザーがベースラインと違えば、
+  // 注入していない差まで赤くなり（無注入の対照が落ちる）、強度の測定にならない。
+  test.beforeAll(async ({ browser }) => {
+    await assertBaselineBrowser(browser, "lapras", "current");
+  });
+
   test.afterAll(async () => {
+    // beforeAll のガードが落ちるとテストは 1 件も走らないが、afterAll は走る。そのまま書くと
+    // 記録済みの強度結果を空配列で潰してしまうため、1 件も採れていなければ既存の証跡を残す。
+    if (results.length === 0) return;
     await writeFile(RESULT_PATH, `${JSON.stringify(results, null, 2)}\n`, "utf8");
   });
 

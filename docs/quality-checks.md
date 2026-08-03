@@ -61,6 +61,19 @@ PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/pari
 ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
 CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
 
+### ベースライン採取ブラウザーの陳腐化ガード
+
+視覚ベースラインは採取に使ったブラウザーの描画結果そのもので、現行側と新側で Chromium が
+食い違うと実装差ではない差分が出る。採取条件は `.replace/parity/<slug>/metadata.json` の
+`capture_conditions.browser`（`engine` / `playwright_version` / `browser_version`）に機械可読で
+記録し、採取・照合の実行時に実行中のバージョンと突き合わせる（`e2e/parity/lib/browser-version.ts`）。
+検査するのは現行側の採取（`baseline.spec.ts`）・強度ゲート（`strength.spec.ts`）と、
+新側の採取（`baseline-new.spec.ts`）で、不一致なら採り直しの手順を示して失敗する。
+
+**この一致を CI で検査してはいけない。** CI に置くと Playwright の更新 PR 自体が赤くなり、
+更新のたびに全機能のベースライン再採取を強制することになる。Playwright は通常の依存更新として
+上げてよく、再採取のコストは次にパリティ比較を行う機能の分だけ、ガードが告げた時点で払う。
+
 ## Preview スモークテスト
 
 Cloudflare Pages の Preview デプロイ直後に `deploy.yml` が自動実行する。パリティスイートの固定レスポンスは
