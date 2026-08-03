@@ -218,8 +218,9 @@ export function checkNodeVersionParity(sources: NodeVersionSources): readonly st
   const majorsMatch = new Set(majors).size === 1;
   if (!majorsMatch) {
     problems.push(
-      "Node のメジャーバージョンが一致していません。" +
-        "実行環境と型は同一の変更でまとめて更新してください。\n" +
+      // 対処（実行環境と型をまとめて更新する）は CLI 側が末尾にまとめて出すため、ここでは
+      // 繰り返さず「何がどうずれているか」だけを示す。
+      "Node のメジャーバージョンが一致していません。\n" +
         `  mise.toml       node         = "${formatSemver(miseVersion)}"   -> major ${String(miseVersion.major)}\n` +
         `  package.json    engines.node = ">=${formatSemver(enginesLowerBound)}" -> major ${String(enginesLowerBound.major)}\n` +
         `  package.json    @types/node  = "^${formatSemver(typesVersion)}"  -> major ${String(typesVersion.major)}`,
