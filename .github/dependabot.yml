@@ -30,6 +30,15 @@ updates:
     # （mise の minimum_release_age / pnpm の minimumReleaseAge と方針を揃える）。
     cooldown:
       default-days: 7
+    ignore:
+      # inter-ui は本文フォントの送り幅を現行サイトと一致させるため 3.19.3 に完全固定している
+      # （skills.yml の intentional_diffs.keep「本文フォントの字形・送り幅」）。4.x は字形・
+      # メトリクスが変わり、.replace/parity/*/baseline/ のピクセルベースライン（ノイズ基準値は
+      # pixel_diff: 0）が無効になる。CI は Playwright を実行しないためこの回帰は検出できない。
+      # 上げるには意図的差異レジストリの方針変更とベースライン再採取が要るので、メジャーは出さない。
+      - dependency-name: "inter-ui"
+        update-types:
+          - "version-update:semver-major"
     groups:
       # patch は安全な範囲としてまとめる。minor は個別 PR にして
       # dependabot-automerge.yml が各依存のメジャーバージョンを正しく判定する。
