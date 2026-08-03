@@ -115,13 +115,25 @@ describe("checkNodeVersionParity", () => {
     expect(problems).toEqual([]);
   });
 
-  it("メジャーが不一致なときはマイナー先行を重ねて報告しない", () => {
+  it("型のメジャーがずれているときはマイナー先行を重ねて報告しない", () => {
     const problems = checkNodeVersionParity({
       miseToml: miseToml("26.5.0"),
       packageJson: packageJson(">=26.5.0", "^27.9.0"),
     });
     expect(problems).toHaveLength(1);
     expect(problems[0]).toContain("メジャーバージョンが一致していません");
+  });
+
+  it("engines.node 側だけメジャーがずれているときもマイナー先行を重ねて報告しない", () => {
+    // 検査 3 の条件を `types.major === mise.major` だけにすると、型と mise のメジャーは
+    // 揃っているため 1 と 3 が同時に出てしまう（実測）。3 者一致を条件にする必要がある。
+    const problems = checkNodeVersionParity({
+      miseToml: miseToml("26.5.0"),
+      packageJson: packageJson(">=24.18.0", "^26.9.0"),
+    });
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain("メジャーバージョンが一致していません");
+    expect(problems.join("\n")).not.toContain("より新しいマイナーを要求しています");
   });
 
   it("@types/node だけメジャーを上げた状態を検出する（PR #36 の形）", () => {

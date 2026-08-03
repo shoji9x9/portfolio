@@ -215,7 +215,8 @@ export function checkNodeVersionParity(sources: NodeVersionSources): readonly st
 
   // ---- 1. メジャーの一致 ----
   const majors = [miseVersion.major, enginesLowerBound.major, typesVersion.major];
-  if (new Set(majors).size > 1) {
+  const majorsMatch = new Set(majors).size === 1;
+  if (!majorsMatch) {
     problems.push(
       "Node のメジャーバージョンが一致していません。" +
         "実行環境と型は同一の変更でまとめて更新してください。\n" +
@@ -234,8 +235,11 @@ export function checkNodeVersionParity(sources: NodeVersionSources): readonly st
   }
 
   // ---- 3. 型が実行環境より先行していないか（同一メジャー内の片側制約）----
-  // メジャーが揃っていない場合は 1 が既に報告しているので、重ねて報告しない。
-  if (typesVersion.major === miseVersion.major && typesVersion.minor > miseVersion.minor) {
+  // 3 者のメジャーが揃っているときだけ評価する。揃っていなければ 1 が根本の不整合を報告して
+  // おり、minor の先行はメジャーを揃えた後に再評価すべき二次的な条件。`types.major ===
+  // mise.major` だけを条件にすると、engines.node 側だけメジャーがずれている場合に 1 と 3 が
+  // 同時に出る（実測で確認）。
+  if (majorsMatch && typesVersion.minor > miseVersion.minor) {
     problems.push(
       `@types/node (^${formatSemver(typesVersion)}) が mise.toml の node ` +
         `(${formatSemver(miseVersion)}) より新しいマイナーを要求しています。\n` +
