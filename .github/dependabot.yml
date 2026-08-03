@@ -40,6 +40,20 @@ updates:
         update-types:
           - "version-update:semver-major"
     groups:
+      # playwright 系は**必ず同時に**上げる。片方だけ上げると型検査が壊れる。
+      #   - e2e/parity/lib/capture.ts は Locator を "@playwright/test" から取る
+      #   - e2e/parity/lib/tools/vendor/trait-capture.mjs は JSDoc の
+      #     `import('playwright').Locator` から取る（parity-suite 配布物。修正しない規約）
+      #   - capture.ts が前者の値を後者の関数へ渡すため、両者の Locator が同一型である必要がある
+      # @playwright/test は playwright を、playwright は playwright-core を厳密固定（^ なし）で
+      # 要求するので、版がずれると playwright-core が 2 系統同居し Locator が非互換になる。
+      # 実測（2026-08-03, PR #38 / #42）: 片方だけの更新は TS2345 / TS2322 で必ず落ちる。
+      # このグループは patch より前に置く（先に一致したグループが採用されるため）。
+      # なお、万一片方だけの PR が現れたら**単独でマージしない**。もう片方を同じ PR に足す。
+      playwright:
+        patterns:
+          - "@playwright/test"
+          - "playwright"
       # patch は安全な範囲としてまとめる。minor は個別 PR にして
       # dependabot-automerge.yml が各依存のメジャーバージョンを正しく判定する。
       patch:
