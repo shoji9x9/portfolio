@@ -9,15 +9,18 @@
 import type { NetworkEntry } from "../lib/capture";
 
 import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 import { VIEWPORTS } from "../../../playwright.config";
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { collectArtifacts, writeArtifacts } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
+import { parityDir } from "../lib/paths";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 
-const OUTPUT_DIR = ".replace/parity/static-page/baseline";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const OUTPUT_DIR = join(parityDir("static-page"), "baseline");
 
 /** `metadata.json` の differ.align_tolerance と一致させる（記録値と実行値をずらさない）。 */
 const ALIGN_TOLERANCE = 1;

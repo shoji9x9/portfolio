@@ -2,20 +2,23 @@ import type { LogicalEntry } from "../lib/locator-map/portable";
 import type { Locator } from "@playwright/test";
 
 import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { parseTraits } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
 import { OBSERVED_LAPRAS_PREVIEW } from "../lib/lapras-fixture";
 import { laprasEntries } from "../lib/locator-map/portable";
+import { parityDir } from "../lib/paths";
 import { compareAria } from "../lib/tools/aria-compare.mjs";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { captureTraits } from "../lib/tools/vendor/trait-capture.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 import { laprasAria, laprasScreenshot } from "./capture";
 
-const BASELINE = ".replace/parity/lapras/baseline/desktop/default";
-const RESULT_PATH = ".replace/parity/lapras/strength-results.json";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const BASELINE = join(parityDir("lapras"), "baseline", "desktop", "default");
+const RESULT_PATH = join(parityDir("lapras"), "strength-results.json");
 
 type Detection = "handwritten" | "traits" | "pixel" | "aria";
 type FaultResult = {

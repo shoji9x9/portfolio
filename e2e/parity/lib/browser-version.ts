@@ -18,6 +18,8 @@ import { readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { join } from "node:path";
 
+import { parityDir } from "./paths";
+
 /** `metadata.json` の `capture_conditions.browser`（採取条件の機械可読部分）。 */
 type BaselineBrowser = {
   /** ブラウザーエンジン名（`browserType().name()` と同じ語彙）。 */
@@ -115,8 +117,7 @@ export async function assertBaselineBrowser(
   slug: string,
   side: CaptureSide,
 ): Promise<void> {
-  const repoRoot = process.env["PARITY_REPO_ROOT"] ?? process.cwd();
-  const metadataPath = join(repoRoot, ".replace", "parity", slug, "metadata.json");
+  const metadataPath = join(parityDir(slug), "metadata.json");
   const recorded = parseBaselineBrowser(await readFile(metadataPath, "utf8"), metadataPath);
   const running = runningBrowser(browser);
 

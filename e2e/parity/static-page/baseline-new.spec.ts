@@ -23,6 +23,7 @@ import {
 } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
 import { captureMaskEntries } from "../lib/locator-map/portable";
+import { parityDir } from "../lib/paths";
 
 type CaptureState = "default" | "hover" | "focus";
 
@@ -157,8 +158,7 @@ if (pass !== "baseline" && pass !== "noise") {
   );
 }
 
-const repoRoot = process.env["PARITY_REPO_ROOT"] ?? process.cwd();
-const metadataPath = join(repoRoot, ".replace", "parity", slug, "metadata.json");
+const metadataPath = join(parityDir(slug), "metadata.json");
 const metadata = parseMetadata(readFileSync(metadataPath, "utf8"), metadataPath);
 if (metadata.slug !== slug || slug !== "static-page") {
   throw new Error(
@@ -180,10 +180,7 @@ if (
 expect(metadata.capture_conditions.state_samples).toEqual(INTERACTIVE_SAMPLES);
 
 const outRoot = join(
-  repoRoot,
-  ".replace",
-  "parity",
-  slug,
+  parityDir(slug),
   "new",
   target,
   pass === "noise" ? "noise-pass2" : "baseline-new",

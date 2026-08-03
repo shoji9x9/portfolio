@@ -22,18 +22,21 @@ import type { ContainerLocators } from "../lib/locator-map/types";
 import type { Page } from "@playwright/test";
 
 import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { dynamicMasks, parseTraits } from "../lib/capture";
 import * as checks from "../lib/checks";
 import { expect, test } from "../lib/fixtures";
+import { parityDir } from "../lib/paths";
 import { compareAria } from "../lib/tools/aria-compare.mjs";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { captureTraits } from "../lib/tools/vendor/trait-capture.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 
-const BASELINE_DIR = ".replace/parity/static-page/baseline/desktop/default";
-const RESULT_PATH = ".replace/parity/static-page/strength-results.json";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const BASELINE_DIR = join(parityDir("static-page"), "baseline", "desktop", "default");
+const RESULT_PATH = join(parityDir("static-page"), "strength-results.json");
 const ALIGN_TOLERANCE = 1;
 
 /** 検出経路。手書き assertion と差分器 3 経路の 4 つ。 */

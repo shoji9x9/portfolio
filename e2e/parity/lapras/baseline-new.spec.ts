@@ -7,6 +7,7 @@ import { VIEWPORTS } from "../../../playwright.config";
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { writeDefaultArtifacts, writeNetworkEntries } from "../lib/capture";
 import { test } from "../lib/fixtures";
+import { parityDir } from "../lib/paths";
 import { collectLaprasDefaultArtifacts } from "./capture";
 
 function requireEnvironment(name: string): string {
@@ -26,10 +27,9 @@ if (pass !== "baseline" && pass !== "noise") {
   throw new Error(`PARITY_CAPTURE_PASS が不正です: ${pass}`);
 }
 
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
 const outputDirectory = join(
-  ".replace",
-  "parity",
-  "lapras",
+  parityDir("lapras"),
   "new",
   target,
   pass === "baseline" ? "baseline-new" : "noise-pass2",

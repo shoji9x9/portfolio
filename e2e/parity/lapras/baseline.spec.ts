@@ -1,16 +1,19 @@
 import type { NetworkEntry } from "../lib/capture";
 
 import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 import { VIEWPORTS } from "../../../playwright.config";
 import { assertBaselineBrowser } from "../lib/browser-version";
 import { writeDefaultArtifacts, writeNetworkEntries } from "../lib/capture";
 import { expect, test } from "../lib/fixtures";
+import { parityDir } from "../lib/paths";
 import { comparePng } from "../lib/tools/pixel-compare.mjs";
 import { compareTraits } from "../lib/tools/vendor/trait-compare.mjs";
 import { collectLaprasDefaultArtifacts } from "./capture";
 
-const OUTPUT_DIR = ".replace/parity/lapras/baseline";
+// 成果物の根は metadata の参照元（assertBaselineBrowser）と同じ解決を使う。
+const OUTPUT_DIR = join(parityDir("lapras"), "baseline");
 const ALIGN_TOLERANCE = 1;
 
 test("lapras: 現行ベースラインと自己ノイズを採取する", async ({ browser, page, containers }) => {
