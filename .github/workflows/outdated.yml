@@ -1,8 +1,15 @@
 name: mise outdated
 
 # mise 管理ツール（node / pnpm / 各 CLI）の更新を毎週チェックし、固定タイトルの
-# Issue に集約通知する。メジャー更新は破壊的変更を伴い得るため自動通知しない
-# （現在バージョンと bump/latest のメジャーが一致する項目のみ対象）。
+# Issue に集約通知する。メジャー更新も通知し、破壊的変更の可能性がある更新として
+# 本文内で節を分ける（対応の判断は人が行う）。
+#
+# メジャー更新を除外していた頃の問題（Issue #45 で実測）:
+#   Dependabot は npm 依存のメジャー更新 PR を作るのに、mise 管理ツールのメジャー更新は
+#   ここで落としていた。この非対称性のため `@types/node` 26 系の PR（#36）だけが届き、
+#   対になる Node 26 への更新を促す通知はどこからも来ない状態だった。片側だけ上げると
+#   型検査は通るのに実行時に存在しない API を使える状態になる。
+#   （両者の整合自体は `pnpm check:node-version` が CI で検査する。）
 on:
   schedule:
     # 毎週月曜 00:00 UTC。
@@ -38,45 +45,88 @@ jobs:
         with:
           cache: true
 
-      # `mise outdated --bump --json` を取得し、current と (bump//latest) の
-      # メジャーが一致する項目のみ残す（メジャー更新は除外）。Markdown 表本文を生成。
-      - name: Compute outdated tools (minor/patch only)
+      # `mise outdated --bump --json` を取得し、current と (bump//latest) のメジャーが
+      # 一致するか否かで minor/patch 群とメジャー群に分ける。Markdown 表本文を生成。
+      - name: Compute outdated tools
         id: outdated
         run: |
           # jq プログラム内の \(...) は jq 構文（shell 展開ではない）。
           # shellcheck disable=SC2016
           set -euo pipefail
+          # mise outdated は更新の有無に関わらず JSON を出す（実測 2026-08-03: 更新なしは "{}"、
+          # 更新ありはオブジェクト、存在しないツール名でも "{}"。いずれも exit 0 で、
+          # 「更新あり」を exit code で伝えることはしない）。したがって「出力が JSON でない」は
+          # mise 自体が動かなかったことを意味する。ここを "{}" へ丸めると更新なしと誤判定し、
+          # 後続ステップが集約 Issue を「すべて最新です」でクローズする——通知経路が黙って
+          # 沈黙する。誤クローズより赤いワークフローの方が安全なのでステップを失敗させる。
           raw="$(mise outdated --bump --json 2>/dev/null || true)"
-          if [ -z "$raw" ]; then raw='{}'; fi
+          if ! printf '%s' "$raw" | jq -e 'type == "object" or type == "array"' >/dev/null 2>&1; then
+            echo "::error::mise outdated の出力を JSON として解釈できませんでした（出力長 ${#raw}）。更新なしと誤判定して Issue をクローズしないため失敗させます。"
+            exit 1
+          fi
 
-          # current と (bump//latest) のメジャーが一致する項目のみ残す
-          # （メジャー更新は自動通知しない）。
+          # 全項目に「メジャー更新か」の判定を付与する。
           items="$(printf '%s' "$raw" | jq -c '
             (if type=="object" then [to_entries[].value] else . end)
             | map( (.bump // .latest) as $t
               | select(.current != null and $t != null)
-              | select((.current|split(".")[0]) == ($t|split(".")[0]))
-              | {name, current, target: $t})')"
+              | {name, current, target: $t,
+                 major: ((.current|split(".")[0]) != ($t|split(".")[0]))})')"
+
+          minor_patch="$(printf '%s' "$items" | jq -c 'map(select(.major | not))')"
+          major="$(printf '%s' "$items" | jq -c 'map(select(.major))')"
 
           count="$(printf '%s' "$items" | jq 'length')"
+          minor_patch_count="$(printf '%s' "$minor_patch" | jq 'length')"
+          major_count="$(printf '%s' "$major" | jq 'length')"
           echo "count=$count" >> "$GITHUB_OUTPUT"
 
+          # メジャー更新に node が含まれるかで、型（@types/node）を対で上げる注意書きを出す。
+          node_major="$(printf '%s' "$major" | jq -r 'any(.name == "node")')"
+
           {
-            echo "mise 管理ツールに minor/patch 更新があります。"
-            echo "この Issue は \`mise outdated\` ワークフローが自動生成・更新します"
-            echo "（メジャー更新は破壊的変更を伴い得るため対象外）。"
+            echo "mise 管理ツールに更新があります。"
+            echo "この Issue は \`mise outdated\` ワークフローが自動生成・更新します。"
             echo
-            echo "| ツール | 現在 | 最新 |"
-            echo "| --- | --- | --- |"
-            printf '%s' "$items" | jq -r '.[] | "| \(.name) | \(.current) | \(.target) |"'
-            echo
-            echo "## 更新手順"
-            echo
-            echo "対象ツールを個別に bump します（\`mise.toml\` のバージョン指定を更新）。"
-            echo
-            echo '```bash'
-            printf '%s' "$items" | jq -r '.[] | "mise upgrade \(.name) --bump"'
-            echo '```'
+            echo "更新は対象ツールを個別に bump します（\`mise.toml\` のバージョン指定を更新）。"
+
+            if [ "$minor_patch_count" -gt 0 ]; then
+              echo
+              echo "## minor / patch 更新"
+              echo
+              echo "| ツール | 現在 | 最新 |"
+              echo "| --- | --- | --- |"
+              printf '%s' "$minor_patch" | jq -r '.[] | "| \(.name) | \(.current) | \(.target) |"'
+              echo
+              echo '```bash'
+              printf '%s' "$minor_patch" | jq -r '.[] | "mise upgrade \(.name) --bump"'
+              echo '```'
+            fi
+
+            if [ "$major_count" -gt 0 ]; then
+              echo
+              echo "## メジャー更新（破壊的変更の可能性あり）"
+              echo
+              echo "| ツール | 現在 | 最新 |"
+              echo "| --- | --- | --- |"
+              printf '%s' "$major" | jq -r '.[] | "| \(.name) | \(.current) | \(.target) |"'
+              echo
+              echo "変更履歴を確認し、影響を検証してから上げます。まとめず 1 ツールずつ扱います。"
+              echo
+              echo '```bash'
+              printf '%s' "$major" | jq -r '.[] | "mise upgrade \(.name) --bump"'
+              echo '```'
+
+              if [ "$node_major" = "true" ]; then
+                echo
+                echo "### node のメジャー更新について"
+                echo
+                echo "実行環境（\`mise.toml\` の \`node\`）と型（\`package.json\` の"
+                echo "\`@types/node\`・\`engines.node\`）は**同一の PR でまとめて**上げます。"
+                echo "片側だけ上げると型検査は通るのに実行時に存在しない API を使える状態になります。"
+                echo "この整合は \`pnpm check:node-version\` が CI で検査します。"
+              fi
+            fi
           } > issue-body.md
 
       # 固定タイトルの open Issue を検索し、状況に応じて作成 / 更新 / クローズする（冪等）。
@@ -109,7 +159,7 @@ jobs:
             if [ -n "$number" ]; then
               echo "No outdated tools; closing issue #$number"
               gh issue close "$number" \
-                --comment "すべての mise ツールが最新です（メジャー更新を除く）。自動クローズします。"
+                --comment "すべての mise ツールが最新です。自動クローズします。"
             else
               echo "No outdated tools and no open issue; nothing to do."
             fi

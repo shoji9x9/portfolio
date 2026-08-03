@@ -63,6 +63,12 @@ jobs:
             run: pnpm run lint:md
           - name: Lint shell scripts
             run: pnpm run lint:sh
+          # 実行環境の Node（mise.toml）と型（@types/node）の整合。3 点を検査する:
+          # メジャーの一致 / mise の node が engines.node の下限を満たすこと /
+          # @types/node の minor が mise の node の minor を超えないこと。
+          # tsc はこれらを見ないため、型だけ上げた PR は他のチェックでは緑になる。
+          - name: Node version parity
+            run: pnpm run check:node-version
           - name: Knip (unused files / deps)
             run: pnpm run knip
           - name: Copy-paste detection (jscpd)
