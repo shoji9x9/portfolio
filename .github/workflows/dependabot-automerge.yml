@@ -39,8 +39,11 @@ jobs:
             let updates = [];
             try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch { updates = []; }
             if (!Array.isArray(updates)) updates = [];
-            // dependabot/fetch-metadata が返すエコシステム名。npm は "npm_and_yarn"、
-            // GitHub Actions は "github_actions"。"npm" という値は返らない。
+            // dependabot/fetch-metadata が返すエコシステム名。実測では npm は "npm_and_yarn"、
+            // GitHub Actions は "github_actions" で、"npm" は返らない（この取り違えが本バグの原因）。
+            // それでも "npm" を許容リストに残すのは、将来 fetch-metadata の表記が変わったときに
+            // 再び全 PR が黙って対象外へ落ちるのを避けるため。許容を広げても、後続の
+            // dependencyType / updateType の判定は変わらないので安全側は保たれる。
             const NPM = ["npm", "npm_and_yarn"];
             const ACTIONS = ["github_actions"];
             const eligible = updates.length > 0 && updates.every((update) => {
@@ -126,7 +129,10 @@ jobs:
           node -e '
             const lines = ["### Dependabot auto-merge", ""];
             let updates = [];
-            try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch {}
+            try { updates = JSON.parse(process.env.UPDATES || "[]"); } catch { updates = []; }
+            // 判定ステップと同じく配列であることまで確かめる。null や {} は JSON として妥当なので
+            // catch に入らず、for...of で TypeError になってサマリー自体が出力されなくなる。
+            if (!Array.isArray(updates)) updates = [];
             // テンプレートリテラルと Markdown のコードスパンは使わない。shellcheck は単一引用符内の
             // ドル記号つき波括弧とバッククォートを展開の意図と見なして SC2016 を出す（actionlint 経由で検出）。
             for (const u of updates) {
