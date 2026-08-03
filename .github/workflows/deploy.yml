@@ -70,8 +70,11 @@ jobs:
         run: |
           set -euo pipefail
 
+          # 1 試行あたりの上限を固定する。curl は既定で全体タイムアウトを持たないため、DNS や接続が
+          # 詰まると 1 回の試行が長時間ブロックし、下の 30 回 × 5 秒という待機上限が意味をなさなくなる。
+          # 最悪でも 30 × (10 + 5) = 450 秒で、ジョブの timeout-minutes: 15 に収まる。
           for attempt in $(seq 1 30); do
-            response="$(curl -s -o /dev/null -w '%{http_code} %{content_type}' "${PREVIEW_UI_URL}/api/lapras-preview" || true)"
+            response="$(curl -s --connect-timeout 5 --max-time 10 -o /dev/null -w '%{http_code} %{content_type}' "${PREVIEW_UI_URL}/api/lapras-preview" || true)"
             status="${response%% *}"
             content_type="${response#* }"
             case "$content_type" in
