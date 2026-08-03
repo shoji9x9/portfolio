@@ -87,7 +87,8 @@ pre-commit:
               - "**/.claude/**"
             run: pnpm lint:md {staged_files}
 
-          # 実行環境の Node（mise.toml）と型（@types/node）のメジャー整合検査。
+          # 実行環境の Node（mise.toml）と型（@types/node）の整合検査。メジャーの一致・
+          # engines.node の下限充足・@types/node の minor 先行なしの 3 点を見る。
           # 検査対象は 2 ファイル固定なので {staged_files} は渡さず、glob は
           # 「関連ファイルが staged されたときのみ実行」するゲートとして使う。
           - name: node-version-parity

@@ -20,5 +20,8 @@ if (problems.length > 0) {
   );
   process.exitCode = 1;
 } else {
-  console.log("Node version parity OK: mise.toml / engines.node / @types/node のメジャーが一致。");
+  console.log(
+    "Node version parity OK: メジャー一致 / engines.node の下限充足 / " +
+      "@types/node の minor 先行なし。",
+  );
 }
