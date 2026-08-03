@@ -123,7 +123,10 @@ function readPackageFields(packageJson: string):
     return undefined;
   }
 
-  if (typeof parsed !== "object" || parsed === null) return undefined;
+  // 配列・null・プリミティブはいずれも package.json として不正なので undefined に倒す。
+  // `typeof [] === "object"` のため Array.isArray も見る（配列を通すと「フィールドが
+  // 定義されていません」という事実と異なる報告になる）。
+  if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) return undefined;
 
   // 型アサーションを使わず `in` による絞り込みで unknown から値を取り出す
   // （oxlint の typescript/no-unsafe-type-assertion に合わせる）。

@@ -196,4 +196,16 @@ describe("checkNodeVersionParity", () => {
     expect(problems[0]).toContain("JSON オブジェクトとして解析できません");
     expect(problems.join("\n")).not.toContain("定義されていません");
   });
+
+  it("package.json のルートが配列なら構文・形式エラーとして扱う", () => {
+    // typeof [] === "object" のため Array.isArray を見ないと、構文としては読めてしまい
+    // 「フィールドが定義されていません」という事実と異なる報告になる。
+    const problems = checkNodeVersionParity({
+      miseToml: miseToml("26.5.0"),
+      packageJson: "[]",
+    });
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain("JSON オブジェクトとして解析できません");
+    expect(problems.join("\n")).not.toContain("定義されていません");
+  });
 });

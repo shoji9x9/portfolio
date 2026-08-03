@@ -53,8 +53,17 @@ jobs:
           # jq プログラム内の \(...) は jq 構文（shell 展開ではない）。
           # shellcheck disable=SC2016
           set -euo pipefail
+          # mise outdated は更新の有無に関わらず JSON を出す（実測 2026-08-03: 更新なしは "{}"、
+          # 更新ありはオブジェクト、存在しないツール名でも "{}"。いずれも exit 0 で、
+          # 「更新あり」を exit code で伝えることはしない）。したがって「出力が JSON でない」は
+          # mise 自体が動かなかったことを意味する。ここを "{}" へ丸めると更新なしと誤判定し、
+          # 後続ステップが集約 Issue を「すべて最新です」でクローズする——通知経路が黙って
+          # 沈黙する。誤クローズより赤いワークフローの方が安全なのでステップを失敗させる。
           raw="$(mise outdated --bump --json 2>/dev/null || true)"
-          if [ -z "$raw" ]; then raw='{}'; fi
+          if ! printf '%s' "$raw" | jq -e 'type == "object" or type == "array"' >/dev/null 2>&1; then
+            echo "::error::mise outdated の出力を JSON として解釈できませんでした（出力長 ${#raw}）。更新なしと誤判定して Issue をクローズしないため失敗させます。"
+            exit 1
+          fi
 
           # 全項目に「メジャー更新か」の判定を付与する。
           items="$(printf '%s' "$raw" | jq -c '
