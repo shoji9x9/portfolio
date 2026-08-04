@@ -28,7 +28,8 @@ export type Artifact = {
   title: string;
   url: string;
   repositoryUrl: string;
-  article: { title: string; url: string };
+  /** 紹介記事。書いていない製作物は持たない（カードの「記事」見出しごと出ない）。 */
+  article?: { title: string; url: string };
   techStack: string[];
 };
 export type StaticContent = {
@@ -118,9 +119,10 @@ function isArtifact(value: unknown): value is Artifact {
     typeof value["title"] === "string" &&
     typeof value["url"] === "string" &&
     typeof value["repositoryUrl"] === "string" &&
-    isRecord(article) &&
-    typeof article["title"] === "string" &&
-    typeof article["url"] === "string" &&
+    (article === undefined ||
+      (isRecord(article) &&
+        typeof article["title"] === "string" &&
+        typeof article["url"] === "string")) &&
     isStringArray(value["techStack"])
   );
 }

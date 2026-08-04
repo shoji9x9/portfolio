@@ -1,3 +1,10 @@
+// ポートフォリオの表示データの正本（論理データ）。
+//
+// **役割が変わっている。** 移行（Issue #22 / #23）が収束するまでは「現行 shoji9x9.github.io の
+// 忠実な再現」が契約だったが、移行完了後の Issue #31 で「ポートフォリオの正本」へ変えた。
+// 現行サイトはもう更新しないため、ここから先の内容の変更は現行との差分になる
+// （設定の `intentional_diffs.may_change`「移行完了後のコンテンツ更新（新側のみ）」で宣言済み）。
+// 経緯と影響は `.replace/references/static-data-semantics.md` を参照する。
 type Badge = { id: string; label: string; href?: string; imageSrc: string };
 type Project = {
   id: string;
@@ -120,9 +127,19 @@ const frameworkBadges = createImageBadges([
     "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
   ],
   [
+    "vite",
+    "Vite",
+    "https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white",
+  ],
+  [
     "tailwindcss",
     "TailwindCSS",
     "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white",
+  ],
+  [
+    "shadcnui",
+    "shadcn/ui",
+    "https://img.shields.io/badge/shadcn%2Fui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white",
   ],
   [
     "storybook",
@@ -150,15 +167,49 @@ const frameworkBadges = createImageBadges([
     "https://img.shields.io/badge/DB2-ccc.svg?logo=db2&color=0F4D92&style=flat-square&logoColor=white",
   ],
   [
+    "postgresql",
+    "PostgreSQL",
+    "https://img.shields.io/badge/PostgreSQL-%234169E1.svg?style=for-the-badge&logo=postgresql&logoColor=white",
+  ],
+  [
+    "mysql",
+    "MySQL",
+    "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white",
+  ],
+  // DynamoDB・AWS・OpenAI のロゴは shields.io（simple-icons）に存在しないため文字のみのバッジにする。
+  // 既存の OutSystems・Recoil と同じ形。
+  [
+    "dynamodb",
+    "DynamoDB",
+    "https://img.shields.io/badge/DynamoDB-%234053D6.svg?style=for-the-badge",
+  ],
+  [
     "azure",
     "Azure",
     "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
   ],
+  ["aws", "AWS", "https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge"],
   [
     "vercel",
     "Vercel",
     "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white",
   ],
+  [
+    "cloudflare",
+    "Cloudflare",
+    "https://img.shields.io/badge/Cloudflare-%23F38020.svg?style=for-the-badge&logo=cloudflare&logoColor=white",
+  ],
+  [
+    "docker",
+    "Docker",
+    "https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white",
+  ],
+  [
+    "figma",
+    "Figma",
+    "https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white",
+  ],
+  ["openai", "OpenAI", "https://img.shields.io/badge/OpenAI-%23412991.svg?style=for-the-badge"],
   [
     "github-actions",
     // 現行アプリの実値（`frameworkBadges` のキー = img の alt）。上の "Github" と同じ理由で正規化しない。
@@ -168,6 +219,75 @@ const frameworkBadges = createImageBadges([
 ]);
 
 const projects: Project[] = [
+  {
+    id: "freelance-pharma-ir",
+    name: "製薬会社向けIR分析システムの開発",
+    term: "2026年6月～2026年7月",
+    roleTasks: [
+      {
+        summary: "開発メンバーとして以下を担当。",
+        items: [
+          "フロントエンド、バックエンドの開発・運用",
+          "コーディングエージェントが主体的に開発する (人がボトルネックとならない) 環境の構築",
+          "OpenAIを利用したIR資料の収集・分析、事業戦略の変化検知の実装",
+        ],
+      },
+    ],
+    techStack: { items: ["TypeScript", "React", "DynamoDB", "AWS", "OpenAI"] },
+    members: { team: 1, project: 1 },
+  },
+  {
+    id: "freelance-design-system",
+    name: "デザインシステムの開発、運用",
+    term: "2025年8月～2026年7月",
+    roleTasks: [
+      {
+        summary: "開発メンバーとして以下を担当。",
+        items: [
+          "技術スタック選定",
+          "Figmaデザインの作成、UIコンポーネントの開発・運用",
+          "デザイントークン、各UIコンポーネントの用途・プロパティの定義",
+          "コーディングエージェント主体へ移行するための品質担保 (プレビュー環境でのテスト、VRTの導入)",
+        ],
+      },
+    ],
+    techStack: { items: ["TypeScript", "React", "shadcn/ui", "Storybook", "AWS", "Figma"] },
+    members: { team: 3, project: 3 },
+  },
+  {
+    id: "freelance-investment",
+    name: "商社向け投資判断支援システムの開発、運用",
+    term: "2025年6月～2026年5月",
+    roleTasks: [
+      {
+        summary: "開発メンバーとして以下を担当。",
+        items: [
+          "技術スタック選定 (フロントエンド)",
+          "フロントエンド、バックエンドの開発・運用",
+          "チャット (Markdown描画)、チャート、ツリー等の複雑なUIの実装",
+          "OpenAIを利用したPDFファイルの要約の実装",
+        ],
+      },
+    ],
+    techStack: {
+      items: ["TypeScript", "NextJS", "MySQL", "AWS", "Docker", "Figma", "OpenAI"],
+    },
+    members: { team: 2, project: 2 },
+  },
+  {
+    id: "freelance-case-management",
+    name: "商社向け案件状況管理システムの開発",
+    term: "2023年10月～2026年7月",
+    roleTasks: [
+      {
+        summary:
+          "開発メンバーとして以下を担当 (当初はフロントエンド担当として参画し、最終的にはバックエンド、インフラも1人で担当)。",
+        items: ["要件定義、技術スタック選定", "フロントエンド、バックエンド、インフラの開発・運用"],
+      },
+    ],
+    techStack: { items: ["TypeScript", "NextJS", "PostgreSQL", "AWS", "Docker", "Figma"] },
+    members: { team: 2, project: 2 },
+  },
   {
     id: "freelance-sales",
     name: "自動車会社基幹システム（商品販売システム）の再構築",
@@ -292,7 +412,14 @@ export const goldenDataset = {
     {
       id: "freelance",
       company: "フリーランス (2022年1月～現在)",
-      projectIds: ["freelance-sales", "freelance-construction"],
+      projectIds: [
+        "freelance-pharma-ir",
+        "freelance-design-system",
+        "freelance-investment",
+        "freelance-case-management",
+        "freelance-sales",
+        "freelance-construction",
+      ],
     },
     {
       id: "toyota",
@@ -315,16 +442,14 @@ export const goldenDataset = {
     }),
   })),
   artifacts: [
+    // 記事は書いていないため `article` を持たない。任意項目であり、無いときはカードの
+    // 「記事」見出しごと描画しない（`src/components/portfolio/ArtifactSection.tsx`）。
     {
       id: "portfolio",
       title: "ポートフォリオ（このページ）",
-      url: "https://shoji9x9.github.io/",
-      repositoryUrl: "https://github.com/shoji9x9/shoji9x9.github.io",
-      article: {
-        title: "GitHub PagesにNext.jsでポートフォリオ作ってみた",
-        url: "https://zenn.dev/shoji9x9/articles/90897d3f772e8a",
-      },
-      techStack: ["React", "TypeScript", "NextJS", "TailwindCSS", "GithubActions"],
+      url: "https://shoji9x9.pages.dev/",
+      repositoryUrl: "https://github.com/shoji9x9/portfolio",
+      techStack: ["React", "TypeScript", "Vite", "TailwindCSS", "Cloudflare", "GithubActions"],
     },
     {
       id: "qiita-search",
@@ -352,9 +477,9 @@ export const goldenDataset = {
   staticContent: {
     selfPromotion: [
       "数百万円～十億円以上の大小50以上のプロジェクトを立ち上げてきた経験を持ち、問題点の把握、原因の分析、ROIの高い対策の立案が得意です",
-      "また、これらのプロジェクトの上流～下流の各局面の成果物のレビューを行い、時には自身で成果物を作成してきました (Java、COBOLがメイン)",
-      "日頃より現状に課題意識を持ちOutSystemsやアジャイル (Scrum、SAFe) の情報を集めプロジェクトに導入してきた行動力も特徴の一つと考えます",
-      "今後はこれまで培ってきた経験を活かしながらも、製品やサービスの開発を行っていきたいと考えており、特にフロントエンド開発 (Reactやコンポーネント駆動開発) への関心が高いです",
+      "アサインされたタスクが適切かをまず考え、適切でないと感じたときは背景や問題を確認した上で代案を提示します。期日と合格条件を確認し、そこから必要なマイルストーンを自ら設定して進めます",
+      "コーディングエージェントが主体的に開発を進められる環境を設計し、人がボトルネックとならない開発プロセスを構築しています",
+      "エージェント主体へ移行しても品質を落とさないよう、プレビュー環境でのテストやVRT (ビジュアルリグレッションテスト) など検証の仕組みを併せて用意します",
     ],
     qualifications: {
       "情報処理推進機構 (IPA)": [
@@ -432,8 +557,8 @@ export function verifyGoldenDataset(): {
     throw new Error("安定 ID が一意でないか、形式が不正です。");
   }
   const projectsCount = goldenDataset.careers.flatMap((career) => career.projects).length;
-  if (projectsCount !== 6) {
-    throw new Error("職務経歴の件数が現行ソースと一致しません。");
+  if (projectsCount !== 10) {
+    throw new Error("職務経歴の件数が正本の件数と一致しません。");
   }
   return {
     fingerprint: fingerprintOf(serializeDataset()),

@@ -4,6 +4,123 @@
     "company": "フリーランス (2022年1月～現在)",
     "projects": [
       {
+        "id": "freelance-pharma-ir",
+        "name": "製薬会社向けIR分析システムの開発",
+        "term": "2026年6月～2026年7月",
+        "roleTasks": [
+          {
+            "summary": "開発メンバーとして以下を担当。",
+            "items": [
+              "フロントエンド、バックエンドの開発・運用",
+              "コーディングエージェントが主体的に開発する (人がボトルネックとならない) 環境の構築",
+              "OpenAIを利用したIR資料の収集・分析、事業戦略の変化検知の実装"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "TypeScript",
+            "React",
+            "DynamoDB",
+            "AWS",
+            "OpenAI"
+          ]
+        },
+        "members": {
+          "team": 1,
+          "project": 1
+        }
+      },
+      {
+        "id": "freelance-design-system",
+        "name": "デザインシステムの開発、運用",
+        "term": "2025年8月～2026年7月",
+        "roleTasks": [
+          {
+            "summary": "開発メンバーとして以下を担当。",
+            "items": [
+              "技術スタック選定",
+              "Figmaデザインの作成、UIコンポーネントの開発・運用",
+              "デザイントークン、各UIコンポーネントの用途・プロパティの定義",
+              "コーディングエージェント主体へ移行するための品質担保 (プレビュー環境でのテスト、VRTの導入)"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "TypeScript",
+            "React",
+            "shadcn/ui",
+            "Storybook",
+            "AWS",
+            "Figma"
+          ]
+        },
+        "members": {
+          "team": 3,
+          "project": 3
+        }
+      },
+      {
+        "id": "freelance-investment",
+        "name": "商社向け投資判断支援システムの開発、運用",
+        "term": "2025年6月～2026年5月",
+        "roleTasks": [
+          {
+            "summary": "開発メンバーとして以下を担当。",
+            "items": [
+              "技術スタック選定 (フロントエンド)",
+              "フロントエンド、バックエンドの開発・運用",
+              "チャット (Markdown描画)、チャート、ツリー等の複雑なUIの実装",
+              "OpenAIを利用したPDFファイルの要約の実装"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "TypeScript",
+            "NextJS",
+            "MySQL",
+            "AWS",
+            "Docker",
+            "Figma",
+            "OpenAI"
+          ]
+        },
+        "members": {
+          "team": 2,
+          "project": 2
+        }
+      },
+      {
+        "id": "freelance-case-management",
+        "name": "商社向け案件状況管理システムの開発",
+        "term": "2023年10月～2026年7月",
+        "roleTasks": [
+          {
+            "summary": "開発メンバーとして以下を担当 (当初はフロントエンド担当として参画し、最終的にはバックエンド、インフラも1人で担当)。",
+            "items": [
+              "要件定義、技術スタック選定",
+              "フロントエンド、バックエンド、インフラの開発・運用"
+            ]
+          }
+        ],
+        "techStack": {
+          "items": [
+            "TypeScript",
+            "NextJS",
+            "PostgreSQL",
+            "AWS",
+            "Docker",
+            "Figma"
+          ]
+        },
+        "members": {
+          "team": 2,
+          "project": 2
+        }
+      },
+      {
         "id": "freelance-sales",
         "name": "自動車会社基幹システム（商品販売システム）の再構築",
         "term": "2023年1月～2023年9月",

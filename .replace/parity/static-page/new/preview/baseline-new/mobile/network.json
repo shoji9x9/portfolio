@@ -1,31 +1,43 @@
 [
   {
     "method": "GET",
-    "url": "https://b7b8d054.shoji9x9.pages.dev/",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/",
     "resourceType": "document",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://b7b8d054.shoji9x9.pages.dev/assets/index-CCcPLhYt.css",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/assets/index-z7B9PfOe.css",
     "resourceType": "stylesheet",
-    "status": 304
-  },
-  {
-    "method": "GET",
-    "url": "https://b7b8d054.shoji9x9.pages.dev/assets/Inter-roman.var-B8gyCBtH.woff2",
-    "resourceType": "font",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://b7b8d054.shoji9x9.pages.dev/assets/index-Dzu33Dac.js",
+    "url": "https://static.cloudflareinsights.com/beacon.min.js",
     "resourceType": "script",
-    "status": 304
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/assets/index-DU6z6yHS.js",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/api/lapras-preview",
+    "resourceType": "fetch",
+    "status": 200
   },
   {
     "method": "GET",
     "url": "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=GitHub&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/dot_hiyoko.png",
     "resourceType": "image",
     "status": 200
   },
@@ -37,7 +49,7 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/shoji9x9-55C500.svg?&style=flat-square&logo=qiita&logoColor=white",
+    "url": "https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2Fshoji9x9",
     "resourceType": "image",
     "status": 200
   },
@@ -49,13 +61,7 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2Fshoji9x9",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white",
+    "url": "https://img.shields.io/badge/shoji9x9-55C500.svg?&style=flat-square&logo=qiita&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -67,7 +73,7 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white",
+    "url": "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -79,25 +85,13 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/PHP-ccc.svg?logo=php&color=777BB4&style=flat-square&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
     "url": "https://img.shields.io/badge/COBOL-ccc.svg?logo=cobol&color=1572B6&style=flat-square&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/-OutSystems-fa173d.svg?logo=&style=flat-square",
+    "url": "https://img.shields.io/badge/PHP-ccc.svg?logo=php&color=777BB4&style=flat-square&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -109,19 +103,25 @@
   },
   {
     "method": "GET",
+    "url": "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
     "url": "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
+    "url": "https://img.shields.io/badge/shadcn%2Fui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -139,13 +139,31 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/drupal-%230678BE.svg?style=for-the-badge&logo=drupal&logoColor=white",
+    "url": "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
+    "url": "https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-OutSystems-fa173d.svg?logo=&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/drupal-%230678BE.svg?style=for-the-badge&logo=drupal&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -163,7 +181,49 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
+    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/PostgreSQL-%234169E1.svg?style=for-the-badge&logo=postgresql&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/DynamoDB-%234053D6.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://fcbeb8cc.shoji9x9.pages.dev/assets/Inter-roman.var-B8gyCBtH.woff2",
+    "resourceType": "font",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/OpenAI-%23412991.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Cloudflare-%23F38020.svg?style=for-the-badge&logo=cloudflare&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -175,14 +235,32 @@
   },
   {
     "method": "GET",
+    "url": "https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
     "url": "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://b7b8d054.shoji9x9.pages.dev/dot_hiyoko.png",
+    "url": "https://media.lapras.com/media/public_setting/ZABL0NU/7724307d3f3342b783ba0af59bf6f02c.png",
     "resourceType": "image",
-    "status": 304
+    "status": 200
   }
 ]

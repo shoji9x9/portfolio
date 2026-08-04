@@ -1,23 +1,24 @@
 # データ設計（design）
 
-- version: 2
+- version: 3
 - mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-07-28T18:51:11+09:00
-- 現行ソース: `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`
+- 最終更新: 2026-08-04T13:52:00+09:00
+- 現行ソース: なし（version 3 で「現行の再現」から「ポートフォリオの正本」へ役割が変わった。
+  version 2 までの出所は `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`）
 
 ## 対象リソース
 
-| リソース                | features.md の機能 |                 件数 | 生成先                | 安定 ID と表示順                        |
-| ----------------------- | ------------------ | -------------------: | --------------------- | --------------------------------------- |
-| プロフィール            | `static-page`      |                    4 | `profile.json`        | `occupation` から `education` の順      |
-| アカウントバッジ        | `static-page`      |                    5 | `badges.json`         | 現行オブジェクトの定義順                |
-| 言語バッジ              | `static-page`      |                    7 | `badges.json`         | 現行オブジェクトの定義順                |
-| フレームワーク等バッジ  | `static-page`      |                   14 | `badges.json`         | 現行オブジェクトの定義順                |
-| 職務経歴                | `static-page`      | 2 社・6 プロジェクト | `careers.json`        | `freelance`、`toyota` と現行配列順      |
-| 製作物                  | `static-page`      |                    3 | `artifacts.json`      | `portfolio`、`qiita-search`、`memo-app` |
-| 自己 PR・資格・希望条件 | `static-page`      |              4・4・1 | `static-content.json` | ページ内の記述順                        |
-| LAPRAS                  | `lapras`           |                1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap  |
+| リソース                | features.md の機能 |                  件数 | 生成先                | 安定 ID と表示順                             |
+| ----------------------- | ------------------ | --------------------: | --------------------- | -------------------------------------------- |
+| プロフィール            | `static-page`      |                     4 | `profile.json`        | `occupation` から `education` の順           |
+| アカウントバッジ        | `static-page`      |                     5 | `badges.json`         | 現行オブジェクトの定義順                     |
+| 言語バッジ              | `static-page`      |                     7 | `badges.json`         | 現行オブジェクトの定義順                     |
+| フレームワーク等バッジ  | `static-page`      |                    24 | `badges.json`         | 定義順（新規 10 件は用途の近い位置へ挿入）   |
+| 職務経歴                | `static-page`      | 2 社・10 プロジェクト | `careers.json`        | `freelance`、`toyota` と各社内で開始日の降順 |
+| 製作物                  | `static-page`      |                     3 | `artifacts.json`      | `portfolio`、`qiita-search`、`memo-app`      |
+| 自己 PR・資格・希望条件 | `static-page`      |               4・4・1 | `static-content.json` | ページ内の記述順                             |
+| LAPRAS                  | `lapras`           |                 1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap       |
 
 DB・テーブル・外部キーは存在しない。投入先は `dataset_static_paths`（`seed/data/`）で、`seed/golden-dataset.ts` が
 検証 → 削除 → 生成の順に実行する（検証に落ちる論理データを生成先へ書き出さないため）。生成物はキー順・インデント・末尾改行を固定した JSON で、
@@ -28,13 +29,13 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 
 ## 含めたエッジケース
 
-| 観点               | 対応                                           |
-| ------------------ | ---------------------------------------------- |
-| 空の技術スタック   | `toyota-rideshare` の空配列                    |
-| 任意項目           | 技術スタックの `comment` の有無                |
-| 長い日本語テキスト | 職務・自己 PR・資格・製作物の原文を保持        |
-| 数値の幅           | チーム人数 3、5、10、15、20、30、50 を保持     |
-| 表示順             | すべて現行の配列またはオブジェクト定義順で固定 |
+| 観点               | 対応                                                                     |
+| ------------------ | ------------------------------------------------------------------------ |
+| 空の技術スタック   | `toyota-rideshare` の空配列                                              |
+| 任意項目           | 技術スタックの `comment` の有無、製作物の `article` の有無               |
+| 長い日本語テキスト | 職務・自己 PR・資格・製作物の原文を保持                                  |
+| 数値の幅           | チーム人数 1、2、3、5、10、15、20、30、50 を保持                         |
+| 表示順             | 配列またはオブジェクトの定義順で固定（正本は本ファイルの対象リソース表） |
 
 ## 未カバーの領域と理由
 
@@ -46,8 +47,29 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 
 ## 値の規律のメモ
 
-- 実データを本番から取得せず、現行リポジトリにコミット済みの公開静的値だけを論理データとして再現した。
+- version 2 までは、実データを本番から取得せず、現行リポジトリにコミット済みの公開静的値だけを
+  論理データとして再現した。version 3 以降は本人が公開してよいと判断した内容（職務経歴書由来）を正本とする。
 - ID は表示文言ではなく、英小文字・数字・ハイフンだけの固定値にした。
+
+## 内容更新の履歴
+
+- 2026-08-04（version 2 → 3、Issue #31）: 移行（Issue #22 / #23）の収束後、**論理データの役割を
+  「現行の忠実な再現」から「ポートフォリオの正本」へ変えた**。現行サイトは追従させないため、以降の
+  内容変更はそのまま現行との差分になる（設定の `intentional_diffs.may_change`
+  「移行完了後のコンテンツ更新（新側のみ）」で宣言済み。影響の一覧は
+  [`../references/static-data-semantics.md`](../references/static-data-semantics.md)）。
+
+  変更点は 4 つ。fingerprint は `f4c8d11a` → `f1aba402`。
+
+  - 職務経歴のフリーランスへ 4 案件を追加（`freelance-pharma-ir` / `freelance-design-system` /
+    `freelance-investment` / `freelance-case-management`）。6 → 10 プロジェクト
+  - 自己 PR を 4 項目のうち 1 項目（プロジェクト規模・上流の実績）だけ残し、残り 3 項目を
+    職務経歴書由来の内容（自律的な推進、AI 前提の開発プロセス、その品質担保）へ差し替え
+  - 製作物 `portfolio` を新リポジトリー・新 URL へ差し替え、技術スタックを実態
+    （Vite / Cloudflare）へ更新し、記事を持たない形（`article` なし）にした
+  - 技術バッジを 10 件追加（`vite` / `shadcnui` / `postgresql` / `mysql` / `dynamodb` / `aws` /
+    `cloudflare` / `docker` / `figma` / `openai`）。14 → 24 件。DynamoDB・AWS・OpenAI は
+    shields.io（simple-icons）にロゴが無いため文字のみのバッジにした
 
 ## gaps 由来の追加履歴
 

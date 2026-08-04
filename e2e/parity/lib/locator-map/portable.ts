@@ -188,10 +188,14 @@ export function logicalEntries(containers: ContainerLocators): LogicalEntry[] {
       `artifacts.card.${artifact.id}.repository-link`,
       card.getByRole("link", { name: artifact.repositoryUrl, exact: true }),
     );
-    add(
-      `artifacts.card.${artifact.id}.article-link`,
-      card.getByRole("link", { name: artifact.article.title, exact: true }),
-    );
+    // 記事を持たない製作物には記事リンクの論理名を作らない（存在しない要素の論理名を
+    // カタログへ入れると、採取・照合が「見つからない要素」として毎回落ちる）。
+    if (artifact.article !== undefined) {
+      add(
+        `artifacts.card.${artifact.id}.article-link`,
+        card.getByRole("link", { name: artifact.article.title, exact: true }),
+      );
+    }
     for (const label of artifact.techStack) {
       const badge = badgeByLabel(label);
       add(

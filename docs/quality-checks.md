@@ -53,24 +53,37 @@
 URL を直書きしない。
 
 ```bash
-# 現行（current-prod）に対して全件実行
-PARITY_CURRENT_UI_URL=https://shoji9x9.github.io/ pnpm exec playwright test --project=current
+# 新側（local-dev など）に対して全件実行 ＝ 現在の回帰スイート
+PARITY_NEW_UI_URL=http://localhost:5173 pnpm exec playwright test --project=new
 
-# ベースライン採取とノイズ基準値の測定（.replace/parity/<slug>/baseline/ を作り直す）
-PARITY_CURRENT_UI_URL=<url> pnpm exec playwright test --project=current e2e/parity/static-page/baseline.spec.ts
+# 新側ベースラインの採取（.replace/parity/<slug>/new/<target>/ を作り直す）。
+# Issue #31 以降はこれが「新側の変更前 vs 変更後」の比較基準になるため、
+# 表示内容を変えたら受け入れ後に採り直す。採取ブラウザーの陳腐化ガード（後述）が先に走る。
+PARITY_SLUG=static-page PARITY_NEW_UI_URL=http://localhost:5173 \
+  pnpm exec playwright test --project=new-capture
 ```
+
+**`--project=current` は Issue #31（2026-08-04）以降 green にならない。** 移行完了後のコンテンツ更新で
+現行 shoji9x9.github.io を追従させないと決めたため、期待値（ゴールデンデータセット）と現行の表示は
+一致しない。現行側の実行・ベースライン再採取は行わず、移行時点の成果物
+（`.replace/parity/<slug>/baseline/`）を証跡として凍結する。経緯は
+[.replace/features.md](../.replace/features.md)「移行完了後の扱い」。
 
 ブラウザーの導入は `pnpm exec playwright install chromium`（`pnpm install` では入らない）。
 CI では実行しない（現行サイト・外部画像 CDN への到達性に依存し、外部要因で不安定になるため）。
 
 ### ベースライン採取ブラウザーの陳腐化ガード
 
-視覚ベースラインは採取に使ったブラウザーの描画結果そのもので、現行側と新側で Chromium が
+視覚ベースラインは採取に使ったブラウザーの描画結果そのもので、比較する 2 つの採取で Chromium が
 食い違うと実装差ではない差分が出る。採取条件は `.replace/parity/<slug>/metadata.json` の
 `capture_conditions.browser`（`engine` / `playwright_version` / `browser_version`）に機械可読で
 記録し、採取・照合の実行時に実行中のバージョンと突き合わせる（`e2e/parity/lib/browser-version.ts`）。
 検査するのは現行側の採取（`baseline.spec.ts`）・強度ゲート（`strength.spec.ts`）と、
 新側の採取（`baseline-new.spec.ts`）で、不一致なら採り直しの手順を示して失敗する。
+
+Issue #31 以降、**新側の比較相手は現行側ではなく前回の `baseline-new`** なので、新側でガードが
+発火したときの手当ては新側で閉じる（`metadata.json` の記録値を更新 → 新側ベースラインを採り直す）。
+現行側を採り直す必要はない。
 
 **この一致を CI で検査してはいけない。** CI に置くと Playwright の更新 PR 自体が赤くなり、
 更新のたびに全機能のベースライン再採取を強制することになる。Playwright は通常の依存更新として

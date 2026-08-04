@@ -42,9 +42,9 @@
     - heading "自己PR" [level=2]
     - list:
       - listitem: 数百万円～十億円以上の大小50以上のプロジェクトを立ち上げてきた経験を持ち、問題点の把握、原因の分析、ROIの高い対策の立案が得意です
-      - listitem: また、これらのプロジェクトの上流～下流の各局面の成果物のレビューを行い、時には自身で成果物を作成してきました (Java、COBOLがメイン)
-      - listitem: 日頃より現状に課題意識を持ちOutSystemsやアジャイル (Scrum、SAFe) の情報を集めプロジェクトに導入してきた行動力も特徴の一つと考えます
-      - listitem: 今後はこれまで培ってきた経験を活かしながらも、製品やサービスの開発を行っていきたいと考えており、特にフロントエンド開発 (Reactやコンポーネント駆動開発) への関心が高いです
+      - listitem: アサインされたタスクが適切かをまず考え、適切でないと感じたときは背景や問題を確認した上で代案を提示します。期日と合格条件を確認し、そこから必要なマイルストーンを自ら設定して進めます
+      - listitem: コーディングエージェントが主体的に開発を進められる環境を設計し、人がボトルネックとならない開発プロセスを構築しています
+      - listitem: エージェント主体へ移行しても品質を落とさないよう、プレビュー環境でのテストやVRT (ビジュアルリグレッションテスト) など検証の仕組みを併せて用意します
   - region "保有スキル":
     - heading "保有スキル" [level=2]
     - heading "言語" [level=3]
@@ -61,18 +61,105 @@
     - img "React"
     - img "Recoil"
     - img "NextJS"
+    - img "Vite"
     - img "TailwindCSS"
+    - img "shadcn/ui"
     - img "Storybook"
     - img "Drupal"
     - img "Firebase"
     - img "Oracle"
     - img "DB2"
+    - img "PostgreSQL"
+    - img "MySQL"
+    - img "DynamoDB"
     - img "Azure"
+    - img "AWS"
     - img "Vercel"
+    - img "Cloudflare"
+    - img "Docker"
+    - img "Figma"
+    - img "OpenAI"
     - img "GitHub Actions"
   - region "職務経歴詳細":
     - heading "職務経歴詳細" [level=2]
     - heading "フリーランス (2022年1月～現在)" [level=3]
+    - article "製薬会社向けIR分析システムの開発":
+      - heading "製薬会社向けIR分析システムの開発" [level=4]
+      - heading "期間" [level=5]
+      - text: 2026年6月～2026年7月
+      - heading "ロールとタスク" [level=5]
+      - text: 開発メンバーとして以下を担当。
+      - list:
+        - listitem: フロントエンド、バックエンドの開発・運用
+        - listitem: コーディングエージェントが主体的に開発する (人がボトルネックとならない) 環境の構築
+        - listitem: OpenAIを利用したIR資料の収集・分析、事業戦略の変化検知の実装
+      - heading "メンバー数" [level=5]
+      - text: "チーム: 1名 プロジェクト全体: 1名"
+      - heading "技術スタック" [level=5]
+      - img "TypeScript"
+      - img "React"
+      - img "DynamoDB"
+      - img "AWS"
+      - img "OpenAI"
+    - article "デザインシステムの開発、運用":
+      - heading "デザインシステムの開発、運用" [level=4]
+      - heading "期間" [level=5]
+      - text: 2025年8月～2026年7月
+      - heading "ロールとタスク" [level=5]
+      - text: 開発メンバーとして以下を担当。
+      - list:
+        - listitem: 技術スタック選定
+        - listitem: Figmaデザインの作成、UIコンポーネントの開発・運用
+        - listitem: デザイントークン、各UIコンポーネントの用途・プロパティの定義
+        - listitem: コーディングエージェント主体へ移行するための品質担保 (プレビュー環境でのテスト、VRTの導入)
+      - heading "メンバー数" [level=5]
+      - text: "チーム: 3名 プロジェクト全体: 3名"
+      - heading "技術スタック" [level=5]
+      - img "TypeScript"
+      - img "React"
+      - img "shadcn/ui"
+      - img "Storybook"
+      - img "AWS"
+      - img "Figma"
+    - article "商社向け投資判断支援システムの開発、運用":
+      - heading "商社向け投資判断支援システムの開発、運用" [level=4]
+      - heading "期間" [level=5]
+      - text: 2025年6月～2026年5月
+      - heading "ロールとタスク" [level=5]
+      - text: 開発メンバーとして以下を担当。
+      - list:
+        - listitem: 技術スタック選定 (フロントエンド)
+        - listitem: フロントエンド、バックエンドの開発・運用
+        - listitem: チャット (Markdown描画)、チャート、ツリー等の複雑なUIの実装
+        - listitem: OpenAIを利用したPDFファイルの要約の実装
+      - heading "メンバー数" [level=5]
+      - text: "チーム: 2名 プロジェクト全体: 2名"
+      - heading "技術スタック" [level=5]
+      - img "TypeScript"
+      - img "NextJS"
+      - img "MySQL"
+      - img "AWS"
+      - img "Docker"
+      - img "Figma"
+      - img "OpenAI"
+    - article "商社向け案件状況管理システムの開発":
+      - heading "商社向け案件状況管理システムの開発" [level=4]
+      - heading "期間" [level=5]
+      - text: 2023年10月～2026年7月
+      - heading "ロールとタスク" [level=5]
+      - text: 開発メンバーとして以下を担当 (当初はフロントエンド担当として参画し、最終的にはバックエンド、インフラも1人で担当)。
+      - list:
+        - listitem: 要件定義、技術スタック選定
+        - listitem: フロントエンド、バックエンド、インフラの開発・運用
+      - heading "メンバー数" [level=5]
+      - text: "チーム: 2名 プロジェクト全体: 2名"
+      - heading "技術スタック" [level=5]
+      - img "TypeScript"
+      - img "NextJS"
+      - img "PostgreSQL"
+      - img "AWS"
+      - img "Docker"
+      - img "Figma"
     - article "自動車会社基幹システム（商品販売システム）の再構築":
       - heading "自動車会社基幹システム（商品販売システム）の再構築" [level=4]
       - heading "期間" [level=5]
@@ -205,20 +292,18 @@
     - article "ポートフォリオ（このページ）":
       - heading "ポートフォリオ（このページ）" [level=4]
       - heading "URL" [level=5]
-      - link "https://shoji9x9.github.io/":
-        - /url: https://shoji9x9.github.io/
+      - link "https://shoji9x9.pages.dev/":
+        - /url: https://shoji9x9.pages.dev/
       - heading "リポジトリー" [level=5]
-      - link "https://github.com/shoji9x9/shoji9x9.github.io":
-        - /url: https://github.com/shoji9x9/shoji9x9.github.io
+      - link "https://github.com/shoji9x9/portfolio":
+        - /url: https://github.com/shoji9x9/portfolio
       - heading "技術スタック" [level=5]
       - img "React"
       - img "TypeScript"
-      - img "NextJS"
+      - img "Vite"
       - img "TailwindCSS"
+      - img "Cloudflare"
       - img "GitHub Actions"
-      - heading "記事" [level=5]
-      - link "GitHub PagesにNext.jsでポートフォリオ作ってみた":
-        - /url: https://zenn.dev/shoji9x9/articles/90897d3f772e8a
     - article "Qiita記事検索":
       - heading "Qiita記事検索" [level=4]
       - heading "URL" [level=5]
@@ -255,3 +340,8 @@
     - heading "希望条件" [level=2]
     - link "狩野モデルで考える、自分が希望する労働環境":
       - /url: https://zenn.dev/shoji9x9/articles/741bba963942a6
+  - region "LAPRAS":
+    - heading "LAPRAS" [level=2]
+    - link "shoji9x9さんのLAPRAS Profile":
+      - /url: https://lapras.com/public/shoji9x9
+      - img "shoji9x9さんのLAPRAS Profile"
