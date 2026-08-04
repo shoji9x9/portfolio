@@ -4,7 +4,7 @@
     "state": "default",
     "viewport": "desktop",
     "pixel_diff": 0,
-    "pixel_total": 16986360,
+    "pixel_total": 10880000,
     "trait_diffs": 0
   },
   {
@@ -28,7 +28,7 @@
     "state": "default",
     "viewport": "mobile",
     "pixel_diff": 0,
-    "pixel_total": 27590805,
+    "pixel_total": 5938140,
     "trait_diffs": 0
   },
   {
@@ -36,7 +36,7 @@
     "state": "hover",
     "viewport": "mobile",
     "pixel_diff": 0,
-    "pixel_total": 13722,
+    "pixel_total": 16278,
     "trait_diffs": 0
   },
   {
@@ -44,7 +44,7 @@
     "state": "focus",
     "viewport": "mobile",
     "pixel_diff": 0,
-    "pixel_total": 13722,
+    "pixel_total": 16278,
     "trait_diffs": 0
   }
 ]
