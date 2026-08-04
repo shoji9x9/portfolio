@@ -45,12 +45,13 @@
 
 ### 基準の採り直し記録（2026-08-04 / Issue #31）
 
-| 対象                                          | 実施                                                                                                            |
-| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `capture_conditions.browser`（両 slug）       | Playwright 1.61.1 / Chromium 149.0.7827.55 → **1.62.0 / 151.0.7922.34**（実行中の値）                           |
-| `traits.elements`（`static-page`）            | 136 → **178**（新 4 案件・新 10 バッジを追加、`artifacts.card.portfolio.article-link` と `tech.nextjs` を削除） |
-| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0**（desktop 2005×8472 / mobile 2005×13761）       |
-| `new/preview/baseline-new`                    | **未採取**。プレビューは PR 作成時にしかデプロイされないため、PR 作成後に同じ手順で採る                         |
+| 対象                                          | 実施                                                                                                                                    |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `capture_conditions.browser`（両 slug）       | Playwright 1.61.1 / Chromium 149.0.7827.55 → **1.62.0 / 151.0.7922.34**（実行中の値）                                                   |
+| `traits.elements`（`static-page`）            | 136 → **178**（新 4 案件・新 10 バッジを追加、`artifacts.card.portfolio.article-link` と `tech.nextjs` を削除）                         |
+| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0**（desktop 2005×8472 / mobile 2005×13761）                               |
+| `new/preview/baseline-new`                    | PR #51 のデプロイ（`fcbeb8cc`）に対して採り直し。自己ノイズは**特性差 0 件・画素差 0**（6 状態すべて）                                  |
+| `preview` と `local-dev` の同一性             | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile）。本番ビルドと Cloudflare 配信を経ても差は増えない |
 
 判断の宣言は設定 `intentional_diffs.may_change`「移行完了後のコンテンツ更新（新側のみ）」、
 データ側の意味は [`references/static-data-semantics.md`](references/static-data-semantics.md)。
