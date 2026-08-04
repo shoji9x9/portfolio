@@ -42,7 +42,7 @@
       "x": 0,
       "y": 0,
       "width": 390,
-      "height": 10304.8125
+      "height": 13760.8125
     }
   },
   {
@@ -456,7 +456,7 @@
       "x": 96,
       "y": 1585.625,
       "width": 198,
-      "height": 6128
+      "height": 9684
     }
   },
   {
@@ -546,7 +546,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7745.625,
+      "y": 11301.625,
       "width": 198,
       "height": 432
     }
@@ -592,7 +592,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7745.625,
+      "y": 11301.625,
       "width": 198,
       "height": 36
     }
@@ -638,9 +638,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8209.625,
+      "y": 11765.625,
       "width": 198,
-      "height": 1356
+      "height": 1256
     }
   },
   {
@@ -684,7 +684,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8209.625,
+      "y": 11765.625,
       "width": 198,
       "height": 36
     }
@@ -730,7 +730,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 9597.625,
+      "y": 13053.625,
       "width": 198,
       "height": 96
     }
@@ -776,7 +776,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 9597.625,
+      "y": 13053.625,
       "width": 198,
       "height": 36
     }
@@ -1698,7 +1698,7 @@
       "x": 96,
       "y": 793.625,
       "width": 198,
-      "height": 144
+      "height": 192
     }
   },
   {
@@ -1742,9 +1742,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 937.625,
+      "y": 985.625,
       "width": 198,
-      "height": 144
+      "height": 120
     }
   },
   {
@@ -1788,9 +1788,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 1081.625,
+      "y": 1105.625,
       "width": 198,
-      "height": 192
+      "height": 168
     }
   },
   {
@@ -2438,7 +2438,7 @@
     }
   },
   {
-    "name": "skills.framework.tailwindcss",
+    "name": "skills.framework.vite",
     "computed": {
       "padding-top": "0px",
       "padding-right": "0px",
@@ -2479,7 +2479,99 @@
     "rect": {
       "x": 474.765625,
       "y": 1533.625,
+      "width": 53.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.tailwindcss",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 536.328125,
+      "y": 1533.625,
       "width": 99.09375,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.shadcnui",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 643.421875,
+      "y": 1533.625,
+      "width": 87.3125,
       "height": 20
     }
   },
@@ -2523,7 +2615,7 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 581.859375,
+      "x": 738.734375,
       "y": 1533.625,
       "width": 88.75,
       "height": 20
@@ -2569,7 +2661,7 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 678.609375,
+      "x": 835.484375,
       "y": 1533.625,
       "width": 68.921875,
       "height": 20
@@ -2615,7 +2707,7 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 755.53125,
+      "x": 912.40625,
       "y": 1533.625,
       "width": 77.84375,
       "height": 20
@@ -2661,7 +2753,7 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 841.375,
+      "x": 998.25,
       "y": 1533.625,
       "width": 45,
       "height": 20
@@ -2707,9 +2799,147 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 894.375,
+      "x": 1051.25,
       "y": 1533.625,
       "width": 33,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.postgresql",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1092.25,
+      "y": 1533.625,
+      "width": 93.203125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.mysql",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1193.453125,
+      "y": 1533.625,
+      "width": 63.03125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.dynamodb",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1264.484375,
+      "y": 1533.625,
+      "width": 70.703125,
       "height": 20
     }
   },
@@ -2753,9 +2983,55 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 935.375,
+      "x": 1343.1875,
       "y": 1533.625,
       "width": 107.671875,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1458.859375,
+      "y": 1533.625,
+      "width": 38.390625,
       "height": 20
     }
   },
@@ -2799,9 +3075,193 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 1051.046875,
+      "x": 1505.25,
       "y": 1533.625,
       "width": 66.78125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.cloudflare",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1580.03125,
+      "y": 1533.625,
+      "width": 92.5,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.docker",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1680.53125,
+      "y": 1533.625,
+      "width": 69.640625,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.figma",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1758.171875,
+      "y": 1533.625,
+      "width": 62.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.openai",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 1828.484375,
+      "y": 1533.625,
+      "width": 53.921875,
       "height": 20
     }
   },
@@ -2845,7 +3305,7 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 1125.828125,
+      "x": 1890.40625,
       "y": 1533.625,
       "width": 114.640625,
       "height": 20
@@ -2938,9 +3398,1481 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 3625.625,
+      "y": 7181.625,
       "width": 190,
       "height": 96
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 1737.625,
+      "width": 174,
+      "height": 844
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 1755.625,
+      "width": 138,
+      "height": 84
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 2527.625,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.react",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 225,
+      "y": 2527.625,
+      "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.dynamodb",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 292,
+      "y": 2527.625,
+      "width": 70.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 370.703125,
+      "y": 2527.625,
+      "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.openai",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 417.09375,
+      "y": 2527.625,
+      "width": 53.921875,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 2613.625,
+      "width": 174,
+      "height": 916
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 2631.625,
+      "width": 138,
+      "height": 84
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 3475.625,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.react",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 225,
+      "y": 3475.625,
+      "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.shadcnui",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 292,
+      "y": 3475.625,
+      "width": 87.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.storybook",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 387.3125,
+      "y": 3475.625,
+      "width": 88.75,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 484.0625,
+      "y": 3475.625,
+      "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.figma",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 530.453125,
+      "y": 3475.625,
+      "width": 62.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 3561.625,
+      "width": 174,
+      "height": 872
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 3579.625,
+      "width": 138,
+      "height": 112
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 4379.625,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.nextjs",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 225,
+      "y": 4379.625,
+      "width": 55.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.mysql",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 288.703125,
+      "y": 4379.625,
+      "width": 63.03125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 359.734375,
+      "y": 4379.625,
+      "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.docker",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 406.125,
+      "y": 4379.625,
+      "width": 69.640625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.figma",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 483.765625,
+      "y": 4379.625,
+      "width": 62.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.openai",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 554.078125,
+      "y": 4379.625,
+      "width": 53.921875,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 4465.625,
+      "width": 174,
+      "height": 796
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 4483.625,
+      "width": 138,
+      "height": 84
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 5207.625,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.nextjs",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 225,
+      "y": 5207.625,
+      "width": 55.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.postgresql",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 288.703125,
+      "y": 5207.625,
+      "width": 93.203125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 389.90625,
+      "y": 5207.625,
+      "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.docker",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 436.296875,
+      "y": 5207.625,
+      "width": 69.640625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.figma",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 513.9375,
+      "y": 5207.625,
+      "width": 62.3125,
+      "height": 20
     }
   },
   {
@@ -2984,7 +4916,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1737.625,
+      "y": 5293.625,
       "width": 174,
       "height": 956
     }
@@ -3030,7 +4962,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 1755.625,
+      "y": 5311.625,
       "width": 138,
       "height": 140
     }
@@ -3076,7 +5008,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 2487.625,
+      "y": 6043.625,
       "width": 87,
       "height": 20
     }
@@ -3122,7 +5054,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 2487.625,
+      "y": 6043.625,
       "width": 49,
       "height": 20
     }
@@ -3168,7 +5100,7 @@
     "after": null,
     "rect": {
       "x": 282,
-      "y": 2487.625,
+      "y": 6043.625,
       "width": 59,
       "height": 20
     }
@@ -3214,7 +5146,7 @@
     "after": null,
     "rect": {
       "x": 349,
-      "y": 2487.625,
+      "y": 6043.625,
       "width": 68.921875,
       "height": 20
     }
@@ -3260,7 +5192,7 @@
     "after": null,
     "rect": {
       "x": 425.921875,
-      "y": 2487.625,
+      "y": 6043.625,
       "width": 107.671875,
       "height": 20
     }
@@ -3306,7 +5238,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 2725.625,
+      "y": 6281.625,
       "width": 174,
       "height": 852
     }
@@ -3352,7 +5284,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 2743.625,
+      "y": 6299.625,
       "width": 138,
       "height": 140
     }
@@ -3398,7 +5330,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3523.625,
+      "y": 7079.625,
       "width": 85,
       "height": 20
     }
@@ -3444,7 +5376,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 3523.625,
+      "y": 7079.625,
       "width": 29.640625,
       "height": 20
     }
@@ -3490,7 +5422,7 @@
     "after": null,
     "rect": {
       "x": 260.640625,
-      "y": 3523.625,
+      "y": 7079.625,
       "width": 77,
       "height": 20
     }
@@ -3536,7 +5468,7 @@
     "after": null,
     "rect": {
       "x": 345.640625,
-      "y": 3523.625,
+      "y": 7079.625,
       "width": 45,
       "height": 20
     }
@@ -3582,7 +5514,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 3729.625,
+      "y": 7285.625,
       "width": 174,
       "height": 816
     }
@@ -3628,7 +5560,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 3747.625,
+      "y": 7303.625,
       "width": 138,
       "height": 140
     }
@@ -3674,7 +5606,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 4577.625,
+      "y": 8133.625,
       "width": 174,
       "height": 1152
     }
@@ -3720,7 +5652,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 4595.625,
+      "y": 8151.625,
       "width": 138,
       "height": 168
     }
@@ -3766,7 +5698,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5675.625,
+      "y": 9231.625,
       "width": 85,
       "height": 20
     }
@@ -3812,7 +5744,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 5675.625,
+      "y": 9231.625,
       "width": 29.640625,
       "height": 20
     }
@@ -3858,7 +5790,7 @@
     "after": null,
     "rect": {
       "x": 260.640625,
-      "y": 5675.625,
+      "y": 9231.625,
       "width": 77,
       "height": 20
     }
@@ -3904,7 +5836,7 @@
     "after": null,
     "rect": {
       "x": 345.640625,
-      "y": 5675.625,
+      "y": 9231.625,
       "width": 45,
       "height": 20
     }
@@ -3950,7 +5882,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 5761.625,
+      "y": 9317.625,
       "width": 174,
       "height": 1004
     }
@@ -3996,7 +5928,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 5779.625,
+      "y": 9335.625,
       "width": 138,
       "height": 140
     }
@@ -4042,7 +5974,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6583.625,
+      "y": 10139.625,
       "width": 85,
       "height": 20
     }
@@ -4088,7 +6020,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 6583.625,
+      "y": 10139.625,
       "width": 77,
       "height": 20
     }
@@ -4134,7 +6066,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 6797.625,
+      "y": 10353.625,
       "width": 174,
       "height": 884
     }
@@ -4180,7 +6112,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 6815.625,
+      "y": 10371.625,
       "width": 138,
       "height": 196
     }
@@ -4226,7 +6158,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7627.625,
+      "y": 11183.625,
       "width": 55,
       "height": 20
     }
@@ -4272,7 +6204,7 @@
     "after": null,
     "rect": {
       "x": 193,
-      "y": 7627.625,
+      "y": 11183.625,
       "width": 49,
       "height": 20
     }
@@ -4318,7 +6250,7 @@
     "after": null,
     "rect": {
       "x": 250,
-      "y": 7627.625,
+      "y": 11183.625,
       "width": 33,
       "height": 20
     }
@@ -4364,9 +6296,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8257.625,
-      "width": 385,
-      "height": 404
+      "y": 11813.625,
+      "width": 318,
+      "height": 304
     }
   },
   {
@@ -4410,8 +6342,8 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 8275.625,
-      "width": 349,
+      "y": 11831.625,
+      "width": 282,
       "height": 28
     }
   },
@@ -4456,8 +6388,8 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8357.625,
-      "width": 190,
+      "y": 11913.625,
+      "width": 203,
       "height": 20
     }
   },
@@ -4502,55 +6434,9 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8433.625,
-      "width": 341,
+      "y": 11989.625,
+      "width": 274,
       "height": 20
-    }
-  },
-  {
-    "name": "artifacts.card.portfolio.article-link",
-    "computed": {
-      "padding-top": "0px",
-      "padding-right": "0px",
-      "padding-bottom": "0px",
-      "padding-left": "0px",
-      "margin-top": "0px",
-      "margin-right": "0px",
-      "margin-bottom": "0px",
-      "margin-left": "0px",
-      "font-family": "\"Inter var\", \"Inter Fallback\"",
-      "font-size": "16px",
-      "font-weight": "400",
-      "line-height": "24px",
-      "color": "rgb(59, 130, 246)",
-      "background-color": "rgba(0, 0, 0, 0)",
-      "border-top-width": "0px",
-      "border-top-style": "solid",
-      "border-top-color": "rgb(229, 231, 235)",
-      "border-right-width": "0px",
-      "border-right-style": "solid",
-      "border-right-color": "rgb(229, 231, 235)",
-      "border-bottom-width": "0px",
-      "border-bottom-style": "solid",
-      "border-bottom-color": "rgb(229, 231, 235)",
-      "border-left-width": "0px",
-      "border-left-style": "solid",
-      "border-left-color": "rgb(229, 231, 235)",
-      "border-top-left-radius": "0px",
-      "border-top-right-radius": "0px",
-      "border-bottom-right-radius": "0px",
-      "border-bottom-left-radius": "0px",
-      "text-align": "start",
-      "display": "inline",
-      "visibility": "visible"
-    },
-    "before": null,
-    "after": null,
-    "rect": {
-      "x": 122,
-      "y": 8581.625,
-      "width": 330,
-      "height": 44
     }
   },
   {
@@ -4594,7 +6480,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8507.625,
+      "y": 12063.625,
       "width": 59,
       "height": 20
     }
@@ -4640,13 +6526,13 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 8507.625,
+      "y": 12063.625,
       "width": 87,
       "height": 20
     }
   },
   {
-    "name": "artifacts.card.portfolio.tech.nextjs",
+    "name": "artifacts.card.portfolio.tech.vite",
     "computed": {
       "padding-top": "0px",
       "padding-right": "0px",
@@ -4686,8 +6572,8 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 8507.625,
-      "width": 55.703125,
+      "y": 12063.625,
+      "width": 53.5625,
       "height": 20
     }
   },
@@ -4731,9 +6617,55 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 347.703125,
-      "y": 8507.625,
+      "x": 345.5625,
+      "y": 12063.625,
       "width": 99.09375,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.portfolio.tech.cloudflare",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 452.65625,
+      "y": 12063.625,
+      "width": 92.5,
       "height": 20
     }
   },
@@ -4777,8 +6709,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 454.796875,
-      "y": 8507.625,
+      "x": 553.15625,
+      "y": 12063.625,
       "width": 114.640625,
       "height": 20
     }
@@ -4824,7 +6756,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8693.625,
+      "y": 12149.625,
       "width": 435,
       "height": 380
     }
@@ -4870,7 +6802,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 8711.625,
+      "y": 12167.625,
       "width": 399,
       "height": 28
     }
@@ -4916,7 +6848,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8793.625,
+      "y": 12249.625,
       "width": 318,
       "height": 20
     }
@@ -4962,7 +6894,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8869.625,
+      "y": 12325.625,
       "width": 391,
       "height": 20
     }
@@ -5008,7 +6940,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9017.625,
+      "y": 12473.625,
       "width": 363,
       "height": 20
     }
@@ -5054,7 +6986,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8943.625,
+      "y": 12399.625,
       "width": 59,
       "height": 20
     }
@@ -5100,7 +7032,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 8943.625,
+      "y": 12399.625,
       "width": 87,
       "height": 20
     }
@@ -5146,7 +7078,7 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 8943.625,
+      "y": 12399.625,
       "width": 88.75,
       "height": 20
     }
@@ -5192,7 +7124,7 @@
     "after": null,
     "rect": {
       "x": 380.75,
-      "y": 8943.625,
+      "y": 12399.625,
       "width": 66.78125,
       "height": 20
     }
@@ -5238,7 +7170,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 9105.625,
+      "y": 12561.625,
       "width": 307,
       "height": 428
     }
@@ -5284,7 +7216,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 9123.625,
+      "y": 12579.625,
       "width": 271,
       "height": 28
     }
@@ -5330,7 +7262,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9205.625,
+      "y": 12661.625,
       "width": 251,
       "height": 20
     }
@@ -5376,7 +7308,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9281.625,
+      "y": 12737.625,
       "width": 263,
       "height": 44
     }
@@ -5422,7 +7354,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9453.625,
+      "y": 12909.625,
       "width": 255,
       "height": 44
     }
@@ -5468,7 +7400,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9379.625,
+      "y": 12835.625,
       "width": 59,
       "height": 20
     }
@@ -5514,7 +7446,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 9379.625,
+      "y": 12835.625,
       "width": 87,
       "height": 20
     }
@@ -5560,7 +7492,7 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 9379.625,
+      "y": 12835.625,
       "width": 43,
       "height": 20
     }
@@ -5606,7 +7538,7 @@
     "after": null,
     "rect": {
       "x": 335,
-      "y": 9379.625,
+      "y": 12835.625,
       "width": 77.84375,
       "height": 20
     }
@@ -5652,7 +7584,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7793.625,
+      "y": 11349.625,
       "width": 198,
       "height": 144
     }
@@ -5698,7 +7630,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 7817.625,
+      "y": 11373.625,
       "width": 182,
       "height": 24
     }
@@ -5744,7 +7676,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 7841.625,
+      "y": 11397.625,
       "width": 182,
       "height": 24
     }
@@ -5790,7 +7722,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 7865.625,
+      "y": 11421.625,
       "width": 182,
       "height": 24
     }
@@ -5836,7 +7768,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 7889.625,
+      "y": 11445.625,
       "width": 182,
       "height": 48
     }
@@ -5882,7 +7814,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7937.625,
+      "y": 11493.625,
       "width": 198,
       "height": 96
     }
@@ -5928,7 +7860,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 7985.625,
+      "y": 11541.625,
       "width": 182,
       "height": 24
     }
@@ -5974,7 +7906,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 8009.625,
+      "y": 11565.625,
       "width": 182,
       "height": 24
     }
@@ -6020,7 +7952,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8033.625,
+      "y": 11589.625,
       "width": 198,
       "height": 72
     }
@@ -6066,7 +7998,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 8057.625,
+      "y": 11613.625,
       "width": 182,
       "height": 48
     }
@@ -6112,7 +8044,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 8105.625,
+      "y": 11661.625,
       "width": 198,
       "height": 72
     }
@@ -6158,7 +8090,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 8129.625,
+      "y": 11685.625,
       "width": 182,
       "height": 24
     }
@@ -6204,7 +8136,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 8153.625,
+      "y": 11709.625,
       "width": 182,
       "height": 24
     }
@@ -6250,7 +8182,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 9647.625,
+      "y": 13103.625,
       "width": 192,
       "height": 44
     }
