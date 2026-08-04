@@ -7,7 +7,7 @@
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/main.tsx?t=1785821714954",
+    "url": "http://localhost:5173/src/main.tsx?t=1785829108793",
     "resourceType": "script",
     "status": 200
   },
@@ -25,25 +25,19 @@
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react.js?v=27d6a783",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/@tanstack_react-router.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/@tanstack_react-router.js?v=33e4ddd9",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/router.tsx",
-    "resourceType": "script",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "http://localhost:5173/src/index.css?t=1785821714954",
+    "url": "http://localhost:5173/src/router.tsx?t=1785829108793",
     "resourceType": "script",
     "status": 200
   },
@@ -55,73 +49,79 @@
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=87e8359b",
+    "url": "http://localhost:5173/src/index.css?t=1785829108793",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/rolldown-runtime-FDOR9p9I.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=27d6a783",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/rolldown-runtime-FDOR9p9I.js?v=3d9568b8",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react_jsx-runtime.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react_jsx-runtime.js?v=27d6a783",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom.js?v=27d6a783",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/App.tsx",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react-dom_client.js?v=7de8368e",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/react_compiler-runtime.js?v=87e8359b",
+    "url": "http://localhost:5173/src/App.tsx?t=1785829108793",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/components/portfolio/ArtifactSection.tsx",
+    "url": "http://localhost:5173/src/components/portfolio/ArtifactSection.tsx?t=1785829081024",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/components/portfolio/BadgeImage.tsx",
+    "url": "http://localhost:5173/src/components/portfolio/BadgeImage.tsx?t=1785829081024",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/components/portfolio/CareerSection.tsx",
+    "url": "http://localhost:5173/node_modules/.vite/deps/react_compiler-runtime.js?v=27d6a783",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/components/portfolio/LaprasSection.tsx",
+    "url": "http://localhost:5173/src/components/portfolio/CareerSection.tsx?t=1785829081024",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
     "url": "http://localhost:5173/src/components/portfolio/PortfolioSection.tsx",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5173/src/components/portfolio/LaprasSection.tsx?t=1785829108793",
     "resourceType": "script",
     "status": 200
   },
@@ -163,12 +163,6 @@
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/data/generated/artifacts.json?import",
-    "resourceType": "script",
-    "status": 200
-  },
-  {
-    "method": "GET",
     "url": "http://localhost:5173/src/data/generated/lapras.json?import",
     "resourceType": "script",
     "status": 200
@@ -176,6 +170,18 @@
   {
     "method": "GET",
     "url": "http://localhost:5173/src/data/generated/profile.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5173/src/data/generated/artifacts.json?import",
+    "resourceType": "script",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:5173/src/data/generated/static-content.json?import",
     "resourceType": "script",
     "status": 200
   },
@@ -193,19 +199,13 @@
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/clsx.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/clsx.js?v=5f0ebd76",
     "resourceType": "script",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "http://localhost:5173/src/data/generated/static-content.json?import",
-    "resourceType": "script",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "http://localhost:5173/node_modules/.vite/deps/tailwind-merge.js?v=87e8359b",
+    "url": "http://localhost:5173/node_modules/.vite/deps/tailwind-merge.js?v=e1a13ed0",
     "resourceType": "script",
     "status": 200
   },
@@ -229,49 +229,13 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/shoji9x9-55C500.svg?&style=flat-square&logo=qiita&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
     "url": "https://img.shields.io/badge/shoji9x9-%2312100E.svg?&style=flat-square&logo=GitHub&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/shoji9x9-3EA8FF.svg?&style=flat-square&logo=Zenn&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2Fshoji9x9",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/COBOL-ccc.svg?logo=cobol&color=1572B6&style=flat-square&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white",
+    "url": "https://img.shields.io/badge/shoji9x9-55C500.svg?&style=flat-square&logo=qiita&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -283,13 +247,97 @@
   },
   {
     "method": "GET",
+    "url": "https://img.shields.io/endpoint?url=https%3A%2F%2Fatcoder-badges.now.sh%2Fapi%2Fatcoder%2Fjson%2Fshoji9x9",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/shoji9x9-3EA8FF.svg?&style=flat-square&logo=Zenn&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
     "url": "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white",
+    "url": "https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Python-3776AB?style=flat-square&logo=Python&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/drupal-%230678BE.svg?style=for-the-badge&logo=drupal&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/OpenAI-%23412991.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/DB2-ccc.svg?logo=db2&color=0F4D92&style=flat-square&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/COBOL-ccc.svg?logo=cobol&color=1572B6&style=flat-square&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-OutSystems-fa173d.svg?logo=&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/PostgreSQL-%234169E1.svg?style=for-the-badge&logo=postgresql&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -301,7 +349,19 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/-OutSystems-fa173d.svg?logo=&style=flat-square",
+    "url": "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -319,115 +379,7 @@
   },
   {
     "method": "GET",
-    "url": "https://img.shields.io/badge/-Oracle-F80000.svg?logo=oracle&style=flat-square",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
     "url": "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Cloudflare-%23F38020.svg?style=for-the-badge&logo=cloudflare&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/drupal-%230678BE.svg?style=for-the-badge&logo=drupal&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/OpenAI-%23412991.svg?style=for-the-badge",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/shadcn%2Fui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/PostgreSQL-%234169E1.svg?style=for-the-badge&logo=postgresql&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/DB2-ccc.svg?logo=db2&color=0F4D92&style=flat-square&logoColor=white",
-    "resourceType": "image",
-    "status": 200
-  },
-  {
-    "method": "GET",
-    "url": "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white",
     "resourceType": "image",
     "status": 200
   },
@@ -439,7 +391,55 @@
   },
   {
     "method": "GET",
+    "url": "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/shadcn%2Fui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/-Oracle-F80000.svg?logo=oracle&style=flat-square",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
     "url": "https://img.shields.io/badge/DynamoDB-%234053D6.svg?style=for-the-badge",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Cloudflare-%23F38020.svg?style=for-the-badge&logo=cloudflare&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white",
+    "resourceType": "image",
+    "status": 200
+  },
+  {
+    "method": "GET",
+    "url": "https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white",
     "resourceType": "image",
     "status": 200
   },

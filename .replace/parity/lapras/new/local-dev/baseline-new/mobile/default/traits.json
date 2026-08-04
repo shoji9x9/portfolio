@@ -39,10 +39,10 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 0,
-      "y": 264.625,
+      "x": 96,
+      "y": 563.625,
       "width": 198,
-      "height": 451.1875
+      "height": 151.9375
     }
   },
   {
@@ -85,8 +85,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 0,
-      "y": 264.625,
+      "x": 96,
+      "y": 563.625,
       "width": 198,
       "height": 36
     }
@@ -131,10 +131,10 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 0,
-      "y": 312.625,
-      "width": 768,
-      "height": 403.1875
+      "x": 96,
+      "y": 611.625,
+      "width": 198,
+      "height": 103.9375
     }
   },
   {
@@ -177,10 +177,10 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 0,
-      "y": 312.625,
-      "width": 767.96875,
-      "height": 403.1875
+      "x": 96,
+      "y": 611.625,
+      "width": 197.96875,
+      "height": 103.9375
     }
   }
 ]
