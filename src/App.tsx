@@ -31,13 +31,8 @@ function App() {
       </PortfolioSection>
 
       <PortfolioSection heading="アカウント" id="account">
-        <div className="flex items-center">
-          {badges.account.map((badge) => (
-            <a href={badge.href} key={badge.id} rel="noreferrer" target="_blank">
-              <img alt={badge.label} className="mr-2 h-5" src={badge.imageSrc} />
-            </a>
-          ))}
-        </div>
+        {/* リンク付きバッジも同じ器を通す。折り返し方針を 1 箇所に保つため（Issue #52）。 */}
+        <BadgeRow badges={badges.account} />
       </PortfolioSection>
 
       <PortfolioSection heading="自己PR" id="self-promotion">

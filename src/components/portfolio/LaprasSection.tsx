@@ -19,7 +19,10 @@ export function LaprasPreviewContent({ lapras, preview, onImageError }: LaprasPr
     return <TextLink href={lapras.publicUrl}>{FALLBACK_LABEL}</TextLink>;
   }
   return (
-    <div className="w-3xl">
+    // 幅は最大 3xl（768px）で、器が狭ければ縮む（Issue #52）。固定幅 `w-3xl` のままでは
+    // 器が縮まず、画像も 768px のまま横へはみ出していた。画像自体の縮小は Tailwind の
+    // preflight（`img { max-width: 100%; height: auto }`）が担うため、ここでは指定しない。
+    <div className="w-full max-w-3xl">
       <a href={lapras.publicUrl} rel="noreferrer" target="_blank">
         <img alt={preview.title} onError={onImageError} src={preview.image} />
       </a>

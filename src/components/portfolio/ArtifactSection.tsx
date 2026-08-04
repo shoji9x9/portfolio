@@ -21,7 +21,7 @@ function ArtifactCard({ artifact }: { artifact: Artifact }) {
   return (
     <article
       aria-labelledby={headingId}
-      className="mr-4 mb-8 w-3xl rounded-lg border-2 border-card-border p-4 shadow-xl"
+      className="mr-4 mb-8 w-full max-w-3xl rounded-lg border-2 border-card-border p-4 shadow-xl"
     >
       <h4 className="mb-4 text-xl font-semibold" id={headingId}>
         {artifact.title}
