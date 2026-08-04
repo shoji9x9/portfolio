@@ -53,6 +53,13 @@
 | `new/preview/baseline-new`                    | PR #51 のデプロイ（`fcbeb8cc`）に対して採り直し。自己ノイズは**特性差 0 件・画素差 0**（6 状態すべて）                                  |
 | `preview` と `local-dev` の同一性             | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile）。本番ビルドと Cloudflare 配信を経ても差は増えない |
 
+`preview` の `network.json` だけはデプロイ固有ホスト（`https://<デプロイ ID>.shoji9x9.pages.dev`）を
+含むため、push のたびに記録値と現デプロイがずれる。これは `preview` の性質で、採り直しでは解消しない
+（今回も採取時は `fcbeb8cc`、その採取物を commit した時点で `44e139d9` へ変わった。採り直し前の記録は
+さらに前の `b7b8d054` だった）。描画の成果物（aria・特性・スクリーンショット）はアプリのソースが
+変わらない限り不変なので、`preview` の比較基準として意味を持つのはそちらである。ホストの陳腐化を
+回帰と読み違えない。
+
 判断の宣言は設定 `intentional_diffs.may_change`「移行完了後のコンテンツ更新（新側のみ）」、
 データ側の意味は [`references/static-data-semantics.md`](references/static-data-semantics.md)。
 
