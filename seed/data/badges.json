@@ -95,9 +95,19 @@
       "imageSrc": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"
     },
     {
+      "id": "vite",
+      "label": "Vite",
+      "imageSrc": "https://img.shields.io/badge/Vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white"
+    },
+    {
       "id": "tailwindcss",
       "label": "TailwindCSS",
       "imageSrc": "https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white"
+    },
+    {
+      "id": "shadcnui",
+      "label": "shadcn/ui",
+      "imageSrc": "https://img.shields.io/badge/shadcn%2Fui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white"
     },
     {
       "id": "storybook",
@@ -125,14 +135,54 @@
       "imageSrc": "https://img.shields.io/badge/DB2-ccc.svg?logo=db2&color=0F4D92&style=flat-square&logoColor=white"
     },
     {
+      "id": "postgresql",
+      "label": "PostgreSQL",
+      "imageSrc": "https://img.shields.io/badge/PostgreSQL-%234169E1.svg?style=for-the-badge&logo=postgresql&logoColor=white"
+    },
+    {
+      "id": "mysql",
+      "label": "MySQL",
+      "imageSrc": "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"
+    },
+    {
+      "id": "dynamodb",
+      "label": "DynamoDB",
+      "imageSrc": "https://img.shields.io/badge/DynamoDB-%234053D6.svg?style=for-the-badge"
+    },
+    {
       "id": "azure",
       "label": "Azure",
       "imageSrc": "https://img.shields.io/badge/Microsoft_Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white"
     },
     {
+      "id": "aws",
+      "label": "AWS",
+      "imageSrc": "https://img.shields.io/badge/AWS-%23232F3E.svg?style=for-the-badge"
+    },
+    {
       "id": "vercel",
       "label": "Vercel",
       "imageSrc": "https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white"
+    },
+    {
+      "id": "cloudflare",
+      "label": "Cloudflare",
+      "imageSrc": "https://img.shields.io/badge/Cloudflare-%23F38020.svg?style=for-the-badge&logo=cloudflare&logoColor=white"
+    },
+    {
+      "id": "docker",
+      "label": "Docker",
+      "imageSrc": "https://img.shields.io/badge/Docker-%232496ED.svg?style=for-the-badge&logo=docker&logoColor=white"
+    },
+    {
+      "id": "figma",
+      "label": "Figma",
+      "imageSrc": "https://img.shields.io/badge/Figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white"
+    },
+    {
+      "id": "openai",
+      "label": "OpenAI",
+      "imageSrc": "https://img.shields.io/badge/OpenAI-%23412991.svg?style=for-the-badge"
     },
     {
       "id": "github-actions",

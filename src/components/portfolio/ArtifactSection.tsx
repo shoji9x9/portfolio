@@ -43,10 +43,13 @@ function ArtifactCard({ artifact }: { artifact: Artifact }) {
         <BadgeRow badges={badges} className="mb-2" />
       </div>
 
-      <div className="mb-4 ml-2">
-        <CardHeading>記事</CardHeading>
-        <TextLink href={artifact.article.url}>{artifact.article.title}</TextLink>
-      </div>
+      {/* 紹介記事が無い製作物では、リンクだけでなく「記事」見出しごと描画しない。 */}
+      {artifact.article === undefined ? null : (
+        <div className="mb-4 ml-2">
+          <CardHeading>記事</CardHeading>
+          <TextLink href={artifact.article.url}>{artifact.article.title}</TextLink>
+        </div>
+      )}
     </article>
   );
 }

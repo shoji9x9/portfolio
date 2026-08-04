@@ -105,12 +105,16 @@ function mapCareers() {
 }
 
 function mapArtifacts() {
+  // `article` は任意項目。無い製作物ではキーごと落とす（論理データと同じ形にするため、
+  // `undefined` を持つキーを作らない）。
   return goldenDataset.artifacts.map((artifact) => ({
     id: artifact.id,
     title: artifact.title,
     url: artifact.url,
     repositoryUrl: artifact.repositoryUrl,
-    article: { title: artifact.article.title, url: artifact.article.url },
+    ...("article" in artifact
+      ? { article: { title: artifact.article.title, url: artifact.article.url } }
+      : {}),
     techStack: artifact.techStack.map(badgeIdByLabel),
   }));
 }

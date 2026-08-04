@@ -2,17 +2,14 @@
   {
     "id": "portfolio",
     "title": "ポートフォリオ（このページ）",
-    "url": "https://shoji9x9.github.io/",
-    "repositoryUrl": "https://github.com/shoji9x9/shoji9x9.github.io",
-    "article": {
-      "title": "GitHub PagesにNext.jsでポートフォリオ作ってみた",
-      "url": "https://zenn.dev/shoji9x9/articles/90897d3f772e8a"
-    },
+    "url": "https://shoji9x9.pages.dev/",
+    "repositoryUrl": "https://github.com/shoji9x9/portfolio",
     "techStack": [
       "react",
       "typescript",
-      "nextjs",
+      "vite",
       "tailwindcss",
+      "cloudflare",
       "github-actions"
     ]
   },

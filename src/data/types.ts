@@ -64,7 +64,8 @@ export type Artifact = {
   title: string;
   url: string;
   repositoryUrl: string;
-  article: {
+  /** 紹介記事。書いていない製作物では持たず、カードの「記事」見出しごと描画しない。 */
+  article?: {
     title: string;
     url: string;
   };

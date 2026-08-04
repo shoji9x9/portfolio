@@ -126,13 +126,18 @@ describe("App", () => {
     }
   });
 
-  it("製作物の全リンクを描画する", () => {
+  it("製作物の全リンクを描画し、記事が無いカードは見出しごと出さない", () => {
     for (const artifact of artifacts) {
       expect(html).toContain(artifact.title);
       expect(html).toContain(`href="${attr(artifact.url)}"`);
       expect(html).toContain(`href="${attr(artifact.repositoryUrl)}"`);
-      expect(html).toContain(`href="${attr(artifact.article.url)}"`);
+      if (artifact.article !== undefined) {
+        expect(html).toContain(`href="${attr(artifact.article.url)}"`);
+      }
     }
+    // リンクの有無だけだと「見出しは出るが中身が空」を見逃す。見出しの数まで数える。
+    const withArticle = artifacts.filter((artifact) => artifact.article !== undefined).length;
+    expect(html.split(">記事</h5>").length - 1, "「記事」見出しの数").toBe(withArticle);
   });
 
   it("自己 PR・資格・希望条件を描画する", () => {

@@ -211,18 +211,20 @@ export async function checkArtifactCard(
   const card = containers.artifactCard(artifact.id);
   await expect(card, "製作物カードが一意に解決しない").toHaveCount(1);
 
+  // 記事を持たない製作物は「記事」見出しごと出ない。見出しの並びを期待値にすることで
+  // 「見出しだけ残ってリンクが無い」状態も落ちる。
   await expect(card.getByRole("heading", { level: 5 })).toHaveText([
     "URL",
     "リポジトリー",
     "技術スタック",
-    "記事",
+    ...(artifact.article === undefined ? [] : ["記事"]),
   ]);
 
   // リンクは「表示文言」と「リンク先」の両方が仕様。
   await expectAccessibleNamesInOrder(card.getByRole("link"), [
     artifact.url,
     artifact.repositoryUrl,
-    artifact.article.title,
+    ...(artifact.article === undefined ? [] : [artifact.article.title]),
   ]);
   await expect(card.getByRole("link", { name: artifact.url, exact: true })).toHaveAttribute(
     "href",
@@ -231,9 +233,11 @@ export async function checkArtifactCard(
   await expect(
     card.getByRole("link", { name: artifact.repositoryUrl, exact: true }),
   ).toHaveAttribute("href", artifact.repositoryUrl);
-  await expect(
-    card.getByRole("link", { name: artifact.article.title, exact: true }),
-  ).toHaveAttribute("href", artifact.article.url);
+  if (artifact.article !== undefined) {
+    await expect(
+      card.getByRole("link", { name: artifact.article.title, exact: true }),
+    ).toHaveAttribute("href", artifact.article.url);
+  }
 
   const badges = artifact.techStack.map((label) => badgeByLabel(label));
   await expectAccessibleNamesInOrder(
@@ -560,7 +564,7 @@ export async function checkTabOrder(page: Page): Promise<void> {
     ...dataset.artifacts.flatMap((artifact) => [
       artifact.url,
       artifact.repositoryUrl,
-      artifact.article.title,
+      ...(artifact.article === undefined ? [] : [artifact.article.title]),
     ]),
     dataset.staticContent.desiredWorkTitle,
   ];
