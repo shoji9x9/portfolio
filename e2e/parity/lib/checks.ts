@@ -470,6 +470,7 @@ export async function checkAriaQualifications(containers: ContainerLocators): Pr
       - listitem:
         - list:
           - listitem: AWS Certified Cloud Practitioner
+          - listitem: AWS Certified Solutions Architect - Associate
       - listitem:
         - list:
           - listitem: 英語検定2級

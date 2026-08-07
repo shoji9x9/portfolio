@@ -4,7 +4,7 @@
     "state": "default",
     "viewport": "desktop",
     "pixel_diff": 0,
-    "pixel_total": 10880000,
+    "pixel_total": 10910720,
     "trait_diffs": 0
   },
   {
@@ -28,7 +28,7 @@
     "state": "default",
     "viewport": "mobile",
     "pixel_diff": 0,
-    "pixel_total": 5938140,
+    "pixel_total": 5966220,
     "trait_diffs": 0
   },
   {

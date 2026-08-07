@@ -106,7 +106,7 @@
       "display",
       "visibility"
     ],
-    "element_count": 178,
+    "element_count": 179,
     "elements": [
       "page.main",
       "section.profile",
@@ -282,6 +282,7 @@
       "qualifications.group.2.item.2",
       "qualifications.group.3",
       "qualifications.group.3.item.1",
+      "qualifications.group.3.item.2",
       "qualifications.group.4",
       "qualifications.group.4.item.1",
       "qualifications.group.4.item.2",

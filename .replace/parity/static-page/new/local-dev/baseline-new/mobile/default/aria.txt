@@ -282,6 +282,7 @@
         - text: AWS
         - list:
           - listitem: AWS Certified Cloud Practitioner
+          - listitem: AWS Certified Solutions Architect - Associate
       - listitem:
         - text: その他
         - list:

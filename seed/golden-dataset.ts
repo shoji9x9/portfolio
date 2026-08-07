@@ -489,7 +489,7 @@ export const goldenDataset = {
         "プロジェクトマネージャ",
       ],
       "日本ディープラーニング協会 (JDLA)": ["G検定", "E資格"],
-      AWS: ["AWS Certified Cloud Practitioner"],
+      AWS: ["AWS Certified Cloud Practitioner", "AWS Certified Solutions Architect - Associate"],
       その他: ["英語検定2級", "日商簿記検定2級"],
     },
     // 希望条件セクションの唯一のリンク。リンク文言もページ上の静的テキストなので論理データに含める
