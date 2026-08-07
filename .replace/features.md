@@ -1,6 +1,6 @@
 # 機能インベントリ（features）
 
-- 最終更新: 2026-08-07T13:00:00+09:00
+- 最終更新: 2026-08-07T13:25:00+09:00
 - ゴールデンデータセット Issue: #9
 
 ## 機能一覧
@@ -124,7 +124,8 @@
 | 旧→新の aria スナップショット                 | `static-page` の desktop / mobile とも**追加された 1 行のみ**（`- listitem: AWS Certified Solutions Architect - Associate`）。他の行は不変    |
 | 旧→新の特性差（`compareTraits`）              | `static-page` desktop 3 件 / mobile 5 件、hover・focus 状態は 0 件、`lapras` 0 件。内訳と実測値は下表                                         |
 | `metadata.json`                               | `traits.elements` に `qualifications.group.3.item.2` を追加し `element_count` 178 → **179**。`capture_conditions` は変更なし                  |
-| `new/preview/baseline-new`                    | **未採取（残件）**。`preview` はデプロイ固有 URL のため PR 作成後でないと解決できない                                                         |
+| `new/preview/baseline-new`                    | PR #61 のデプロイ（`b993bcd` / `78dea5fe`）に対して採り直し。自己ノイズは**特性差 0 件・画素差 0**（6 状態すべて）                            |
+| `preview` と `local-dev` の同一性             | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile の default / hover / focus 全 6 状態）                    |
 
 特性差 8 件はすべて追加項目で説明できる。y 座標・高さの実測値（採取した `traits.json`）で確認した。
 
@@ -137,8 +138,22 @@
 資格セクションと分類 2 の `y` 座標は前後で不変（desktop 6184.8 / 6352.8、mobile 12421.6 / 12613.6）で、
 追加位置より上の要素は動いていない。hover / focus 状態の要素クロップも全 12 枚で画素差 0。
 
-`network.json` は両 slug で差分が出るが、vite 開発サーバーの `?t=<epoch>` と依存最適化の `?v=<hash>` だけで、
-これらを除いたリクエスト集合（URL・method・resourceType・status）は完全に一致する。描画の成果物ではない。
+`local-dev` の `network.json` は両 slug で差分が出るが、vite 開発サーバーの `?t=<epoch>` と依存最適化の
+`?v=<hash>` だけで、これらを除いたリクエスト集合（URL・method・resourceType・status）は完全に一致する。
+描画の成果物ではない。
+
+`preview` の `network.json` は本番ビルドのため事情が違う。デプロイ固有ホストの変化に加えて、
+**JS バンドルのコンテンツハッシュが `index-DQKyNJMB.js` → `index-BPjT1kF_.js` へ変わった**（データが
+変わったので当然）。**CSS は `index-Cp39JzXO.css` のまま**で、スタイルを変えていないことと整合する。
+ホストとバンドルハッシュを伏せて比較すると、リクエスト集合・method・status・resourceType は完全一致する。
+
+`preview` は `local-dev` と違い、自己ノイズの 2 回目採取（`noise-pass2/`）の生データを残さず、要約
+（`baseline-new/noise.json`）だけを保持する（従来どおり）。`noise.json` の変化は `pixel_total` のみで、
+desktop 10,880,000 → 10,910,720（1280×8524）、mobile 5,938,140 → 5,966,220（390×15298）。全画面の
+高さが伸びた分と一致する。`pixel_diff` と `trait_diffs` は 6 状態すべて 0 のまま。
+
+`lapras` の `preview` ベースラインは従来どおり未採取（#31 / #52 でも採っていない）。今回の変更で
+`lapras` は `local-dev` の実測で画素差 0・特性差 0・aria 一致だったため、採取対象を広げていない。
 
 判断の宣言は設定 `intentional_diffs.may_change`「資格の追加（新側のみ）」。
 
