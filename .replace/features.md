@@ -1,6 +1,6 @@
 # 機能インベントリ（features）
 
-- 最終更新: 2026-08-04T14:01:00+09:00
+- 最終更新: 2026-08-07T13:00:00+09:00
 - ゴールデンデータセット Issue: #9
 
 ## 機能一覧
@@ -110,6 +110,37 @@
 折り返し方針を 1 箇所に集約した（DOM は同一のため aria スナップショットは変わらない）。
 
 判断の宣言は設定 `intentional_diffs.may_change`「狭い幅で横スクロールを発生させない（新側のみ）」。
+
+### 基準の採り直し記録（2026-08-07 / Issue #58）
+
+資格「AWS Certified Solutions Architect - Associate」を追加した（ゴールデンデータセット version 3 → 4）。
+差分検証は「新側の変更前 vs 変更後」で行い、基準は `new/local-dev/baseline-new/` を採り直した。
+
+| 対象                                          | 実施                                                                                                                                          |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0・aria 一致**（`static-page` 6 組・`lapras` 2 組の全 8 組）                     |
+| `static-page` の全画面寸法                    | desktop 1280×8500 → **1280×8524**（+24px＝項目 1 行）、mobile 390×15226 → **390×15298**（+72px＝項目 3 行の折り返し）。幅は不変               |
+| `lapras` の採取寸法                           | desktop 1088×856 / mobile 198×258 とも**変化なし**（旧→新の画素差 0・特性差 0・aria 一致）。`full_page: false` で資格セクションを含まないため |
+| 旧→新の aria スナップショット                 | `static-page` の desktop / mobile とも**追加された 1 行のみ**（`- listitem: AWS Certified Solutions Architect - Associate`）。他の行は不変    |
+| 旧→新の特性差（`compareTraits`）              | `static-page` desktop 3 件 / mobile 5 件、hover・focus 状態は 0 件、`lapras` 0 件。内訳と実測値は下表                                         |
+| `metadata.json`                               | `traits.elements` に `qualifications.group.3.item.2` を追加し `element_count` 178 → **179**。`capture_conditions` は変更なし                  |
+| `new/preview/baseline-new`                    | **未採取（残件）**。`preview` はデプロイ固有 URL のため PR 作成後でないと解決できない                                                         |
+
+特性差 8 件はすべて追加項目で説明できる。y 座標・高さの実測値（採取した `traits.json`）で確認した。
+
+| 差分                                                                   | 実測値による説明                                                                                                                                                           |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `qualifications.group.3.item.2`（`kind: missing` / absent → present）  | 追加した項目そのもの。desktop `y=6472.8 h=24`、mobile `y=12781.6 h=72`                                                                                                     |
+| `qualifications.group.3 \| ...item.1` の `vertical` と `bottomAligned` | 分類 AWS が 1 項目から 2 項目になり、器の高さが desktop 48→72 / mobile 72→144 へ伸びた。中心が項目 1 より下がるため `lt` → `eq`（desktop）/ `gt`（mobile）、下端一致も解消 |
+| mobile のみ `section.qualifications \| group.2` 系 2 件                | 資格セクションの高さが 432→504 で中心が +36px 下がり、分類 2（JDLA、中心 12661.6）との上下関係が反転した。desktop は +12px で反転しないため 0 件                           |
+
+資格セクションと分類 2 の `y` 座標は前後で不変（desktop 6184.8 / 6352.8、mobile 12421.6 / 12613.6）で、
+追加位置より上の要素は動いていない。hover / focus 状態の要素クロップも全 12 枚で画素差 0。
+
+`network.json` は両 slug で差分が出るが、vite 開発サーバーの `?t=<epoch>` と依存最適化の `?v=<hash>` だけで、
+これらを除いたリクエスト集合（URL・method・resourceType・status）は完全に一致する。描画の成果物ではない。
+
+判断の宣言は設定 `intentional_diffs.may_change`「資格の追加（新側のみ）」。
 
 ## 分解の変更履歴
 
