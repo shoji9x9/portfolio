@@ -1,9 +1,9 @@
 # データ設計（design）
 
-- version: 3
+- version: 4
 - mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-08-04T13:52:00+09:00
+- 最終更新: 2026-08-07T08:55:00+09:00
 - 現行ソース: なし（version 3 で「現行の再現」から「ポートフォリオの正本」へ役割が変わった。
   version 2 までの出所は `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`）
 
@@ -52,6 +52,13 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 - ID は表示文言ではなく、英小文字・数字・ハイフンだけの固定値にした。
 
 ## 内容更新の履歴
+
+- 2026-08-07（version 3 → 4、Issue #58）: 資格「AWS Certified Solutions Architect - Associate」を
+  取得したため、`staticContent.qualifications` の分類 `AWS` へ追加した。分類は 4 のまま、
+  `AWS` の項目が 1 → 2 件。fingerprint は `f1aba402` → `978a9784`。
+  現行サイトには存在しない項目なので、そのまま現行との差分になる（設定の `intentional_diffs.may_change`
+  「資格の追加（新側のみ）」で宣言。version 3 の「移行完了後のコンテンツ更新（新側のみ）」は
+  当時の変更内容を列挙した宣言なので、そこには含まれない）。
 
 - 2026-08-04（version 2 → 3、Issue #31）: 移行（Issue #22 / #23）の収束後、**論理データの役割を
   「現行の忠実な再現」から「ポートフォリオの正本」へ変えた**。現行サイトは追従させないため、以降の

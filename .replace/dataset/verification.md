@@ -1,17 +1,17 @@
 # 検証レポート（verification）
 
-- version: 3
+- version: 4
 - mode: `static`
-- 最終更新: 2026-08-04T14:01:00+09:00
+- 最終更新: 2026-08-07T09:10:00+09:00
 
 ## フェーズ A（正本フェーズ）
 
 version 3 で論理データの役割が「現行の忠実な再現」から「ポートフォリオの正本」へ変わった
 （[`../references/static-data-semantics.md`](../references/static-data-semantics.md)）。
 そのため「現行ソースとの照合」「現行実 DOM との照合」は version 2 までの検査であり、
-version 3 では**実施していない**（現行サイトを追従させないため、実施しても不一致になるのが正しい）。
+version 3 以降は**実施していない**（現行サイトを追従させないため、実施しても不一致になるのが正しい）。
 
-### 整合性（version 3 / 2026-08-04）
+### 整合性（version 4 / 2026-08-07）
 
 | 検査         | 結果                                                                                                                            |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -19,7 +19,7 @@ version 3 では**実施していない**（現行サイトを追従させない
 | 件数         | profile 4、account badges 5、language badges 7、framework badges 24、careers 2、projects 10、artifacts 3、自己 PR 4、資格分類 4 |
 | 形式妥当性   | 生成した 6 ファイルがすべて JSON として読み戻せ、末尾が改行で終わる（`seed/golden-dataset.test.ts`）                            |
 | 参照整合     | 外部キーは存在しない。技術スタックの表示名はすべてバッジへ解決できる（解決できなければ写像が失敗する）                          |
-| 決定性       | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `f1aba402` を出力                                                     |
+| 決定性       | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `978a9784` を出力（version 3 は `f1aba402`）                          |
 | 冪等性       | 連続 2 回実行して生成物・fingerprint が一致（削除 → 生成のため実行前の状態に依らない）                                          |
 | 書き込み範囲 | 生成・削除はすべて `seed/data/` 配下。配下外を指すパスはツールが例外で停止する                                                  |
 
@@ -92,6 +92,19 @@ version 3 の論理データを同じ写像規則で再生成し、`local-dev` �
 | target が実際にゴールデンデータを配信しているか | `local-dev`（<http://localhost:5173>）に対しパリティスイート `--project=new` の **54 件が green**（職務経歴 10 プロジェクト・製作物 3 件を含む）              |
 | 外部画像の描画                                  | 同スイートの「外部画像がすべて描画される」が green。新規 10 バッジを含む全画像が `naturalWidth > 0`。ブラウザーの実測でも壊れた画像 0 件・console エラー 0 件 |
 | 製作物の任意 `article`                          | 実 DOM で `portfolio` カードの h5 が `URL` / `リポジトリー` / `技術スタック` の 3 つ（「記事」は出ない）、他 2 件は 4 つであることを確認                      |
+
+### `static-page` / `lapras` × `local-dev`（2026-08-07 / version 4）
+
+version 4（資格 `AWS` へ 1 件追加）を同じ写像規則で再生成し、`local-dev` に対して検証した。
+写像規則・宣言済み意図的差異（3 件）は version 2 から変えていない。
+
+| 検査                                            | 結果                                                                                                        |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| 決定性                                          | `pnpm exec tsx seed/golden-dataset.ts` が fingerprint `978a9784` を出力                                     |
+| 現新一致                                        | `pnpm exec tsx seed/phase-b.ts` が `declaredDiffs: 3` で成功。宣言外の差 0 件                               |
+| 再生成し忘れの検出                              | `pnpm exec vitest run`（79 件）が green。`seed/phase-b.test.ts` がディスク上の生成物と写像結果の一致を確認  |
+| target が実際にゴールデンデータを配信しているか | `local-dev`（<http://localhost:5173>）に対しパリティスイート `--project=new` の **54 件が green**           |
+| 資格の構造                                      | 手書き aria スナップショット（`checkAriaQualifications`）が desktop / mobile とも green。分類 4・`AWS` 2 件 |
 
 ### 意図的差異（写像で適用したもの）
 
