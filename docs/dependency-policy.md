@@ -22,7 +22,8 @@
 [pnpm-transitive-update.md](../.agents/skills/dependabot-alert-issue/references/pnpm-transitive-update.md) を参照する。
 
 - **バージョンを明示しない `pnpm update <pkg> --depth Infinity` を第一候補にする。** 上げたい版が分かっていても
-  range 指定を足さず、「range 内の最新」を pnpm に選ばせる。transitive にバージョンを明示すると据え置かれる。
+  range 指定を足さず、「range 内の最新」を pnpm に選ばせる。バージョンを明示すると、無指定なら到達する版へも
+  上がらないことがある（実測: 下表の nanoid。plain transitive・ゲート無効条件で観測）。
 - **リリース年齢ゲート（`minimumReleaseAge`）に阻まれても `pnpm update` は無言で旧版を据え置く。**
   親の range が既存の成熟版を満たすため、エラーは出ない。「エラーが出ないから更新された」と判断しない。
   判断の権威は `git diff pnpm-lock.yaml`。
