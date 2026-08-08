@@ -32,11 +32,11 @@
 
 実測の条件と結果は次のとおり（いずれも lockfile 差分で判定）。
 
-| 対象 | 条件 | コマンド | 結果 |
-| --- | --- | --- | --- |
-| nanoid（#62） | ゲート無効（`--config.minimumReleaseAge=0`） | `pnpm update nanoid --depth Infinity --lockfile-only` | `3.3.16` → `3.3.18` 到達 |
-| nanoid（#62） | ゲート無効（同上） | `pnpm update nanoid@3.3.17 --depth Infinity --lockfile-only` | `3.3.16` 据え置き |
-| fast-uri（#55） | ゲート有効・cutoff 前 | `pnpm update fast-uri --depth Infinity --lockfile-only` | `3.1.4` 据え置き（無言） |
-| fast-uri（#55） | ゲート有効・cutoff 後 | `pnpm update fast-uri --depth Infinity --lockfile-only` | `3.1.4` → `3.1.5` 到達 |
+| 対象            | 条件                                         | コマンド                                                     | 結果                     |
+| --------------- | -------------------------------------------- | ------------------------------------------------------------ | ------------------------ |
+| nanoid（#62）   | ゲート無効（`--config.minimumReleaseAge=0`） | `pnpm update nanoid --depth Infinity --lockfile-only`        | `3.3.16` → `3.3.18` 到達 |
+| nanoid（#62）   | ゲート無効（同上）                           | `pnpm update nanoid@3.3.17 --depth Infinity --lockfile-only` | `3.3.16` 据え置き        |
+| fast-uri（#55） | ゲート有効・cutoff 前                        | `pnpm update fast-uri --depth Infinity --lockfile-only`      | `3.1.4` 据え置き（無言） |
+| fast-uri（#55） | ゲート有効・cutoff 後                        | `pnpm update fast-uri --depth Infinity --lockfile-only`      | `3.1.4` → `3.1.5` 到達   |
 
 根拠は [AGENTS.md](../AGENTS.md) の「サプライチェーン対策」と、[pnpm-workspace.yaml](../pnpm-workspace.yaml)、[ライセンス方針](../.github/license-policy.json) である。
