@@ -27,11 +27,14 @@ pre-commit:
       group:
         piped: true
         jobs:
-          # oxfmt: JS/TS/JSON/CSS などを整形（vendored ディレクトリは除外）
+          # oxfmt: JS/TS/JSON/CSS/Markdown/YAML/HTML を整形（vendored ディレクトリは除外）。
+          # glob は CI の `format:check`（= oxfmt.config.ts の ignorePatterns 方式）と
+          # 対象集合を揃える。ここが狭いと pre-commit を通過した未整形ファイルが CI で落ちる。
           - name: oxfmt
             glob:
               - "*.{js,cjs,mjs,jsx,ts,cts,mts,tsx}"
               - "*.{json,jsonc,css}"
+              - "*.{md,yaml,yml,html}"
             exclude: # lefthook v2 の exclude は glob リストで指定する（文字列の正規表現は効かない）
               - ".agents/**"
               - ".claude/**"
@@ -45,6 +48,11 @@ pre-commit:
               - "src/data/generated/**"
               # パリティスイートの採取物（同上。正本は採取ツール）。
               - ".replace/parity/**"
+              # oxfmt.config.ts が ignore しており、かつ stage され得る追跡ファイル。
+              # 渡すと exit 2（Expected at least one target file）で pre-commit ごと落ちる。
+              # pnpm-lock.yaml は依存更新のたびに stage されるため必須。
+              - ".config/**"
+              - "pnpm-lock.yaml"
             run: pnpm format {staged_files}
             stage_fixed: true
 
