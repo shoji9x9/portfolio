@@ -15,7 +15,11 @@ pnpm の transitive 依存には 2 種類ある。
 
 この完全再生成は **対象パッケージ以外の依存も一斉に float させる**（実例: vitest / oxlint / semantic-release / @types/node など約 20 パッケージが巻き込まれた）。`pnpm.overrides` やロックファイルの手動編集なしに「対象 1 件だけを surgical に上げる」ことができないケースがある。
 
-**plain transitive** は `pnpm update <pkg>` で patched version に到達することが多いが、この場合も **対象 1 件だけの更新は保証されない**。
+**plain transitive** は、patched version が分かっていても**バージョンを付けず** `pnpm update <pkg>` を使う。
+`pnpm update <pkg>@<version>` と明示すると、同じ入力で無指定なら到達する場合でも exit 0・エラーなし・lockfile 差分なしの no-op になり得る。
+これは「版指定でも効かないことがある」だけではなく、plain transitive で効く無指定の経路を版指定によって失う挙動である。
+
+無指定で到達した場合も **対象 1 件だけの更新は保証されない**。
 `pnpm update` は in-range で新版がある他の plain transitive も同時に bump することがある（実例: `pnpm update undici` が nanoid / postcss / @napi-rs/wasm-runtime / @tybys/wasm-util を巻き込んだ）。
 プレーンな `pnpm install --lockfile-only` では差分が出ないため、これは `update` 動詞特有の広い再解決挙動であり、peer-keyed 限定の問題ではない。
 
@@ -25,12 +29,35 @@ pnpm の transitive 依存には 2 種類ある。
 「不可能／完全再生成しかない」と結論しない。拒む理由（lockfile の既存 transitive 解決を保持する）を特定したら、
 **その前提を崩す別の動詞**（lockfile からエントリを消す `remove`）まで候補に入れてから結論する。
 
-1. **direct dependency なら直接更新する**
-2. **親を remove して同一 range で add し直す**（サブツリーだけ再解決。下記）
-3. **surgical hand-edit**（最小差分が要る plain transitive。下記）
-4. **lockfile 完全再生成**（無関係な依存も一斉に float する。最後の手段）
+1. **plain transitive はバージョン無指定の `pnpm update <pkg> --depth Infinity --lockfile-only` を試す**。patched version が分かっていても `<pkg>@<version>` にしない
+2. **direct dependency なら直接更新する**
+3. **親を remove して同一 range で add し直す**（サブツリーだけ再解決。下記）
+4. **surgical hand-edit**（最小差分が要る plain transitive。下記）
+5. **lockfile 完全再生成**（無関係な依存も一斉に float する。最後の手段）
 
 `pnpm.overrides` による強制解決は品質が保証されないため、いずれの段でも採らない（SKILL.md「品質が保証されない回避策は提案しない」）。
+
+## リリース年齢ゲートによる無言 no-op を切り分ける
+
+`minimumReleaseAge` は transitive を含む全依存に適用される。patched version がまだ年齢条件を満たさないとき、
+`pnpm update <pkg> --depth Infinity --lockfile-only` は exit 0・エラーなし・lockfile 差分なしで旧版を維持することがある。
+この結果だけでは、「待てば解決する年齢ゲート」と「update の再解決経路が効かず別手段が要る」を区別できない。
+
+次の順で切り分ける。
+
+1. `pnpm config get minimumReleaseAge` で有効値を確認する。CLI で条件を変える再現では、同じ `--config.minimumReleaseAge=<分>` を付けた `pnpm config get minimumReleaseAge` で上書き後の値も確認する
+2. 元の作業ツリーを汚さないよう、必須の `package.json` / `pnpm-lock.yaml` を一時ディレクトリへ複製する。
+   `pnpm-workspace.yaml` とレジストリ・認証に必要な `.npmrc` は、リポジトリに存在する場合だけ複製する。
+   `.npmrc` に秘密値がある場合は一時ディレクトリの権限を制限し、診断後に破棄する
+3. **リポジトリと同じ pnpm 実体**と、元の有効値を作った global config・環境変数・CLI override を同じ条件で使う。
+   複製先それぞれで `pnpm config get minimumReleaseAge` を再実行して元と同じ有効値であることを確認する。
+   pnpm 11 では `minimumReleaseAge` などの project settings は `pnpm-workspace.yaml`、レジストリ・認証設定は `.npmrc` から読まれる
+4. 複製先で `pnpm update <pkg> --depth Infinity --lockfile-only` を実行し、lockfile の対象 version を確認する
+5. 同じ複製元から作った別コピーで `pnpm add --save-dev <pkg>@<patched-version> --lockfile-only` を実行する
+
+`add` が `ERR_PNPM_NO_MATURE_MATCHING_VERSION` と対象 version の公開日時・cutoff を出して失敗すれば、`update` の無言据え置きも同じ年齢ゲートによるものと判断できる。
+ゲート無効時のバージョン無指定 `update` が patched version へ到達する陽性コントロールも取り、単なる通信失敗・pnpm 未起動・別設定の読み込みを no-op と誤認しない。
+診断用 `add` は manifest を変更するため、必ず使い捨てコピーで行う。
 
 ## 親を remove して同一 range で add し直す
 
@@ -65,11 +92,31 @@ pnpm の transitive 依存には 2 種類ある。
 実例: Issue #124（postcss high）で `pnpm update postcss` は全変種で 8.5.15 のまま・完全再生成なら 122 パッケージ変更（typescript の major を含む）だったが、
 `pnpm remove vitest && pnpm add --save-dev 'vitest@^4.1.7'`（vitest は `devDependencies` 宣言）では 8.5.23 に到達し、変更 50 件・major ゼロ・`package.json` 無変更に収まった。
 
-## 更新結果の判断は lockfile 差分で行う
+## 判断の権威は lockfile（現況・更新結果とも）
 
-**混入・float の有無を `pnpm update` の stdout サマリで判断しない。** stdout の増減（`- pkg X` / `+ pkg Y`）は
-node_modules を lockfile 記載へ整合させた分も報告するため、**lockfile 差分が無くても増減が表示される**（過大表示）。
-判断の権威は常に `git diff pnpm-lock.yaml`（必要なら `git show HEAD:pnpm-lock.yaml` と突き合わせる）。
+pnpm には **lockfile を読むコマンド**と **node_modules（実インストールツリー）を読むコマンド**があり、
+両者は install していない間ずれる。**現況の判定も更新結果の判定も、権威は常に lockfile 側**に置く。
+
+| 判定したいこと | 権威（lockfile 由来） | 使わない（node_modules 由来） |
+| --- | --- | --- |
+| 着手前の現況（どの version が入っているか・脆弱か） | `pnpm audit` / lockfile の直接確認 | `pnpm why` / `pnpm list` |
+| 更新後の混入・float の有無 | `git diff pnpm-lock.yaml`（必要なら `git show HEAD:pnpm-lock.yaml`） | `pnpm update` の stdout サマリ |
+
+- **着手前に `pnpm install --frozen-lockfile` で node_modules を lockfile へ同期してから観測する。**
+  ブランチを切った直後の node_modules は前回 install 時点のままで、その間に base へマージされた依存更新が
+  反映されていない。同期前の `pnpm why` は base の lockfile ではなく過去の解決状態を映す。
+- **`pnpm why` の出力が Issue 本文と「一致」しても裏取りにならない。** 起票時点の状態と同期前の
+  node_modules は「古い」という同じ軸を共有しており、独立した 2 情報源ではない。
+- **起票から時間が経った Issue は、対象パッケージごとに着手時点で再測定する。** 一部だけが他 PR の
+  マージで解消済み、ということが起きる（本文全体を疑うのではなく、対象ごとに測り直す）。
+- 更新後の stdout の増減（`- pkg X` / `+ pkg Y`）は node_modules を lockfile 記載へ整合させた分も
+  報告するため、**lockfile 差分が無くても増減が表示される**（過大表示）。
+
+実例: Issue #177（js-yaml / undici / fast-uri）の着手時、同期前の `pnpm why undici` は Issue 本文と同じ
+`6.27.0` / `7.28.0` を返したが、base の lockfile は既に `6.28.0` / `7.29.0`（起票後にマージされた
+semantic-release の bump で解消済み）で `pnpm audit` にも advisory は無かった。
+`pnpm install --frozen-lockfile` 後は `pnpm why` も patched version を返した。
+同 Issue の js-yaml / fast-uri は未解消のままで、実際に更新が要ったのはこの 2 件だけだった。
 
 ## 着手可否分類への反映
 
@@ -88,4 +135,7 @@ peer-keyed transitive はこの hand-edit が確実に機能するとは限ら�
 
 ## 出典
 
-Issue #39（vite / peer-keyed）・Issue #67（undici / plain）・Issue #113（stdout の過大表示）・Issue #124（親 remove + re-add）の実例に基づく。
+- Issue #39（vite / peer-keyed）・Issue #67（undici / plain）・Issue #113（stdout の過大表示）・Issue #124（親 remove + re-add）・Issue #177（同期前 `pnpm why` の陳腐化）・Issue #181（バージョン明示とリリース年齢ゲートの無言 no-op）の実例
+- [pnpm update](https://pnpm.io/cli/update)
+- [pnpm Settings — configuration files](https://pnpm.io/settings)
+- [pnpm Dependency Resolution Settings — minimumReleaseAge](https://pnpm.io/settings#minimumreleaseage)

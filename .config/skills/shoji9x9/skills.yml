@@ -73,13 +73,20 @@ skills:
     uses_storage: false # アップロード先・ファイル出力先となるストレージは使わない静的サイト
     references: # スキル群が読むプロジェクト知識の配置
       architecture: docs/architecture.md # 新側アーキテクチャの決定記録（parity-replace が実装前に読む）
+      # 生成先リポジトリのコーディング規約（命名・エラー処理・テストの書き方・レビュー観点）。
+      # parity-replace / golden-dataset / parity-suite が生成物を書くときに読む。
+      # 専用ドキュメントは未整備。未整備でも停止しないが、推測で流儀を持ち込まず
+      # 基底ドキュメント（AGENTS.md）・lint 設定・既存コードから読み取る契約。
+      coding_conventions: ""
       ui_library: "" # 新 UI ライブラリと旧→新 design token 対応。未整備を明示する
       # static モードにおける「静的データ形式の対応と意味論差」。golden-dataset のフェーズ B が
       # 写像設計と現新一致検証で読む（db モードの DB 意味論に相当するもの）。
       db_semantics: .replace/references/static-data-semantics.md
       env_setup: "" # 環境変数の用意方法。未整備を明示する
       dependency_policy: docs/dependency-policy.md
-    verification_commands: # 完了前に実行する検証コマンド列（parity-replace が読む）
+    # 検証コマンド列。対象プロジェクト側にコードを生成する全スキルが読む
+    # （parity-replace は完了判定に使い未設定なら停止、golden-dataset / parity-suite は記録して進む）。
+    verification_commands:
       - pnpm typecheck
       - pnpm lint
     artifacts:
