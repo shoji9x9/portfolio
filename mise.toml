@@ -1,9 +1,14 @@
 # mise で管理するツール。`mise install` で導入する。
 # バージョンは再現性のため厳密にピン留めする（更新は Dependabot / mise up で行う）。
+#
+# 解決結果（取得 URL・チェックサム・provenance）は mise.lock に固定してコミットする。
+# ここを変更したら `mise install` を実行して mise.lock を追従させ、同じコミットに含めること
+# （CI の "Verify mise.lock is up to date" が食い違いを検出して失敗する）。
+# 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
-node = "26.5.0"
-pnpm = "11.17.0"
+node = "26.6.0"
+pnpm = "11.19.0"
 
 # セキュリティ / lint（シェル・GitHub Actions）
 gitleaks = "8.30.1"
@@ -14,10 +19,10 @@ shfmt = "3.13.1"
 shellcheck = "0.11.0"
 
 # Cloudflare CLI
-wrangler = { version = "4.114.0", allow_builds = ["esbuild", "sharp", "workerd"] }
+wrangler = { version = "4.118.0", allow_builds = ["esbuild", "sharp", "workerd"] }
 
 # vite+（vite / vitest / oxlint / oxfmt などを内包）
-viteplus = "0.2.6"
+viteplus = "0.2.7"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。

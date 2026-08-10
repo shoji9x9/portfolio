@@ -39,6 +39,39 @@ jobs:
         uses: jdx/mise-action@7e36c90d9ab29c415a2384db3006f3ec8a8cc654 # v4.2.4
         with:
           cache: true
+      # mise.lock（ツールのバージョン・取得 URL・チェックサム・provenance の固定）が
+      # mise.toml と食い違っていないかを検査する。mise は install 時に食い違いを見つけると
+      # mise.lock を黙って書き換えるため、この差分は「mise.lock のコミット漏れ」を意味する。
+      #
+      # 実測（2026-08-10 / mise 2026.5.16 linux-x64）:
+      #   - mise.toml と mise.lock が整合していれば install 後も mise.lock はバイト単位で不変。
+      #   - mise.toml だけ別バージョンにすると install が mise.lock を追従させて書き換える
+      #     （lockfile は mise.toml を上書きしない。正は常に mise.toml）。
+      #   - ツールが導入済みの場合、mise.lock から platform ブロック（checksum / URL）だけを
+      #     削っても install は補完しない。よってこのゲートが捉えるのは**バージョンのずれ**で、
+      #     checksum ブロックの欠落は捉えない（`mise lock --platform <plat>` の実行が要る）。
+      #   - `--locked` / `MISE_LOCKED=1` は代わりにならない。設定は有効化される
+      #     （`mise settings get locked` が true）が、mise.lock に無いツールでも install は成功する。
+      #   - 上記は手元の mise 2026.5.16 での実測。CI の mise は mise-action が解決する
+      #     未固定バージョン（最新）なので、install の書き戻し挙動が変わればこのゲートは
+      #     黙って無力化する。挙動が変わったと疑うときはこの実測をその版で取り直す。
+      #
+      # 存在検査を先に置く。`git diff -- mise.lock` は **追跡されていないファイルを見ない**ため、
+      # mise.lock が未コミット（`git add` 漏れ）でも削除されていても exit 0 になり、
+      # 「検査した」というグリーンだけが残る（実測: 未追跡の mise.lock で exit 0）。
+      # mise はそもそも存在しない lockfile を維持しないので、追跡漏れはゲートの無力化と同義。
+      - name: Verify mise.lock is up to date
+        run: |
+          set -euo pipefail
+          if ! git ls-files --error-unmatch mise.lock >/dev/null 2>&1; then
+            echo "::error file=mise.lock::mise.lock が Git 管理下にありません。ローカルで mise install を実行し、生成された mise.lock を同じコミットに含めてください。"
+            exit 1
+          fi
+          if [ -n "$(git status --porcelain -- mise.lock)" ]; then
+            git --no-pager diff -- mise.lock || true
+            echo "::error file=mise.lock::mise.lock が mise.toml と整合していません。ローカルで mise install を実行し、mise.lock を同じコミットに含めてください。"
+            exit 1
+          fi
       - name: Resolve pnpm store path
         id: pnpm-store
         run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"

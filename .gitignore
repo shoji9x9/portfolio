@@ -42,4 +42,5 @@ reports/
 # kaizen hook runtime markers
 **/.kaizen/.pending-extract*
 **/.kaizen/.extract-done
+**/.kaizen/.extract-checkpoint*
 .claude/scheduled_tasks.lock

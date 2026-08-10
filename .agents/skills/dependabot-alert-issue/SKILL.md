@@ -4,9 +4,9 @@ description: Dependabot alerts または外部 audit findings（例 pnpm audit �
 license: MIT
 metadata:
     github-path: skills/dependabot-alert-issue
-    github-ref: refs/tags/v1.34.0
+    github-ref: refs/tags/v1.36.0
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: 5f908cfec3e5dc6a8137ac4efc1ae273ed941b40
+    github-tree-sha: 673b6a43814c93e56cd680d96e9820c7a71ced90
 name: dependabot-alert-issue
 ---
 # Dependabot Alert Issue

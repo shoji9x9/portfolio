@@ -24,6 +24,7 @@
 | knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `functions` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言）                                 |
 | jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `functions` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                                                             |
 | check-node-version-parity.ts   | Node 実行環境と型の整合          | ✓ 全体（関連 staged 時） | –        | ✓                                          | `mise.toml` / `package.json`                                                                                                         |
+| mise.lock 整合検査             | ツール解決の固定漏れ検出         | –                        | –        | ✓（`ci.yml` の `check`）                   | `mise.toml` / `mise.lock`                                                                                                            |
 | commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                                                   |
 | tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）                                  |
 | vitest                         | テスト                           | –                        | ✓ 全体   | ✓                                          | `src/**` / `functions/**` / `seed/**` / `scripts/**` / `vite/**` の `*.{test,spec}.{ts,tsx}`（`e2e` は対象外）                       |
@@ -37,7 +38,8 @@
 
 ## CI ジョブ構成
 
-- `ci.yml`: `check` ジョブが各チェック（format/lint/typecheck/test/build/knip/jscpd/check:node-version/react:doctor/署名検証/ライセンス）を
+- `ci.yml`: `check` ジョブが mise セットアップ直後に `mise.lock` の整合を検査してから、各チェック
+  （format/lint/typecheck/test/build/knip/jscpd/check:node-version/react:doctor/署名検証/ライセンス）を
   **ネイティブの step 並列（`parallel:`）** で実行し、`secret-scan` ジョブ（全履歴 gitleaks）を並列実行。
   ※ `parallel:` は actionlint 未対応のため `.github/actionlint.yaml` で ci.yml のみ該当メッセージを ignore。
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。
