@@ -37,6 +37,8 @@
 **サプライチェーン対策** — 依存経由の攻撃への多層防御
 
 - mise: `minimum_release_age` で新しすぎるツールリリースの採用を遅延
+- mise: `mise.lock` で解決済みバージョン・取得 URL・チェックサム・provenance を固定する（現在は `linux-x64`）。
+  `mise.toml` を変えたら `mise install` で `mise.lock` を追従させ、同じコミットに含める（CI が食い違いを検査する）
 - pnpm: `pnpm-workspace.yaml` の `minimumReleaseAge` などで新しすぎるパッケージ公開の採用を遅延
 - Dependabot による依存更新、Dependency Review、ライセンスチェック（AGPL 等リスクのあるライセンスを禁止）
 

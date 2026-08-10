@@ -89,6 +89,8 @@ jobs:
             echo "この Issue は \`mise outdated\` ワークフローが自動生成・更新します。"
             echo
             echo "更新は対象ツールを個別に bump します（\`mise.toml\` のバージョン指定を更新）。"
+            echo "bump 後は \`mise install\` を実行して \`mise.lock\` を追従させ、同じコミットに含めます"
+            echo "（CI の \"Verify mise.lock is up to date\" が食い違いを検出して失敗します）。"
 
             if [ "$minor_patch_count" -gt 0 ]; then
               echo

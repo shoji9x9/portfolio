@@ -1,5 +1,10 @@
 # mise で管理するツール。`mise install` で導入する。
 # バージョンは再現性のため厳密にピン留めする（更新は Dependabot / mise up で行う）。
+#
+# 解決結果（取得 URL・チェックサム・provenance）は mise.lock に固定してコミットする。
+# ここを変更したら `mise install` を実行して mise.lock を追従させ、同じコミットに含めること
+# （CI の "Verify mise.lock is up to date" が食い違いを検出して失敗する）。
+# 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
 node = "26.6.0"
