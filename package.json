@@ -27,7 +27,7 @@
     "react:doctor": "bash scripts/react-doctor-gate.sh"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.170.18",
+    "@tanstack/react-router": "^1.170.25",
     "clsx": "^2.1.1",
     "inter-ui": "3.19.3",
     "react": "^19.2.8",
@@ -58,11 +58,11 @@
     "pixelmatch": "^7.2.0",
     "playwright": "^1.62.1",
     "pngjs": "^7.0.0",
-    "react-doctor": "^0.9.3",
+    "react-doctor": "^0.9.11",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.5",
+    "tsx": "^4.23.11",
     "typescript": "~7.0.0",
-    "vite": "^8.2.0",
+    "vite": "^8.2.1",
     "vitest": "^4.1.10"
   },
   "devEngines": {
