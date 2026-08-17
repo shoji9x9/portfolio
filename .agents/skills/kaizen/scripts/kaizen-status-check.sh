@@ -16,11 +16,19 @@ errors=0
 
 frontmatter_state() {
 	awk '
-		BEGIN { fm = 0; present = 0; nonempty = 0; status = ""; in_applied = 0 }
+		# 空配列は `[]` だけでなく `[ ]` のような空白入りでも、フォーマッタによる折り返しでも
+		# 書かれる。内部の空白を落とし、折り返し分を連結してから判定しないと、pending は
+		# 誤ブロック（空なのに「適用先あり」）、applied / rejected は検査漏れ（空なのに素通り）になる。
+		function emit(  merged) {
+			merged = applied_value
+			if (merged != "" && merged != "[]" && merged != "null" && merged != "~") nonempty = 1
+			printf "%s|%s|%s\n", status, present, nonempty
+		}
+		BEGIN { fm = 0; present = 0; nonempty = 0; status = ""; in_applied = 0; applied_value = "" }
 		/^---[[:space:]]*$/ {
 			fm++
 			if (fm == 2) {
-				printf "%s|%s|%s\n", status, present, nonempty
+				emit()
 				exit
 			}
 			next
@@ -39,20 +47,35 @@ frontmatter_state() {
 			value = $0
 			sub(/^applied-to:[[:space:]]*/, "", value)
 			sub(/[[:space:]]+#.*$/, "", value)
-			gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-			# 空配列は `[]` だけでなく `[ ]` のような空白入りでも書かれる。内部の空白を
-			# 落としてから判定しないと、pending は誤ブロック（空なのに「適用先あり」）、
-			# applied / rejected は検査漏れ（空なのに素通り）になる。
-			compact = value
-			gsub(/[[:space:]]/, "", compact)
-			if (compact != "" && compact != "[]" && compact != "null" && compact != "~") nonempty = 1
+			gsub(/[[:space:]]/, "", value)
+			applied_value = value
 			in_applied = 1
 			next
 		}
 		in_applied && /^[[:space:]]+-[[:space:]]*[^[:space:]]/ { nonempty = 1; next }
-		/^[[:alnum:]_-]+:[[:space:]]*/ { in_applied = 0 }
+		# ブロックシーケンスは親キーと同じ桁 0 に置いても正しい YAML で、フォーマッタ次第で
+		# その形で書かれる。桁 0 というだけで値の終わりに倒すと、非空の applied-to が空と
+		# 読まれ、applied / rejected は誤ブロック、pending は検査漏れ（fail open）になる（実測）。
+		# 閉じ `---` は先頭のルールが先に next するのでここへは来ない。
+		in_applied && /^-[[:space:]]+[^[:space:]]/ { nonempty = 1; next }
+		# 折り返された flow 配列（`applied-to:` の次行以降にインデントで続く値）を拾う。
+		# Markdown フォーマッタを .kaizen/*.md に掛けていると applied-to が長いだけで折り返される。
+		in_applied && /^[[:space:]]+[^[:space:]#]/ {
+			cont = $0
+			sub(/[[:space:]]+#.*$/, "", cont)
+			gsub(/[[:space:]]/, "", cont)
+			applied_value = applied_value cont
+			next
+		}
+		# ここへ来る桁 0 の行は applied-to の値の終わり（桁 0 に置ける継続行はブロック
+		# シーケンスだけで、それは上のルールが先に next する）。リセット条件を
+		# キー名の字種（`[[:alnum:]_-]+:`）で絞ると、それ以外の文字を含むキー（`kedb.ref:` や
+		# 引用符付きキー）の後ろで in_applied が残り、そのブロックスカラー本文まで applied_value へ
+		# 連結されて、空の `applied-to: []` が非空と判定される（実測）。
+		# 桁 0 のコメントだけは値の途中に現れ得るのでリセットしない。
+		/^[^[:space:]#]/ { in_applied = 0 }
 		END {
-			if (fm < 2) printf "%s|%s|%s\n", status, present, nonempty
+			if (fm < 2) emit()
 		}
 	' "$1"
 }
@@ -60,7 +83,17 @@ frontmatter_state() {
 for note in .kaizen/*.md .kaizen/archive/*.md; do
 	[ -e "${note}" ] || continue
 	[ "$(basename "${note}")" = "INDEX.md" ] && continue
-	state=$(frontmatter_state "${note}")
+	# 1 件の読み取り失敗でループごと落とさない（set -e で残りのノートが未検査になり、
+	# 診断も awk のメッセージだけになって「何の不整合か分からないまま commit できない」状態になる）。
+	# 読めないノートは検査できていないので、素通りさせず不整合として数えて fail closed を保つ。
+	if ! state=$(frontmatter_state "${note}" 2>/dev/null); then
+		# 失敗理由は権限とは限らない（破損・awk の内部エラー等）。捨てると「何の不整合か
+		# 分からないまま commit できない」状態に戻るので、失敗時だけ読み直して診断を添える。
+		detail=$(frontmatter_state "${note}" 2>&1 >/dev/null | tr '\n' ' ') || true
+		echo "kaizen-status-check: ${note}: could not read the frontmatter: ${detail:-no diagnostics from awk}" >&2
+		errors=$((errors + 1))
+		continue
+	fi
 	IFS='|' read -r status present nonempty <<<"${state}"
 
 	# applied-to が無い旧形式は後方互換のため検査対象外。新形式としてフィールドを

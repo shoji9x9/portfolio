@@ -4,9 +4,9 @@ description: コーディングエージェントのセッションから失敗�
 license: MIT
 metadata:
     github-path: skills/kaizen
-    github-ref: refs/tags/v1.36.0
+    github-ref: refs/tags/v1.36.4
     github-repo: https://github.com/shoji9x9/skills
-    github-tree-sha: db7c82024a97d076fbf989ce717e9201643dcdee
+    github-tree-sha: 370aa0d33f8adad3f720186eb45a903d3f8d2430
 name: kaizen
 ---
 # Kaizen
