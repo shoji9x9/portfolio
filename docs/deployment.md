@@ -20,7 +20,7 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    ```
 
    Wrangler は Debian の `secret-tool --version` が終了コード 2 を返すことを未導入として
-   誤判定する（4.114.0 で観測。4.118.0 でも `probeSecretTool` が `--version` の終了コード 0 で
+   誤判定する（4.114.0 で観測。4.120.0 でも `probeSecretTool` が `--version` の終了コード 0 で
    判定しており未解消であることを確認した）。解消するまでは、`--version` にだけ成功を返し、
    他の呼び出しを `/usr/bin/secret-tool` へ委譲する互換ラッパーを置く。
 
@@ -29,7 +29,7 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    cat >"$HOME/.local/bin/secret-tool" <<'EOF'
    #!/bin/sh
    # Wrangler は Debian の `secret-tool --version` の終了コード 2 を、
-   # 未導入として誤判定する（4.118.0 時点で未解消）。このラッパーはその検出だけを補正し、
+   # 未導入として誤判定する（4.120.0 時点で未解消）。このラッパーはその検出だけを補正し、
    # 実際の認証情報操作はすべて /usr/bin/secret-tool へ委譲する。
    # Wrangler 更新後に直接実行できれば削除する。
    if [ "$#" -eq 1 ] && [ "$1" = "--version" ]; then
