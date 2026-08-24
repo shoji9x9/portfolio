@@ -13,7 +13,7 @@ session: codex
 
 `mise exec -- wrangler --version` は終了コード 0 でバージョンを返した一方、
 書き込み不可の `~/.config/.wrangler/logs/` にログを作ろうとして EROFS を出力した。
-`WRANGLER_WRITE_LOGS=false` を指定すると同じ条件でエラーなく成功した。
+`WRANGLER_LOG_PATH=/tmp/wrangler-issue-81.log` を指定すると、同じ条件でエラーなく成功した。
 
 ## 根本原因
 
@@ -26,6 +26,5 @@ KEDB 照合では同種の既存記録はなかった。直接実行箇所に加
 
 ## 提案
 
-filesystem sandbox から Wrangler を実行するときは
-`WRANGLER_WRITE_LOGS=false` または書き込み可能な `WRANGLER_LOG_PATH` を明示し、
-終了コードと stderr の両方を確認する。
+filesystem sandbox から Wrangler を実行するときは、公式ドキュメントに記載された
+`WRANGLER_LOG_PATH` へ書き込み可能なパスを明示し、終了コードと stderr の両方を確認する。
