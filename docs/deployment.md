@@ -39,6 +39,8 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    exec /usr/bin/secret-tool "$@"
    EOF
    chmod 755 "$HOME/.local/bin/secret-tool"
+   export PATH="$HOME/.local/bin:$PATH"
+   test "$(command -v secret-tool)" = "$HOME/.local/bin/secret-tool"
 
    CLOUDFLARE_AUTH_USE_KEYRING=true mise exec -- wrangler login --browser=false \
      --callback-host 127.0.0.1 \
