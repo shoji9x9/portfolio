@@ -17,7 +17,8 @@
 
 ## pnpm のメジャー更新を保留している理由
 
-pnpm は 11 系の最新に留め、12 系へは上げない（2026-09-07 時点、`mise.toml` の `pnpm`・
+pnpm は `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
+（2026-09-07 時点、`mise.toml` の `pnpm`・
 `package.json` の `packageManager` / `devEngines`）。**Dependabot が pnpm 12 に未対応で、
 上げると npm 依存の更新 PR が作られなくなる**ため。
 

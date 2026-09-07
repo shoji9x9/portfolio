@@ -25,9 +25,12 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    `error === undefined` で導入済みと判定される）。当時置いた互換ラッパーがあれば削除する。
 
    ```bash
-   # 当時のラッパーだけを消す（同じ場所に自作の secret-tool がある場合に備えて中身で判定する）。
-   if grep -qF 'exec /usr/bin/secret-tool' "$HOME/.local/bin/secret-tool" 2>/dev/null; then
-     rm -f "$HOME/.local/bin/secret-tool"
+   # 当時の回避ラッパーだけを消す。委譲だけでは同じ場所の自作 shim と区別できないため、
+   # --version を詐称する処理と委譲の両方が揃っているファイルに限定する。
+   wrapper="$HOME/.local/bin/secret-tool"
+   if grep -qF "printf '%s\\n' 'secret-tool'" "$wrapper" 2>/dev/null &&
+     grep -qF 'exec /usr/bin/secret-tool' "$wrapper"; then
+     rm -f "$wrapper"
    fi
 
    CLOUDFLARE_AUTH_USE_KEYRING=true mise exec -- wrangler login --browser=false \
