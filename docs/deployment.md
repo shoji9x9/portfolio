@@ -19,28 +19,19 @@ Cloudflare Pages は Git 連携ではなく、GitHub Actions からビルド成�
    sudo apt-get install libsecret-tools gnome-keyring
    ```
 
-   Wrangler は Debian の `secret-tool --version` が終了コード 2 を返すことを未導入として
-   誤判定する（4.114.0 で観測。4.125.0 でも `probeSecretTool` が `--version` の終了コード 0 で
-   判定しており未解消であることを確認した）。解消するまでは、`--version` にだけ成功を返し、
-   他の呼び出しを `/usr/bin/secret-tool` へ委譲する互換ラッパーを置く。
+   Wrangler は 4.125.0 以前、Debian の `secret-tool --version` が終了コード 2 を返すことを
+   未導入として誤判定していた（4.114.0 で観測）。4.126.0 で `probeSecretTool` の判定が
+   終了コード 0 から spawn 失敗の有無へ変わり解消した（4.127.1 の実測: 終了コード 2 でも
+   `error === undefined` で導入済みと判定される）。当時置いた互換ラッパーがあれば削除する。
 
    ```bash
-   install -d "$HOME/.local/bin"
-   cat >"$HOME/.local/bin/secret-tool" <<'EOF'
-   #!/bin/sh
-   # Wrangler は Debian の `secret-tool --version` の終了コード 2 を、
-   # 未導入として誤判定する（4.125.0 時点で未解消）。このラッパーはその検出だけを補正し、
-   # 実際の認証情報操作はすべて /usr/bin/secret-tool へ委譲する。
-   # Wrangler 更新後に直接実行できれば削除する。
-   if [ "$#" -eq 1 ] && [ "$1" = "--version" ]; then
-     printf '%s\n' 'secret-tool'
-     exit 0
+   # 当時の回避ラッパーだけを消す。委譲だけでは同じ場所の自作 shim と区別できないため、
+   # --version を詐称する処理と委譲の両方が揃っているファイルに限定する。
+   wrapper="$HOME/.local/bin/secret-tool"
+   if grep -qF "printf '%s\\n' 'secret-tool'" "$wrapper" 2>/dev/null &&
+     grep -qF 'exec /usr/bin/secret-tool' "$wrapper"; then
+     rm -f "$wrapper"
    fi
-   exec /usr/bin/secret-tool "$@"
-   EOF
-   chmod 755 "$HOME/.local/bin/secret-tool"
-   export PATH="$HOME/.local/bin:$PATH"
-   test "$(command -v secret-tool)" = "$HOME/.local/bin/secret-tool"
 
    CLOUDFLARE_AUTH_USE_KEYRING=true mise exec -- wrangler login --browser=false \
      --callback-host 127.0.0.1 \

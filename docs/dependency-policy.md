@@ -15,6 +15,41 @@
 - CI の Dependency Review、ライセンス検査、Dependabot による更新を維持する。AGPL 等のリスクがあるライセンスは許可しない。
 - 依存更新であっても、更新内容とライセンスを確認し、通常の品質チェックを通す。
 
+## pnpm のメジャー更新を保留している理由
+
+pnpm は `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
+（2026-09-07 時点、`mise.toml` の `pnpm`・
+`package.json` の `packageManager` / `devEngines`）。**Dependabot が pnpm 12 に未対応で、
+上げると npm 依存の更新 PR が作られなくなる**ため。
+
+- GitHub のドキュメント「Supported ecosystems」が npm エコシステムで挙げる pnpm は v7〜v10。
+  dependabot-core の `PNPMPackageManager::SUPPORTED_VERSIONS` も 7〜11 で `PNPM_V12` を持たない。
+- 対応は [dependabot/dependabot-core#16095](https://github.com/dependabot/dependabot-core/issues/16095) で未解決。
+
+失敗の実体は pnpm 12 のパッケージ構造変更にある。11 系の npm パッケージは依存を持たない自己完結
+JS だが、12 系は `@pnpm/exe.<platform>` を optionalDependencies に持ち、`bin` はプレースホルダーで、
+初回実行時にネイティブバイナリを取得する。Dependabot は `corepack install pnpm@<version>
+--global --cache-only` で導入するため依存も install スクリプトも入らず、実行時取得が
+サンドボックスのネットワーク制限に阻まれる。`packageManager: "pnpm@12.1.0"` を置いた
+リポジトリーの実ジョブログで観測した失敗は次のとおり。
+
+```text
+pnpm -v → exit 1
+  Downloading the pnpm 12.1.0 binary for linux-x64...
+  Could not download the pnpm 12.1.0 binary:
+    Could not reach https://registry.npmjs.org/@pnpm/exe.linux-x64/12.1.0: fetch failed
+WARN pnpm (unknown version) does not support minimumReleaseAge ...
+pnpm update <pkg> --lockfile-only --no-save -r → exit 1
+ERROR Dependabot::SharedHelpers::HelperSubprocessFailed
+```
+
+更新 PR が止まるだけでなく、pnpm のバージョンを判定できないことで
+**transitive 依存に対する `minimumReleaseAge` の cooldown も無効化される**（上のログ 2 行目の WARN）。
+サプライチェーン対策そのものが静かに落ちるため、Dependabot 側が対応するまで上げない。
+
+`mise outdated` ワークフローは方針を読まないので、毎週 pnpm 12 への更新を Issue に出し続ける。
+これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
+
 ## transitive 依存を patched 版へ上げるとき
 
 脆弱性対応で transitive dependency を patched 版へ上げるときは、以下を実行知識の起点にする。
