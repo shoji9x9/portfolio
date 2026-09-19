@@ -62,6 +62,9 @@ updates:
       # （playwright / react / vitest 本体）は patch に勝ったが、`@vitest/*` や `@tailwindcss/*` の
       # ワイルドカード指定は `belongs to more specific group 'patch'` で patch に負け、
       # @vitest/coverage-v8 だけが vitest のメジャー更新 PR（#121）から漏れた。
+      # 一次情報（dependabot-core の updater/lib/dependabot/updater/pattern_specificity_calculator.rb、
+      # b74d9cf 時点）: 完全名一致は 1000 点で他グループと比較されない。ワイルドカードは
+      # 100 - 10×`*` の数 + (長さ - 5) 点（`@vitest/*` は 94 点）で、patterns を持たない patch（500 点）に負ける。
       # そのため lockstep グループの patterns は**ワイルドカードを使わず完全名で列挙**する。
       # 対象の依存を追加したら、ここにも名前を足す。
       # なお、万一片方だけの PR が現れたら**単独でマージしない**。もう片方を同じ PR に足す。
