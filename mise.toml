@@ -8,11 +8,10 @@
 [tools]
 # ランタイム / パッケージマネージャ
 node = "26.8.1"
-# pnpm は 12 系へ上げない。Dependabot が pnpm 12 に未対応で、更新 PR が作られなくなる
-# （理由と実測は docs/dependency-policy.md「pnpm のメジャー更新を保留している理由」）。
-# 採るのは minimum_release_age（7 日）を満たす範囲での 11 系最新であり、11 系の絶対最新ではない
-# （例: 2026-09-07 時点の 11 系最新 11.26.0 は公開翌日のため採らず 11.25.0 を採った）。
-pnpm = "11.25.0"
+# pnpm 12 系は Dependabot の対応を待って採用した。採用後の確認手順と 11 系へ戻す条件は
+# docs/dependency-policy.md「pnpm 12 系の採用と Dependabot の対応状況」を参照する。
+# 採るのは minimum_release_age（7 日）を満たす範囲での最新であり、絶対最新ではない。
+pnpm = "12.4.1"
 
 # セキュリティ / lint（シェル・GitHub Actions）
 gitleaks = "8.30.1"

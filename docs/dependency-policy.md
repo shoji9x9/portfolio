@@ -15,16 +15,16 @@
 - CI の Dependency Review、ライセンス検査、Dependabot による更新を維持する。AGPL 等のリスクがあるライセンスは許可しない。
 - 依存更新であっても、更新内容とライセンスを確認し、通常の品質チェックを通す。
 
-## pnpm のメジャー更新を保留している理由
+## pnpm 12 系の採用と Dependabot の対応状況
 
-pnpm は `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
-（2026-09-07 時点、`mise.toml` の `pnpm`・
-`package.json` の `packageManager` / `devEngines`）。**Dependabot が pnpm 12 に未対応で、
-上げると npm 依存の更新 PR が作られなくなる**ため。
+pnpm は 2026-09-19 に 11.25.0 から 12.4.1 へ上げた（Issue #105。`mise.toml` の `pnpm`・
+`package.json` の `packageManager` / `devEngines`）。それまでは **Dependabot が pnpm 12 に未対応で、
+上げると npm 依存の更新 PR が作られなくなる**ため 11 系に留めていた（Issue #98）。
 
-- GitHub のドキュメント「Supported ecosystems」が npm エコシステムで挙げる pnpm は v7〜v10。
-  dependabot-core の `PNPMPackageManager::SUPPORTED_VERSIONS` も 7〜11 で `PNPM_V12` を持たない。
-- 対応は [dependabot/dependabot-core#16095](https://github.com/dependabot/dependabot-core/issues/16095) で未解決。
+### 保留していた理由（2026-09-07 時点）
+
+当時は GitHub のドキュメント「Supported ecosystems」が npm エコシステムで挙げる pnpm が v7〜v10 で、
+dependabot-core の `PNPMPackageManager::SUPPORTED_VERSIONS` も 7〜11 までだった。
 
 失敗の実体は pnpm 12 のパッケージ構造変更にある。11 系の npm パッケージは依存を持たない自己完結
 JS だが、12 系は `@pnpm/exe.<platform>` を optionalDependencies に持ち、`bin` はプレースホルダーで、
@@ -45,9 +45,31 @@ ERROR Dependabot::SharedHelpers::HelperSubprocessFailed
 
 更新 PR が止まるだけでなく、pnpm のバージョンを判定できないことで
 **transitive 依存に対する `minimumReleaseAge` の cooldown も無効化される**（上のログ 2 行目の WARN）。
-サプライチェーン対策そのものが静かに落ちるため、Dependabot 側が対応するまで上げない。
 
-`mise outdated` ワークフローは方針を読まないので、毎週 pnpm 12 への更新を Issue に出し続ける。
+### 上流の対応（2026-09-19 に確認）
+
+- [dependabot/dependabot-core#16095](https://github.com/dependabot/dependabot-core/issues/16095) は
+  2026-09-15 に completed でクローズされた。
+- 同日マージの [#16169](https://github.com/dependabot/dependabot-core/pull/16169) で
+  `SUPPORTED_VERSIONS` に `PNPM_V12` が加わり、
+  [#16170](https://github.com/dependabot/dependabot-core/pull/16170) でネイティブバイナリの取得が
+  Dependabot のプロキシ経由になった。
+- 上流でマージ済みであることは、GitHub がホストする Dependabot にデプロイ済みであることを意味しない。
+  このため採用後に、次の手順で実ジョブの挙動を確かめる。
+
+### 採用後の確認と差し戻し条件
+
+main へマージした後、Insights → Dependency graph → Dependabot で npm の「Check for updates」を
+手動実行し、ジョブログで次を確認する。
+
+- 上の失敗ログにある `Could not download the pnpm ... binary` と
+  `pnpm (unknown version) does not support minimumReleaseAge` が出ていない。
+- ジョブが `HelperSubprocessFailed` で終わっていない。
+
+どちらかに当たったら、pnpm を `minimum_release_age`（7 日）を満たす 11 系の最新へ戻し、この節に
+観測したログを追記する。
+
+`mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
 これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
 
 ## transitive 依存を patched 版へ上げるとき
