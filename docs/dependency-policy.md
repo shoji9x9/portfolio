@@ -17,7 +17,7 @@
 
 ## pnpm 12 系を保留している理由
 
-pnpm は `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
+pnpm 本体は `mise.toml` の `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
 （`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。**12 系にすると
 Dependabot の npm 更新 PR が作られなくなる**ため。経緯は次のとおり。
 
