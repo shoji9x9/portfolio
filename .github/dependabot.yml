@@ -63,6 +63,32 @@ updates:
         patterns:
           - "@playwright/test"
           - "playwright"
+      # 以下の 3 グループも playwright と同じく「版がずれると壊れる」依存群を束ねる（Issue #119）。
+      # グループが無いと minor 更新が依存ごとの PR に分かれ、片方だけ上がる。
+      # 実測（2026-09-19, PR #116）: react だけが 19.3.0 に上がり react-dom が 19.2.8 に残って、
+      # react-dom の版一致検査（Incompatible React versions）でテストが落ちた。
+      # グループ化しても dependabot-automerge.yml はグループ内の依存を 1 件ずつ判定するため、
+      # major を含む PR が自動マージされることはない。
+      # react-dom は実行時に react と完全一致を要求し、@types/react-dom は peer で @types/react の
+      # 同じ minor を要求する。
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      # @vitest/coverage-v8 は peer で vitest の完全一致版を要求する。
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      # @tailwindcss/vite は tailwindcss / @tailwindcss/node / @tailwindcss/oxide を完全一致で依存し、
+      # scripts/tailwind-canonical.ts は @tailwindcss/node と @tailwindcss/oxide を直接使う。
+      # 版がずれると、ビルドと検査で別々の tailwind が同居する。
+      tailwindcss:
+        patterns:
+          - "tailwindcss"
+          - "@tailwindcss/*"
       # patch は安全な範囲としてまとめる。minor は個別 PR にして
       # dependabot-automerge.yml が各依存のメジャーバージョンを正しく判定する。
       patch:
