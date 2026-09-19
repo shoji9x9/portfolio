@@ -15,59 +15,72 @@
 - CI の Dependency Review、ライセンス検査、Dependabot による更新を維持する。AGPL 等のリスクがあるライセンスは許可しない。
 - 依存更新であっても、更新内容とライセンスを確認し、通常の品質チェックを通す。
 
-## pnpm 12 系の採用と Dependabot の対応状況
+## pnpm 12 系を保留している理由
 
-pnpm は 2026-09-19 に 11.25.0 から 12.4.1 へ上げた（Issue #105。`mise.toml` の `pnpm`・
-`package.json` の `packageManager` / `devEngines`）。それまでは **Dependabot が pnpm 12 に未対応で、
-上げると npm 依存の更新 PR が作られなくなる**ため 11 系に留めていた（Issue #98）。
+pnpm は `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
+（`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。**12 系にすると
+Dependabot の npm 更新 PR が作られなくなる**ため。経緯は次のとおり。
 
-### 保留していた理由（2026-09-07 時点）
+| 日付       | 出来事                                                                                          |
+| ---------- | ----------------------------------------------------------------------------------------------- |
+| 2026-09-07 | 12.1.0 を見送り 11 系に留めた（Issue #98）。Dependabot がネイティブバイナリを取得できず失敗する |
+| 2026-09-19 | 上流の対応を受けて 12.4.1 を採用した（Issue #105）が、Dependabot が別の理由で全件失敗した       |
+| 2026-09-19 | 11.26.0 へ戻した（Issue #109）                                                                  |
 
-当時は GitHub のドキュメント「Supported ecosystems」が npm エコシステムで挙げる pnpm が v7〜v10 で、
-dependabot-core の `PNPMPackageManager::SUPPORTED_VERSIONS` も 7〜11 までだった。
+### 1 回目の失敗: ネイティブバイナリを取得できない（2026-09-07、解消済み）
 
-失敗の実体は pnpm 12 のパッケージ構造変更にある。11 系の npm パッケージは依存を持たない自己完結
-JS だが、12 系は `@pnpm/exe.<platform>` を optionalDependencies に持ち、`bin` はプレースホルダーで、
+12 系は `@pnpm/exe.<platform>` を optionalDependencies に持ち、`bin` はプレースホルダーで、
 初回実行時にネイティブバイナリを取得する。Dependabot は `corepack install pnpm@<version>
---global --cache-only` で導入するため依存も install スクリプトも入らず、実行時取得が
-サンドボックスのネットワーク制限に阻まれる。`packageManager: "pnpm@12.1.0"` を置いた
-リポジトリーの実ジョブログで観測した失敗は次のとおり。
+--global --cache-only` で導入するため、実行時取得がサンドボックスのネットワーク制限に阻まれた。
 
 ```text
 pnpm -v → exit 1
-  Downloading the pnpm 12.1.0 binary for linux-x64...
   Could not download the pnpm 12.1.0 binary:
     Could not reach https://registry.npmjs.org/@pnpm/exe.linux-x64/12.1.0: fetch failed
 WARN pnpm (unknown version) does not support minimumReleaseAge ...
-pnpm update <pkg> --lockfile-only --no-save -r → exit 1
 ERROR Dependabot::SharedHelpers::HelperSubprocessFailed
 ```
 
-更新 PR が止まるだけでなく、pnpm のバージョンを判定できないことで
-**transitive 依存に対する `minimumReleaseAge` の cooldown も無効化される**（上のログ 2 行目の WARN）。
+pnpm のバージョンを判定できないことで、transitive 依存に対する `minimumReleaseAge` の cooldown も
+無効化されていた（WARN 行）。これは上流で解消した。
+[dependabot/dependabot-core#16095](https://github.com/dependabot/dependabot-core/issues/16095) が
+2026-09-15 に completed でクローズされ、
+[#16169](https://github.com/dependabot/dependabot-core/pull/16169)（`SUPPORTED_VERSIONS` に `PNPM_V12`）と
+[#16170](https://github.com/dependabot/dependabot-core/pull/16170)（バイナリ取得をプロキシ経由に）が
+入った。2026-09-19 の実ジョブでもバイナリ取得は `200` で成功し、WARN も出なかった。
 
-### 上流の対応（2026-09-19 に確認）
+### 2 回目の失敗: `minimumReleaseAgeStrict` と `--no-save` の衝突（2026-09-19、未解消）
 
-- [dependabot/dependabot-core#16095](https://github.com/dependabot/dependabot-core/issues/16095) は
-  2026-09-15 に completed でクローズされた。
-- 同日マージの [#16169](https://github.com/dependabot/dependabot-core/pull/16169) で
-  `SUPPORTED_VERSIONS` に `PNPM_V12` が加わり、
-  [#16170](https://github.com/dependabot/dependabot-core/pull/16170) でネイティブバイナリの取得が
-  Dependabot のプロキシ経由になった。
-- 上流でマージ済みであることは、GitHub がホストする Dependabot にデプロイ済みであることを意味しない。
-  このため採用後に、次の手順で実ジョブの挙動を確かめる。
+12.4.1 を採用した直後の Dependabot ジョブ（run 35430039172）で、更新候補 8 件がすべて次で失敗し、
+PR は 1 件も作られなかった。更新先はいずれも公開から 7 日以上経った版だった。
 
-### 採用後の確認と差し戻し条件
+```text
+pnpm update <pkg>@<ver> --lockfile-only --no-save -r → exit 1
+ERR_PNPM_STRICT_MIN_RELEASE_AGE_REQUIRES_SAVE
+  minimumReleaseAgeStrict cannot be combined with --no-save: approval
+  would require writing to minimumReleaseAgeExclude in pnpm-workspace.yaml
+```
 
-main へマージした後、Insights → Dependency graph → Dependabot で npm の「Check for updates」を
-手動実行し、ジョブログで次を確認する。
+12 系では `minimumReleaseAgeStrict` が既定で有効として振る舞い、Dependabot が付ける `--no-save` と
+両立しない。一時ディレクトリーにこのリポジトリーの `package.json` / `pnpm-lock.yaml` /
+`pnpm-workspace.yaml` を複製して測った結果は次のとおり。
 
-- 上の失敗ログにある `Could not download the pnpm ... binary` と
-  `pnpm (unknown version) does not support minimumReleaseAge` が出ていない。
-- ジョブが `HelperSubprocessFailed` で終わっていない。
+| 操作                                                                        | 11.25.0 / 11.26.0                            | 12.4.1（既定）     | 12.4.1 + `minimumReleaseAgeStrict: false` |
+| --------------------------------------------------------------------------- | -------------------------------------------- | ------------------ | ----------------------------------------- |
+| `pnpm update knip@6.35.1 --lockfile-only --no-save -r`（Dependabot と同形） | 成功                                         | 失敗（上のエラー） | 成功                                      |
+| 公開 7 日未満の `wrangler@4.135.0` を明示して `pnpm add -D`                 | `ERR_PNPM_NO_MATURE_MATCHING_VERSION` で拒否 | 未測定             | **追加できる**                            |
 
-どちらかに当たったら、pnpm を `minimum_release_age`（7 日）を満たす 11 系の最新へ戻し、この節に
-観測したログを追記する。
+`minimumReleaseAgeStrict: false` は Dependabot を通すが、公開直後の版を明示指定したときに待機ゲートを
+すり抜ける。11 系より防御が弱くなり、「例外で緩めない」方針とも合わないため採らない。
+なお `--config.minimumReleaseAgeStrict=false` のコマンドライン上書きは `pnpm config get` で
+読まれていなかったため、測定は `pnpm-workspace.yaml` への記述で行った。
+
+### 12 系へ上げ直す条件
+
+Dependabot が 12 系の既定（strict）の下で `--no-save` を使わずに更新できるようになったことを、
+dependabot-core の変更で確認する。上げ直したら main へのマージ後に npm の「Check for updates」を
+手動実行し、ジョブログに `HelperSubprocessFailed` が出ないこと、更新候補があれば PR が作られることを
+確かめる。失敗したら 11 系へ戻し、この節へ観測したログを追記する。
 
 `mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
 これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
