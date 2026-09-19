@@ -1,7 +1,7 @@
 ---
 date: 2026-08-17
 type: doc
-priority: medium
+priority: high
 status: pending
 applied-to: []
 session: claude-code
@@ -54,6 +54,24 @@ KEDB 照合: [[2026-08-04-metric-must-detect-the-failure]]（applied）と同型
 AGENTS.md「運用方針（凍結・除外・基準化）を決めるとき」節は**除外の宣言**を既に扱っているが、
 そこでの関心は「実行時入力を凍結していないか」であり、**列挙の要素が主張どおりの性質を
 持つか**は別軸。
+
+## 再発（2026-09-19, Issue #119 / PR #120 → #121）
+
+PR #116 の版ずれ対策として `.github/dependabot.yml` に lockstep グループを追加した。vitest / tailwind 系は
+`@vitest/*` / `@tailwindcss/*` のワイルドカードで書き、既存コメント「先に一致したグループが採用される」を
+前提に patch より前へ置いた。検証は YAML 解析と並び順の確認だけで、効き目は「次回実行で確認」と先送りした。
+
+直後の Dependabot 実行（run 35440215401）で、ワイルドカード指定は `belongs to more specific group 'patch'` で
+patch に負け、@vitest/coverage-v8 が vitest 5.0.0 のグループ PR（#121）から漏れて CI が落ちた。
+振り分けは並び順ではなく具体性で決まる。
+
+構図は本ノートと同じ。観測した失敗（react の版ずれ）は解消するが、案の構成要素（ワイルドカードの一致、
+グループ間の優先順位）が主張どおりに動くかを一次情報で確かめていない。Dependabot が specificity で
+振り分けること自体は、変更前の実行ログ（run 35433765705 の `Checking specificity ...` 行）でも読めた。
+既存コメントを実測と同じ強さで扱った。
+
+追加の教訓: 設定変更の効き目を「次回の実行で確認」と先送りする前に、過去の実行ログで判定処理が
+出力する根拠行を読めないか探す。
 
 ## 提案
 
