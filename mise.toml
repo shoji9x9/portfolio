@@ -23,7 +23,7 @@ shfmt = "3.14.1"
 shellcheck = "0.11.0"
 
 # Cloudflare CLI
-wrangler = { version = "4.127.1", allow_builds = ["esbuild", "sharp", "workerd"] }
+wrangler = { version = "4.131.1", allow_builds = ["esbuild", "sharp", "workerd"] }
 
 # vite+（vite / vitest / oxlint / oxfmt などを内包）
 viteplus = "0.3.0"
