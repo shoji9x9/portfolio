@@ -57,7 +57,13 @@ updates:
       # @playwright/test は playwright を、playwright は playwright-core を厳密固定（^ なし）で
       # 要求するので、版がずれると playwright-core が 2 系統同居し Locator が非互換になる。
       # 実測（2026-08-03, PR #38 / #42）: 片方だけの更新は TS2345 / TS2322 で必ず落ちる。
-      # このグループは patch より前に置く（先に一致したグループが採用されるため）。
+      # グループの振り分けは設定の並び順ではなく Dependabot が判定する「具体性」で決まる。
+      # 実測（2026-09-19, Dependabot run 35440215401）: パッケージ名をそのまま書いたグループ
+      # （playwright / react / vitest 本体）は patch に勝ったが、`@vitest/*` や `@tailwindcss/*` の
+      # ワイルドカード指定は `belongs to more specific group 'patch'` で patch に負け、
+      # @vitest/coverage-v8 だけが vitest のメジャー更新 PR（#121）から漏れた。
+      # そのため lockstep グループの patterns は**ワイルドカードを使わず完全名で列挙**する。
+      # 対象の依存を追加したら、ここにも名前を足す。
       # なお、万一片方だけの PR が現れたら**単独でマージしない**。もう片方を同じ PR に足す。
       playwright:
         patterns:
@@ -81,14 +87,16 @@ updates:
       vitest:
         patterns:
           - "vitest"
-          - "@vitest/*"
+          - "@vitest/coverage-v8"
       # @tailwindcss/vite は tailwindcss / @tailwindcss/node / @tailwindcss/oxide を完全一致で依存し、
       # scripts/tailwind-canonical.ts は @tailwindcss/node と @tailwindcss/oxide を直接使う。
       # 版がずれると、ビルドと検査で別々の tailwind が同居する。
       tailwindcss:
         patterns:
           - "tailwindcss"
-          - "@tailwindcss/*"
+          - "@tailwindcss/node"
+          - "@tailwindcss/oxide"
+          - "@tailwindcss/vite"
       # patch は安全な範囲としてまとめる。minor は個別 PR にして
       # dependabot-automerge.yml が各依存のメジャーバージョンを正しく判定する。
       patch:
