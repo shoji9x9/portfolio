@@ -27,7 +27,7 @@
     "react:doctor": "bash scripts/react-doctor-gate.sh"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.170.35",
+    "@tanstack/react-router": "^1.170.36",
     "clsx": "^2.1.1",
     "inter-ui": "3.19.3",
     "react": "^19.3.0",
