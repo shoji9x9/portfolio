@@ -88,6 +88,13 @@ jobs:
       - parallel:
           - name: Verify registry signatures
             run: pnpm audit signatures
+          # peer の不一致検査。package.json の `vite` は Vite+ core のエイリアスで、版が
+          # Vite+ の版（0.3.x）になるため `vite: ^8.0.0` 等の peer は構造上満たせない。
+          # pnpm-workspace.yaml の peerDependencyRules で**要求元ごと**に許可しているので、
+          # 未登録の要求元を持つパッケージが入るとここで落ちる（`pnpm install` の警告は
+          # exit 0 のままなので、これが無いと許可漏れが CI を素通りする）。
+          - name: Peer dependency check
+            run: pnpm peers check
           - name: Format check
             run: pnpm run format:check
           - name: Lint

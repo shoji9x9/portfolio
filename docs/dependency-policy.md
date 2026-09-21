@@ -156,8 +156,9 @@ peerDependencyRules:
 | 上記 5 件（要求元ごと） | clean                                                           |
 | 上記から 1 件抜く       | `unmet peer vite / Installed: 0.3.1 / Wanted: ^8.0.0` で exit 1 |
 
-最後の行が故障注入で、この指標が「未登録の要求元」を実際に落とせることの確認。対象を増やすときは
-`pnpm peers check` の出力にある要求元を足す。これは release-age ゲートとは別物で、
+最後の行が故障注入で、この指標が「未登録の要求元」を実際に落とせることの確認。判定を CI へ効かせるため
+`pnpm peers check` を `ci.yml` の `check` ジョブに入れている（`pnpm install` は unmet peer でも exit 0 の
+ため、これが無いと許可漏れが CI を素通りする）。対象を増やすときは `pnpm peers check` の出力にある要求元を足す。これは release-age ゲートとは別物で、
 `minimumReleaseAge` の例外は使っていない。
 
 ### 採らなかった手段

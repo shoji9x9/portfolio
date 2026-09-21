@@ -23,7 +23,8 @@ minimumReleaseAge: 10080
 #
 # 無効化は `vite: "*"` ではなく **要求元ごと**に書く。`vite: "*"` だと今後追加する
 # パッケージの vite peer 不一致まで黙って通り、判断の機会が消える。要求元を列挙しておけば
-# 未登録のパッケージが入ったときだけ警告が出る（実測 2026-09-21 / pnpm 11.26.0:
+# 未登録の要求元を持つパッケージが入ったときだけ検出される。`pnpm install` は警告だけで exit 0 に
+# なるため、判定は CI の `pnpm peers check`（ci.yml の check ジョブ）が担う（実測 2026-09-21 / pnpm 11.26.0:
 # 下記 5 件で `pnpm peers check` が clean、1 件（@vitejs/plugin-react）を抜くと
 # `unmet peer vite / Installed: 0.3.1 / Wanted: ^8.0.0` で exit 1）。
 # 対象を増やすときは `pnpm peers check` の出力にある要求元をここへ足す。
