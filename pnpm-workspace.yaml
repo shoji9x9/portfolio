@@ -13,3 +13,24 @@ allowBuilds:
 # 方針: 例外（minimumReleaseAgeExclude）は使わない。ゲートに引っかかる依存は
 # 成熟版へ張り替える（範囲を緩めて pnpm に成熟版を選ばせる）か、成熟版が無ければ採用を見送る。
 minimumReleaseAge: 10080
+
+# vite は Vite+ core のエイリアス（package.json の `vite` =
+# npm:@voidzero-dev/vite-plus-core@<mise の viteplus と同一版>）。エイリアス先の版は
+# 0.3.1 のような Vite+ の版なので、@vitejs/plugin-react 等が要求する peer 範囲
+# （vite: ^8.0.0 など）は構造上満たせない。実際の互換性は Vite+ が同梱する vite の版が
+# 担保するため、この peer 不一致だけを無効化する（理由・実測は
+# docs/dependency-policy.md「vite は Vite+ core のエイリアスで管理する」）。
+#
+# 無効化は `vite: "*"` ではなく **要求元ごと**に書く。`vite: "*"` だと今後追加する
+# パッケージの vite peer 不一致まで黙って通り、判断の機会が消える。要求元を列挙しておけば
+# 未登録のパッケージが入ったときだけ警告が出る（実測 2026-09-21 / pnpm 11.26.0:
+# 下記 5 件で `pnpm peers check` が clean、1 件（@vitejs/plugin-react）を抜くと
+# `unmet peer vite / Installed: 0.3.1 / Wanted: ^8.0.0` で exit 1）。
+# 対象を増やすときは `pnpm peers check` の出力にある要求元をここへ足す。
+peerDependencyRules:
+  allowedVersions:
+    "@rolldown/plugin-babel>vite": "*"
+    "@tailwindcss/vite>vite": "*"
+    "@vitejs/plugin-react>vite": "*"
+    "@vitest/mocker>vite": "*"
+    "vitest>vite": "*"

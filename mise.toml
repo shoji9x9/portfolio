@@ -24,8 +24,12 @@ shellcheck = "0.11.0"
 # Cloudflare CLI
 wrangler = { version = "4.131.1", allow_builds = ["esbuild", "sharp", "workerd"] }
 
-# vite+（vite / vitest / oxlint / oxfmt などを内包）
-viteplus = "0.3.0"
+# vite+（vite / vitest / oxlint / oxfmt などを内包）。
+# 0.3.1 以降、vp dev / build / preview は node_modules/vite が
+# @voidzero-dev/vite-plus-core@<ここと同一版> であることを厳密一致で要求する。
+# package.json の `vite` はそのエイリアスなので、ここを上げたら同じコミットで同じ版へ揃える
+# （理由・実測は docs/dependency-policy.md「vite は Vite+ core のエイリアスで管理する」）。
+viteplus = "0.3.1"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。

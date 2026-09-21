@@ -83,6 +83,9 @@ jobs:
 
           # メジャー更新に node が含まれるかで、型（@types/node）を対で上げる注意書きを出す。
           node_major="$(printf '%s' "$major" | jq -r 'any(.name == "node")')"
+          # viteplus は minor/patch 更新でも package.json の `vite`（Vite+ core のエイリアス）を
+          # 対で上げる必要がある。major 群だけを見ると 0.3.x 内の更新を取りこぼすので $items で見る。
+          viteplus_listed="$(printf '%s' "$items" | jq -r 'any(.name == "viteplus")')"
 
           {
             echo "mise 管理ツールに更新があります。"
@@ -128,6 +131,18 @@ jobs:
                 echo "片側だけ上げると型検査は通るのに実行時に存在しない API を使える状態になります。"
                 echo "この整合は \`pnpm check:node-version\` が CI で検査します。"
               fi
+            fi
+
+            if [ "$viteplus_listed" = "true" ]; then
+              echo
+              echo "### viteplus の更新について"
+              echo
+              echo "\`viteplus\`（vp CLI）と \`package.json\` の \`vite\`"
+              echo "（\`npm:@voidzero-dev/vite-plus-core@<viteplus と同一版>\` のエイリアス）は"
+              echo "**同一の PR で同じ版へ**上げます。上の \`mise upgrade viteplus --bump\` だけでは"
+              echo "エイリアス版が取り残され、vp dev / build / preview の厳密一致チェック"
+              echo "（\`Expected @voidzero-dev/vite-plus-core@<CLI 版>, but found ...\`）で失敗します。"
+              echo "手順は \`docs/dependency-policy.md\`「vite は Vite+ core のエイリアスで管理する」。"
             fi
           } > issue-body.md
 

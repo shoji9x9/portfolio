@@ -48,6 +48,22 @@ updates:
       # （型だけ先の minor へ進むと、実行環境に無い API が型検査を通る。実測は
       # docs/quality-checks.md「3 を等値ではなく片側にする理由」）。
       # 型が先行する PR が来たら単独でマージせず、mise.toml の node 更新を同じ PR に足す。
+      # @voidzero-dev/vite-plus-core は ignore する。package.json の `vite` はこのパッケージへの
+      # エイリアス（npm:@voidzero-dev/vite-plus-core@<mise.toml の viteplus と同一版>）。
+      # Dependabot がエイリアスをどう扱うかは版・experiment 依存で、実測していない。
+      # 一次情報（dependabot-core の npm_and_yarn/lib/dependabot/npm_and_yarn/file_parser.rb）:
+      #   - 既定経路では `ignore_requirement?` が `npm:` で始まる requirement を落とすため、
+      #     エイリアス依存は実名でもエイリアス名でも拾われず、PR は作られない。
+      #   - 実名へ解く経路（`dealias_package`）は `dealias_packages?`
+      #     = `options.fetch(:dealias_packages, false)` の後ろにあり、既定は false。
+      #     GitHub 側がこの experiment を有効にすれば実名 = このパッケージ名で PR が作られる。
+      # つまり本エントリは「解く経路が有効な場合」に効く保険であり、無効なら no-op。
+      # 保険が要るのは、対になる vp CLI が mise 管理で Dependabot が触れないため、単独更新は
+      # 「リリースされていない CLI 版 × core 版」になり、vp dev / build / preview が
+      # 厳密一致チェックで落ちる（上流 voidzero-dev/vite-plus#2356 の「bot が lockstep を壊す」構図）。
+      # 沈黙対策: 更新通知は outdated.yml（mise の viteplus）が担い、そこで両方を同じコミットで
+      # 上げる。ずれたまま進んだ場合は CI の Build（`vp build`）が必ず落ちる。
+      - dependency-name: "@voidzero-dev/vite-plus-core"
     groups:
       # playwright 系は**必ず同時に**上げる。片方だけ上げると型検査が壊れる。
       #   - e2e/parity/lib/capture.ts は Locator を "@playwright/test" から取る
