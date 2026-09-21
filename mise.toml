@@ -7,7 +7,7 @@
 # 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
-node = "26.8.1"
+node = "26.8.2"
 # pnpm は 12 系へ上げない。12 系では Dependabot の npm 更新が全件失敗する
 # （理由・実測・上げ直す条件は docs/dependency-policy.md「pnpm 12 系を保留している理由」）。
 # 採るのは minimum_release_age（7 日）を満たす範囲での 11 系最新であり、11 系の絶対最新ではない。
