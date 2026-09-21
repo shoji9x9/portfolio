@@ -28,6 +28,8 @@
 **pnpm で管理（`package.json`）** — プロジェクト結合の強い依存
 
 - TypeScript v7（LSP も v7 に統一） / tsx
+- vite（`package.json` の `vite` は上流 vite ではなく **Vite+ core のエイリアス**で、版は mise の
+  `viteplus` と完全一致させる。理由・手順は [docs/dependency-policy.md](docs/dependency-policy.md)）
 - react / tailwindcss v4 / tailwind-merge / clsx / babel-plugin-react-compiler / react-doctor
 - oxlint（type-aware）/ oxfmt / Tailwind lint プラグイン
 - lefthook / commitlint / markdownlint-cli2 / knip / jscpd

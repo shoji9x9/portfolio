@@ -33,13 +33,14 @@
 | react-doctor (`react:doctor`)  | React 健全性                     | –                        | ✓ 全体   | ✓                                          | `src`                                                                                                                                |
 | actionlint / ghalint / pinact  | Actions 検査・SHA ピン           | –                        | ✓ 全体   | ✓（`actions-lint.yml`）                    | `.github/workflows/**`                                                                                                               |
 | pnpm audit signatures          | レジストリ署名検証               | –                        | –        | ✓（`supply-chain`）                        | 依存全体                                                                                                                             |
+| pnpm peers check               | peer 不一致（許可漏れ）検出      | –                        | –        | ✓（`ci.yml` の `check`）                   | 依存全体（`pnpm-workspace.yaml` の `peerDependencyRules`）                                                                           |
 | check-licenses.ts              | ライセンス（GPL/AGPL/SSPL 拒否） | –                        | –        | ✓（`supply-chain`）                        | 依存全体（`pnpm licenses`）                                                                                                          |
 | Dependency Review              | 依存差分の脆弱性・ライセンス     | –                        | –        | ✓（依存マニフェスト変更 PR）               | `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml`                                                                            |
 
 ## CI ジョブ構成
 
 - `ci.yml`: `check` ジョブが mise セットアップ直後に `mise.lock` の整合を検査してから、各チェック
-  （format/lint/typecheck/test/build/knip/jscpd/check:node-version/react:doctor/署名検証/ライセンス）を
+  （format/lint/typecheck/test/build/knip/jscpd/check:node-version/react:doctor/署名検証/peer 検査/ライセンス）を
   **ネイティブの step 並列（`parallel:`）** で実行し、`secret-scan` ジョブ（全履歴 gitleaks）を並列実行。
   ※ `parallel:` は actionlint 未対応のため `.github/actionlint.yaml` で ci.yml のみ該当メッセージを ignore。
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。
