@@ -81,3 +81,14 @@ fail closed へ倒れることを疑う。ゲート・チェックが毎回同�
   `atis-latch` が無い。
 - 根本原因の更新: 上流報告の段階はすでに終わっている。残っているのは「上流の修正を取り込む作業」が
   誰にも割り当てられていないこと。
+
+## 再発（2026-09-28、Issue #134 の commit）
+
+- 同じ `unsupported or malformed record` で fail closed した。transcript の型集計で未知の型は
+  `atis-latch` の 12 件だけ。
+- 同時に出た `user correction: transcript line 51 / 101` は、どちらも `type: "user"` の tool_result
+  （ドキュメントとリリースノートの読み取り結果）で、ユーザー発話ではない。
+- `.agents/skills/kaizen/scripts/kaizen-candidate-scan.sh` は依然として `atis-latch` を含まず、
+  2026-09-19 の具体アクション（`gh skill update` で最新版へ更新）が未実施のまま。
+- 根本原因は 2026-09-19 の更新から変わらない。上流の修正を取り込む作業が未割り当てで、commit のたびに
+  同じ停止が起きる。
