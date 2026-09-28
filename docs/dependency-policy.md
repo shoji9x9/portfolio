@@ -82,6 +82,13 @@ dependabot-core の変更で確認する。上げ直したら main へのマー�
 手動実行し、ジョブログに `HelperSubprocessFailed` が出ないこと、更新候補があれば PR が作られることを
 確かめる。失敗したら 11 系へ戻し、この節へ観測したログを追記する。
 
+2026-09-28（Issue #134）時点で未達。この失敗は上流
+[dependabot/dependabot-core#16375](https://github.com/dependabot/dependabot-core/issues/16375)（open）として
+報告されており、当リポジトリーと同じ「Dependabot の cooldown と `minimumReleaseAge` が等しいか短いと
+`--config.minimumReleaseAgeStrict=false` が付かない」構図を原因に挙げている。main の
+`pnpm_lockfile_updater.rb` も引き続き `update ... --lockfile-only --no-save -r` を使う。
+解除の判断はこの Issue のクローズと修正内容を起点にする。
+
 `mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
 これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
 
@@ -91,7 +98,7 @@ dependabot-core の変更で確認する。上げ直したら main へのマー�
 `viteplus` と完全一致させる（範囲指定にしない）。
 
 ```json
-"vite": "npm:@voidzero-dev/vite-plus-core@0.3.1"
+"vite": "npm:@voidzero-dev/vite-plus-core@0.3.3"
 ```
 
 ### なぜ必要か
