@@ -27,7 +27,7 @@
     "react:doctor": "bash scripts/react-doctor-gate.sh"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.170.36",
+    "@tanstack/react-router": "^1.170.38",
     "clsx": "^2.1.1",
     "inter-ui": "3.19.3",
     "react": "^19.3.0",
@@ -35,9 +35,9 @@
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.2.2",
-    "@commitlint/config-conventional": "^21.2.2",
-    "@commitlint/types": "^21.2.0",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@commitlint/types": "^21.2.3",
     "@playwright/test": "^1.63.0",
     "@rolldown/plugin-babel": "^0.2.4",
     "@tailwindcss/node": "^4.3.3",
@@ -52,15 +52,15 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "jscpd": "^5.3.0",
     "knip": "^6.37.0",
-    "lefthook": "^2.1.12",
-    "markdownlint-cli2": "^0.23.2",
+    "lefthook": "^2.1.14",
+    "markdownlint-cli2": "^0.23.3",
     "oxlint-tailwindcss": "^1.12.0",
     "pixelmatch": "^7.2.0",
     "playwright": "^1.63.0",
     "pngjs": "^7.0.0",
     "react-doctor": "^0.9.14",
     "tailwindcss": "^4.3.3",
-    "tsx": "^4.23.13",
+    "tsx": "^4.23.15",
     "typescript": "~7.0.0",
     "vite": "npm:@voidzero-dev/vite-plus-core@0.3.1",
     "vitest": "^5.0.1"
