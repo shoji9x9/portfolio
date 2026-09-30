@@ -92,3 +92,14 @@ fail closed へ倒れることを疑う。ゲート・チェックが毎回同�
   2026-09-19 の具体アクション（`gh skill update` で最新版へ更新）が未実施のまま。
 - 根本原因は 2026-09-19 の更新から変わらない。上流の修正を取り込む作業が未割り当てで、commit のたびに
   同じ停止が起きる。
+
+## 再発（2026-09-30、Issue #136 の commit）
+
+- 同じ `unsupported or malformed record` で fail closed した。transcript の型集計で未知の型は
+  `atis-latch` の 12 件だけ。
+- 同時に出た `user correction: transcript line 8` は、スキル起動時に注入された SKILL.md 本文
+  （`type: "user"` レコード）で、ユーザー発話ではない。
+- `.agents/skills/kaizen/scripts/kaizen-candidate-scan.sh` は依然として `atis-latch` を含まない
+  （grep 件数 0）。KEDB 照合もこのファイル 1 件に一致した。
+- 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が未実施で、
+  commit のたびに同じ停止が起きる（初回から数えて 4 回目の発生）。
