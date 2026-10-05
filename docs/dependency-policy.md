@@ -89,6 +89,17 @@ dependabot-core の変更で確認する。上げ直したら main へのマー�
 `pnpm_lockfile_updater.rb` も引き続き `update ... --lockfile-only --no-save -r` を使う。
 解除の判断はこの Issue のクローズと修正内容を起点にする。
 
+2026-10-05（Issue #144）: #16375 は 2026-10-01 に completed でクローズされ、
+[#16376](https://github.com/dependabot/dependabot-core/pull/16376) がマージされた。修正の形は
+「`--no-save` を使わない」ではなく、**リポジトリー側の `minimumReleaseAge` が効く場合に、Dependabot の
+`update ... --no-save` コマンドにだけ `--config.minimum-release-age-strict=false` を付ける**というもの
+（`install` と `audit --fix` は strict のまま。待機日数は変えない。あわせて `--config` を kebab-case で
+渡すよう改め、pnpm 12 が camelCase を黙って無視していた問題も直した）。上の条件を文字どおりには
+満たさないが、2 回目の失敗の原因は取り除かれている。未確認の点が 2 つある。1 つは、strict を外した
+`--no-save` 更新で transitive 依存に公開 7 日未満の版が入り得るか（未測定）。もう 1 つは、GitHub の
+Dependabot にこの修正が反映されたかで、これは手元では確かめられない。Issue #144 では 12 系への更新を見送り、別の Issue で
+上げたうえで、上記の手順（main へのマージ後に「Check for updates」を手動実行する）で確認する。
+
 `mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
 これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
 
