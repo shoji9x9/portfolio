@@ -37,7 +37,7 @@ checksum = "sha256:cb5c9ce9c80d7b8821e3a258543c71b939138cf17c74d5cc44bbe85d6dbc5
 url = "https://nodejs.org/dist/v26.10.0/node-v26.10.0-linux-x64.tar.gz"
 
 [[tools."npm:typescript-language-server"]]
-version = "6.0.0"
+version = "6.0.1"
 backend = "npm:typescript-language-server"
 
 [[tools.pinact]]
@@ -79,7 +79,7 @@ version = "0.3.3"
 backend = "npm:vite-plus"
 
 [[tools.wrangler]]
-version = "4.135.0"
+version = "4.142.0"
 backend = "npm:wrangler"
 
 [tools.wrangler.options]
