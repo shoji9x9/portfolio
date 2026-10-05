@@ -42,7 +42,7 @@
       "x": 0,
       "y": 0,
       "width": 1280,
-      "height": 8524
+      "height": 9104
     }
   },
   {
@@ -456,7 +456,7 @@
       "x": 96,
       "y": 912.8125,
       "width": 1088,
-      "height": 5240
+      "height": 5820
     }
   },
   {
@@ -546,7 +546,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6184.8125,
+      "y": 6764.8125,
       "width": 1088,
       "height": 384
     }
@@ -592,7 +592,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6184.8125,
+      "y": 6764.8125,
       "width": 1088,
       "height": 36
     }
@@ -638,7 +638,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6600.8125,
+      "y": 7180.8125,
       "width": 1088,
       "height": 1208
     }
@@ -684,7 +684,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6600.8125,
+      "y": 7180.8125,
       "width": 1088,
       "height": 36
     }
@@ -730,7 +730,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7840.8125,
+      "y": 8420.8125,
       "width": 1088,
       "height": 72
     }
@@ -776,7 +776,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7840.8125,
+      "y": 8420.8125,
       "width": 1088,
       "height": 36
     }
@@ -3398,13 +3398,13 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 4024.8125,
+      "y": 4604.8125,
       "width": 1080,
       "height": 32
     }
   },
   {
-    "name": "careers.project.freelance-pharma-ir",
+    "name": "careers.project.freelance-outsystems-rewrite",
     "computed": {
       "padding-top": "16px",
       "padding-right": "16px",
@@ -3446,11 +3446,11 @@
       "x": 104,
       "y": 1000.8125,
       "width": 768,
-      "height": 452
+      "height": 548
     }
   },
   {
-    "name": "careers.project.freelance-pharma-ir.heading",
+    "name": "careers.project.freelance-outsystems-rewrite.heading",
     "computed": {
       "padding-top": "0px",
       "padding-right": "0px",
@@ -3496,6 +3496,328 @@
     }
   },
   {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 1494.8125,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.outsystems",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 225,
+      "y": 1494.8125,
+      "width": 77,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.react",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 310,
+      "y": 1494.8125,
+      "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.oracle",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 377,
+      "y": 1494.8125,
+      "width": 45,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.aws",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 430,
+      "y": 1494.8125,
+      "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 1580.8125,
+      "width": 768,
+      "height": 452
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 1598.8125,
+      "width": 732,
+      "height": 28
+    }
+  },
+  {
     "name": "careers.project.freelance-pharma-ir.tech.typescript",
     "computed": {
       "padding-top": "0px",
@@ -3536,7 +3858,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 1398.8125,
+      "y": 1978.8125,
       "width": 87,
       "height": 20
     }
@@ -3582,7 +3904,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 1398.8125,
+      "y": 1978.8125,
       "width": 59,
       "height": 20
     }
@@ -3628,7 +3950,7 @@
     "after": null,
     "rect": {
       "x": 292,
-      "y": 1398.8125,
+      "y": 1978.8125,
       "width": 70.703125,
       "height": 20
     }
@@ -3674,7 +3996,7 @@
     "after": null,
     "rect": {
       "x": 370.703125,
-      "y": 1398.8125,
+      "y": 1978.8125,
       "width": 38.390625,
       "height": 20
     }
@@ -3720,7 +4042,7 @@
     "after": null,
     "rect": {
       "x": 417.09375,
-      "y": 1398.8125,
+      "y": 1978.8125,
       "width": 53.921875,
       "height": 20
     }
@@ -3766,7 +4088,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1484.8125,
+      "y": 2064.8125,
       "width": 768,
       "height": 500
     }
@@ -3812,7 +4134,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 1502.8125,
+      "y": 2082.8125,
       "width": 732,
       "height": 28
     }
@@ -3858,7 +4180,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 87,
       "height": 20
     }
@@ -3904,7 +4226,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 59,
       "height": 20
     }
@@ -3950,7 +4272,7 @@
     "after": null,
     "rect": {
       "x": 292,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 87.3125,
       "height": 20
     }
@@ -3996,7 +4318,7 @@
     "after": null,
     "rect": {
       "x": 387.3125,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 88.75,
       "height": 20
     }
@@ -4042,7 +4364,7 @@
     "after": null,
     "rect": {
       "x": 484.0625,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 38.390625,
       "height": 20
     }
@@ -4088,7 +4410,7 @@
     "after": null,
     "rect": {
       "x": 530.453125,
-      "y": 1930.8125,
+      "y": 2510.8125,
       "width": 62.3125,
       "height": 20
     }
@@ -4134,7 +4456,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 2016.8125,
+      "y": 2596.8125,
       "width": 768,
       "height": 476
     }
@@ -4180,7 +4502,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 2034.8125,
+      "y": 2614.8125,
       "width": 732,
       "height": 28
     }
@@ -4226,7 +4548,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 87,
       "height": 20
     }
@@ -4272,7 +4594,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 55.703125,
       "height": 20
     }
@@ -4318,7 +4640,7 @@
     "after": null,
     "rect": {
       "x": 288.703125,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 63.03125,
       "height": 20
     }
@@ -4364,7 +4686,7 @@
     "after": null,
     "rect": {
       "x": 359.734375,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 38.390625,
       "height": 20
     }
@@ -4410,7 +4732,7 @@
     "after": null,
     "rect": {
       "x": 406.125,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 69.640625,
       "height": 20
     }
@@ -4456,7 +4778,7 @@
     "after": null,
     "rect": {
       "x": 483.765625,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 62.3125,
       "height": 20
     }
@@ -4502,7 +4824,7 @@
     "after": null,
     "rect": {
       "x": 554.078125,
-      "y": 2438.8125,
+      "y": 3018.8125,
       "width": 53.921875,
       "height": 20
     }
@@ -4548,7 +4870,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 2524.8125,
+      "y": 3104.8125,
       "width": 768,
       "height": 452
     }
@@ -4594,7 +4916,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 2542.8125,
+      "y": 3122.8125,
       "width": 732,
       "height": 28
     }
@@ -4640,7 +4962,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 87,
       "height": 20
     }
@@ -4686,7 +5008,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 55.703125,
       "height": 20
     }
@@ -4732,7 +5054,7 @@
     "after": null,
     "rect": {
       "x": 288.703125,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 93.203125,
       "height": 20
     }
@@ -4778,7 +5100,7 @@
     "after": null,
     "rect": {
       "x": 389.90625,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 38.390625,
       "height": 20
     }
@@ -4824,7 +5146,7 @@
     "after": null,
     "rect": {
       "x": 436.296875,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 69.640625,
       "height": 20
     }
@@ -4870,7 +5192,7 @@
     "after": null,
     "rect": {
       "x": 513.9375,
-      "y": 2922.8125,
+      "y": 3502.8125,
       "width": 62.3125,
       "height": 20
     }
@@ -4916,7 +5238,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 3008.8125,
+      "y": 3588.8125,
       "width": 768,
       "height": 460
     }
@@ -4962,7 +5284,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 3026.8125,
+      "y": 3606.8125,
       "width": 732,
       "height": 28
     }
@@ -5008,7 +5330,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3382.8125,
+      "y": 3962.8125,
       "width": 87,
       "height": 20
     }
@@ -5054,7 +5376,7 @@
     "after": null,
     "rect": {
       "x": 225,
-      "y": 3382.8125,
+      "y": 3962.8125,
       "width": 49,
       "height": 20
     }
@@ -5100,7 +5422,7 @@
     "after": null,
     "rect": {
       "x": 282,
-      "y": 3382.8125,
+      "y": 3962.8125,
       "width": 59,
       "height": 20
     }
@@ -5146,7 +5468,7 @@
     "after": null,
     "rect": {
       "x": 349,
-      "y": 3382.8125,
+      "y": 3962.8125,
       "width": 68.921875,
       "height": 20
     }
@@ -5192,7 +5514,7 @@
     "after": null,
     "rect": {
       "x": 425.921875,
-      "y": 3382.8125,
+      "y": 3962.8125,
       "width": 107.671875,
       "height": 20
     }
@@ -5238,7 +5560,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 3500.8125,
+      "y": 4080.8125,
       "width": 768,
       "height": 476
     }
@@ -5284,7 +5606,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 3518.8125,
+      "y": 4098.8125,
       "width": 732,
       "height": 28
     }
@@ -5330,7 +5652,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3922.8125,
+      "y": 4502.8125,
       "width": 85,
       "height": 20
     }
@@ -5376,7 +5698,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 3922.8125,
+      "y": 4502.8125,
       "width": 29.640625,
       "height": 20
     }
@@ -5422,7 +5744,7 @@
     "after": null,
     "rect": {
       "x": 260.640625,
-      "y": 3922.8125,
+      "y": 4502.8125,
       "width": 77,
       "height": 20
     }
@@ -5468,7 +5790,7 @@
     "after": null,
     "rect": {
       "x": 345.640625,
-      "y": 3922.8125,
+      "y": 4502.8125,
       "width": 45,
       "height": 20
     }
@@ -5514,7 +5836,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 4064.8125,
+      "y": 4644.8125,
       "width": 768,
       "height": 464
     }
@@ -5560,7 +5882,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 4082.8125,
+      "y": 4662.8125,
       "width": 732,
       "height": 28
     }
@@ -5606,7 +5928,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 4560.8125,
+      "y": 5140.8125,
       "width": 768,
       "height": 532
     }
@@ -5652,7 +5974,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 4578.8125,
+      "y": 5158.8125,
       "width": 732,
       "height": 28
     }
@@ -5698,7 +6020,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5038.8125,
+      "y": 5618.8125,
       "width": 85,
       "height": 20
     }
@@ -5744,7 +6066,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 5038.8125,
+      "y": 5618.8125,
       "width": 29.640625,
       "height": 20
     }
@@ -5790,7 +6112,7 @@
     "after": null,
     "rect": {
       "x": 260.640625,
-      "y": 5038.8125,
+      "y": 5618.8125,
       "width": 77,
       "height": 20
     }
@@ -5836,7 +6158,7 @@
     "after": null,
     "rect": {
       "x": 345.640625,
-      "y": 5038.8125,
+      "y": 5618.8125,
       "width": 45,
       "height": 20
     }
@@ -5882,7 +6204,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 5124.8125,
+      "y": 5704.8125,
       "width": 768,
       "height": 484
     }
@@ -5928,7 +6250,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 5142.8125,
+      "y": 5722.8125,
       "width": 732,
       "height": 28
     }
@@ -5974,7 +6296,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5522.8125,
+      "y": 6102.8125,
       "width": 85,
       "height": 20
     }
@@ -6020,7 +6342,7 @@
     "after": null,
     "rect": {
       "x": 223,
-      "y": 5522.8125,
+      "y": 6102.8125,
       "width": 77,
       "height": 20
     }
@@ -6066,7 +6388,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 5640.8125,
+      "y": 6220.8125,
       "width": 768,
       "height": 480
     }
@@ -6112,7 +6434,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 5658.8125,
+      "y": 6238.8125,
       "width": 732,
       "height": 56
     }
@@ -6158,7 +6480,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6066.8125,
+      "y": 6646.8125,
       "width": 55,
       "height": 20
     }
@@ -6204,7 +6526,7 @@
     "after": null,
     "rect": {
       "x": 193,
-      "y": 6066.8125,
+      "y": 6646.8125,
       "width": 49,
       "height": 20
     }
@@ -6250,7 +6572,7 @@
     "after": null,
     "rect": {
       "x": 250,
-      "y": 6066.8125,
+      "y": 6646.8125,
       "width": 33,
       "height": 20
     }
@@ -6296,7 +6618,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6648.8125,
+      "y": 7228.8125,
       "width": 768,
       "height": 304
     }
@@ -6342,7 +6664,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 6666.8125,
+      "y": 7246.8125,
       "width": 732,
       "height": 28
     }
@@ -6388,7 +6710,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 6748.8125,
+      "y": 7328.8125,
       "width": 203,
       "height": 20
     }
@@ -6434,7 +6756,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 6824.8125,
+      "y": 7404.8125,
       "width": 274,
       "height": 20
     }
@@ -6480,7 +6802,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 59,
       "height": 20
     }
@@ -6526,7 +6848,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 87,
       "height": 20
     }
@@ -6572,7 +6894,7 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 53.5625,
       "height": 20
     }
@@ -6618,7 +6940,7 @@
     "after": null,
     "rect": {
       "x": 345.5625,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 99.09375,
       "height": 20
     }
@@ -6664,7 +6986,7 @@
     "after": null,
     "rect": {
       "x": 452.65625,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 92.5,
       "height": 20
     }
@@ -6710,7 +7032,7 @@
     "after": null,
     "rect": {
       "x": 553.15625,
-      "y": 6898.8125,
+      "y": 7478.8125,
       "width": 114.640625,
       "height": 20
     }
@@ -6756,7 +7078,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6984.8125,
+      "y": 7564.8125,
       "width": 768,
       "height": 380
     }
@@ -6802,7 +7124,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 7002.8125,
+      "y": 7582.8125,
       "width": 732,
       "height": 28
     }
@@ -6848,7 +7170,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7084.8125,
+      "y": 7664.8125,
       "width": 318,
       "height": 20
     }
@@ -6894,7 +7216,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7160.8125,
+      "y": 7740.8125,
       "width": 391,
       "height": 20
     }
@@ -6940,7 +7262,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7308.8125,
+      "y": 7888.8125,
       "width": 363,
       "height": 20
     }
@@ -6986,7 +7308,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7234.8125,
+      "y": 7814.8125,
       "width": 59,
       "height": 20
     }
@@ -7032,7 +7354,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 7234.8125,
+      "y": 7814.8125,
       "width": 87,
       "height": 20
     }
@@ -7078,7 +7400,7 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 7234.8125,
+      "y": 7814.8125,
       "width": 88.75,
       "height": 20
     }
@@ -7124,7 +7446,7 @@
     "after": null,
     "rect": {
       "x": 380.75,
-      "y": 7234.8125,
+      "y": 7814.8125,
       "width": 66.78125,
       "height": 20
     }
@@ -7170,7 +7492,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7396.8125,
+      "y": 7976.8125,
       "width": 768,
       "height": 380
     }
@@ -7216,7 +7538,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 7414.8125,
+      "y": 7994.8125,
       "width": 732,
       "height": 28
     }
@@ -7262,7 +7584,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7496.8125,
+      "y": 8076.8125,
       "width": 251,
       "height": 20
     }
@@ -7308,7 +7630,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7572.8125,
+      "y": 8152.8125,
       "width": 290,
       "height": 20
     }
@@ -7354,7 +7676,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7720.8125,
+      "y": 8300.8125,
       "width": 367,
       "height": 20
     }
@@ -7400,7 +7722,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7646.8125,
+      "y": 8226.8125,
       "width": 59,
       "height": 20
     }
@@ -7446,7 +7768,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 7646.8125,
+      "y": 8226.8125,
       "width": 87,
       "height": 20
     }
@@ -7492,7 +7814,7 @@
     "after": null,
     "rect": {
       "x": 284,
-      "y": 7646.8125,
+      "y": 8226.8125,
       "width": 43,
       "height": 20
     }
@@ -7538,7 +7860,7 @@
     "after": null,
     "rect": {
       "x": 335,
-      "y": 7646.8125,
+      "y": 8226.8125,
       "width": 77.84375,
       "height": 20
     }
@@ -7584,7 +7906,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6232.8125,
+      "y": 6812.8125,
       "width": 1088,
       "height": 120
     }
@@ -7630,7 +7952,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6256.8125,
+      "y": 6836.8125,
       "width": 1072,
       "height": 24
     }
@@ -7676,7 +7998,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6280.8125,
+      "y": 6860.8125,
       "width": 1072,
       "height": 24
     }
@@ -7722,7 +8044,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6304.8125,
+      "y": 6884.8125,
       "width": 1072,
       "height": 24
     }
@@ -7768,7 +8090,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6328.8125,
+      "y": 6908.8125,
       "width": 1072,
       "height": 24
     }
@@ -7814,7 +8136,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6352.8125,
+      "y": 6932.8125,
       "width": 1088,
       "height": 72
     }
@@ -7860,7 +8182,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6376.8125,
+      "y": 6956.8125,
       "width": 1072,
       "height": 24
     }
@@ -7906,7 +8228,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6400.8125,
+      "y": 6980.8125,
       "width": 1072,
       "height": 24
     }
@@ -7952,7 +8274,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6424.8125,
+      "y": 7004.8125,
       "width": 1088,
       "height": 72
     }
@@ -7998,7 +8320,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6448.8125,
+      "y": 7028.8125,
       "width": 1072,
       "height": 24
     }
@@ -8044,7 +8366,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6472.8125,
+      "y": 7052.8125,
       "width": 1072,
       "height": 24
     }
@@ -8090,7 +8412,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 6496.8125,
+      "y": 7076.8125,
       "width": 1088,
       "height": 72
     }
@@ -8136,7 +8458,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6520.8125,
+      "y": 7100.8125,
       "width": 1072,
       "height": 24
     }
@@ -8182,7 +8504,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 6544.8125,
+      "y": 7124.8125,
       "width": 1072,
       "height": 24
     }
@@ -8228,7 +8550,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 7890.8125,
+      "y": 8470.8125,
       "width": 336,
       "height": 20
     }

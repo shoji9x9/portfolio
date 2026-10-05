@@ -1,9 +1,9 @@
 # データ設計（design）
 
-- version: 4
+- version: 5
 - mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-08-07T08:55:00+09:00
+- 最終更新: 2026-10-05T16:17:00+09:00
 - 現行ソース: なし（version 3 で「現行の再現」から「ポートフォリオの正本」へ役割が変わった。
   version 2 までの出所は `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`）
 
@@ -15,7 +15,7 @@
 | アカウントバッジ        | `static-page`      |                     5 | `badges.json`         | 現行オブジェクトの定義順                     |
 | 言語バッジ              | `static-page`      |                     7 | `badges.json`         | 現行オブジェクトの定義順                     |
 | フレームワーク等バッジ  | `static-page`      |                    24 | `badges.json`         | 定義順（新規 10 件は用途の近い位置へ挿入）   |
-| 職務経歴                | `static-page`      | 2 社・10 プロジェクト | `careers.json`        | `freelance`、`toyota` と各社内で開始日の降順 |
+| 職務経歴                | `static-page`      | 2 社・11 プロジェクト | `careers.json`        | `freelance`、`toyota` と各社内で開始日の降順 |
 | 製作物                  | `static-page`      |                     3 | `artifacts.json`      | `portfolio`、`qiita-search`、`memo-app`      |
 | 自己 PR・資格・希望条件 | `static-page`      |               4・4・1 | `static-content.json` | ページ内の記述順                             |
 | LAPRAS                  | `lapras`           |                 1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap       |
@@ -34,7 +34,7 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 | 空の技術スタック   | `toyota-rideshare` の空配列                                              |
 | 任意項目           | 技術スタックの `comment` の有無、製作物の `article` の有無               |
 | 長い日本語テキスト | 職務・自己 PR・資格・製作物の原文を保持                                  |
-| 数値の幅           | チーム人数 1、2、3、5、10、15、20、30、50 を保持                         |
+| 数値の幅           | チーム人数 1、2、3、4、5、10、15、20、30、50 を保持                      |
 | 表示順             | 配列またはオブジェクトの定義順で固定（正本は本ファイルの対象リソース表） |
 
 ## 未カバーの領域と理由
@@ -52,6 +52,16 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 - ID は表示文言ではなく、英小文字・数字・ハイフンだけの固定値にした。
 
 ## 内容更新の履歴
+
+- 2026-10-05（version 4 → 5、Issue #145）: 職務経歴のフリーランスへ 2026年8月からの案件
+  `freelance-outsystems-rewrite`（OutSystemsを利用したアプリケーションのTypeScriptへのリライトPoC）を
+  先頭（開始日の降順）へ追加した。10 → 11 プロジェクト。あわせて `freelance-pharma-ir` の
+  「フロントエンド、バックエンドの開発・運用」から誤りだった「運用」を削除し、自己 PR の 3 項目目
+  （エージェント主体の開発環境）を職務経歴書の最新の記述（Human-on-the-Loop）へ差し替えた。
+  技術スタックは既存バッジ（TypeScript / OutSystems / React / Oracle / AWS）だけで表せるため、
+  バッジは追加していない。fingerprint は `978a9784` → `081947dd`。
+  現行サイトには存在しない内容なので、そのまま現行との差分になる（設定の `intentional_diffs.may_change`
+  「職務経歴の追加・修正（新側のみ）」と「自己 PR の文言修正（新側のみ）」で宣言）。
 
 - 2026-08-07（version 3 → 4、Issue #58）: 資格「AWS Certified Solutions Architect - Associate」を
   取得したため、`staticContent.qualifications` の分類 `AWS` へ追加した。分類は 4 のまま、

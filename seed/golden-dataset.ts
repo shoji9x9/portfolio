@@ -220,6 +220,25 @@ const frameworkBadges = createImageBadges([
 
 const projects: Project[] = [
   {
+    id: "freelance-outsystems-rewrite",
+    name: "OutSystemsを利用したアプリケーションのTypeScriptへのリライトPoC",
+    term: "2026年8月～現在",
+    roleTasks: [
+      {
+        summary: "開発メンバーとして以下を担当。",
+        items: [
+          "OutSystemsを利用したアプリケーションを仕様を変えずにTypeScriptへリライト可能かの検証",
+          "検証計画立案、リライトのプロセス定義、リライト (フロントエンド、バックエンドの実装、テスト)、評価",
+          "リライトのノウハウのハーネスとしての汎用化",
+          "コーディングエージェントが自律的に、安全に、並列作業可能な開発基盤 (devContainer、Proxy、各種決定的な検査処理) の構築",
+          "DataGridを含む複雑なページのリライト (ほぼ完全に再現)",
+        ],
+      },
+    ],
+    techStack: { items: ["TypeScript", "OutSystems", "React", "Oracle", "AWS"] },
+    members: { team: 1, project: 4 },
+  },
+  {
     id: "freelance-pharma-ir",
     name: "製薬会社向けIR分析システムの開発",
     term: "2026年6月～2026年7月",
@@ -227,7 +246,7 @@ const projects: Project[] = [
       {
         summary: "開発メンバーとして以下を担当。",
         items: [
-          "フロントエンド、バックエンドの開発・運用",
+          "フロントエンド、バックエンドの開発",
           "コーディングエージェントが主体的に開発する (人がボトルネックとならない) 環境の構築",
           "OpenAIを利用したIR資料の収集・分析、事業戦略の変化検知の実装",
         ],
@@ -413,6 +432,7 @@ export const goldenDataset = {
       id: "freelance",
       company: "フリーランス (2022年1月～現在)",
       projectIds: [
+        "freelance-outsystems-rewrite",
         "freelance-pharma-ir",
         "freelance-design-system",
         "freelance-investment",
@@ -478,7 +498,7 @@ export const goldenDataset = {
     selfPromotion: [
       "数百万円～十億円以上の大小50以上のプロジェクトを立ち上げてきた経験を持ち、問題点の把握、原因の分析、ROIの高い対策の立案が得意です",
       "アサインされたタスクが適切かをまず考え、適切でないと感じたときは背景や問題を確認した上で代案を提示します。期日と合格条件を確認し、そこから必要なマイルストーンを自ら設定して進めます",
-      "コーディングエージェントが主体的に開発を進められる環境を設計し、人がボトルネックとならない開発プロセスを構築しています",
+      "コーディングエージェントが主体的に開発を進められる環境、プロセスの構築（Human-on-the-Loop）に取り組んでいます",
       "エージェント主体へ移行しても品質を落とさないよう、プレビュー環境でのテストやVRT (ビジュアルリグレッションテスト) など検証の仕組みを併せて用意します",
     ],
     qualifications: {
@@ -557,7 +577,7 @@ export function verifyGoldenDataset(): {
     throw new Error("安定 ID が一意でないか、形式が不正です。");
   }
   const projectsCount = goldenDataset.careers.flatMap((career) => career.projects).length;
-  if (projectsCount !== 10) {
+  if (projectsCount !== 11) {
     throw new Error("職務経歴の件数が正本の件数と一致しません。");
   }
   return {
