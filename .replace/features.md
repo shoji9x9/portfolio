@@ -161,7 +161,7 @@ desktop 10,880,000 → 10,910,720（1280×8524）、mobile 5,938,140 → 5,966,2
 
 職務経歴へ 1 案件（`freelance-outsystems-rewrite`）を追加し、`freelance-pharma-ir` の職務から「運用」を削除し、
 自己 PR の 3 項目目を差し替えた（ゴールデンデータセット version 4 → 5）。差分検証は「新側の変更前 vs 変更後」で行い、
-基準は `new/local-dev/baseline-new/` を採り直した。
+基準は `new/local-dev/baseline-new/` と `new/preview/baseline-new/` を採り直した。
 
 採取ブラウザーが前回採取（Playwright 1.62.0 / Chromium 151.0.7922.34）から main 側の依存更新で
 Playwright 1.63.0 / Chromium Headless Shell 153.0.8010.12 へ変わっていたため、ブラウザー起因とコンテンツ起因の
@@ -170,17 +170,18 @@ Playwright 1.63.0 / Chromium Headless Shell 153.0.8010.12 へ変わっていた�
 1. **パス 1（比較用・コミットしない）**: `origin/main` のコンテンツ（version 4）のまま、新しいブラウザーで採取
 2. **パス 2（コミットした基準）**: version 5 のコンテンツで採取
 
-| 対象                                          | 実施                                                                                                                                                                                                                                        |
-| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `capture_conditions.browser`                  | 両 slug を `1.62.0` / `151.0.7922.34` → **`1.63.0` / `153.0.8010.12`**（採取ブラウザーの陳腐化ガードの手当て）                                                                                                                              |
-| ブラウザー更新の影響（旧基準 → パス 1）       | 追跡対象（`aria.txt`・`traits.json`）は両 slug・全状態で**バイト一致**（64 ファイルの書き直しを更新時刻で確認）。**画素は未比較**: PNG は追跡対象外（`.gitignore`）で、旧基準のローカル PNG をパス 1 が上書きしたため比較相手が残っていない |
-| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0・aria 一致**（`static-page` 6 組・`lapras` 2 組の全 8 組）                                                                                                                   |
-| `static-page` の全画面寸法（パス 1 → 2）      | desktop 1280×8524 → **1280×9104**（+580px＝追加カード 548px＋間隔 32px）、mobile 390×15298 → **390×16730**（+1432px＝1400px＋32px）。幅は不変                                                                                               |
-| `lapras` の採取寸法                           | desktop 1088×856 / mobile 198×258 とも**変化なし**（画素差 0・特性差 0・aria 一致）。`full_page: false` で職務経歴・自己 PR を含まないため                                                                                                  |
-| aria スナップショット（パス 1 → 2）           | `static-page` の desktop / mobile とも、自己 PR 1 行の差し替え・追加カード 22 行・`freelance-pharma-ir` の職務 1 行の差し替えだけ（unified diff で確認）                                                                                    |
-| 特性差（`compareTraits`、パス 1 → 2）         | `static-page` desktop 15 件（missing 7・geometry 8）/ mobile 18 件（missing 7・geometry 11）、hover・focus 状態は 0 件、`lapras` 0 件。内訳は下表                                                                                           |
-| `metadata.json`                               | `traits.elements` に追加カードの 7 件を挿入し `element_count` 179 → **186**。`static-page` の新側採取が `traits.elements` との順序込み完全一致（`toEqual`）で green                                                                         |
-| `new/preview/baseline-new`                    | **未採取（残件）**。preview の URL 解決（`scripts/preview-url.mjs`）が Cloudflare の認証（`CLOUDFLARE_API_TOKEN`）を要し、このセッションからは実行できなかった                                                                              |
+| 対象                                          | 実施                                                                                                                                                                                                                                                                                                   |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `capture_conditions.browser`                  | 両 slug を `1.62.0` / `151.0.7922.34` → **`1.63.0` / `153.0.8010.12`**（採取ブラウザーの陳腐化ガードの手当て）                                                                                                                                                                                         |
+| ブラウザー更新の影響（旧基準 → パス 1）       | 追跡対象（`aria.txt`・`traits.json`）は両 slug・全状態で**バイト一致**（64 ファイルの書き直しを更新時刻で確認）。**画素は未比較**: PNG は追跡対象外（`.gitignore`）で、旧基準のローカル PNG をパス 1 が上書きしたため比較相手が残っていない                                                            |
+| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0・aria 一致**（`static-page` 6 組・`lapras` 2 組の全 8 組）                                                                                                                                                                              |
+| `static-page` の全画面寸法（パス 1 → 2）      | desktop 1280×8524 → **1280×9104**（+580px＝追加カード 548px＋間隔 32px）、mobile 390×15298 → **390×16730**（+1432px＝1400px＋32px）。幅は不変                                                                                                                                                          |
+| `lapras` の採取寸法                           | desktop 1088×856 / mobile 198×258 とも**変化なし**（画素差 0・特性差 0・aria 一致）。`full_page: false` で職務経歴・自己 PR を含まないため                                                                                                                                                             |
+| aria スナップショット（パス 1 → 2）           | `static-page` の desktop / mobile とも、自己 PR 1 行の差し替え・追加カード 22 行・`freelance-pharma-ir` の職務 1 行の差し替えだけ（unified diff で確認）                                                                                                                                               |
+| 特性差（`compareTraits`、パス 1 → 2）         | `static-page` desktop 15 件（missing 7・geometry 8）/ mobile 18 件（missing 7・geometry 11）、hover・focus 状態は 0 件、`lapras` 0 件。内訳は下表                                                                                                                                                      |
+| `metadata.json`                               | `traits.elements` に追加カードの 7 件を挿入し `element_count` 179 → **186**。`static-page` の新側採取が `traits.elements` との順序込み完全一致（`toEqual`）で green                                                                                                                                    |
+| `new/preview/baseline-new`                    | PR #146 のデプロイ（`28c1384` / `6899685d`）に対して `static-page` を採り直し。自己ノイズは**特性差 0 件・画素差 0・aria 一致**（6 状態すべて）。旧→新の差は `local-dev` と同じ（旧 preview の aria はパス 1 と、新 preview の aria は `local-dev` とバイト一致。特性差 desktop 15 件 / mobile 18 件） |
+| `preview` と `local-dev` の同一性             | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile の default / hover / focus 全 6 状態）                                                                                                                                                                             |
 
 特性差はすべて追加カードで説明できる。y 座標・高さの実測値（採取した `traits.json`）で確認した。
 
@@ -195,6 +196,13 @@ hover / focus 状態の要素クロップも全 12 枚で画素差 0。
 `local-dev` の `network.json` は両 slug で差分が出るが、vite 開発サーバーの `?t=<epoch>` / `?v=<hash>` に加え、
 main 側の依存更新による vite-plus 0.2.6 → 0.3.3 の内部パスと rolldown ランタイムのハッシュだけで、描画の成果物ではない
 （パス 1 の時点で同じ差が出ており、コンテンツ起因ではない）。
+
+`preview` の `network.json` は本番ビルドのため、デプロイ固有ホストの変化に加えて JS バンドルのコンテンツハッシュが
+`index-OEL_Wcms.js` へ変わった（データが変わったため）。**CSS は `index-Cp39JzXO.css` のまま**で、スタイルを変えていないことと整合する。
+`preview` では従来どおり自己ノイズの 2 回目採取（`noise-pass2/`）の生データを残さず、要約（`baseline-new/noise.json`）だけを保持する。
+`noise.json` の変化は `pixel_total` のみで、desktop 10,910,720 → 11,653,120（1280×9104）、mobile 5,966,220 → 6,524,700（390×16730）。
+全画面の高さが伸びた分と一致する。`lapras` の `preview` ベースラインは従来どおり未採取（#31 / #52 / #58 でも採っていない）。
+`lapras` は `local-dev` の実測で変更前後の画素差 0・特性差 0・aria 一致だったため、採取対象を広げていない。
 
 判断の宣言は設定 `intentional_diffs.may_change`「職務経歴の追加・修正（新側のみ）」「自己 PR の文言修正（新側のみ）」。
 
