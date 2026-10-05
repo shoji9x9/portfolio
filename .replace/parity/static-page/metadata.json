@@ -106,7 +106,7 @@
       "display",
       "visibility"
     ],
-    "element_count": 179,
+    "element_count": 186,
     "elements": [
       "page.main",
       "section.profile",
@@ -182,6 +182,13 @@
       "skills.framework.github-actions",
       "careers.company.freelance",
       "careers.company.toyota",
+      "careers.project.freelance-outsystems-rewrite",
+      "careers.project.freelance-outsystems-rewrite.heading",
+      "careers.project.freelance-outsystems-rewrite.tech.typescript",
+      "careers.project.freelance-outsystems-rewrite.tech.outsystems",
+      "careers.project.freelance-outsystems-rewrite.tech.react",
+      "careers.project.freelance-outsystems-rewrite.tech.oracle",
+      "careers.project.freelance-outsystems-rewrite.tech.aws",
       "careers.project.freelance-pharma-ir",
       "careers.project.freelance-pharma-ir.heading",
       "careers.project.freelance-pharma-ir.tech.typescript",

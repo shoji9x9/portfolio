@@ -1,18 +1,18 @@
 {
-  "version": 4,
+  "version": 5,
   "mode": "static",
   "base_time": null,
-  "generated_at": "2026-08-07T08:55:00+09:00",
+  "generated_at": "2026-10-05T16:17:00+09:00",
   "current": {
     "target": null,
     "commit": "none",
     "seeded_at": null,
-    "fingerprint": "978a9784",
-    "verified_at": "2026-08-07T08:55:00+09:00"
+    "fingerprint": "081947dd",
+    "verified_at": "2026-10-05T16:17:00+09:00"
   },
   "run": {
     "agent": "Claude Code",
-    "model": "Opus 5 (1M context)",
+    "model": "Opus 5.5 (1M context)",
     "effort": "標準",
     "skill_version": "golden-dataset v1.34.0"
   },
@@ -24,16 +24,16 @@
   "phase_b": {
     "static-page": {
       "local-dev": {
-        "dataset_version": 4,
-        "seeded_at": "2026-08-07T08:55:00+09:00",
-        "verified_at": "2026-08-07T08:55:00+09:00"
+        "dataset_version": 5,
+        "seeded_at": "2026-10-05T16:17:00+09:00",
+        "verified_at": "2026-10-05T16:17:00+09:00"
       }
     },
     "lapras": {
       "local-dev": {
-        "dataset_version": 4,
-        "seeded_at": "2026-08-07T08:55:00+09:00",
-        "verified_at": "2026-08-07T08:55:00+09:00"
+        "dataset_version": 5,
+        "seeded_at": "2026-10-05T16:17:00+09:00",
+        "verified_at": "2026-10-05T16:17:00+09:00"
       }
     }
   }
