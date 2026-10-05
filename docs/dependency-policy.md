@@ -49,7 +49,7 @@ pnpm のバージョンを判定できないことで、transitive 依存に対�
 [#16170](https://github.com/dependabot/dependabot-core/pull/16170)（バイナリ取得をプロキシ経由に）が
 入った。2026-09-19 の実ジョブでもバイナリ取得は `200` で成功し、WARN も出なかった。
 
-### 2 回目の失敗: `minimumReleaseAgeStrict` と `--no-save` の衝突（2026-09-19、未解消）
+### 2 回目の失敗: `minimumReleaseAgeStrict` と `--no-save` の衝突（2026-09-19、上流で修正済み・当リポジトリーでは未確認）
 
 12.4.1 を採用した直後の Dependabot ジョブ（run 35430039172）で、更新候補 8 件がすべて次で失敗し、
 PR は 1 件も作られなかった。更新先はいずれも公開から 7 日以上経った版だった。
@@ -88,6 +88,20 @@ dependabot-core の変更で確認する。上げ直したら main へのマー�
 `--config.minimumReleaseAgeStrict=false` が付かない」構図を原因に挙げている。main の
 `pnpm_lockfile_updater.rb` も引き続き `update ... --lockfile-only --no-save -r` を使う。
 解除の判断はこの Issue のクローズと修正内容を起点にする。
+
+2026-10-05（Issue #144）: #16375 は 2026-10-01 に completed でクローズされ、
+[#16376](https://github.com/dependabot/dependabot-core/pull/16376) がマージされた。修正の形は
+「`--no-save` を使わない」ではなく、**リポジトリー側の `minimumReleaseAge` が効く場合に、Dependabot の
+`update ... --no-save` コマンドにだけ `--config.minimum-release-age-strict=false` を付ける**というもの
+（`install` と `audit --fix` は strict のまま。待機日数は変えない。あわせて `--config` を kebab-case で
+渡すよう改め、pnpm 12 が camelCase を黙って無視していた問題も直した）。上の条件を文字どおりには
+満たさないが、2 回目の失敗の原因は上流で取り除かれている。未確認の点が 2 つある。1 つは、strict を外した
+`--no-save` 更新で transitive 依存に公開 7 日未満の版が入り得るか（未測定）。もう 1 つは、GitHub の
+Dependabot にこの修正が反映されたかで、これは手元では確かめられない。
+
+このため条件は**未達のまま**とし、Issue #144 では 12 系への更新を見送った。この修正の形で条件を満たしたと
+みなすか（条件を改めるか）は、12 系への更新を扱う別の Issue で上の 2 点を確かめてから判断する。
+上げる場合も、上記の手順（main へのマージ後に「Check for updates」を手動実行する）で確認する。
 
 `mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
 これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。

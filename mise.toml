@@ -22,7 +22,7 @@ shfmt = "3.14.1"
 shellcheck = "0.11.0"
 
 # Cloudflare CLI
-wrangler = { version = "4.135.0", allow_builds = ["esbuild", "sharp", "workerd"] }
+wrangler = { version = "4.142.0", allow_builds = ["esbuild", "sharp", "workerd"] }
 
 # vite+（vite / vitest / oxlint / oxfmt などを内包）。
 # 0.3.1 以降、vp dev / build / preview は node_modules/vite が
@@ -33,7 +33,7 @@ viteplus = "0.3.3"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。
-"npm:typescript-language-server" = "6.0.0"
+"npm:typescript-language-server" = "6.0.1"
 
 [settings]
 # サプライチェーン対策: 公開直後の新しすぎるリリースを採用しない（悪意あるリリースの取り下げ猶予）。
