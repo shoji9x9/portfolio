@@ -84,7 +84,7 @@ jobs:
           # メジャー更新に node が含まれるかで、型（@types/node）を対で上げる注意書きを出す。
           node_major="$(printf '%s' "$major" | jq -r 'any(.name == "node")')"
           # viteplus は minor/patch 更新でも package.json の `vite`（Vite+ core のエイリアス）を
-          # 対で上げる必要がある。major 群だけを見ると 0.3.x 内の更新を取りこぼすので $items で見る。
+          # 対で上げる必要がある。major 群だけを見ると同一メジャー内（例: 1.0.x）の更新を取りこぼすので $items で見る。
           viteplus_listed="$(printf '%s' "$items" | jq -r 'any(.name == "viteplus")')"
 
           {
