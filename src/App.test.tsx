@@ -34,6 +34,7 @@ const SECTION_HEADINGS: readonly { id: string; text: string; decorated?: boolean
 
 describe("App", () => {
   const html = renderToStaticMarkup(<App />);
+  const occurrences = (needle: string): number => html.split(needle).length - 1;
 
   it("セクション見出しを仕様の順で描画する", () => {
     // タグを剥がして本文だけを取り出す形にはしない。HTML を正規表現で除去する処理は、
@@ -85,7 +86,6 @@ describe("App", () => {
   it("技術スタックのバッジをカードごとに件数どおり描画する", () => {
     // 保有スキルセクションに同じ alt が既出のため、`toContain` だけでは
     // カード内の技術スタックが空でも通ってしまう。出現回数で数える。
-    const occurrences = (needle: string): number => html.split(needle).length - 1;
     const expectedCount = new Map<string, number>();
     const count = (id: string): void => {
       expectedCount.set(id, (expectedCount.get(id) ?? 0) + 1);

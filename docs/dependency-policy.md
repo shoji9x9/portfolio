@@ -112,7 +112,7 @@ Dependabot にこの修正が反映されたかで、これは手元では確か
 `viteplus` と完全一致させる（範囲指定にしない）。
 
 ```json
-"vite": "npm:@voidzero-dev/vite-plus-core@0.3.3"
+"vite": "npm:@voidzero-dev/vite-plus-core@1.0.0"
 ```
 
 ### なぜ必要か
@@ -123,6 +123,8 @@ viteplus 0.3.1 以降、`vp dev` / `vp build` / `vp preview` / `vp pack` は `no
 狙いは vite ランタイムの同一性（RFC `vite-core-module-identity`）で、上流はこれを 0.3.1 の
 「TanStack Start の 404 修正」としてのみ告知し、破壊的変更には挙げていない。0.3.2 / 0.3.3 も main の
 同じ実装とスナップショット（`core_resolution_upstream_vite`）を持つため、待っても解消しない。
+1.0.0 でも同じ検査が残っていることを下の 2 回目の実測で確かめた（1.0.0 のリリースノートも、この検査の変更や
+撤廃には触れていない）。
 
 実測（2026-09-21、Issue #127。node 26.8.2・同一 node_modules・`pnpm run build`）:
 
@@ -131,6 +133,22 @@ viteplus 0.3.1 以降、`vp dev` / `vp build` / `vp preview` / `vp pack` は `no
 | 0.3.0    | `^8.3.0`（上流 vite）                    | 成功                                                                        |
 | 0.3.1    | `^8.3.0`（上流 vite）                    | 失敗（`Expected @voidzero-dev/vite-plus-core@0.3.1, but found vite@8.3.0`） |
 | 0.3.1    | `npm:@voidzero-dev/vite-plus-core@0.3.1` | 成功                                                                        |
+
+実測（2026-10-12、Issue #149。node 26.10.0・pnpm 11.28.4。本体を複製した一時ディレクトリーで
+`package.json` の `vite` だけを変えて `pnpm install` し、`vp build` と `vp dev` を実行。`vp preview` /
+`vp pack` は未測定）:
+
+| viteplus（CLI） | `package.json` の `vite`                 | `vp build` / `vp dev`                                                                               |
+| --------------- | ---------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 1.0.0           | `npm:@voidzero-dev/vite-plus-core@1.0.0` | 成功（対照）                                                                                        |
+| 1.0.0           | `^8.3.0`（上流 vite。8.3.2 に解決）      | 失敗（`Expected @voidzero-dev/vite-plus-core@1.0.0, but found vite@8.3.2`）                         |
+| 1.0.0           | `npm:@voidzero-dev/vite-plus-core@0.3.3` | 失敗（`Expected @voidzero-dev/vite-plus-core@1.0.0, but found @voidzero-dev/vite-plus-core@0.3.3`） |
+| 0.3.3           | `npm:@voidzero-dev/vite-plus-core@1.0.0` | 失敗（`Expected @voidzero-dev/vite-plus-core@0.3.3, but found @voidzero-dev/vite-plus-core@1.0.0`） |
+
+失敗はいずれも起動前で、ずれの向き（CLI だけ上げた・エイリアスだけ上げた）を問わず落ちる。
+文言の末尾には CLI 1.0.0 / 0.3.3 とも ``Run `vp migrate` to align the Vite alias, then run `vp install`.``
+が付く。このリポジトリーでは下の手順（lockstep）で両方を同じ版へ揃えて直す（`vp migrate` がここで
+何を書き換えるかは未確認）。
 
 エイリアス先は MIT で、`pnpm audit signatures` と `license:check` も通る。
 
@@ -149,7 +167,7 @@ Dependabot 側は `@voidzero-dev/vite-plus-core` を ignore してあるが、�
 
 ### peer 範囲を許可している理由
 
-エイリアス先の版は Vite+ の版（0.3.x）なので、`vite: ^8.0.0` 等を要求する peer
+エイリアス先の版は Vite+ の版（1.0.0 など）なので、`vite: ^8.0.0` 等を要求する peer
 （@vitejs/plugin-react / @rolldown/plugin-babel / @tailwindcss/vite / vitest / @vitest/mocker の 5 件）は
 構造上満たせない。実際の互換性は Vite+ が同梱する vite の版が担保するため、`pnpm-workspace.yaml` の
 `peerDependencyRules.allowedVersions` で許可する。
