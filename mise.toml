@@ -8,8 +8,9 @@
 [tools]
 # ランタイム / パッケージマネージャ
 node = "26.11.1"
-# pnpm 12 系は Dependabot 側の上流修正を確認して採用した（2026-10-19、Issue #163）。過去に 2 回見送った経緯と
-# マージ後の確認手順は docs/dependency-policy.md「pnpm 12 系の採用経緯」。
+# pnpm 12 系は Dependabot 側の上流修正を確認して採用した（2026-10-19、Issue #163）。GitHub 上の Dependabot が
+# 12 系で動くことは未確認で、マージ後に npm の「Check for updates」を手動実行して確かめる（失敗したら 11 系へ戻す）。
+# 過去に 2 回見送った経緯と確認手順は docs/dependency-policy.md「pnpm 12 系の採用経緯」。
 pnpm = "12.12.1"
 
 # セキュリティ / lint（シェル・GitHub Actions）
