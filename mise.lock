@@ -50,12 +50,12 @@ url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v5.0.0/pinact
 provenance = "github-attestations"
 
 [[tools.pnpm]]
-version = "11.28.4"
+version = "12.12.1"
 backend = "aqua:pnpm/pnpm"
 
 [tools.pnpm."platforms.linux-x64"]
-checksum = "sha256:e29dac5d468abfe53a9dae4242e6e35f5ad436fff9947bb63d050c37e23dc98d"
-url = "https://github.com/pnpm/pnpm/releases/download/v11.28.4/pnpm-linux-x64.tar.gz"
+checksum = "sha256:f61657f53f7891f76ae5cf11e924ee3e9ae1659affcaf7deb9622d4d7ea5637e"
+url = "https://github.com/pnpm/pnpm/releases/download/v12.12.1/pnpm-linux-x64.tar.gz"
 provenance = "github-attestations"
 
 [[tools.shellcheck]]

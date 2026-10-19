@@ -15,17 +15,18 @@
 - CI の Dependency Review、ライセンス検査、Dependabot による更新を維持する。AGPL 等のリスクがあるライセンスは許可しない。
 - 依存更新であっても、更新内容とライセンスを確認し、通常の品質チェックを通す。
 
-## pnpm 12 系を保留している理由
+## pnpm 12 系の採用経緯
 
-pnpm 本体は `mise.toml` の `minimum_release_age`（7 日）を満たす 11 系の最新に留め、12 系へは上げない
-（`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。**12 系にすると
-Dependabot の npm 更新 PR が作られなくなる**ため。経緯は次のとおり。
+pnpm 本体は `mise.toml` の `minimum_release_age`（7 日）を満たす 12 系の最新を採る
+（`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。12 系は 2 回、
+**Dependabot の npm 更新 PR が作られなくなる**ために見送った。経緯は次のとおり。
 
 | 日付       | 出来事                                                                                          |
 | ---------- | ----------------------------------------------------------------------------------------------- |
 | 2026-09-07 | 12.1.0 を見送り 11 系に留めた（Issue #98）。Dependabot がネイティブバイナリを取得できず失敗する |
 | 2026-09-19 | 上流の対応を受けて 12.4.1 を採用した（Issue #105）が、Dependabot が別の理由で全件失敗した       |
 | 2026-09-19 | 11.26.0 へ戻した（Issue #109）                                                                  |
+| 2026-10-19 | 2 回目の失敗の上流修正を確認し、12.12.1 を採用した（Issue #163）                                |
 
 ### 1 回目の失敗: ネイティブバイナリを取得できない（2026-09-07、解消済み）
 
@@ -49,7 +50,7 @@ pnpm のバージョンを判定できないことで、transitive 依存に対�
 [#16170](https://github.com/dependabot/dependabot-core/pull/16170)（バイナリ取得をプロキシ経由に）が
 入った。2026-09-19 の実ジョブでもバイナリ取得は `200` で成功し、WARN も出なかった。
 
-### 2 回目の失敗: `minimumReleaseAgeStrict` と `--no-save` の衝突（2026-09-19、上流で修正済み・当リポジトリーでは未確認）
+### 2 回目の失敗: `minimumReleaseAgeStrict` と `--no-save` の衝突（2026-09-19、上流で修正済み）
 
 12.4.1 を採用した直後の Dependabot ジョブ（run 35430039172）で、更新候補 8 件がすべて次で失敗し、
 PR は 1 件も作られなかった。更新先はいずれも公開から 7 日以上経った版だった。
@@ -75,36 +76,45 @@ ERR_PNPM_STRICT_MIN_RELEASE_AGE_REQUIRES_SAVE
 なお `--config.minimumReleaseAgeStrict=false` のコマンドライン上書きは `pnpm config get` で
 読まれていなかったため、測定は `pnpm-workspace.yaml` への記述で行った。
 
-### 12 系へ上げ直す条件
+### 12 系を採用した判断（2026-10-19、Issue #163）
 
-Dependabot が 12 系の既定（strict）の下で `--no-save` を使わずに更新できるようになったことを、
-dependabot-core の変更で確認する。上げ直したら main へのマージ後に npm の「Check for updates」を
-手動実行し、ジョブログに `HelperSubprocessFailed` が出ないこと、更新候補があれば PR が作られることを
-確かめる。失敗したら 11 系へ戻し、この節へ観測したログを追記する。
+当初の上げ直し条件は「Dependabot が strict の下で `--no-save` を使わずに更新できるようになったこと」だった。
+上流の修正はこれとは形が違う。上流
+[dependabot/dependabot-core#16375](https://github.com/dependabot/dependabot-core/issues/16375) は
+2026-10-01 にクローズされ、[#16376](https://github.com/dependabot/dependabot-core/pull/16376) がマージされた。
+修正は、**リポジトリー側の `minimumReleaseAge` が効く場合に、Dependabot の `update ... --no-save` にだけ
+`--config.minimum-release-age-strict=false` を付ける**というもの（`install` と `audit --fix` は strict の
+まま。待機日数は変えない。`--config` を kebab-case で渡すよう改め、pnpm 12 が camelCase を黙って
+無視していた問題も直した）。さらに 2026-10-09 には、Dependabot の updater イメージが同梱する pnpm 自体が
+12 系へ上がった（[#16513](https://github.com/dependabot/dependabot-core/pull/16513)）。
 
-2026-09-28（Issue #134）時点で未達。この失敗は上流
-[dependabot/dependabot-core#16375](https://github.com/dependabot/dependabot-core/issues/16375)（open）として
-報告されており、当リポジトリーと同じ「Dependabot の cooldown と `minimumReleaseAge` が等しいか短いと
-`--config.minimumReleaseAgeStrict=false` が付かない」構図を原因に挙げている。main の
-`pnpm_lockfile_updater.rb` も引き続き `update ... --lockfile-only --no-save -r` を使う。
-解除の判断はこの Issue のクローズと修正内容を起点にする。
+この修正の形で条件を満たしたとみなした。根拠は、Issue #144 で未確認として残した 2 点を次のとおり測ったこと（2 点目は手元で測れる範囲まで）。
+測定は、このリポジトリーの `package.json` / `pnpm-lock.yaml` / `pnpm-workspace.yaml` を一時ディレクトリーへ
+複製して行った（`mise.toml` は含めず、cwd と pnpm の版・strict の設定値を最初に出力して確認した）。
 
-2026-10-05（Issue #144）: #16375 は 2026-10-01 に completed でクローズされ、
-[#16376](https://github.com/dependabot/dependabot-core/pull/16376) がマージされた。修正の形は
-「`--no-save` を使わない」ではなく、**リポジトリー側の `minimumReleaseAge` が効く場合に、Dependabot の
-`update ... --no-save` コマンドにだけ `--config.minimum-release-age-strict=false` を付ける**というもの
-（`install` と `audit --fix` は strict のまま。待機日数は変えない。あわせて `--config` を kebab-case で
-渡すよう改め、pnpm 12 が camelCase を黙って無視していた問題も直した）。上の条件を文字どおりには
-満たさないが、2 回目の失敗の原因は上流で取り除かれている。未確認の点が 2 つある。1 つは、strict を外した
-`--no-save` 更新で transitive 依存に公開 7 日未満の版が入り得るか（未測定）。もう 1 つは、GitHub の
-Dependabot にこの修正が反映されたかで、これは手元では確かめられない。
+| 操作（`pnpm update knip@<ver> --lockfile-only --no-save -r`）                                      | 11.28.4（main）                                         | 12.12.1                     |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------- | --------------------------- |
+| 公開 1 日の 6.42.0、strict 既定                                                                    | 失敗（`ERR_PNPM_STRICT_MIN_RELEASE_AGE_REQUIRES_SAVE`） | 失敗（同じエラー）          |
+| 公開 1 日の 6.42.0、`--config.minimum-release-age-strict=false`（#16376 後の Dependabot と同じ形） | 成功（**6.42.0 が入る**）                               | 成功（**6.42.0 が入る**）   |
+| 公開 13 日の 6.40.0（6.39.0 から。`package.json` も 6.40.0 へ書き換え）、strict 既定               | 成功（6.40.0 に更新される）                             | 成功（6.40.0 に更新される） |
 
-このため条件は**未達のまま**とし、Issue #144 では 12 系への更新を見送った。この修正の形で条件を満たしたと
-みなすか（条件を改めるか）は、12 系への更新を扱う別の Issue で上の 2 点を確かめてから判断する。
-上げる場合も、上記の手順（main へのマージ後に「Check for updates」を手動実行する）で確認する。
+1. **strict を外した `--no-save` 更新で公開 7 日未満の版が入り得るか**: 明示した直接依存については入る。
+   ただし挙動は 11.28.4 でも 12.12.1 でも同じだった。#16376 以降は 11 系でも strict を外して実行されるので、
+   これは 12 系に固有の弱まりではなく、11 系に留めても防げない。直接依存の更新先は Dependabot の `cooldown`（`default-days: 7`）が待機させる。
+   transitive 依存がこの経路で公開 7 日未満の版に解決されるかは測っていない（11 系・12 系とも同じ未確認）。
+2. **GitHub の Dependabot に修正が反映されたか**: 手元では確かめられず、未確認のまま。2026-10-19 に
+   Dependabot が npm の更新 PR を 6 件作った（#157〜#162）ことは反映の証拠にならない。Dependabot が
+   `cooldown` で選ぶ公開 7 日以上の版は、上の表のとおり strict 既定のままでも 11.28.4 で成功するため。
+   ただし同じ表で、12.4.1 で全件失敗した「公開 7 日以上の版への strict 既定の更新」が 12.12.1 では成功した。
+   2 回目の失敗の条件は、Dependabot 側の修正の反映を問わず手元の 12.12.1 では再現しない。
+   GitHub 上の 12 系での動作は下の手順で確かめる。
 
-`mise outdated` ワークフローは方針を読まないので、メジャー更新を検出すると Issue に出し続ける。
-これは意図した挙動（メジャー更新の通知を落とさない）であり、採否の判断はこの節を根拠に行う。
+**マージ後の確認**: main へのマージ後に npm の「Check for updates」を手動実行し、ジョブログに
+`HelperSubprocessFailed` や `ERR_PNPM_*` が出ないこと、更新候補があれば PR が作られることを確かめる。
+失敗したら 11 系の最新（`minimum_release_age` を満たすもの）へ戻し、この節へ観測したログを追記する。
+
+`mise outdated` ワークフローは方針を読まないので、pnpm のメジャー更新（13 系など）も他のツールと同じく
+Issue に出す。採否の判断は上の経緯を踏まえ、Dependabot の対応状況を一次情報で確かめてから行う。
 
 ## vite は Vite+ core のエイリアスで管理する
 
