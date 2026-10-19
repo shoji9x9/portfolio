@@ -54,7 +54,7 @@
     "knip": "^6.39.0",
     "lefthook": "^2.1.16",
     "markdownlint-cli2": "^0.23.3",
-    "oxlint-tailwindcss": "^1.14.0",
+    "oxlint-tailwindcss": "^1.16.0",
     "pixelmatch": "^7.2.0",
     "playwright": "^1.63.0",
     "pngjs": "^7.0.0",
