@@ -14,6 +14,20 @@ allowBuilds:
 # 成熟版へ張り替える（範囲を緩めて pnpm に成熟版を選ばせる）か、成熟版が無ければ採用を見送る。
 minimumReleaseAge: 10080
 
+# pnpm audit で報告しない advisory。足すときは理由と Issue を書く。
+# 修正版が公開されたときと、どの依存もそのパッケージを使わなくなったときに外す
+# （方針は docs/dependency-policy.md「修正版が出ない advisory を無視するとき」）。
+auditConfig:
+  ignoreGhsas:
+    # braces（devDependencies の markdownlint-cli2 が micromatch 経由で使う）。
+    # 上流のメンテナはパッチを出さないと述べた（github/advisory-database#10132 のコメント）。
+    # このリポジトリーが braces に渡す glob のパターンは、.markdownlint-cli2.mjs の globs / ignores と、
+    # pre-commit（lefthook.yml）で markdownlint-cli2 に渡すステージ済みのファイル名だけである。
+    # 設定ファイルを変えるにはレビューとマージを通るので、信頼できない人がパターンを直接渡すことは無い。
+    # fork の PR が深く入れ子にしたパターンを置いてスタックを使い切らせても、止まるのはその PR の CI だけである。
+    # この影響は許容する（#147）。
+    - GHSA-vfj7-8cjw-p6xm
+
 # vite は Vite+ core のエイリアス（package.json の `vite` =
 # npm:@voidzero-dev/vite-plus-core@<mise の viteplus と同一版>）。エイリアス先の版は
 # 0.3.1 のような Vite+ の版なので、@vitejs/plugin-react 等が要求する peer 範囲

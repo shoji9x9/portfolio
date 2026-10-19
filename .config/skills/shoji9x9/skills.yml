@@ -227,9 +227,13 @@ skills:
           送り幅は 18 サンプルすべてで実測一致する。ただしサブセットのビルドは別で
           （現行は gasp テーブルを持ち inter-ui は持たない）、weight 600 のラスタライズだけ
           数画素違う（この画素差はここでは吸収されない。下記 pending を参照）
-  # dependabot-alert-issue:
-  #   リポジトリ固有の alert 特別処理（dismiss ルール等）が必要になったらここに記述する。
-  #   現時点では規約は common.conventions_doc に従う。
+  dependabot-alert-issue:
+    # pnpm-workspace.yaml の auditConfig.ignoreGhsas と同じ advisory を、Dependabot alerts でも却下する。
+    # 足すときと外すときは、ignoreGhsas と同じ変更で行う。
+    dismiss:
+      - ghsa: "GHSA-vfj7-8cjw-p6xm"
+        reason: "tolerable_risk"
+        comment: "影響を許容できると判断した理由は、https://github.com/shoji9x9/portfolio/issues/147 と pnpm-workspace.yaml の auditConfig.ignoreGhsas のコメントにある"
 
   browser-test:
     environments:
