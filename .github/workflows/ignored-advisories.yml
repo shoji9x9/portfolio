@@ -46,7 +46,7 @@ jobs:
         run: |
           set -euo pipefail
           # 無視の一覧は、pnpm が実際に読み込んだ値（`pnpm config get audit` の `.ignore`）を正本にする。
-          # 実測（2026-10-19 / pnpm 11.28.4）: auditConfig.ignoreGhsas は `{"ignore": [...]}` として返り、
+          # 実測（2026-10-19 / pnpm 11.28.4・12.12.1）: auditConfig.ignoreGhsas は `{"ignore": [...]}` として返り、
           # キーが無いときは空の出力になる。
           raw="$(pnpm config get audit --json)"
           if [ -z "$raw" ]; then

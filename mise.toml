@@ -7,11 +7,11 @@
 # 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
-node = "26.10.0"
-# pnpm は 12 系へ上げない。12 系では Dependabot の npm 更新が全件失敗する
-# （理由・実測・上げ直す条件は docs/dependency-policy.md「pnpm 12 系を保留している理由」）。
-# 採るのは minimum_release_age（7 日）を満たす範囲での 11 系最新であり、11 系の絶対最新ではない。
-pnpm = "11.28.4"
+node = "26.11.1"
+# pnpm 12 系は Dependabot 側の上流修正を確認して採用した（2026-10-19、Issue #163）。GitHub 上の Dependabot が
+# 12 系で動くことは未確認で、マージ後に npm の「Check for updates」を手動実行して確かめる（失敗したら 11 系へ戻す）。
+# 過去に 2 回見送った経緯と確認手順は docs/dependency-policy.md「pnpm 12 系の採用経緯」。
+pnpm = "12.12.1"
 
 # セキュリティ / lint（シェル・GitHub Actions）
 gitleaks = "8.30.1"
@@ -22,18 +22,18 @@ shfmt = "3.14.1"
 shellcheck = "0.11.0"
 
 # Cloudflare CLI
-wrangler = { version = "4.147.0", allow_builds = ["esbuild", "sharp", "workerd"] }
+wrangler = { version = "4.149.0", allow_builds = ["esbuild", "sharp", "workerd"] }
 
 # vite+（vite / vitest / oxlint / oxfmt などを内包）。
 # 0.3.1 以降、vp dev / build / preview は node_modules/vite が
 # @voidzero-dev/vite-plus-core@<ここと同一版> であることを厳密一致で要求する。
 # package.json の `vite` はそのエイリアスなので、ここを上げたら同じコミットで同じ版へ揃える
 # （理由・実測は docs/dependency-policy.md「vite は Vite+ core のエイリアスで管理する」）。
-viteplus = "1.0.0"
+viteplus = "1.1.0"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。
-"npm:typescript-language-server" = "6.0.1"
+"npm:typescript-language-server" = "6.0.2"
 
 [settings]
 # サプライチェーン対策: 公開直後の新しすぎるリリースを採用しない（悪意あるリリースの取り下げ猶予）。
