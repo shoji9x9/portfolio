@@ -1,0 +1,132 @@
+name: Ignored advisories
+
+# pnpm-workspace.yaml の auditConfig.ignoreGhsas で無視している advisory を毎週見直し、
+# 外す条件（修正版の公開・advisory の取り下げ）を満たしたものを固定タイトルの Issue に
+# 集約通知する。無視した advisory は pnpm audit にも dependabot-alert-issue にも出なくなるため、
+# ここが外す時期を知らせる唯一の経路になる（方針は docs/dependency-policy.md
+# 「修正版が出ない advisory を無視するとき」）。外す作業そのものは人が行う。
+on:
+  schedule:
+    # 毎週月曜 00:00 UTC（outdated.yml と同じ）。
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ignored-advisories-${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check ignored advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      # 固定タイトル Issue の作成・更新・クローズに必要（ラベル作成も含む）。
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # pnpm を用意する（mise.toml を読み込む）。無視の一覧は pnpm 自身に読ませる。
+      - name: Set up mise tools
+        uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        with:
+          cache: true
+
+      - name: Compute advisories to review
+        id: review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # 無視の一覧は、pnpm が実際に読み込んだ値（`pnpm config get audit` の `.ignore`）を正本にする。
+          # 実測（2026-10-19 / pnpm 11.28.4）: auditConfig.ignoreGhsas は `{"ignore": [...]}` として返り、
+          # キーが無いときは空の出力になる。
+          raw="$(pnpm config get audit --json)"
+          if [ -z "$raw" ]; then
+            ids='[]'
+          else
+            ids="$(printf '%s' "$raw" | jq -ce '.ignore // [] | if type == "array" and all(type == "string") then . else error("audit.ignore is not an array of strings") end')"
+          fi
+
+          # pnpm の設定キーの名前や形が変わると、上は無言で空になり「見直すものは無い」と誤判定する。
+          # ファイルに書かれた GHSA の数と突き合わせ、食い違えば失敗させる（誤クローズより赤い方が安全）。
+          declared="$(grep -cE '^[[:space:]]*-[[:space:]]*"?GHSA-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}"?[[:space:]]*$' pnpm-workspace.yaml || true)"
+          loaded="$(printf '%s' "$ids" | jq 'length')"
+          if [ "$loaded" -ne "$declared" ]; then
+            echo "::error::pnpm が読んだ無視の一覧（${loaded} 件）と pnpm-workspace.yaml の記載（${declared} 件）が一致しません。"
+            exit 1
+          fi
+          echo "Checking ${loaded} ignored advisories: $(printf '%s' "$ids" | jq -r 'join(", ")')"
+
+          # 各 advisory を GitHub Advisory Database で引き、修正版の公開または取り下げを検出する。
+          # API の失敗は set -e でジョブを失敗させる（未確認を「変化なし」に丸めない）。
+          rows='[]'
+          for id in $(printf '%s' "$ids" | jq -r '.[]'); do
+            advisory="$(gh api "/advisories/${id}")"
+            row="$(printf '%s' "$advisory" | jq -c --arg id "$id" '{
+              id: $id,
+              withdrawn: .withdrawn_at,
+              patched: [.vulnerabilities[] | select(.first_patched_version != null)
+                | "\(.package.name)@\(.first_patched_version)"]
+            }')"
+            echo "$row"
+            rows="$(jq -c --argjson r "$row" '. + [$r]' <<< "$rows")"
+          done
+
+          due="$(jq -c 'map(select(.withdrawn != null or (.patched | length) > 0))' <<< "$rows")"
+          count="$(jq 'length' <<< "$due")"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "\`pnpm-workspace.yaml\` の \`auditConfig.ignoreGhsas\` で無視している advisory のうち、外す条件を満たしたものがあります。"
+            echo "この Issue は \`Ignored advisories\` ワークフローが自動生成・更新します。"
+            echo
+            echo "| advisory | 修正版 | 取り下げ |"
+            echo "| --- | --- | --- |"
+            jq -r '.[] | "| [\(.id)](https://github.com/advisories/\(.id)) | \(if (.patched | length) > 0 then (.patched | join(", ")) else "なし" end) | \(.withdrawn // "なし") |"' <<< "$due"
+            echo
+            echo "修正版が依存経路から到達できるかを確かめて更新し、\`ignoreGhsas\` から外します。"
+            echo "同じ GHSA を \`.config/skills/shoji9x9/skills.yml\` の \`dependabot-alert-issue.dismiss\` と"
+            echo "\`docs/dependency-policy.md\` の一覧からも同じ変更で外します。"
+          } > issue-body.md
+
+      # 固定タイトルの open Issue を検索し、状況に応じて作成 / 更新 / クローズする（冪等）。
+      - name: Create, update or close issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COUNT: ${{ steps.review.outputs.count }}
+        run: |
+          set -euo pipefail
+          title="Ignored audit advisories to review"
+
+          number="$(gh issue list --state open --limit 100 \
+            --json number,title \
+            --jq "map(select(.title == \"$title\")) | (.[0].number // empty)")"
+
+          if [ "${COUNT:-0}" -gt 0 ]; then
+            gh label create dependencies --color 0366d6 \
+              --description "Dependency updates" 2>/dev/null || true
+            if [ -n "$number" ]; then
+              echo "Updating existing issue #$number"
+              gh issue edit "$number" --body-file issue-body.md
+            else
+              echo "Creating new issue"
+              gh issue create --title "$title" \
+                --body-file issue-body.md --label dependencies
+            fi
+          else
+            if [ -n "$number" ]; then
+              echo "No ignored advisory is due for review; closing issue #$number"
+              gh issue close "$number" \
+                --comment "外す条件を満たした無視中の advisory はありません。自動クローズします。"
+            else
+              echo "No ignored advisory is due for review and no open issue; nothing to do."
+            fi
+          fi

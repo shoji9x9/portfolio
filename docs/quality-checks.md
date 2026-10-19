@@ -46,6 +46,8 @@
 - `actions-lint.yml`: `actionlint` + `ghalint` + `pinact --check`（`.github/workflows/**` 変更時）。
 - `outdated.yml`: 週次で `mise outdated` を検出し Issue で通知。minor/patch とメジャーを節に分けて両方通知する
   （メジャーを落とすと Dependabot だけがメジャー PR を出す非対称な状態になり、対で上げるべき依存の片側しか届かない）。
+- `ignored-advisories.yml`: 週次で `pnpm-workspace.yaml` の `auditConfig.ignoreGhsas` の各 advisory を GitHub Advisory Database で引き、
+  修正版の公開または取り下げを Issue で通知する。pnpm が読んだ一覧とファイルの記載数が食い違うか、API が失敗したらジョブを失敗させる。
 - `dependency-review.yml`: 依存マニフェスト変更 PR の既知脆弱性・拒否ライセンスを検査する。拒否ライセンスは `.github/license-policy.json` を正本としてローカル検査と共有する。
 - `dependabot-automerge.yml`: 対象の Dependabot PR が CI と Dependency Review を通過した場合だけ merge commit で自動マージする。
 
