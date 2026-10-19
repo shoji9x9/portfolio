@@ -103,3 +103,13 @@ fail closed へ倒れることを疑う。ゲート・チェックが毎回同�
   （grep 件数 0）。KEDB 照合もこのファイル 1 件に一致した。
 - 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が未実施で、
   commit のたびに同じ停止が起きる（初回から数えて 4 回目の発生）。
+
+## 再発（2026-10-19、Issue #147 の commit）
+
+- 同じ `unsupported or malformed record` で fail closed した。transcript の型集計で
+  未知の型は `atis-latch` 22 件に加え、`api-request` / `api-request-blob` /
+  `api-request-shape` が新たに出ている（いずれも `kaizen-candidate-scan.sh` の grep 0 件）。
+- 手元の kaizen は v1.36.4 のまま（`kaizen-candidate-scan.sh` の `atis-latch` は grep 0 件）、
+  上流の最新は v1.137.0。
+- 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が
+  未実施で、commit のたびに同じ停止が起きる（初回から数えて 5 回目の発生）。

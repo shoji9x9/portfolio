@@ -235,4 +235,28 @@ peerDependencyRules:
 | fast-uri（#55） | ゲート有効・cutoff 前                        | `pnpm update fast-uri --depth Infinity --lockfile-only`      | `3.1.4` 据え置き（無言） |
 | fast-uri（#55） | ゲート有効・cutoff 後                        | `pnpm update fast-uri --depth Infinity --lockfile-only`      | `3.1.4` → `3.1.5` 到達   |
 
+## 修正版が出ない advisory を無視するとき
+
+この節の取り決めは、`pnpm audit` と Dependabot alerts のどちらで脆弱性を確かめるかに関わらず守る。
+
+- 修正版が出る見込みが無く、このリポジトリーでは影響を許容できる advisory は、`pnpm-workspace.yaml` の
+  `auditConfig.ignoreGhsas` に足して `pnpm audit` に報告させない。
+- 足すときは、影響を許容できる理由と、判断を記録した Issue をコメントに書く。修正版が公開されたときと、
+  どの依存もそのパッケージを使わなくなったときに外す。
+- 足した advisory は `pnpm audit` の一覧に出なくなり（末尾の `ignored` 件数にだけ数えられる）、`dependabot-alert-issue` も Issue を作らない。
+  外す時期は `ignored-advisories.yml` が毎週月曜に知らせる。修正版の公開か advisory の取り下げを検出すると、
+  固定タイトルの Issue「Ignored audit advisories to review」を作成・更新する。通知を受けたら、修正版が依存経路から
+  到達できるかを確かめて外す。「どの依存もそのパッケージを使わなくなった」はこのワークフローでは検出しないので、
+  依存を外す変更のときに `pnpm why <パッケージ>` で確かめる。
+- Dependabot alerts は `ignoreGhsas` を読まないので、同じ advisory を `.config/skills/shoji9x9/skills.yml` の
+  `dependabot-alert-issue.dismiss` にも `ghsa` で置く。足すときと外すときは、`ignoreGhsas` と同じ変更で行う。
+  `dismiss` から外しても、GitHub で却下した alert は open に戻らない。外すときは、却下した alert を GitHub で再び開く。
+- `pnpm.overrides` による強制解決や、フォークへの差し替えは品質が保証されないため採らない。
+
+現在無視している advisory は次のとおり。
+
+| advisory                                                                 | パッケージ | 判断した Issue | 無視する理由（要約）                                                                                                    |
+| ------------------------------------------------------------------------ | ---------- | -------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) | `braces`   | #147           | 上流がパッチを出さないと表明。devDependencies の markdownlint-cli2 だけが使い、渡すパターンは自前の設定とファイル名だけ |
+
 根拠は [AGENTS.md](../AGENTS.md) の「サプライチェーン対策」と、[pnpm-workspace.yaml](../pnpm-workspace.yaml)、[ライセンス方針](../.github/license-policy.json) である。
