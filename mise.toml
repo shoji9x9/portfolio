@@ -29,7 +29,7 @@ wrangler = { version = "4.149.0", allow_builds = ["esbuild", "sharp", "workerd"]
 # @voidzero-dev/vite-plus-core@<ここと同一版> であることを厳密一致で要求する。
 # package.json の `vite` はそのエイリアスなので、ここを上げたら同じコミットで同じ版へ揃える
 # （理由・実測は docs/dependency-policy.md「vite は Vite+ core のエイリアスで管理する」）。
-viteplus = "1.0.0"
+viteplus = "1.1.0"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。

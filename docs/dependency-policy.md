@@ -112,7 +112,7 @@ Dependabot にこの修正が反映されたかで、これは手元では確か
 `viteplus` と完全一致させる（範囲指定にしない）。
 
 ```json
-"vite": "npm:@voidzero-dev/vite-plus-core@1.0.0"
+"vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
 ```
 
 ### なぜ必要か
