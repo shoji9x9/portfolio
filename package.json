@@ -55,7 +55,7 @@
     "lefthook": "^2.2.1",
     "markdownlint-cli2": "^0.23.3",
     "oxlint-tailwindcss": "^1.16.0",
-    "pixelmatch": "^7.2.0",
+    "pixelmatch": "^8.0.0",
     "playwright": "^1.64.0",
     "pngjs": "^7.0.0",
     "react-doctor": "^0.9.17",
