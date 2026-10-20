@@ -21,12 +21,13 @@ pnpm 本体は `mise.toml` の `minimum_release_age`（7 日）を満たす 12 �
 （`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。12 系は 2 回、
 **Dependabot の npm 更新 PR が作られなくなる**ために見送った。経緯は次のとおり。
 
-| 日付       | 出来事                                                                                          |
-| ---------- | ----------------------------------------------------------------------------------------------- |
-| 2026-09-07 | 12.1.0 を見送り 11 系に留めた（Issue #98）。Dependabot がネイティブバイナリを取得できず失敗する |
-| 2026-09-19 | 上流の対応を受けて 12.4.1 を採用した（Issue #105）が、Dependabot が別の理由で全件失敗した       |
-| 2026-09-19 | 11.26.0 へ戻した（Issue #109）                                                                  |
-| 2026-10-19 | 2 回目の失敗の上流修正を確認し、12.12.1 を採用した（Issue #163）                                |
+| 日付       | 出来事                                                                                             |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| 2026-09-07 | 12.1.0 を見送り 11 系に留めた（Issue #98）。Dependabot がネイティブバイナリを取得できず失敗する    |
+| 2026-09-19 | 上流の対応を受けて 12.4.1 を採用した（Issue #105）が、Dependabot が別の理由で全件失敗した          |
+| 2026-09-19 | 11.26.0 へ戻した（Issue #109）                                                                     |
+| 2026-10-19 | 2 回目の失敗の上流修正を確認し、12.12.1 を採用した（Issue #163）                                   |
+| 2026-10-19 | マージ後の Dependabot 実ジョブで 12.12.1 の更新が成功し、PR が作られることを確認した（Issue #167） |
 
 ### 1 回目の失敗: ネイティブバイナリを取得できない（2026-09-07、解消済み）
 
@@ -102,19 +103,54 @@ ERR_PNPM_STRICT_MIN_RELEASE_AGE_REQUIRES_SAVE
    ただし挙動は 11.28.4 でも 12.12.1 でも同じだった。#16376 以降は 11 系でも strict を外して実行されるので、
    これは 12 系に固有の弱まりではなく、11 系に留めても防げない。直接依存の更新先は Dependabot の `cooldown`（`default-days: 7`）が待機させる。
    transitive 依存がこの経路で公開 7 日未満の版に解決されるかは測っていない（11 系・12 系とも同じ未確認）。
-2. **GitHub の Dependabot に修正が反映されたか**: 手元では確かめられず、未確認のまま。2026-10-19 に
+2. **GitHub の Dependabot に修正が反映されたか**: マージ前は手元で確かめられなかった。2026-10-19 に
    Dependabot が npm の更新 PR を 6 件作った（#157〜#162）ことは反映の証拠にならない。Dependabot が
    `cooldown` で選ぶ公開 7 日以上の版は、上の表のとおり strict 既定のままでも 11.28.4 で成功するため。
    ただし同じ表で、12.4.1 で全件失敗した「公開 7 日以上の版への strict 既定の更新」が 12.12.1 では成功した。
    2 回目の失敗の条件は、Dependabot 側の修正の反映を問わず手元の 12.12.1 では再現しない。
-   GitHub 上の 12 系での動作は下の手順で確かめる。
+   GitHub 上での反映は、マージ後の実ジョブで確認した（次項）。
 
-**マージ後の確認**: main へのマージ後に npm の「Check for updates」を手動実行し、ジョブログに
-`HelperSubprocessFailed` や `ERR_PNPM_*` が出ないこと、更新候補があれば PR が作られることを確かめる。
-失敗したら 11 系の最新（`minimum_release_age` を満たすもの）へ戻し、この節へ観測したログを追記する。
+#### マージ後の確認（2026-10-19、Issue #167）
+
+PR #165 のマージ後に npm の「Check for updates」を手動実行した
+（[run 39254446356](https://github.com/shoji9x9/portfolio/actions/runs/39254446356)、main は 12.12.1）。
+ジョブは success で、ログから次を確認した。
+
+- `corepack install pnpm@12.12.1 --global --cache-only` が exit 0。1 回目の失敗（ネイティブバイナリを
+  取得できない）は起きていない
+- 更新コマンドは `pnpm update <pkg>@<ver> --lockfile-only --no-save -r --config.minimum-release-age-strict=false
+  --config.trust-lockfile=true` の形で実行され、いずれも exit 0。**#16376 が GitHub 上で動いている**
+- ログに `HelperSubprocessFailed` も `ERR_PNPM_*` も無い。`Filtered out N versions due to cooldown` が出ており、
+  `cooldown` による除外が働いている
+- 更新 PR #166（vitest グループ 5.0.3 → 5.0.4。5.0.4 は 2026-10-12 公開）が作られた
+
+なお、11.28.4 だった同日朝の実ジョブ（run 39179477718）の更新コマンドにも
+`--config.minimum-release-age-strict=false` が付いていた。#16376 は 12 系へ切り替える前から GitHub 上に
+反映されていたことになる。
+
+同じジョブで、更新の判断前に `pnpm --filter . peers check` が exit 1 で終わっていた。ジョブを止める失敗では
+なく、直後の更新処理と PR 作成は進んでいる。経緯は次のとおり（dependabot-core の
+`update_checker/version_resolver.rb` と、同じ操作の手元での再現による）。
+
+- Dependabot は更新先の peer 依存の整合を確かめるため、依存を 1 つずつ `pnpm update <dep>@<ver> --lockfile-only`
+  で試す。出力に `Run "pnpm peers check" to list them.` が含まれると、続けて `pnpm --filter . peers check` を実行する
+- 今回は vitest グループのうち `@vitest/coverage-v8` だけを 5.0.4 にした段階で、peer の版が一時的に食い違った
+  （coverage-v8 5.0.4 は vitest 5.0.4 を、vitest 5.0.3 は coverage-v8 5.0.3 を要求する）。グループの PR では
+  両方を同時に上げるため、最終的な lockfile では解消している
+- PR #165 マージ直後の main（8265b53）を一時ディレクトリーへ複製して同じ 2 コマンドを流すと、12.12.1 で同じ WARN と
+  `peers check` の exit 1（unmet peer 2 件）が再現した。マージ前の main（07418e7）を 11.28.4 で流しても同じ結果に
+  なり、**12 系に固有の挙動ではない**。11 系の朝のジョブ（2026-10-19T00:09Z 開始）で実行されなかったのは、
+  5.0.4（2026-10-12T09:47Z 公開）が公開 7 日に満たず、vitest グループが `cooldown` で更新対象から外れていたため
+- Dependabot がこの exit 1 をどう扱って更新を続けたかは、ログに終了コードしか出ないため確かめていない
+
+この確認で、上の 2 点のうち GitHub 上の Dependabot への反映（2 点目）は確認済みになった。1 点目のうち transitive
+依存の扱いは引き続き測っていない（11 系・12 系とも同じ）。今後 Dependabot の npm 更新が失敗した場合は、11 系の
+最新（`minimum_release_age` を満たすもの）へ戻すかを判断し、この節へ観測したログを追記する。
 
 `mise outdated` ワークフローは方針を読まないので、pnpm のメジャー更新（13 系など）も他のツールと同じく
 Issue に出す。採否の判断は上の経緯を踏まえ、Dependabot の対応状況を一次情報で確かめてから行う。
+採用した場合は、マージ後に上の「マージ後の確認」と同じく npm の「Check for updates」を手動実行し、
+実ジョブのログで更新コマンドの終了コードと PR 作成を確かめる。
 
 ## vite は Vite+ core のエイリアスで管理する
 
