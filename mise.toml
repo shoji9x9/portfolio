@@ -7,7 +7,9 @@
 # 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
-node = "26.11.1"
+# 26.12.1 はセキュリティ修正のため、minimum_release_age（7 日）を経る前に例外として採用した（2026-10-22、Issue #169）。
+# 記録は docs/dependency-policy.md「リリース年齢ゲートの例外採用」。次に node を上げるときはこの 2 行を消す（記録は docs 側に残る）。
+node = "26.12.1"
 # pnpm 12 系は Dependabot 側の上流修正を確認して採用した（2026-10-19、Issue #163）。GitHub 上の Dependabot が
 # 12 系で更新 PR を作れることは、マージ後の実ジョブで確認済み（Issue #167）。
 # 過去に 2 回見送った経緯と確認結果は docs/dependency-policy.md「pnpm 12 系の採用経緯」。

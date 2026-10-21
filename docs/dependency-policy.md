@@ -11,7 +11,7 @@
 ## 導入と継続的な検査
 
 - JavaScript 依存は pnpm だけで管理し、lockfile を更新する。`pnpm-workspace.yaml` の `minimumReleaseAge: 10080` と build script の許可リストを維持し、例外で緩めない。
-- mise 管理の CLI は `mise.toml` の `minimum_release_age` に従う。
+- mise 管理の CLI は `mise.toml` の `minimum_release_age` に従う。緊急のセキュリティ修正だけは例外とし、扱いは「リリース年齢ゲートの例外採用」に従う。
 - CI の Dependency Review、ライセンス検査、Dependabot による更新を維持する。AGPL 等のリスクがあるライセンスは許可しない。
 - 依存更新であっても、更新内容とライセンスを確認し、通常の品質チェックを通す。
 
@@ -255,6 +255,33 @@ peerDependencyRules:
   audit signatures / license:check がすべて通る。
 - **`overrides` による `vite` の強制解決**: 上流の migrate は書き込むが、`pnpm why vite` が core 1 版
   のみを示し上流 vite を持ち込む依存が無いため不要。lockstep させる箇所を増やさない。
+
+## リリース年齢ゲートの例外採用
+
+緊急のセキュリティ修正に限り、公開から 7 日を経ていない版を個別に採用することがある。
+例外はその版 1 回だけに限る。`minimum_release_age` / `minimumReleaseAge` の設定値は変えず、採用した事実をこの節の表に残す。
+
+mise の `minimum_release_age` が効くのは、曖昧指定（`node@26` や `latest`）を解決するときと、更新候補を探すときである。
+`mise.toml` に完全なバージョンを書いた場合、ゲートが有効なままでも `mise install` はその版を導入する。
+そのため、例外採用のときに設定を変えたり上書きしたりする必要はない。
+mise 2026.5.16 linux-x64・`minimum_release_age = "7 days"`・2026-10-22（v26.12.1 の公開翌日）の条件で、次のとおり実測した。
+
+| 操作                                               | 結果                                                       |
+| -------------------------------------------------- | ---------------------------------------------------------- |
+| `mise latest node@26`                              | `26.12.0`（公開 1 日の `26.12.1` を除外）                  |
+| `MISE_MINIMUM_RELEASE_AGE=0d mise latest node@26`  | `26.12.1`                                                  |
+| `node = "26.12.1"` に書き換えて `mise install`     | 成功（`node --version` が `v26.12.1`、`mise.lock` も追従） |
+| `node = "26.11.1"` の状態で `mise outdated --bump` | 更新候補は `26.12.0`（`26.12.1` を除外）                   |
+
+CI の mise は mise-action が解決する未固定の最新版なので、完全なバージョンの導入は CI と同じ条件でも確かめた。
+mise 2026.10.17 linux-x64（同日時点の最新）・同じ設定・空の data ディレクトリーで `node = "26.12.1"` の `mise install` は成功し、`node --version` は `v26.12.1` だった。
+mise の版が上がって完全なバージョンにもゲートが効くようになった場合、この手順は CI の `mise install` で失敗する。そのときはこの実測をその版で取り直す。
+
+ゲートを経ずに採用する分、配布物の真正性は手で確かめる。`mise.lock` に入ったチェックサムが公式の `SHASUMS256.txt` と一致するかを照合する。
+
+| ツール | 版        | 採用日     | Issue | 理由                                                                                                                                                                                                |
+| ------ | --------- | ---------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| node   | `26.12.1` | 2026-10-22 | #169  | [2026 年 10 月のセキュリティリリース](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)。High 4 件（RCE 1 件を含む）。linux-x64 のチェックサムが公式と一致することを確認済み |
 
 ## transitive 依存を patched 版へ上げるとき
 
