@@ -273,8 +273,11 @@ mise 2026.5.16 linux-x64・`minimum_release_age = "7 days"`・2026-10-22（v26.1
 | `node = "26.12.1"` に書き換えて `mise install`     | 成功（`node --version` が `v26.12.1`、`mise.lock` も追従） |
 | `node = "26.11.1"` の状態で `mise outdated --bump` | 更新候補は `26.12.0`（`26.12.1` を除外）                   |
 
-CI の mise は mise-action が解決する未固定の最新版なので、完全なバージョンの導入は CI と同じ条件でも確かめた。
-mise 2026.10.17 linux-x64（同日時点の最新）・同じ設定・空の data ディレクトリーで `node = "26.12.1"` の `mise install` は成功し、`node --version` は `v26.12.1` だった。
+CI の mise は手元と版が違う。mise-action が版を固定せずに解決し、mise 本体にも独自の待機期間（24 時間）をかける。
+そのため、完全なバージョンの導入は CI の実ジョブでも確かめた（PR #170、run 39694544633）。
+ログでは `Selected mise 2026.10.15 ... with minimum_release_age=24h` の後に `mise install --locked` が `node@26.12.1` を導入しており、
+続く「Verify mise.lock is up to date」と「Node version parity」も成功した。
+手元では同日時点の最新 mise 2026.10.17 linux-x64（同じ設定・空の data ディレクトリー）でも、`node = "26.12.1"` の `mise install` が成功した。
 mise の版が上がって完全なバージョンにもゲートが効くようになった場合、この手順は CI の `mise install` で失敗する。そのときはこの実測をその版で取り直す。
 
 ゲートを経ずに採用する分、配布物の真正性は手で確かめる。`mise.lock` に入ったチェックサムが公式の `SHASUMS256.txt` と一致するかを照合する。
