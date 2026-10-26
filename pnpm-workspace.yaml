@@ -15,18 +15,13 @@ allowBuilds:
 minimumReleaseAge: 10080
 
 # pnpm audit で報告しない advisory。足すときは理由と Issue を書く。
-# 修正版が公開されたときと、どの依存もそのパッケージを使わなくなったときに外す
+# 修正版が公開されたとき・advisory が取り下げられたときと、どの依存もそのパッケージを使わなくなったときに外す
 # （方針は docs/dependency-policy.md「修正版が出ない advisory を無視するとき」）。
 auditConfig:
-  ignoreGhsas:
-    # braces（devDependencies の markdownlint-cli2 が micromatch 経由で使う）。
-    # 上流のメンテナはパッチを出さないと述べた（github/advisory-database#10132 のコメント）。
-    # このリポジトリーが braces に渡す glob のパターンは、.markdownlint-cli2.mjs の globs / ignores と、
-    # pre-commit（lefthook.yml）で markdownlint-cli2 に渡すステージ済みのファイル名だけである。
-    # 設定ファイルを変えるにはレビューとマージを通るので、信頼できない人がパターンを直接渡すことは無い。
-    # fork の PR が深く入れ子にしたパターンを置いてスタックを使い切らせても、止まるのはその PR の CI だけである。
-    # この影響は許容する（#147）。
-    - GHSA-vfj7-8cjw-p6xm
+  # 現在無視している advisory は無い（GHSA-vfj7-8cjw-p6xm は advisory の取り下げで外した。#147 / #171）。
+  # 足すときは `ignoreGhsas:` の下にブロック形式（`    - GHSA-...`）で書く。ignored-advisories.yml は
+  # この形の行を数えて pnpm が読んだ件数と突き合わせるので、フロー形式（`[GHSA-...]`）だとジョブが失敗する。
+  ignoreGhsas: []
 
 # vite は Vite+ core のエイリアス（package.json の `vite` =
 # npm:@voidzero-dev/vite-plus-core@<mise の viteplus と同一版>）。エイリアス先の版は

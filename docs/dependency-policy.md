@@ -322,17 +322,26 @@ mise の版が上がって完全なバージョンにもゲートが効くよう
 - 足した advisory は `pnpm audit` の一覧に出なくなり（末尾の `ignored` 件数にだけ数えられる）、`dependabot-alert-issue` も Issue を作らない。
   外す時期は `ignored-advisories.yml` が毎週月曜に知らせる。修正版の公開か advisory の取り下げを検出すると、
   固定タイトルの Issue「Ignored audit advisories to review」を作成・更新する。通知を受けたら、修正版が依存経路から
-  到達できるかを確かめて外す。「どの依存もそのパッケージを使わなくなった」はこのワークフローでは検出しないので、
+  到達できるかを確かめて外す。advisory が取り下げられたときは、無視する理由が無くなるので修正版を待たずに外す
+  （実測（2026-10-26 / pnpm 12.12.1・12.14.0）: 取り下げ済みの GHSA-vfj7-8cjw-p6xm は、無視を外しても `pnpm audit` に出ない。#171）。
+  「どの依存もそのパッケージを使わなくなった」はこのワークフローでは検出しないので、
   依存を外す変更のときに `pnpm why <パッケージ>` で確かめる。
 - Dependabot alerts は `ignoreGhsas` を読まないので、同じ advisory を `.config/skills/shoji9x9/skills.yml` の
   `dependabot-alert-issue.dismiss` にも `ghsa` で置く。足すときと外すときは、`ignoreGhsas` と同じ変更で行う。
   `dismiss` から外しても、GitHub で却下した alert は open に戻らない。外すときは、却下した alert を GitHub で再び開く。
+  advisory の取り下げで外すときは、開き直す alert が残っていない（実測（2026-10-26）: GHSA-vfj7-8cjw-p6xm の alert は
+  open / dismissed / auto_dismissed / fixed のどの状態にも無かった。#171）。
 - `pnpm.overrides` による強制解決や、フォークへの差し替えは品質が保証されないため採らない。
 
-現在無視している advisory は次のとおり。
+現在無視している advisory は無い。足したときは、次の形の表で一覧にする。
 
-| advisory                                                                 | パッケージ | 判断した Issue | 無視する理由（要約）                                                                                                    |
-| ------------------------------------------------------------------------ | ---------- | -------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) | `braces`   | #147           | 上流がパッチを出さないと表明。devDependencies の markdownlint-cli2 だけが使い、渡すパターンは自前の設定とファイル名だけ |
+| advisory | パッケージ | 判断した Issue | 無視する理由（要約） |
+| -------- | ---------- | -------------- | -------------------- |
+
+過去に無視して外した advisory は次のとおり。
+
+| advisory                                                                 | パッケージ | 判断した Issue | 外した Issue | 外した理由          |
+| ------------------------------------------------------------------------ | ---------- | -------------- | ------------ | ------------------- |
+| [GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) | `braces`   | #147           | #171         | advisory の取り下げ |
 
 根拠は [AGENTS.md](../AGENTS.md) の「サプライチェーン対策」と、[pnpm-workspace.yaml](../pnpm-workspace.yaml)、[ライセンス方針](../.github/license-policy.json) である。
