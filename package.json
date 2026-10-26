@@ -48,7 +48,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "@vitest/coverage-v8": "^5.0.4",
+    "@vitest/coverage-v8": "^5.0.5",
     "babel-plugin-react-compiler": "^1.0.0",
     "jscpd": "^5.4.1",
     "knip": "^6.41.0",
@@ -63,7 +63,7 @@
     "tsx": "^4.23.15",
     "typescript": "~7.0.0",
     "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0",
-    "vitest": "^5.0.4"
+    "vitest": "^5.0.5"
   },
   "devEngines": {
     "packageManager": {
