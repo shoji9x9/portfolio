@@ -158,7 +158,7 @@ Issue に出す。採否の判断は上の経緯を踏まえ、Dependabot の対
 `viteplus` と完全一致させる（範囲指定にしない）。
 
 ```json
-"vite": "npm:@voidzero-dev/vite-plus-core@1.1.0"
+"vite": "npm:@voidzero-dev/vite-plus-core@1.3.0"
 ```
 
 ### なぜ必要か
