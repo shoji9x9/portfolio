@@ -48,6 +48,7 @@ jobs:
           # 無視の一覧は、pnpm が実際に読み込んだ値（`pnpm config get audit` の `.ignore`）を正本にする。
           # 実測（2026-10-19 / pnpm 11.28.4・12.12.1）: auditConfig.ignoreGhsas は `{"ignore": [...]}` として返り、
           # キーが無いときは空の出力になる。
+          # 実測（2026-10-26 / pnpm 12.12.1・12.14.0）: `ignoreGhsas: []` のときは `null` が返り、下の `.ignore // []` で空になる。
           raw="$(pnpm config get audit --json)"
           if [ -z "$raw" ]; then
             ids='[]'
@@ -92,7 +93,8 @@ jobs:
             echo "| --- | --- | --- |"
             jq -r '.[] | "| [\(.id)](https://github.com/advisories/\(.id)) | \(if (.patched | length) > 0 then (.patched | join(", ")) else "なし" end) | \(.withdrawn // "なし") |"' <<< "$due"
             echo
-            echo "修正版が依存経路から到達できるかを確かめて更新し、\`ignoreGhsas\` から外します。"
+            echo "修正版があるものは、修正版が依存経路から到達できるかを確かめて更新し、\`ignoreGhsas\` から外します。"
+            echo "取り下げられたものは、無視する理由が無くなったので、修正版を待たずに \`ignoreGhsas\` から外します。"
             echo "同じ GHSA を \`.config/skills/shoji9x9/skills.yml\` の \`dependabot-alert-issue.dismiss\` と"
             echo "\`docs/dependency-policy.md\` の一覧からも同じ変更で外します。"
           } > issue-body.md
