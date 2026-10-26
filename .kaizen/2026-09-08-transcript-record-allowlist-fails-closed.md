@@ -113,3 +113,14 @@ fail closed へ倒れることを疑う。ゲート・チェックが毎回同�
   上流の最新は v1.137.0。
 - 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が
   未実施で、commit のたびに同じ停止が起きる（初回から数えて 5 回目の発生）。
+
+## 再発（2026-10-26、Issue #180 の commit）
+
+- 同じ `unsupported or malformed record` で fail closed した。transcript の型集計で
+  未知の型は `atis-latch` 19 件・`api-request` 33 件・`api-request-blob` 56 件・
+  `api-request-shape` 1 件（いずれも `kaizen-candidate-scan.sh` の grep 0 件）。
+- 同時に出た `user correction: transcript line 8` は、スキル起動時に注入された
+  SKILL.md 本文（dependabot-alert-issue、`type: "user"` レコード）で、ユーザー発話ではない。
+- 手元の kaizen は v1.36.4 のまま、上流の最新は v1.146.0。
+- 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が
+  未実施で、commit のたびに同じ停止が起きる（初回から数えて 6 回目の発生）。
