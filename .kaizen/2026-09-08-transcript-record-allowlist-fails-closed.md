@@ -124,3 +124,15 @@ fail closed へ倒れることを疑う。ゲート・チェックが毎回同�
 - 手元の kaizen は v1.36.4 のまま、上流の最新は v1.146.0。
 - 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が
   未実施で、commit のたびに同じ停止が起きる（初回から数えて 6 回目の発生）。
+
+## 再発（2026-10-29、Issue #181 の commit）
+
+- 同じ `unsupported or malformed record` で fail closed した。transcript の型集計で
+  未知の型は `atis-latch` 10 件・`api-request` 17 件・`api-request-blob` 18 件・
+  `api-request-shape` 1 件・`tools-used` 2 件（いずれも `kaizen-candidate-scan.sh` の
+  grep 0 件）。`tools-used` は今回初めて出た型。
+- 同時に出た `tool error: transcript line 141` は、このゲート自身のブロック出力
+  （PreToolUse hook error）で、作業上のエラーではない。
+- 手元の kaizen は v1.36.4 のまま、上流の最新は v1.147.7。
+- 根本原因は 2026-09-19 の更新から変わらない。上流修正の取り込み（`gh skill update`）が
+  未実施で、commit のたびに同じ停止が起きる（初回から数えて 7 回目の発生）。
