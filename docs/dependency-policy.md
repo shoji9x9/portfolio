@@ -158,7 +158,7 @@ Issue に出す。採否の判断は上の経緯を踏まえ、Dependabot の対
 `viteplus` と完全一致させる（範囲指定にしない）。
 
 ```json
-"vite": "npm:@voidzero-dev/vite-plus-core@1.3.0"
+"vite": "npm:@voidzero-dev/vite-plus-core@1.4.0"
 ```
 
 ### なぜ必要か
@@ -323,7 +323,7 @@ mise の版が上がって完全なバージョンにもゲートが効くよう
   外す時期は `ignored-advisories.yml` が毎週月曜に知らせる。修正版の公開か advisory の取り下げを検出すると、
   固定タイトルの Issue「Ignored audit advisories to review」を作成・更新する。通知を受けたら、修正版が依存経路から
   到達できるかを確かめて外す。advisory が取り下げられたときは、無視する理由が無くなるので修正版を待たずに外す
-  （実測（2026-10-26 / pnpm 12.12.1・12.14.0）: 取り下げ済みの GHSA-vfj7-8cjw-p6xm は、無視を外しても `pnpm audit` に出ない。#171）。
+  （実測（2026-10-26 / pnpm 12.12.1・12.14.0、2026-11-02 / pnpm 12.15.0）: 取り下げ済みの GHSA-vfj7-8cjw-p6xm は、無視を外しても `pnpm audit` に出ない。#171）。
   「どの依存もそのパッケージを使わなくなった」はこのワークフローでは検出しないので、
   依存を外す変更のときに `pnpm why <パッケージ>` で確かめる。
 - Dependabot alerts は `ignoreGhsas` を読まないので、同じ advisory を `.config/skills/shoji9x9/skills.yml` の
