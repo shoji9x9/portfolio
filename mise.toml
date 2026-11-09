@@ -7,24 +7,25 @@
 # 対象プラットフォームを増やすときは `mise lock --platform <plat>` で採取する。
 [tools]
 # ランタイム / パッケージマネージャ
-# 26.12.1 はセキュリティ修正のため、minimum_release_age（7 日）を経る前に例外として採用した（2026-10-22、Issue #169）。
-# 記録は docs/dependency-policy.md「リリース年齢ゲートの例外採用」。次に node を上げるときはこの 2 行を消す（記録は docs 側に残る）。
-node = "26.12.1"
+node = "26.13.0"
 # pnpm 12 系は Dependabot 側の上流修正を確認して採用した（2026-10-19、Issue #163）。GitHub 上の Dependabot が
 # 12 系で更新 PR を作れることは、マージ後の実ジョブで確認済み（Issue #167）。
 # 過去に 2 回見送った経緯と確認結果は docs/dependency-policy.md「pnpm 12 系の採用経緯」。
-pnpm = "12.15.0"
+pnpm = "12.17.0"
 
 # セキュリティ / lint（シェル・GitHub Actions）
 gitleaks = "8.30.1"
 actionlint = "1.7.12"
-ghalint = "1.5.6"
+# 1.6.0 で mise.lock の provenance 記録が slsa から cosign に変わった。mise はこれを格下げとして拒否するため、
+# エントリーを消して作り直した（2026-11-09、Issue #200。経緯は docs/dependency-policy.md
+# 「mise.lock の provenance 種別が下がる更新を受け入れるとき」）。
+ghalint = "1.6.0"
 pinact = "5.0.2"
 shfmt = "3.14.1"
 shellcheck = "0.11.0"
 
 # Cloudflare CLI
-wrangler = { version = "4.152.0", allow_builds = ["esbuild", "sharp", "workerd"] }
+wrangler = { version = "4.156.1", allow_builds = ["esbuild", "sharp", "workerd"] }
 
 # vite+（vite / vitest / oxlint / oxfmt などを内包）。
 # 0.3.1 以降、vp dev / build / preview は node_modules/vite が
