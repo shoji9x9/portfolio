@@ -51,6 +51,8 @@ jobs:
           # 実測（2026-10-26 / pnpm 12.12.1・12.14.0）: `ignoreGhsas: []` のときは `null` が返り、下の `.ignore // []` で空になる。
           # 実測（2026-11-02 / pnpm 12.15.0）: `{"ignore": [...]}` と `ignoreGhsas: []` の `null` は同じ。キーが無いときは
           # 空の出力ではなく `null` が返る（下の `.ignore // []` で空になるため判定は変わらない）。
+          # 実測（2026-11-09 / pnpm 12.17.0）: 12.15.0 と同じ（`ignoreGhsas` を書いたときは `{"ignore": [...]}`、
+          # `ignoreGhsas: []`・`ignoreGhsas` が無いとき・`auditConfig` ごと無いときは `null`）。
           raw="$(pnpm config get audit --json)"
           if [ -z "$raw" ]; then
             ids='[]'
