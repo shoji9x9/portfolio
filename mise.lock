@@ -78,7 +78,7 @@ version = "1.4.0"
 backend = "npm:vite-plus"
 
 [[tools.wrangler]]
-version = "4.152.0"
+version = "4.156.1"
 backend = "npm:wrangler"
 
 [tools.wrangler.options]
