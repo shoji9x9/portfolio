@@ -286,6 +286,26 @@ mise の版が上がって完全なバージョンにもゲートが効くよう
 | ------ | --------- | ---------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | node   | `26.12.1` | 2026-10-22 | #169  | [2026 年 10 月のセキュリティリリース](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases)。High 4 件（RCE 1 件を含む）。linux-x64 のチェックサムが公式と一致することを確認済み |
 
+## mise.lock の provenance 種別が下がる更新を受け入れるとき
+
+mise は `mise.lock` に記録した provenance の種別に順位を付け（`minisign < cosign < slsa < github-attestations`）、
+lock を作り直すときに順位が下がると `lockfile generation would downgrade recorded provenance` で拒否する
+（mise v2026.11.4 の `src/lockfile.rs` の `ProvenanceType` と `src/lockfile/generate.rs` の `ensure_no_downgrade`）。
+判定は種別の順位だけで行い、配布元が実際にどの署名を出しているかは見ない。
+
+この拒否は、エントリーを `mise.lock` から消して作り直せば回避できる。回避するのは、配布元の署名の実態を確かめ、
+種別が下がる理由が mise 側の検証設定（aqua-registry の定義など）にあると分かったときに限る。
+回避したら下の表に記録する。
+
+| ツール  | 版            | 採用日     | Issue | 記録の変化    | 理由                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| ------- | ------------- | ---------- | ----- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ghalint | 1.5.6 → 1.6.0 | 2026-11-09 | #200  | slsa → cosign | 上流（go-release-workflow v10）は、保守が終わった slsa-github-generator の `multiple.intoto.jsonl` をやめ、cosign と GitHub Artifact Attestations に移った。1.6.0 の linux_amd64 の tarball には、`suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml` が `refs/tags/v1.6.0` から作った SLSA provenance v1 の attestation が付いている（attestation API で確認）。aqua-registry の ghalint 定義は cosign 検証だけで `github_artifact_attestations` を持たないため（同じワークフローの pinact は持つ）、mise は cosign として記録する |
+
+ghalint の作り直しは、mise 2026.11.4（scratchpad に取得、空の data ディレクトリー）で `mise lock --platform linux-x64 ghalint` を実行して行った。
+cosign の検証が通り、チェックサムは公式の `ghalint_1.6.0_checksums.txt` と一致した。同じ mise で `mise install --locked` を実行しても `mise.lock` は変わらなかった。
+手元の mise 2026.5.16 は、レジストリー定義が古いため lock が無い状態では導入に失敗する（`no asset found: multiple.intoto.jsonl`）。
+一方、記録済みの lock があると、チェックサムの照合だけで導入する（provenance は検証しない）。この場合も `mise.lock` は変わらない。
+
 ## transitive 依存を patched 版へ上げるとき
 
 脆弱性対応で transitive dependency を patched 版へ上げるときは、以下を実行知識の起点にする。
