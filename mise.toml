@@ -36,7 +36,7 @@ viteplus = "1.4.0"
 
 # TypeScript 言語サーバ（エージェントのコード知能用。.github/lsp.json が参照）。
 # プロジェクトのビルド用 TypeScript v7 とは別系統（本パッケージは自前の tsserver を使う）。
-"npm:typescript-language-server" = "6.0.2"
+"npm:typescript-language-server" = "6.0.3"
 
 [settings]
 # サプライチェーン対策: 公開直後の新しすぎるリリースを採用しない（悪意あるリリースの取り下げ猶予）。
