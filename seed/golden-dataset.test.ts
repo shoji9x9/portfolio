@@ -12,21 +12,22 @@ import {
 describe("静的ゴールデンデータセット", () => {
   it("安定 ID、表示順、件数を検証する", () => {
     expect(verifyGoldenDataset()).toEqual({
-      fingerprint: "081947dd",
+      fingerprint: "87018f40",
       counts: {
         profile: 4,
         accountBadges: 5,
-        languageBadges: 7,
-        frameworkBadges: 24,
+        languageBadges: 8,
+        frameworkBadges: 29,
         careers: 2,
         projects: 11,
-        artifacts: 3,
+        artifacts: 4,
         selfPromotion: 4,
         qualificationGroups: 4,
       },
     });
     expect(goldenDataset.artifacts.map((artifact) => artifact.id)).toEqual([
       "portfolio",
+      "recipe-box",
       "qiita-search",
       "memo-app",
     ]);

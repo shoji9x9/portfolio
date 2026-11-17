@@ -48,6 +48,11 @@
       "imageSrc": "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white"
     },
     {
+      "id": "rust",
+      "label": "Rust",
+      "imageSrc": "https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white"
+    },
+    {
       "id": "csharp",
       "label": "CSharp",
       "imageSrc": "https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white"
@@ -85,14 +90,24 @@
       "imageSrc": "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white"
     },
     {
-      "id": "recoil",
-      "label": "Recoil",
-      "imageSrc": "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square"
-    },
-    {
       "id": "nextjs",
       "label": "NextJS",
       "imageSrc": "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white"
+    },
+    {
+      "id": "hono",
+      "label": "Hono",
+      "imageSrc": "https://img.shields.io/badge/Hono-%23E36002.svg?style=for-the-badge&logo=hono&logoColor=white"
+    },
+    {
+      "id": "axum",
+      "label": "Axum",
+      "imageSrc": "https://img.shields.io/badge/Axum-%23000000.svg?style=for-the-badge"
+    },
+    {
+      "id": "htmx",
+      "label": "htmx",
+      "imageSrc": "https://img.shields.io/badge/htmx-%233366CC.svg?style=for-the-badge&logo=htmx&logoColor=white"
     },
     {
       "id": "vite",
@@ -113,6 +128,16 @@
       "id": "storybook",
       "label": "Storybook",
       "imageSrc": "https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white"
+    },
+    {
+      "id": "vitest",
+      "label": "Vitest",
+      "imageSrc": "https://img.shields.io/badge/Vitest-%236E9F18.svg?style=for-the-badge&logo=vitest&logoColor=white"
+    },
+    {
+      "id": "playwright",
+      "label": "Playwright",
+      "imageSrc": "https://img.shields.io/badge/Playwright-%232EAD33.svg?style=for-the-badge"
     },
     {
       "id": "drupal",
@@ -143,6 +168,11 @@
       "id": "mysql",
       "label": "MySQL",
       "imageSrc": "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white"
+    },
+    {
+      "id": "sqlite",
+      "label": "SQLite",
+      "imageSrc": "https://img.shields.io/badge/SQLite-%23003B57.svg?style=for-the-badge&logo=sqlite&logoColor=white"
     },
     {
       "id": "dynamodb",

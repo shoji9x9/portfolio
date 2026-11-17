@@ -25,6 +25,8 @@
             "outsystems",
             "react",
             "oracle",
+            "vitest",
+            "playwright",
             "aws"
           ]
         },
@@ -52,6 +54,7 @@
             "typescript",
             "react",
             "dynamodb",
+            "vitest",
             "aws",
             "openai"
           ]
@@ -82,6 +85,8 @@
             "react",
             "shadcnui",
             "storybook",
+            "vitest",
+            "playwright",
             "aws",
             "figma"
           ]
@@ -111,6 +116,7 @@
             "typescript",
             "nextjs",
             "mysql",
+            "vitest",
             "aws",
             "docker",
             "figma",
@@ -140,6 +146,8 @@
             "typescript",
             "nextjs",
             "postgresql",
+            "vitest",
+            "playwright",
             "aws",
             "docker",
             "figma"

@@ -1,24 +1,24 @@
 # データ設計（design）
 
-- version: 5
+- version: 6
 - mode: `static`（設定の `dataset_mode`。実体はリポジトリ内の静的データ）
 - base_time: 該当なし（時刻に依存する静的データはない）
-- 最終更新: 2026-10-05T16:17:00+09:00
+- 最終更新: 2026-11-17T11:35:00+09:00
 - 現行ソース: なし（version 3 で「現行の再現」から「ポートフォリオの正本」へ役割が変わった。
   version 2 までの出所は `shoji9x9/shoji9x9.github.io` の `b10b54a489fbac94f7bf8beef1a005ffe19ee791`）
 
 ## 対象リソース
 
-| リソース                | features.md の機能 |                  件数 | 生成先                | 安定 ID と表示順                             |
-| ----------------------- | ------------------ | --------------------: | --------------------- | -------------------------------------------- |
-| プロフィール            | `static-page`      |                     4 | `profile.json`        | `occupation` から `education` の順           |
-| アカウントバッジ        | `static-page`      |                     5 | `badges.json`         | 現行オブジェクトの定義順                     |
-| 言語バッジ              | `static-page`      |                     7 | `badges.json`         | 現行オブジェクトの定義順                     |
-| フレームワーク等バッジ  | `static-page`      |                    24 | `badges.json`         | 定義順（新規 10 件は用途の近い位置へ挿入）   |
-| 職務経歴                | `static-page`      | 2 社・11 プロジェクト | `careers.json`        | `freelance`、`toyota` と各社内で開始日の降順 |
-| 製作物                  | `static-page`      |                     3 | `artifacts.json`      | `portfolio`、`qiita-search`、`memo-app`      |
-| 自己 PR・資格・希望条件 | `static-page`      |               4・4・1 | `static-content.json` | ページ内の記述順                             |
-| LAPRAS                  | `lapras`           |                 1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap       |
+| リソース                | features.md の機能 |                  件数 | 生成先                | 安定 ID と表示順                                              |
+| ----------------------- | ------------------ | --------------------: | --------------------- | ------------------------------------------------------------- |
+| プロフィール            | `static-page`      |                     4 | `profile.json`        | `occupation` から `education` の順                            |
+| アカウントバッジ        | `static-page`      |                     5 | `badges.json`         | 現行オブジェクトの定義順                                      |
+| 言語バッジ              | `static-page`      |                     8 | `badges.json`         | 現行オブジェクトの定義順（`rust` は `typescript` の次へ挿入） |
+| フレームワーク等バッジ  | `static-page`      |                    29 | `badges.json`         | 定義順（新規は用途の近い位置へ挿入）                          |
+| 職務経歴                | `static-page`      | 2 社・11 プロジェクト | `careers.json`        | `freelance`、`toyota` と各社内で開始日の降順                  |
+| 製作物                  | `static-page`      |                     4 | `artifacts.json`      | `portfolio`、`recipe-box`、`qiita-search`、`memo-app`         |
+| 自己 PR・資格・希望条件 | `static-page`      |               4・4・1 | `static-content.json` | ページ内の記述順                                              |
+| LAPRAS                  | `lapras`           |                 1 URL | `lapras.json`         | `publicUrl` のみ。プレビュー本文は gap                        |
 
 DB・テーブル・外部キーは存在しない。投入先は `dataset_static_paths`（`seed/data/`）で、`seed/golden-dataset.ts` が
 検証 → 削除 → 生成の順に実行する（検証に落ちる論理データを生成先へ書き出さないため）。生成物はキー順・インデント・末尾改行を固定した JSON で、
@@ -52,6 +52,21 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
 - ID は表示文言ではなく、英小文字・数字・ハイフンだけの固定値にした。
 
 ## 内容更新の履歴
+
+- 2026-11-17（version 5 → 6、Issue #210）: 製作物へ `recipe-box`（レシピ帳）を `portfolio` の次へ追加した
+  （3 → 4 件、記事なし）。技術スタックは Rust・Axum・htmx・JavaScript・TypeScript・SQLite・Vitest・Cloudflare・GitHub Actions。
+  言語バッジ `rust` を `typescript` の次へ追加した（7 → 8 件）。フレームワーク等バッジは、メンテナンスが止まった
+  `recoil` を削除し（`memo-app` の技術スタックからも削除）、`hono`・`axum`・`htmx`（`nextjs` の次）、
+  `vitest`・`playwright`（`storybook` の次）、`sqlite`（`mysql` の次）を追加した（24 → 29 件）。
+  `vitest`・`playwright` は、フリーランスの直近 5 案件（`playwright` は `freelance-outsystems-rewrite`・
+  `freelance-design-system`・`freelance-case-management` の 3 案件だけ）と、使っている製作物（`portfolio` は双方、
+  `recipe-box` は `vitest` だけ。各リポジトリーの依存で確認）の技術スタックへ、職務経歴では `AWS` の直前に追加した。
+  `hono` はどの技術スタックにも付けず、保有スキル欄にだけ表示する。
+  自己 PR は、3 項目目へ直近の経験（TypeScript・AWS・フルスタック・LLM・上流～下流の工程）を新設し、
+  旧 3・4 項目目（コーディングエージェントの取り組みと品質確保の施策）を 1 項目へ統合して 4 項目目にした。
+  「主体的」は「自律的」へ改めた。項目数は 4 のまま。fingerprint は `081947dd` → `87018f40`。
+  現行サイトには存在しない内容なので、そのまま現行との差分になる（設定の `intentional_diffs.may_change`
+  「製作物・バッジの追加と削除（新側のみ）」と「自己 PR の文言修正（新側のみ、Issue #210）」で宣言）。
 
 - 2026-10-05（version 4 → 5、Issue #145）: 職務経歴のフリーランスへ 2026年8月からの案件
   `freelance-outsystems-rewrite`（OutSystemsを利用したアプリケーションのTypeScriptへのリライトPoC）を

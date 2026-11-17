@@ -25,6 +25,8 @@
             "OutSystems",
             "React",
             "Oracle",
+            "Vitest",
+            "Playwright",
             "AWS"
           ]
         },
@@ -52,6 +54,7 @@
             "TypeScript",
             "React",
             "DynamoDB",
+            "Vitest",
             "AWS",
             "OpenAI"
           ]
@@ -82,6 +85,8 @@
             "React",
             "shadcn/ui",
             "Storybook",
+            "Vitest",
+            "Playwright",
             "AWS",
             "Figma"
           ]
@@ -111,6 +116,7 @@
             "TypeScript",
             "NextJS",
             "MySQL",
+            "Vitest",
             "AWS",
             "Docker",
             "Figma",
@@ -140,6 +146,8 @@
             "TypeScript",
             "NextJS",
             "PostgreSQL",
+            "Vitest",
+            "Playwright",
             "AWS",
             "Docker",
             "Figma"
