@@ -61,10 +61,12 @@ DB・テーブル・外部キーは存在しない。投入先は `dataset_stati
   `vitest`・`playwright` は、フリーランスの直近 5 案件（`playwright` は `freelance-outsystems-rewrite`・
   `freelance-design-system`・`freelance-case-management` の 3 案件だけ）と、使っている製作物（`portfolio` は双方、
   `recipe-box` は `vitest` だけ。各リポジトリーの依存で確認）の技術スタックへ、職務経歴では `AWS` の直前に追加した。
-  `hono` はどの技術スタックにも付けず、保有スキル欄にだけ表示する。
+  あわせて、フリーランスの直近 5 案件の技術スタックを本人の申告どおりに補った（Hono・Vite・TailwindCSS・Storybook・
+  Docker・GitHub Actions を追加。フレームワーク類は React / NextJS の後、Docker は AWS の後、GitHub Actions は末尾）。
+  `freelance-design-system` では AWS を使っていなかったため削除した。
   自己 PR は、3 項目目へ直近の経験（TypeScript・AWS・フルスタック・LLM・上流～下流の工程）を新設し、
   旧 3・4 項目目（コーディングエージェントの取り組みと品質確保の施策）を 1 項目へ統合して 4 項目目にした。
-  「主体的」は「自律的」へ改めた。項目数は 4 のまま。fingerprint は `081947dd` → `87018f40`。
+  「主体的」は「自律的」へ改めた。項目数は 4 のまま。fingerprint は `081947dd` → `8f9e04ad`。
   現行サイトには存在しない内容なので、そのまま現行との差分になる（設定の `intentional_diffs.may_change`
   「製作物・バッジの追加と削除（新側のみ）」と「自己 PR の文言修正（新側のみ、Issue #210）」で宣言）。
 

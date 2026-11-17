@@ -12,7 +12,7 @@ import {
 describe("静的ゴールデンデータセット", () => {
   it("安定 ID、表示順、件数を検証する", () => {
     expect(verifyGoldenDataset()).toEqual({
-      fingerprint: "87018f40",
+      fingerprint: "8f9e04ad",
       counts: {
         profile: 4,
         accountBadges: 5,
