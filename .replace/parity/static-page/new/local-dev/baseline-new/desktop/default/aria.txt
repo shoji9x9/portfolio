@@ -107,10 +107,15 @@
       - img "TypeScript"
       - img "OutSystems"
       - img "React"
+      - img "Hono"
+      - img "TailwindCSS"
+      - img "Storybook"
       - img "Oracle"
       - img "Vitest"
       - img "Playwright"
       - img "AWS"
+      - img "Docker"
+      - img "GitHub Actions"
     - article "製薬会社向けIR分析システムの開発":
       - heading "製薬会社向けIR分析システムの開発" [level=4]
       - heading "期間" [level=5]
@@ -126,10 +131,14 @@
       - heading "技術スタック" [level=5]
       - img "TypeScript"
       - img "React"
+      - img "Hono"
+      - img "Vite"
+      - img "TailwindCSS"
       - img "DynamoDB"
       - img "Vitest"
       - img "AWS"
       - img "OpenAI"
+      - img "GitHub Actions"
     - article "デザインシステムの開発、運用":
       - heading "デザインシステムの開発、運用" [level=4]
       - heading "期間" [level=5]
@@ -146,12 +155,14 @@
       - heading "技術スタック" [level=5]
       - img "TypeScript"
       - img "React"
+      - img "Vite"
+      - img "TailwindCSS"
       - img "shadcn/ui"
       - img "Storybook"
       - img "Vitest"
       - img "Playwright"
-      - img "AWS"
       - img "Figma"
+      - img "GitHub Actions"
     - article "商社向け投資判断支援システムの開発、運用":
       - heading "商社向け投資判断支援システムの開発、運用" [level=4]
       - heading "期間" [level=5]
@@ -168,12 +179,15 @@
       - heading "技術スタック" [level=5]
       - img "TypeScript"
       - img "NextJS"
+      - img "Hono"
+      - img "TailwindCSS"
       - img "MySQL"
       - img "Vitest"
       - img "AWS"
       - img "Docker"
       - img "Figma"
       - img "OpenAI"
+      - img "GitHub Actions"
     - article "商社向け案件状況管理システムの開発":
       - heading "商社向け案件状況管理システムの開発" [level=4]
       - heading "期間" [level=5]
@@ -188,12 +202,14 @@
       - heading "技術スタック" [level=5]
       - img "TypeScript"
       - img "NextJS"
+      - img "Storybook"
       - img "PostgreSQL"
       - img "Vitest"
       - img "Playwright"
       - img "AWS"
       - img "Docker"
       - img "Figma"
+      - img "GitHub Actions"
     - article "自動車会社基幹システム（商品販売システム）の再構築":
       - heading "自動車会社基幹システム（商品販売システム）の再構築" [level=4]
       - heading "期間" [level=5]
