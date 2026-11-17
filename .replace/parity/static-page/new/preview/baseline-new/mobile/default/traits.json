@@ -42,7 +42,7 @@
       "x": 0,
       "y": 0,
       "width": 390,
-      "height": 16729.5625
+      "height": 18425.5625
     }
   },
   {
@@ -272,7 +272,7 @@
       "x": 96,
       "y": 657.625,
       "width": 198,
-      "height": 672
+      "height": 984
     }
   },
   {
@@ -362,9 +362,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 1361.625,
+      "y": 1673.625,
       "width": 198,
-      "height": 612
+      "height": 696
     }
   },
   {
@@ -408,7 +408,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 1361.625,
+      "y": 1673.625,
       "width": 198,
       "height": 36
     }
@@ -454,9 +454,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 2005.625,
+      "y": 2401.625,
       "width": 198,
-      "height": 11816
+      "height": 12432
     }
   },
   {
@@ -500,7 +500,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 2005.625,
+      "y": 2401.625,
       "width": 198,
       "height": 36
     }
@@ -546,7 +546,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 13853.625,
+      "y": 14865.625,
       "width": 198,
       "height": 504
     }
@@ -592,7 +592,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 13853.625,
+      "y": 14865.625,
       "width": 198,
       "height": 36
     }
@@ -638,9 +638,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14389.625,
+      "y": 15401.625,
       "width": 198,
-      "height": 1900
+      "height": 2584
     }
   },
   {
@@ -684,7 +684,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14389.625,
+      "y": 15401.625,
       "width": 198,
       "height": 36
     }
@@ -730,7 +730,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 16321.625,
+      "y": 18017.625,
       "width": 198,
       "height": 96
     }
@@ -776,7 +776,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 16321.625,
+      "y": 18017.625,
       "width": 198,
       "height": 36
     }
@@ -1744,7 +1744,7 @@
       "x": 96,
       "y": 1041.625,
       "width": 198,
-      "height": 120
+      "height": 288
     }
   },
   {
@@ -1788,9 +1788,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 1161.625,
+      "y": 1329.625,
       "width": 198,
-      "height": 168
+      "height": 312
     }
   },
   {
@@ -1834,7 +1834,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1409.625,
+      "y": 1721.625,
       "width": 190,
       "height": 32
     }
@@ -1880,7 +1880,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1541.625,
+      "y": 1881.625,
       "width": 190,
       "height": 96
     }
@@ -1926,7 +1926,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1449.625,
+      "y": 1761.625,
       "width": 85,
       "height": 20
     }
@@ -1972,7 +1972,7 @@
     "after": null,
     "rect": {
       "x": 197,
-      "y": 1449.625,
+      "y": 1761.625,
       "width": 67,
       "height": 20
     }
@@ -2018,8 +2018,54 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1477.625,
+      "y": 1789.625,
       "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.language.rust",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 199,
+      "y": 1789.625,
+      "width": 53,
       "height": 20
     }
   },
@@ -2063,8 +2109,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 199,
-      "y": 1477.625,
+      "x": 104,
+      "y": 1817.625,
       "width": 29.640625,
       "height": 20
     }
@@ -2109,8 +2155,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 236.640625,
-      "y": 1477.625,
+      "x": 141.640625,
+      "y": 1817.625,
       "width": 49,
       "height": 20
     }
@@ -2155,8 +2201,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 104,
-      "y": 1505.625,
+      "x": 198.640625,
+      "y": 1817.625,
       "width": 55,
       "height": 20
     }
@@ -2201,8 +2247,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 167,
-      "y": 1505.625,
+      "x": 104,
+      "y": 1845.625,
       "width": 49,
       "height": 20
     }
@@ -2248,7 +2294,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1645.625,
+      "y": 1985.625,
       "width": 77,
       "height": 20
     }
@@ -2294,7 +2340,7 @@
     "after": null,
     "rect": {
       "x": 189,
-      "y": 1645.625,
+      "y": 1985.625,
       "width": 96.0625,
       "height": 20
     }
@@ -2340,54 +2386,8 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1673.625,
+      "y": 2013.625,
       "width": 59,
-      "height": 20
-    }
-  },
-  {
-    "name": "skills.framework.recoil",
-    "computed": {
-      "padding-top": "0px",
-      "padding-right": "0px",
-      "padding-bottom": "0px",
-      "padding-left": "0px",
-      "margin-top": "0px",
-      "margin-right": "8px",
-      "margin-bottom": "0px",
-      "margin-left": "0px",
-      "font-family": "\"Inter var\", \"Inter Fallback\"",
-      "font-size": "16px",
-      "font-weight": "400",
-      "line-height": "24px",
-      "color": "rgb(0, 0, 0)",
-      "background-color": "rgba(0, 0, 0, 0)",
-      "border-top-width": "0px",
-      "border-top-style": "solid",
-      "border-top-color": "rgb(229, 231, 235)",
-      "border-right-width": "0px",
-      "border-right-style": "solid",
-      "border-right-color": "rgb(229, 231, 235)",
-      "border-bottom-width": "0px",
-      "border-bottom-style": "solid",
-      "border-bottom-color": "rgb(229, 231, 235)",
-      "border-left-width": "0px",
-      "border-left-style": "solid",
-      "border-left-color": "rgb(229, 231, 235)",
-      "border-top-left-radius": "0px",
-      "border-top-right-radius": "0px",
-      "border-bottom-right-radius": "0px",
-      "border-bottom-left-radius": "0px",
-      "text-align": "start",
-      "display": "block",
-      "visibility": "visible"
-    },
-    "before": null,
-    "after": null,
-    "rect": {
-      "x": 171,
-      "y": 1673.625,
-      "width": 43,
       "height": 20
     }
   },
@@ -2431,9 +2431,147 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 222,
-      "y": 1673.625,
+      "x": 171,
+      "y": 2013.625,
       "width": 55.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.hono",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 2041.625,
+      "width": 58.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.axum",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 170.5625,
+      "y": 2041.625,
+      "width": 44.28125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.htmx",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 222.84375,
+      "y": 2041.625,
+      "width": 57.84375,
       "height": 20
     }
   },
@@ -2478,7 +2616,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1701.625,
+      "y": 2069.625,
       "width": 53.5625,
       "height": 20
     }
@@ -2524,7 +2662,7 @@
     "after": null,
     "rect": {
       "x": 165.5625,
-      "y": 1701.625,
+      "y": 2069.625,
       "width": 99.09375,
       "height": 20
     }
@@ -2570,7 +2708,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1729.625,
+      "y": 2097.625,
       "width": 87.3125,
       "height": 20
     }
@@ -2616,8 +2754,100 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1757.625,
+      "y": 2125.625,
       "width": 88.75,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 200.75,
+      "y": 2125.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.playwright",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 2153.625,
+      "width": 80.34375,
       "height": 20
     }
   },
@@ -2661,8 +2891,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 200.75,
-      "y": 1757.625,
+      "x": 192.34375,
+      "y": 2153.625,
       "width": 68.921875,
       "height": 20
     }
@@ -2708,7 +2938,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1785.625,
+      "y": 2181.625,
       "width": 77.84375,
       "height": 20
     }
@@ -2754,7 +2984,7 @@
     "after": null,
     "rect": {
       "x": 189.84375,
-      "y": 1785.625,
+      "y": 2181.625,
       "width": 45,
       "height": 20
     }
@@ -2800,7 +3030,7 @@
     "after": null,
     "rect": {
       "x": 242.84375,
-      "y": 1785.625,
+      "y": 2181.625,
       "width": 33,
       "height": 20
     }
@@ -2846,7 +3076,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1813.625,
+      "y": 2209.625,
       "width": 93.203125,
       "height": 20
     }
@@ -2892,8 +3122,54 @@
     "after": null,
     "rect": {
       "x": 205.203125,
-      "y": 1813.625,
+      "y": 2209.625,
       "width": 63.03125,
+      "height": 20
+    }
+  },
+  {
+    "name": "skills.framework.sqlite",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 104,
+      "y": 2237.625,
+      "width": 66.0625,
       "height": 20
     }
   },
@@ -2937,8 +3213,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 104,
-      "y": 1841.625,
+      "x": 178.0625,
+      "y": 2237.625,
       "width": 70.703125,
       "height": 20
     }
@@ -2984,7 +3260,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1869.625,
+      "y": 2265.625,
       "width": 107.671875,
       "height": 20
     }
@@ -3030,7 +3306,7 @@
     "after": null,
     "rect": {
       "x": 219.671875,
-      "y": 1869.625,
+      "y": 2265.625,
       "width": 38.390625,
       "height": 20
     }
@@ -3076,7 +3352,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1897.625,
+      "y": 2293.625,
       "width": 66.78125,
       "height": 20
     }
@@ -3122,7 +3398,7 @@
     "after": null,
     "rect": {
       "x": 178.78125,
-      "y": 1897.625,
+      "y": 2293.625,
       "width": 92.5,
       "height": 20
     }
@@ -3168,7 +3444,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1925.625,
+      "y": 2321.625,
       "width": 69.640625,
       "height": 20
     }
@@ -3214,7 +3490,7 @@
     "after": null,
     "rect": {
       "x": 181.640625,
-      "y": 1925.625,
+      "y": 2321.625,
       "width": 62.3125,
       "height": 20
     }
@@ -3260,7 +3536,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 1953.625,
+      "y": 2349.625,
       "width": 53.921875,
       "height": 20
     }
@@ -3306,7 +3582,7 @@
     "after": null,
     "rect": {
       "x": 165.921875,
-      "y": 1953.625,
+      "y": 2349.625,
       "width": 114.640625,
       "height": 20
     }
@@ -3352,7 +3628,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 2053.625,
+      "y": 2449.625,
       "width": 190,
       "height": 96
     }
@@ -3398,7 +3674,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 9621.625,
+      "y": 10633.625,
       "width": 190,
       "height": 96
     }
@@ -3444,9 +3720,9 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 2157.625,
+      "y": 2553.625,
       "width": 174,
-      "height": 1400
+      "height": 1568
     }
   },
   {
@@ -3490,7 +3766,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 2175.625,
+      "y": 2571.625,
       "width": 138,
       "height": 196
     }
@@ -3536,7 +3812,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3419.625,
+      "y": 3815.625,
       "width": 87,
       "height": 20
     }
@@ -3582,7 +3858,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3447.625,
+      "y": 3843.625,
       "width": 77,
       "height": 20
     }
@@ -3628,8 +3904,146 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3475.625,
+      "y": 3871.625,
       "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.hono",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 3899.625,
+      "width": 58.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.tailwindcss",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 3927.625,
+      "width": 99.09375,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.storybook",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 3955.625,
+      "width": 88.75,
       "height": 20
     }
   },
@@ -3673,9 +4087,101 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 197,
-      "y": 3475.625,
+      "x": 130,
+      "y": 3983.625,
       "width": 45,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 183,
+      "y": 3983.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.playwright",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 4011.625,
+      "width": 80.34375,
       "height": 20
     }
   },
@@ -3720,8 +4226,100 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 3503.625,
+      "y": 4039.625,
       "width": 38.390625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.docker",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 176.390625,
+      "y": 4039.625,
+      "width": 69.640625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-outsystems-rewrite.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 4067.625,
+      "width": 114.640625,
       "height": 20
     }
   },
@@ -3766,9 +4364,9 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 3589.625,
+      "y": 4153.625,
       "width": 174,
-      "height": 928
+      "height": 1040
     }
   },
   {
@@ -3812,7 +4410,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 3607.625,
+      "y": 4171.625,
       "width": 138,
       "height": 84
     }
@@ -3858,7 +4456,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 4379.625,
+      "y": 4943.625,
       "width": 87,
       "height": 20
     }
@@ -3904,8 +4502,146 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 4407.625,
+      "y": 4971.625,
       "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.hono",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 4999.625,
+      "width": 58.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.vite",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 196.5625,
+      "y": 4999.625,
+      "width": 53.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.tailwindcss",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 5027.625,
+      "width": 99.09375,
       "height": 20
     }
   },
@@ -3950,8 +4686,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 4435.625,
+      "y": 5055.625,
       "width": 70.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 5083.625,
+      "width": 65.34375,
       "height": 20
     }
   },
@@ -3995,8 +4777,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 208.703125,
-      "y": 4435.625,
+      "x": 203.34375,
+      "y": 5083.625,
       "width": 38.390625,
       "height": 20
     }
@@ -4042,8 +4824,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 4463.625,
+      "y": 5111.625,
       "width": 53.921875,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-pharma-ir.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 5139.625,
+      "width": 114.640625,
       "height": 20
     }
   },
@@ -4088,9 +4916,9 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 4549.625,
+      "y": 5225.625,
       "width": 174,
-      "height": 1028
+      "height": 1140
     }
   },
   {
@@ -4134,7 +4962,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 4567.625,
+      "y": 5243.625,
       "width": 138,
       "height": 84
     }
@@ -4180,7 +5008,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5411.625,
+      "y": 6087.625,
       "width": 87,
       "height": 20
     }
@@ -4226,8 +5054,100 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5439.625,
+      "y": 6115.625,
       "width": 59,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.vite",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 197,
+      "y": 6115.625,
+      "width": 53.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.tailwindcss",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 6143.625,
+      "width": 99.09375,
       "height": 20
     }
   },
@@ -4272,7 +5192,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5467.625,
+      "y": 6171.625,
       "width": 87.3125,
       "height": 20
     }
@@ -4318,13 +5238,13 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5495.625,
+      "y": 6199.625,
       "width": 88.75,
       "height": 20
     }
   },
   {
-    "name": "careers.project.freelance-design-system.tech.aws",
+    "name": "careers.project.freelance-design-system.tech.vitest",
     "computed": {
       "padding-top": "0px",
       "padding-right": "0px",
@@ -4364,8 +5284,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 5523.625,
-      "width": 38.390625,
+      "y": 6227.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.playwright",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 6255.625,
+      "width": 80.34375,
       "height": 20
     }
   },
@@ -4409,9 +5375,55 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 176.390625,
-      "y": 5523.625,
+      "x": 130,
+      "y": 6283.625,
       "width": 62.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-design-system.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 6311.625,
+      "width": 114.640625,
       "height": 20
     }
   },
@@ -4456,9 +5468,9 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 5609.625,
+      "y": 6397.625,
       "width": 174,
-      "height": 1012
+      "height": 1124
     }
   },
   {
@@ -4502,7 +5514,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 5627.625,
+      "y": 6415.625,
       "width": 138,
       "height": 112
     }
@@ -4548,7 +5560,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6427.625,
+      "y": 7215.625,
       "width": 87,
       "height": 20
     }
@@ -4594,8 +5606,100 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6455.625,
+      "y": 7243.625,
       "width": 55.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.hono",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 7271.625,
+      "width": 58.5625,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.tailwindcss",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 7299.625,
+      "width": 99.09375,
       "height": 20
     }
   },
@@ -4640,8 +5744,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6483.625,
+      "y": 7327.625,
       "width": 63.03125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 7355.625,
+      "width": 65.34375,
       "height": 20
     }
   },
@@ -4685,8 +5835,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 201.03125,
-      "y": 6483.625,
+      "x": 203.34375,
+      "y": 7355.625,
       "width": 38.390625,
       "height": 20
     }
@@ -4732,7 +5882,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6511.625,
+      "y": 7383.625,
       "width": 69.640625,
       "height": 20
     }
@@ -4778,7 +5928,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6539.625,
+      "y": 7411.625,
       "width": 62.3125,
       "height": 20
     }
@@ -4824,8 +5974,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 6567.625,
+      "y": 7439.625,
       "width": 53.921875,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-investment.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 7467.625,
+      "width": 114.640625,
       "height": 20
     }
   },
@@ -4870,9 +6066,9 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 6653.625,
+      "y": 7553.625,
       "width": 174,
-      "height": 908
+      "height": 1020
     }
   },
   {
@@ -4916,7 +6112,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 6671.625,
+      "y": 7571.625,
       "width": 138,
       "height": 84
     }
@@ -4962,7 +6158,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7395.625,
+      "y": 8295.625,
       "width": 87,
       "height": 20
     }
@@ -5008,8 +6204,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7423.625,
+      "y": 8323.625,
       "width": 55.703125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.storybook",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 8351.625,
+      "width": 88.75,
       "height": 20
     }
   },
@@ -5054,8 +6296,100 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7451.625,
+      "y": 8379.625,
       "width": 93.203125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 8407.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.playwright",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 8435.625,
+      "width": 80.34375,
       "height": 20
     }
   },
@@ -5100,7 +6434,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7479.625,
+      "y": 8463.625,
       "width": 38.390625,
       "height": 20
     }
@@ -5146,7 +6480,7 @@
     "after": null,
     "rect": {
       "x": 176.390625,
-      "y": 7479.625,
+      "y": 8463.625,
       "width": 69.640625,
       "height": 20
     }
@@ -5192,8 +6526,54 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 7507.625,
+      "y": 8491.625,
       "width": 62.3125,
+      "height": 20
+    }
+  },
+  {
+    "name": "careers.project.freelance-case-management.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 130,
+      "y": 8519.625,
+      "width": 114.640625,
       "height": 20
     }
   },
@@ -5238,7 +6618,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 7593.625,
+      "y": 8605.625,
       "width": 174,
       "height": 1040
     }
@@ -5284,7 +6664,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 7611.625,
+      "y": 8623.625,
       "width": 138,
       "height": 140
     }
@@ -5330,7 +6710,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 8343.625,
+      "y": 9355.625,
       "width": 87,
       "height": 20
     }
@@ -5376,7 +6756,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 8371.625,
+      "y": 9383.625,
       "width": 49,
       "height": 20
     }
@@ -5422,7 +6802,7 @@
     "after": null,
     "rect": {
       "x": 187,
-      "y": 8371.625,
+      "y": 9383.625,
       "width": 59,
       "height": 20
     }
@@ -5468,7 +6848,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 8399.625,
+      "y": 9411.625,
       "width": 68.921875,
       "height": 20
     }
@@ -5514,7 +6894,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 8427.625,
+      "y": 9439.625,
       "width": 107.671875,
       "height": 20
     }
@@ -5560,7 +6940,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 8665.625,
+      "y": 9677.625,
       "width": 174,
       "height": 908
     }
@@ -5606,7 +6986,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 8683.625,
+      "y": 9695.625,
       "width": 138,
       "height": 140
     }
@@ -5652,7 +7032,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 9463.625,
+      "y": 10475.625,
       "width": 85,
       "height": 20
     }
@@ -5698,7 +7078,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 9491.625,
+      "y": 10503.625,
       "width": 29.640625,
       "height": 20
     }
@@ -5744,7 +7124,7 @@
     "after": null,
     "rect": {
       "x": 167.640625,
-      "y": 9491.625,
+      "y": 10503.625,
       "width": 77,
       "height": 20
     }
@@ -5790,7 +7170,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 9519.625,
+      "y": 10531.625,
       "width": 45,
       "height": 20
     }
@@ -5836,7 +7216,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 9725.625,
+      "y": 10737.625,
       "width": 174,
       "height": 816
     }
@@ -5882,7 +7262,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 9743.625,
+      "y": 10755.625,
       "width": 138,
       "height": 140
     }
@@ -5928,7 +7308,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 10573.625,
+      "y": 11585.625,
       "width": 174,
       "height": 1208
     }
@@ -5974,7 +7354,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 10591.625,
+      "y": 11603.625,
       "width": 138,
       "height": 168
     }
@@ -6020,7 +7400,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 11671.625,
+      "y": 12683.625,
       "width": 85,
       "height": 20
     }
@@ -6066,7 +7446,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 11699.625,
+      "y": 12711.625,
       "width": 29.640625,
       "height": 20
     }
@@ -6112,7 +7492,7 @@
     "after": null,
     "rect": {
       "x": 167.640625,
-      "y": 11699.625,
+      "y": 12711.625,
       "width": 77,
       "height": 20
     }
@@ -6158,7 +7538,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 11727.625,
+      "y": 12739.625,
       "width": 45,
       "height": 20
     }
@@ -6204,7 +7584,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 11813.625,
+      "y": 12825.625,
       "width": 174,
       "height": 1032
     }
@@ -6250,7 +7630,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 11831.625,
+      "y": 12843.625,
       "width": 138,
       "height": 140
     }
@@ -6296,7 +7676,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 12635.625,
+      "y": 13647.625,
       "width": 85,
       "height": 20
     }
@@ -6342,7 +7722,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 12663.625,
+      "y": 13675.625,
       "width": 77,
       "height": 20
     }
@@ -6388,7 +7768,7 @@
     "after": null,
     "rect": {
       "x": 104,
-      "y": 12877.625,
+      "y": 13889.625,
       "width": 174,
       "height": 912
     }
@@ -6434,7 +7814,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 12895.625,
+      "y": 13907.625,
       "width": 138,
       "height": 196
     }
@@ -6480,7 +7860,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 13707.625,
+      "y": 14719.625,
       "width": 55,
       "height": 20
     }
@@ -6526,7 +7906,7 @@
     "after": null,
     "rect": {
       "x": 193,
-      "y": 13707.625,
+      "y": 14719.625,
       "width": 49,
       "height": 20
     }
@@ -6572,7 +7952,7 @@
     "after": null,
     "rect": {
       "x": 130,
-      "y": 13735.625,
+      "y": 14747.625,
       "width": 33,
       "height": 20
     }
@@ -6618,9 +7998,9 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14437.625,
+      "y": 15449.625,
       "width": 182,
-      "height": 544
+      "height": 600
     }
   },
   {
@@ -6664,7 +8044,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 14455.625,
+      "y": 15467.625,
       "width": 146,
       "height": 56
     }
@@ -6710,7 +8090,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14565.625,
+      "y": 15577.625,
       "width": 131,
       "height": 44
     }
@@ -6756,7 +8136,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14665.625,
+      "y": 15677.625,
       "width": 135,
       "height": 68
     }
@@ -6802,7 +8182,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14787.625,
+      "y": 15799.625,
       "width": 59,
       "height": 20
     }
@@ -6848,7 +8228,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14815.625,
+      "y": 15827.625,
       "width": 87,
       "height": 20
     }
@@ -6894,7 +8274,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14843.625,
+      "y": 15855.625,
       "width": 53.5625,
       "height": 20
     }
@@ -6940,8 +8320,100 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14871.625,
+      "y": 15883.625,
       "width": 99.09375,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.portfolio.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 15911.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.portfolio.tech.playwright",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 15939.625,
+      "width": 80.34375,
       "height": 20
     }
   },
@@ -6986,7 +8458,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14899.625,
+      "y": 15967.625,
       "width": 92.5,
       "height": 20
     }
@@ -7032,7 +8504,605 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 14927.625,
+      "y": 15995.625,
+      "width": 114.640625,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box",
+    "computed": {
+      "padding-top": "16px",
+      "padding-right": "16px",
+      "padding-bottom": "16px",
+      "padding-left": "16px",
+      "margin-top": "0px",
+      "margin-right": "16px",
+      "margin-bottom": "32px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "2px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(209, 213, 219)",
+      "border-right-width": "2px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(209, 213, 219)",
+      "border-bottom-width": "2px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(209, 213, 219)",
+      "border-left-width": "2px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(209, 213, 219)",
+      "border-top-left-radius": "8px",
+      "border-top-right-radius": "8px",
+      "border-bottom-right-radius": "8px",
+      "border-bottom-left-radius": "8px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 96,
+      "y": 16081.625,
+      "width": 182,
+      "height": 596
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.heading",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "16px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "20px",
+      "font-weight": "600",
+      "line-height": "28px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 114,
+      "y": 16099.625,
+      "width": 146,
+      "height": 28
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.url-link",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(59, 130, 246)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "inline",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16181.625,
+      "width": 138,
+      "height": 68
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.repository-link",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "0px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(59, 130, 246)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "inline",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16305.625,
+      "width": 135,
+      "height": 68
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.rust",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16427.625,
+      "width": 53,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.axum",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 183,
+      "y": 16427.625,
+      "width": 44.28125,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.htmx",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16455.625,
+      "width": 57.84375,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.javascript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16483.625,
+      "width": 85,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.typescript",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16511.625,
+      "width": 87,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.sqlite",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16539.625,
+      "width": 66.0625,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.vitest",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16567.625,
+      "width": 65.34375,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.cloudflare",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16595.625,
+      "width": 92.5,
+      "height": 20
+    }
+  },
+  {
+    "name": "artifacts.card.recipe-box.tech.github-actions",
+    "computed": {
+      "padding-top": "0px",
+      "padding-right": "0px",
+      "padding-bottom": "0px",
+      "padding-left": "0px",
+      "margin-top": "0px",
+      "margin-right": "8px",
+      "margin-bottom": "0px",
+      "margin-left": "0px",
+      "font-family": "\"Inter var\", \"Inter Fallback\"",
+      "font-size": "16px",
+      "font-weight": "400",
+      "line-height": "24px",
+      "color": "rgb(0, 0, 0)",
+      "background-color": "rgba(0, 0, 0, 0)",
+      "border-top-width": "0px",
+      "border-top-style": "solid",
+      "border-top-color": "rgb(229, 231, 235)",
+      "border-right-width": "0px",
+      "border-right-style": "solid",
+      "border-right-color": "rgb(229, 231, 235)",
+      "border-bottom-width": "0px",
+      "border-bottom-style": "solid",
+      "border-bottom-color": "rgb(229, 231, 235)",
+      "border-left-width": "0px",
+      "border-left-style": "solid",
+      "border-left-color": "rgb(229, 231, 235)",
+      "border-top-left-radius": "0px",
+      "border-top-right-radius": "0px",
+      "border-bottom-right-radius": "0px",
+      "border-bottom-left-radius": "0px",
+      "text-align": "start",
+      "display": "block",
+      "visibility": "visible"
+    },
+    "before": null,
+    "after": null,
+    "rect": {
+      "x": 122,
+      "y": 16623.625,
       "width": 114.640625,
       "height": 20
     }
@@ -7078,7 +9148,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 15013.625,
+      "y": 16709.625,
       "width": 182,
       "height": 632
     }
@@ -7124,7 +9194,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 15031.625,
+      "y": 16727.625,
       "width": 146,
       "height": 28
     }
@@ -7170,7 +9240,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15113.625,
+      "y": 16809.625,
       "width": 110,
       "height": 68
     }
@@ -7216,7 +9286,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15237.625,
+      "y": 16933.625,
       "width": 135,
       "height": 68
     }
@@ -7262,7 +9332,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15517.625,
+      "y": 17213.625,
       "width": 128,
       "height": 92
     }
@@ -7308,7 +9378,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15359.625,
+      "y": 17055.625,
       "width": 59,
       "height": 20
     }
@@ -7354,7 +9424,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15387.625,
+      "y": 17083.625,
       "width": 87,
       "height": 20
     }
@@ -7400,7 +9470,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15415.625,
+      "y": 17111.625,
       "width": 88.75,
       "height": 20
     }
@@ -7446,7 +9516,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15443.625,
+      "y": 17139.625,
       "width": 66.78125,
       "height": 20
     }
@@ -7492,7 +9562,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 15677.625,
+      "y": 17373.625,
       "width": 182,
       "height": 580
     }
@@ -7538,7 +9608,7 @@
     "after": null,
     "rect": {
       "x": 114,
-      "y": 15695.625,
+      "y": 17391.625,
       "width": 146,
       "height": 28
     }
@@ -7584,7 +9654,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15777.625,
+      "y": 17473.625,
       "width": 133,
       "height": 44
     }
@@ -7630,7 +9700,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15877.625,
+      "y": 17573.625,
       "width": 135,
       "height": 68
     }
@@ -7676,7 +9746,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 16129.625,
+      "y": 17825.625,
       "width": 127,
       "height": 92
     }
@@ -7722,7 +9792,7 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 15999.625,
+      "y": 17695.625,
       "width": 59,
       "height": 20
     }
@@ -7768,54 +9838,8 @@
     "after": null,
     "rect": {
       "x": 122,
-      "y": 16027.625,
+      "y": 17723.625,
       "width": 87,
-      "height": 20
-    }
-  },
-  {
-    "name": "artifacts.card.memo-app.tech.recoil",
-    "computed": {
-      "padding-top": "0px",
-      "padding-right": "0px",
-      "padding-bottom": "0px",
-      "padding-left": "0px",
-      "margin-top": "0px",
-      "margin-right": "8px",
-      "margin-bottom": "0px",
-      "margin-left": "0px",
-      "font-family": "\"Inter var\", \"Inter Fallback\"",
-      "font-size": "16px",
-      "font-weight": "400",
-      "line-height": "24px",
-      "color": "rgb(0, 0, 0)",
-      "background-color": "rgba(0, 0, 0, 0)",
-      "border-top-width": "0px",
-      "border-top-style": "solid",
-      "border-top-color": "rgb(229, 231, 235)",
-      "border-right-width": "0px",
-      "border-right-style": "solid",
-      "border-right-color": "rgb(229, 231, 235)",
-      "border-bottom-width": "0px",
-      "border-bottom-style": "solid",
-      "border-bottom-color": "rgb(229, 231, 235)",
-      "border-left-width": "0px",
-      "border-left-style": "solid",
-      "border-left-color": "rgb(229, 231, 235)",
-      "border-top-left-radius": "0px",
-      "border-top-right-radius": "0px",
-      "border-bottom-right-radius": "0px",
-      "border-bottom-left-radius": "0px",
-      "text-align": "start",
-      "display": "block",
-      "visibility": "visible"
-    },
-    "before": null,
-    "after": null,
-    "rect": {
-      "x": 122,
-      "y": 16055.625,
-      "width": 43,
       "height": 20
     }
   },
@@ -7859,8 +9883,8 @@
     "before": null,
     "after": null,
     "rect": {
-      "x": 173,
-      "y": 16055.625,
+      "x": 122,
+      "y": 17751.625,
       "width": 77.84375,
       "height": 20
     }
@@ -7906,7 +9930,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 13901.625,
+      "y": 14913.625,
       "width": 198,
       "height": 144
     }
@@ -7952,7 +9976,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 13925.625,
+      "y": 14937.625,
       "width": 182,
       "height": 24
     }
@@ -7998,7 +10022,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 13949.625,
+      "y": 14961.625,
       "width": 182,
       "height": 24
     }
@@ -8044,7 +10068,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 13973.625,
+      "y": 14985.625,
       "width": 182,
       "height": 24
     }
@@ -8090,7 +10114,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 13997.625,
+      "y": 15009.625,
       "width": 182,
       "height": 48
     }
@@ -8136,7 +10160,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14045.625,
+      "y": 15057.625,
       "width": 198,
       "height": 96
     }
@@ -8182,7 +10206,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14093.625,
+      "y": 15105.625,
       "width": 182,
       "height": 24
     }
@@ -8228,7 +10252,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14117.625,
+      "y": 15129.625,
       "width": 182,
       "height": 24
     }
@@ -8274,7 +10298,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14141.625,
+      "y": 15153.625,
       "width": 198,
       "height": 144
     }
@@ -8320,7 +10344,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14165.625,
+      "y": 15177.625,
       "width": 182,
       "height": 48
     }
@@ -8366,7 +10390,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14213.625,
+      "y": 15225.625,
       "width": 182,
       "height": 72
     }
@@ -8412,7 +10436,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 14285.625,
+      "y": 15297.625,
       "width": 198,
       "height": 72
     }
@@ -8458,7 +10482,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14309.625,
+      "y": 15321.625,
       "width": 182,
       "height": 24
     }
@@ -8504,7 +10528,7 @@
     "after": null,
     "rect": {
       "x": 112,
-      "y": 14333.625,
+      "y": 15345.625,
       "width": 182,
       "height": 24
     }
@@ -8550,7 +10574,7 @@
     "after": null,
     "rect": {
       "x": 96,
-      "y": 16371.625,
+      "y": 18067.625,
       "width": 192,
       "height": 44
     }

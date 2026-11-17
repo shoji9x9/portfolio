@@ -209,7 +209,7 @@ main 側の依存更新による vite-plus 0.2.6 → 0.3.3 の内部パスと ro
 ### 基準の採り直し記録（2026-11-17 / Issue #210）
 
 製作物へレシピ帳（`recipe-box`）を追加し、バッジ 7 件（Rust・Hono・Axum・htmx・Vitest・Playwright・SQLite）を追加、
-Recoil を削除し、既存の 5 案件と 2 製作物へ Vitest / Playwright を付け、自己 PR の 3・4 項目目を再構成した
+Recoil を削除し、Vitest を既存の 5 案件と portfolio・recipe-box へ、Playwright を 5 案件のうち `freelance-outsystems-rewrite`・`freelance-design-system`・`freelance-case-management` の 3 案件と portfolio へ付け、自己 PR の 3・4 項目目を再構成した
 （ゴールデンデータセット version 5 → 6）。基準は `new/local-dev/baseline-new/` と `noise-pass2/` を採り直した。
 
 採取ブラウザーが前回採取（Playwright 1.63.0 / Chromium 153.0.8010.12）から Playwright 1.65.0 /
@@ -257,7 +257,21 @@ Chromium 158.0.8127.18 へ変わっていたため、前回と同じく 2 段階
 
 `lapras` は、`full_page: false` で職務経歴を含まず、外部 URL も増えていないため採り直していない。
 
-`preview` の `baseline-new` は、PR のデプロイ後に採り直す（未実施）。
+#### `preview` の採り直し（PR #211 のデプロイ）
+
+PR #211 のデプロイ（`2e12a65` / <https://7271d45e.shoji9x9.pages.dev>。デプロイ元コミットは Preview ジョブの run の
+`headSha` で HEAD と一致することを確認）に対して、`static-page` の `new/preview/baseline-new` を採り直した。
+
+| 対象                              | 結果                                                                                                                                        |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 自己ノイズ                        | 6 状態すべてで**特性差 0 件・画素差 0**、default は aria 一致。従来どおり `noise-pass2/` の生データは残さず、要約（`noise.json`）だけを保持 |
+| `preview` と `local-dev` の同一性 | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile の default / hover / focus 全 6 状態）                  |
+| `noise.json`                      | 変化は `pixel_total` のみ。desktop 11,653,120 → 12,395,520（1280×9684）、mobile 6,524,700 → 7,186,140（390×18426）                          |
+
+`network.json` は、デプロイ固有ホストに加えて JS バンドル（`index-OEL_Wcms.js` → `index-qHceFg2F.js`）と
+CSS（`index-Cp39JzXO.css` → `index-BhyCeWbR.css`）のハッシュが変わった。CSS は本番（main からのデプロイ）が配信する
+`index-BhyCeWbR.css` とバイト一致で、前回の採取（2026-10-05）以降に main へ入った依存更新による変化であり、
+この PR ではスタイルを変えていない。`lapras` の `preview` ベースラインは従来どおり未採取。
 
 判断の宣言は設定 `intentional_diffs.may_change`「製作物・バッジの追加と削除（新側のみ）」「自己 PR の文言修正（新側のみ、Issue #210）」。
 

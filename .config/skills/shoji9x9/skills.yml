@@ -190,7 +190,9 @@ skills:
           言語バッジ「Rust」を TypeScript の次へ追加（7 → 8 件）。
           フレームワーク等バッジから「Recoil」を削除し（メモアプリの技術スタックからも削除）、
           Hono・Axum・htmx・Vitest・Playwright・SQLite を追加（24 → 29 件）。
-          Vitest・Playwright はフリーランスの直近 5 案件と、portfolio・recipe-box の技術スタックにも追加。
+          Vitest はフリーランスの直近 5 案件と portfolio・recipe-box の技術スタックにも追加。
+          Playwright は直近 5 案件のうち「OutSystemsを利用したアプリケーションのTypeScriptへのリライトPoC」
+          「デザインシステムの開発、運用」「商社向け案件状況管理システムの開発」の 3 案件と portfolio にだけ追加。
           あわせて直近 5 案件の技術スタックを補い（Hono・Vite・TailwindCSS・Storybook・Docker・GitHub Actions）、
           「デザインシステムの開発、運用」から使っていなかった AWS を削除
         - >-
