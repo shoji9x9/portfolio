@@ -64,7 +64,9 @@ PARITY_NEW_UI_URL=http://localhost:5173 pnpm exec playwright test --project=new
 # 新側ベースラインの採取（.replace/parity/<slug>/new/<target>/ を作り直す）。
 # Issue #31 以降はこれが「新側の変更前 vs 変更後」の比較基準になるため、
 # 表示内容を変えたら受け入れ後に採り直す。採取ブラウザーの陳腐化ガード（後述）が先に走る。
-PARITY_SLUG=static-page PARITY_NEW_UI_URL=http://localhost:5173 \
+# PARITY_NEW_TARGET（必須）は採取先の <target>。PARITY_CAPTURE_PASS=noise にすると
+# 自己ノイズ用の 2 回目（noise-pass2/）を採る（既定は baseline）。
+PARITY_SLUG=static-page PARITY_NEW_TARGET=local-dev PARITY_NEW_UI_URL=http://localhost:5173 \
   pnpm exec playwright test --project=new-capture
 ```
 
