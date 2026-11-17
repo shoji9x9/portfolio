@@ -83,6 +83,11 @@ const languageBadges = createImageBadges([
     "https://img.shields.io/badge/-TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white",
   ],
   [
+    "rust",
+    "Rust",
+    "https://img.shields.io/badge/-Rust-000000?style=flat-square&logo=rust&logoColor=white",
+  ],
+  [
     "csharp",
     "CSharp",
     "https://img.shields.io/badge/c%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white",
@@ -120,11 +125,22 @@ const frameworkBadges = createImageBadges([
     "React",
     "https://img.shields.io/badge/-React-45b8d8?style=flat-square&logo=react&logoColor=white",
   ],
-  ["recoil", "Recoil", "https://img.shields.io/badge/-Recoil-3578e5.svg?logo=&style=flat-square"],
   [
     "nextjs",
     "NextJS",
     "https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white",
+  ],
+  [
+    "hono",
+    "Hono",
+    "https://img.shields.io/badge/Hono-%23E36002.svg?style=for-the-badge&logo=hono&logoColor=white",
+  ],
+  // Axum・Playwright のロゴは shields.io（simple-icons）に存在しないため文字のみのバッジにする（下の DynamoDB と同じ形）。
+  ["axum", "Axum", "https://img.shields.io/badge/Axum-%23000000.svg?style=for-the-badge"],
+  [
+    "htmx",
+    "htmx",
+    "https://img.shields.io/badge/htmx-%233366CC.svg?style=for-the-badge&logo=htmx&logoColor=white",
   ],
   [
     "vite",
@@ -145,6 +161,16 @@ const frameworkBadges = createImageBadges([
     "storybook",
     "Storybook",
     "https://img.shields.io/badge/-Storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white",
+  ],
+  [
+    "vitest",
+    "Vitest",
+    "https://img.shields.io/badge/Vitest-%236E9F18.svg?style=for-the-badge&logo=vitest&logoColor=white",
+  ],
+  [
+    "playwright",
+    "Playwright",
+    "https://img.shields.io/badge/Playwright-%232EAD33.svg?style=for-the-badge",
   ],
   [
     "drupal",
@@ -176,8 +202,13 @@ const frameworkBadges = createImageBadges([
     "MySQL",
     "https://img.shields.io/badge/MySQL-%234479A1.svg?style=for-the-badge&logo=mysql&logoColor=white",
   ],
+  [
+    "sqlite",
+    "SQLite",
+    "https://img.shields.io/badge/SQLite-%23003B57.svg?style=for-the-badge&logo=sqlite&logoColor=white",
+  ],
   // DynamoDB・AWS・OpenAI のロゴは shields.io（simple-icons）に存在しないため文字のみのバッジにする。
-  // 既存の OutSystems・Recoil と同じ形。
+  // 既存の OutSystems と同じ形。
   [
     "dynamodb",
     "DynamoDB",
@@ -235,7 +266,22 @@ const projects: Project[] = [
         ],
       },
     ],
-    techStack: { items: ["TypeScript", "OutSystems", "React", "Oracle", "AWS"] },
+    techStack: {
+      items: [
+        "TypeScript",
+        "OutSystems",
+        "React",
+        "Hono",
+        "TailwindCSS",
+        "Storybook",
+        "Oracle",
+        "Vitest",
+        "Playwright",
+        "AWS",
+        "Docker",
+        "GithubActions",
+      ],
+    },
     members: { team: 1, project: 4 },
   },
   {
@@ -252,7 +298,20 @@ const projects: Project[] = [
         ],
       },
     ],
-    techStack: { items: ["TypeScript", "React", "DynamoDB", "AWS", "OpenAI"] },
+    techStack: {
+      items: [
+        "TypeScript",
+        "React",
+        "Hono",
+        "Vite",
+        "TailwindCSS",
+        "DynamoDB",
+        "Vitest",
+        "AWS",
+        "OpenAI",
+        "GithubActions",
+      ],
+    },
     members: { team: 1, project: 1 },
   },
   {
@@ -270,7 +329,20 @@ const projects: Project[] = [
         ],
       },
     ],
-    techStack: { items: ["TypeScript", "React", "shadcn/ui", "Storybook", "AWS", "Figma"] },
+    techStack: {
+      items: [
+        "TypeScript",
+        "React",
+        "Vite",
+        "TailwindCSS",
+        "shadcn/ui",
+        "Storybook",
+        "Vitest",
+        "Playwright",
+        "Figma",
+        "GithubActions",
+      ],
+    },
     members: { team: 3, project: 3 },
   },
   {
@@ -289,7 +361,19 @@ const projects: Project[] = [
       },
     ],
     techStack: {
-      items: ["TypeScript", "NextJS", "MySQL", "AWS", "Docker", "Figma", "OpenAI"],
+      items: [
+        "TypeScript",
+        "NextJS",
+        "Hono",
+        "TailwindCSS",
+        "MySQL",
+        "Vitest",
+        "AWS",
+        "Docker",
+        "Figma",
+        "OpenAI",
+        "GithubActions",
+      ],
     },
     members: { team: 2, project: 2 },
   },
@@ -304,7 +388,20 @@ const projects: Project[] = [
         items: ["要件定義、技術スタック選定", "フロントエンド、バックエンド、インフラの開発・運用"],
       },
     ],
-    techStack: { items: ["TypeScript", "NextJS", "PostgreSQL", "AWS", "Docker", "Figma"] },
+    techStack: {
+      items: [
+        "TypeScript",
+        "NextJS",
+        "Storybook",
+        "PostgreSQL",
+        "Vitest",
+        "Playwright",
+        "AWS",
+        "Docker",
+        "Figma",
+        "GithubActions",
+      ],
+    },
     members: { team: 2, project: 2 },
   },
   {
@@ -462,14 +559,40 @@ export const goldenDataset = {
     }),
   })),
   artifacts: [
-    // 記事は書いていないため `article` を持たない。任意項目であり、無いときはカードの
+    // `portfolio` と `recipe-box` は記事を書いていないため `article` を持たない。任意項目であり、無いときはカードの
     // 「記事」見出しごと描画しない（`src/components/portfolio/ArtifactSection.tsx`）。
     {
       id: "portfolio",
       title: "ポートフォリオ（このページ）",
       url: "https://shoji9x9.pages.dev/",
       repositoryUrl: "https://github.com/shoji9x9/portfolio",
-      techStack: ["React", "TypeScript", "Vite", "TailwindCSS", "Cloudflare", "GithubActions"],
+      techStack: [
+        "React",
+        "TypeScript",
+        "Vite",
+        "TailwindCSS",
+        "Vitest",
+        "Playwright",
+        "Cloudflare",
+        "GithubActions",
+      ],
+    },
+    {
+      id: "recipe-box",
+      title: "レシピ帳",
+      url: "https://recipe-box.shoji9x9.workers.dev/",
+      repositoryUrl: "https://github.com/shoji9x9/recipe-box",
+      techStack: [
+        "Rust",
+        "Axum",
+        "htmx",
+        "JavaScript",
+        "TypeScript",
+        "SQLite",
+        "Vitest",
+        "Cloudflare",
+        "GithubActions",
+      ],
     },
     {
       id: "qiita-search",
@@ -491,15 +614,15 @@ export const goldenDataset = {
         title: "React（TypeScript） + Firebaseでメモアプリ開発",
         url: "https://zenn.dev/shoji9x9/articles/eb185b3d66567b",
       },
-      techStack: ["React", "TypeScript", "Recoil", "Firebase"],
+      techStack: ["React", "TypeScript", "Firebase"],
     },
   ],
   staticContent: {
     selfPromotion: [
       "数百万円～十億円以上の大小50以上のプロジェクトを立ち上げてきた経験を持ち、問題点の把握、原因の分析、ROIの高い対策の立案が得意です",
       "アサインされたタスクが適切かをまず考え、適切でないと感じたときは背景や問題を確認した上で代案を提示します。期日と合格条件を確認し、そこから必要なマイルストーンを自ら設定して進めます",
-      "コーディングエージェントが主体的に開発を進められる環境、プロセスの構築（Human-on-the-Loop）に取り組んでいます",
-      "エージェント主体へ移行しても品質を落とさないよう、プレビュー環境でのテストやVRT (ビジュアルリグレッションテスト) など検証の仕組みを併せて用意します",
+      "直近はTypeScript（React / Next.js / Hono）とAWSを用いたフルスタック開発に携わっており、OpenAIを利用したPDFの要約やIR資料の分析などLLMを組み込んだアプリケーションも開発しています。要件定義・技術スタック選定から実装、運用まで、上流～下流の工程を一貫して担当します",
+      "コーディングエージェントが自律的に開発を進められる環境、プロセスの構築（Human-on-the-Loop）に取り組んでいます。品質を落とさないよう、リントや静的解析、単体テスト、ミューテーションテスト、E2Eテスト、VRT (ビジュアルリグレッションテスト)、プレビュー環境でのテストなどの検証の仕組みを併せて用意します",
     ],
     qualifications: {
       "情報処理推進機構 (IPA)": [

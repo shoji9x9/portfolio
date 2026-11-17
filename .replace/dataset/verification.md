@@ -1,8 +1,8 @@
 # 検証レポート（verification）
 
-- version: 5
+- version: 6
 - mode: `static`
-- 最終更新: 2026-10-05T16:17:00+09:00
+- 最終更新: 2026-11-17T11:35:00+09:00
 
 ## フェーズ A（正本フェーズ）
 
@@ -11,15 +11,15 @@ version 3 で論理データの役割が「現行の忠実な再現」から「�
 そのため「現行ソースとの照合」「現行実 DOM との照合」は version 2 までの検査であり、
 version 3 以降は**実施していない**（現行サイトを追従させないため、実施しても不一致になるのが正しい）。
 
-### 整合性（version 5 / 2026-10-05）
+### 整合性（version 6 / 2026-11-17）
 
 | 検査         | 結果                                                                                                                            |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| 安定 ID      | 56 個の ID が一意で、`^[a-z0-9-]+$` に一致（`seed/golden-dataset.ts` の `verifyGoldenDataset`）                                 |
-| 件数         | profile 4、account badges 5、language badges 7、framework badges 24、careers 2、projects 11、artifacts 3、自己 PR 4、資格分類 4 |
+| 安定 ID      | 63 個の ID が一意で、`^[a-z0-9-]+$` に一致（`seed/golden-dataset.ts` の `verifyGoldenDataset`）                                 |
+| 件数         | profile 4、account badges 5、language badges 8、framework badges 29、careers 2、projects 11、artifacts 4、自己 PR 4、資格分類 4 |
 | 形式妥当性   | 生成した 6 ファイルがすべて JSON として読み戻せ、末尾が改行で終わる（`seed/golden-dataset.test.ts`）                            |
 | 参照整合     | 外部キーは存在しない。技術スタックの表示名はすべてバッジへ解決できる（解決できなければ写像が失敗する）                          |
-| 決定性       | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `081947dd` を出力（version 4 は `978a9784`）                          |
+| 決定性       | `pnpm exec tsx seed/golden-dataset.ts` が固定 fingerprint `8f9e04ad` を出力（version 5 は `081947dd`）                          |
 | 冪等性       | 連続 2 回実行して生成物・fingerprint が一致（削除 → 生成のため実行前の状態に依らない）                                          |
 | 書き込み範囲 | 生成・削除はすべて `seed/data/` 配下。配下外を指すパスはツールが例外で停止する                                                  |
 
@@ -118,6 +118,19 @@ version 5（職務経歴へ 1 案件追加、`freelance-pharma-ir` の職務か�
 | 再生成し忘れの検出                              | `pnpm test`（79 件）が green。`seed/phase-b.test.ts` がディスク上の生成物と写像結果の一致を確認                                                                                                                                                                                                                                                                                                                                        |
 | target が実際にゴールデンデータを配信しているか | version 5 の最終状態（`b69aeb0`）で `local-dev`（<http://localhost:5173>）に対しパリティスイート `--project=new` の **55 件が green**。追加案件のプロジェクト検査（期間・チーム人数 1 / プロジェクト 4・タスク 5 項目・技術スタック）と自己 PR の本文照合を含む。中間状態（fingerprint `4cc635cd`）でも 55 件 green だった                                                                                                             |
 | 論理名カタログ                                  | `.replace/parity/static-page/metadata.json` の `traits.elements` へ追加案件の 7 件を挿入し 179 → 186。`logicalEntries()` の生成順とコード上で照合。その後、採取ブラウザーを Playwright 1.63.0 へ更新して `local-dev` の `baseline-new` を採り直し、`static-page` の新側採取が順序込み完全一致（`toEqual`）で green（version 5 の最終状態。詳細は [`../features.md`](../features.md)「基準の採り直し記録（2026-10-05 / Issue #145）」） |
+
+### `static-page` / `lapras` × `local-dev`（2026-11-17 / version 6）
+
+version 6（製作物 `recipe-box` とバッジ 7 件を追加、バッジ `recoil` を削除、自己 PR の 3・4 項目目を再構成）を同じ写像規則で再生成し、
+`local-dev` に対して検証した。写像規則・宣言済み意図的差異（3 件）は version 2 から変えていない。
+
+| 検査                                            | 結果                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 決定性                                          | `pnpm exec tsx seed/golden-dataset.ts` が fingerprint `8f9e04ad` を出力                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 現新一致                                        | `pnpm exec tsx seed/phase-b.ts` が `declaredDiffs: 3` で成功。宣言外の差 0 件                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 再生成し忘れの検出                              | `pnpm test`（79 件）が green                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| target が実際にゴールデンデータを配信しているか | `local-dev`（<http://localhost:5173>）に対しパリティスイート `--project=new` の **56 件が green**（追加した製作物 `recipe-box` のカード検査 1 件、Rust バッジを含む外部画像の描画を含む）                                                                                                                                                                                                                                                                                                                                                 |
+| 論理名カタログ                                  | `.replace/parity/static-page/metadata.json` の `traits.elements` へバッジ 7 件・追加カードの 13 件・既存の案件と製作物への Vitest / Playwright の 10 件・5 案件の技術スタックの補完 17 件を挿入し、`recoil` の 2 件と `freelance-design-system` の AWS の 1 件を削除して 186 → 230。採取ブラウザーを Playwright 1.65.0 へ更新して `local-dev` の `baseline-new` を採り直し、`static-page` の新側採取が順序込み完全一致（`toEqual`）で green（詳細は [`../features.md`](../features.md)「基準の採り直し記録（2026-11-17 / Issue #210）」） |
 
 ### 意図的差異（写像で適用したもの）
 

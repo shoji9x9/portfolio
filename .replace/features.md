@@ -206,6 +206,75 @@ main 側の依存更新による vite-plus 0.2.6 → 0.3.3 の内部パスと ro
 
 判断の宣言は設定 `intentional_diffs.may_change`「職務経歴の追加・修正（新側のみ）」「自己 PR の文言修正（新側のみ）」。
 
+### 基準の採り直し記録（2026-11-17 / Issue #210）
+
+製作物へレシピ帳（`recipe-box`）を追加し、バッジ 7 件（Rust・Hono・Axum・htmx・Vitest・Playwright・SQLite）を追加、
+Recoil を削除し、Vitest を既存の 5 案件と portfolio・recipe-box へ、Playwright を 5 案件のうち `freelance-outsystems-rewrite`・`freelance-design-system`・`freelance-case-management` の 3 案件と portfolio へ付け、自己 PR の 3・4 項目目を再構成した
+（ゴールデンデータセット version 5 → 6）。基準は `new/local-dev/baseline-new/` と `noise-pass2/` を採り直した。
+
+採取ブラウザーが前回採取（Playwright 1.63.0 / Chromium 153.0.8010.12）から Playwright 1.65.0 /
+Chromium 158.0.8127.18 へ変わっていたため、前回と同じく 2 段階で採取した。パス 1 は本体を汚さないよう、
+`origin/main`（`6cfe60e`）の一時 worktree で別ポート（5174）の開発サーバーを立てて採った。
+
+1. **パス 1（比較用・コミットしない）**: `origin/main` のコンテンツ（version 5）のまま、新しいブラウザーで採取
+2. **パス 2（コミットした基準）**: version 6 のコンテンツで採取
+
+| 対象                                          | 実施                                                                                                                                                                                                                                                            |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `capture_conditions.browser`                  | 両 slug を `1.63.0` / `153.0.8010.12` → **`1.65.0` / `158.0.8127.18`**（採取ブラウザーの陳腐化ガードの手当て）                                                                                                                                                  |
+| ブラウザー更新の影響（旧基準 → パス 1）       | `aria.txt`・`traits.json` は両 slug で**バイト一致**。画素は、旧基準のローカル PNG を退避して比較し、`static-page` の全画面で desktop / mobile とも **2 画素**（`skills.language.python` のバッジ画像内のアンチエイリアス）、要素クロップ 12 枚と `lapras` は 0 |
+| `new/local-dev/baseline-new` と `noise-pass2` | 両 slug・両パスを採り直し。自己ノイズは**特性差 0 件・画素差 0・aria 一致**（`static-page` / `lapras` の desktop / mobile 全 4 組）                                                                                                                             |
+| `static-page` の全画面寸法（パス 1 → 2）      | desktop 1280×9104 → **1280×9544**、mobile 390×16730 → **390×18034**。幅は不変                                                                                                                                                                                   |
+| `lapras`（パス 1 → 2）                        | desktop 1088×856 / mobile 198×258 とも**画素差 0・特性差 0・aria 一致**。`full_page: false` で変更箇所を含まないため                                                                                                                                            |
+| aria スナップショット（パス 1 → 2）           | `static-page` の desktop / mobile とも +37 行 / -4 行。自己 PR 2 行の差し替え、追加バッジ、レシピ帳のカード、Recoil の 2 行の削除だけ                                                                                                                           |
+| 特性差（`compareTraits`、パス 1 → 2）         | `static-page` desktop 2313 件（missing 32・geometry 2281）/ mobile 1151 件（missing 32・geometry 1119）、hover・focus 状態のクロップは全 12 枚で画素差 0。内訳は下表                                                                                            |
+| `metadata.json`                               | `traits.elements` を 186 → **214**。`static-page` の新側採取が `traits.elements` との順序込み完全一致（`toEqual`）で green                                                                                                                                      |
+
+| 差分                                                                      | 実測値による説明                                                                                                                                                                                                                                       |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind: missing` 32 件                                                     | 追加した 30 件（バッジ 7・レシピ帳のカード 13・既存の案件と製作物への Vitest / Playwright 10）と削除した Recoil の 2 件そのもの。名前の一覧で照合した                                                                                                  |
+| geometry のうち変更した要素を片側に含むもの（desktop 2275 / mobile 1113） | バッジ行（保有スキル・5 案件・3 製作物の技術スタック）の折り返しで、要素対の横の順序（`horizontal`）と揃え（`*Aligned`）が変わったもの                                                                                                                 |
+| geometry のうち変更した要素を含まないもの（desktop 6 / mobile 6）         | すべて `vertical` で、器（`page.main`・`section.self-promotion`・`section.artifacts`）の寸法が変わった側の対だけ。器の中心が動き、中心付近の要素（`careers.company.toyota`、`self-promotion.item.2`、`qiita-search` のカードなど）の上下関係が反転した |
+
+`local-dev` の `network.json` は両 slug で差分が出る。外部 URL の差は追加バッジ 7 件と Recoil の削除だけ（両 slug）で、
+それ以外は vite 開発サーバーの `?v=<hash>` と vite-plus の内部パスで、描画の成果物ではない（パス 1 の時点で同じ差が出ており、コンテンツ起因ではない）。
+
+#### 追補: 直近 5 案件の技術スタックの補完（同日）
+
+本人の申告に合わせて直近 5 案件の技術スタックへ 17 件を追加し、`freelance-design-system` の AWS を削除した
+（fingerprint `87018f40` → `8f9e04ad`、`traits.elements` 214 → 230）。採取ブラウザーは上と同じなので、
+`static-page` の `baseline-new` と `noise-pass2` を 1 段階で採り直し、上の基準（`e6dcc29`）と比べた。
+
+| 対象                      | 結果                                                                                                                                                                                                                                                                                               |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 自己ノイズ                | desktop / mobile とも**特性差 0 件・画素差 0・aria 一致**                                                                                                                                                                                                                                          |
+| 新側採取                  | `traits.elements`（230 件）との順序込み完全一致で green                                                                                                                                                                                                                                            |
+| 全画面寸法                | desktop 1280×9544 → **1280×9684**、mobile 390×18034 → **390×18426**。幅は不変                                                                                                                                                                                                                      |
+| aria スナップショット     | desktop / mobile とも +17 行 / -1 行。追加したバッジ 17 件と削除した AWS 1 件だけ                                                                                                                                                                                                                  |
+| 特性差（`compareTraits`） | desktop 1848 件 / mobile 618 件。missing 18 件は追加 17・削除 1 そのもの。geometry は 5 案件のバッジ行の折り返しによるもので、5 案件を含まない対は desktop 2 / mobile 4 件だけ（いずれも `vertical`。器の中心が動いたことによる、後続の `toyota-rideshare`・`freelance-sales` との上下関係の反転） |
+| hover / focus のクロップ  | 全 12 枚で画素差 0                                                                                                                                                                                                                                                                                 |
+| `network.json` の外部 URL | 差 0（追加したバッジはすべて既存の画像 URL）                                                                                                                                                                                                                                                       |
+
+`lapras` は、`full_page: false` で職務経歴を含まず、外部 URL も増えていないため採り直していない。
+
+#### `preview` の採り直し（PR #211 のデプロイ）
+
+PR #211 のデプロイ（`2e12a65` / <https://7271d45e.shoji9x9.pages.dev>。デプロイ元コミットは Preview ジョブの run の
+`headSha` で HEAD と一致することを確認）に対して、`static-page` の `new/preview/baseline-new` を採り直した。
+
+| 対象                              | 結果                                                                                                                                        |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| 自己ノイズ                        | 6 状態すべてで**特性差 0 件・画素差 0**、default は aria 一致。従来どおり `noise-pass2/` の生データは残さず、要約（`noise.json`）だけを保持 |
+| `preview` と `local-dev` の同一性 | 両者の新側採取を直接照合し、**画素差 0・特性差 0・aria 完全一致**（desktop / mobile の default / hover / focus 全 6 状態）                  |
+| `noise.json`                      | 変化は `pixel_total` のみ。desktop 11,653,120 → 12,395,520（1280×9684）、mobile 6,524,700 → 7,186,140（390×18426）                          |
+
+`network.json` は、デプロイ固有ホストに加えて JS バンドル（`index-OEL_Wcms.js` → `index-qHceFg2F.js`）と
+CSS（`index-Cp39JzXO.css` → `index-BhyCeWbR.css`）のハッシュが変わった。CSS は本番（main からのデプロイ）が配信する
+`index-BhyCeWbR.css` とバイト一致で、前回の採取（2026-10-05）以降に main へ入った依存更新による変化であり、
+この PR ではスタイルを変えていない。`lapras` の `preview` ベースラインは従来どおり未採取。
+
+判断の宣言は設定 `intentional_diffs.may_change`「製作物・バッジの追加と削除（新側のみ）」「自己 PR の文言修正（新側のみ、Issue #210）」。
+
 ## 分解の変更履歴
 
 - 2026-07-28: 7 単位（`profile` / `badges` / `careers` / `artifacts` / `static-content` / `lapras` / `lapras-preview`）から

@@ -24,8 +24,15 @@
             "typescript",
             "outsystems",
             "react",
+            "hono",
+            "tailwindcss",
+            "storybook",
             "oracle",
-            "aws"
+            "vitest",
+            "playwright",
+            "aws",
+            "docker",
+            "github-actions"
           ]
         },
         "members": {
@@ -51,9 +58,14 @@
           "items": [
             "typescript",
             "react",
+            "hono",
+            "vite",
+            "tailwindcss",
             "dynamodb",
+            "vitest",
             "aws",
-            "openai"
+            "openai",
+            "github-actions"
           ]
         },
         "members": {
@@ -80,10 +92,14 @@
           "items": [
             "typescript",
             "react",
+            "vite",
+            "tailwindcss",
             "shadcnui",
             "storybook",
-            "aws",
-            "figma"
+            "vitest",
+            "playwright",
+            "figma",
+            "github-actions"
           ]
         },
         "members": {
@@ -110,11 +126,15 @@
           "items": [
             "typescript",
             "nextjs",
+            "hono",
+            "tailwindcss",
             "mysql",
+            "vitest",
             "aws",
             "docker",
             "figma",
-            "openai"
+            "openai",
+            "github-actions"
           ]
         },
         "members": {
@@ -139,10 +159,14 @@
           "items": [
             "typescript",
             "nextjs",
+            "storybook",
             "postgresql",
+            "vitest",
+            "playwright",
             "aws",
             "docker",
-            "figma"
+            "figma",
+            "github-actions"
           ]
         },
         "members": {

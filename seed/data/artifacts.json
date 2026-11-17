@@ -9,6 +9,25 @@
       "TypeScript",
       "Vite",
       "TailwindCSS",
+      "Vitest",
+      "Playwright",
+      "Cloudflare",
+      "GithubActions"
+    ]
+  },
+  {
+    "id": "recipe-box",
+    "title": "レシピ帳",
+    "url": "https://recipe-box.shoji9x9.workers.dev/",
+    "repositoryUrl": "https://github.com/shoji9x9/recipe-box",
+    "techStack": [
+      "Rust",
+      "Axum",
+      "htmx",
+      "JavaScript",
+      "TypeScript",
+      "SQLite",
+      "Vitest",
       "Cloudflare",
       "GithubActions"
     ]
@@ -41,7 +60,6 @@
     "techStack": [
       "React",
       "TypeScript",
-      "Recoil",
       "Firebase"
     ]
   }

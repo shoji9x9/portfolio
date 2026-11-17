@@ -1,14 +1,14 @@
 {
-  "version": 5,
+  "version": 6,
   "mode": "static",
   "base_time": null,
-  "generated_at": "2026-10-05T16:17:00+09:00",
+  "generated_at": "2026-11-17T11:35:00+09:00",
   "current": {
     "target": null,
     "commit": "none",
     "seeded_at": null,
-    "fingerprint": "081947dd",
-    "verified_at": "2026-10-05T16:17:00+09:00"
+    "fingerprint": "8f9e04ad",
+    "verified_at": "2026-11-17T11:35:00+09:00"
   },
   "run": {
     "agent": "Claude Code",
@@ -24,16 +24,16 @@
   "phase_b": {
     "static-page": {
       "local-dev": {
-        "dataset_version": 5,
-        "seeded_at": "2026-10-05T16:17:00+09:00",
-        "verified_at": "2026-10-05T16:17:00+09:00"
+        "dataset_version": 6,
+        "seeded_at": "2026-11-17T11:35:00+09:00",
+        "verified_at": "2026-11-17T11:35:00+09:00"
       }
     },
     "lapras": {
       "local-dev": {
-        "dataset_version": 5,
-        "seeded_at": "2026-10-05T16:17:00+09:00",
-        "verified_at": "2026-10-05T16:17:00+09:00"
+        "dataset_version": 6,
+        "seeded_at": "2026-11-17T11:35:00+09:00",
+        "verified_at": "2026-11-17T11:35:00+09:00"
       }
     }
   }
