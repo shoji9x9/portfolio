@@ -36,7 +36,7 @@ checksum = "sha256:518674de2b621728a5e4486f5fb3b7d2900bb3cc4aa97969edaa463db99f9
 url = "https://nodejs.org/dist/v26.13.1/node-v26.13.1-linux-x64.tar.gz"
 
 [[tools."npm:typescript-language-server"]]
-version = "6.0.3"
+version = "6.1.0"
 backend = "npm:typescript-language-server"
 
 [[tools.pinact]]
