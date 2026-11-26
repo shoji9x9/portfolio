@@ -24,6 +24,7 @@
 | knip                           | 未使用 files/deps/exports        | ✓ 全体（関連 staged 時） | –        | ✓ 全体                                     | `src` / `functions` / `e2e` / `scripts` / `seed` / `playwright.config.ts`（CLI は entry として宣言）                                 |
 | jscpd                          | コピー&ペースト検出              | ✓ 全体（関連 staged 時） | –        | ✓                                          | `src` / `functions` / `e2e`（`*.test.*` / `*.spec.*` / vendored は除外）                                                             |
 | check-node-version-parity.ts   | Node 実行環境と型の整合          | ✓ 全体（関連 staged 時） | –        | ✓                                          | `mise.toml` / `package.json`                                                                                                         |
+| check-tool-version-parity.ts   | mise と package.json の版の一致  | ✓ 全体（関連 staged 時） | –        | ✓                                          | `mise.toml` / `package.json`                                                                                                         |
 | mise.lock 整合検査             | ツール解決の固定漏れ検出         | –                        | –        | ✓（`ci.yml` の `check`）                   | `mise.toml` / `mise.lock`                                                                                                            |
 | commitlint                     | コミットメッセージ規約           | ✓ commit-msg             | –        | –                                          | コミットメッセージ                                                                                                                   |
 | tsc                            | 型検査                           | –                        | ✓ 全体   | ✓                                          | tsconfig 対象（`src` / `functions` / `e2e`＋`playwright.config.ts` / 各 config・`scripts`・`seed`）                                  |
@@ -167,6 +168,27 @@ node_modules から外すと peer 解決が壊れる。逆方向（pnpm の `use
 `@types/node` 26 系の PR だけが届き Node 26 への更新を促す通知は来なかった。対で上げる依存を扱うときは、
 **両側から通知が来る状態を保つ**（`@types/node` のメジャーを Dependabot で ignore しない／`outdated.yml`
 はメジャーも通知する）。
+
+## mise 管理ツールと package.json の版の一致検査
+
+同じ版を `mise.toml` と `package.json` の複数箇所へ手で書いている組がある。`pnpm check:tool-version`
+（`scripts/check-tool-version-parity.ts`）が次の 2 組を**等値**で検査する。
+
+1. pnpm: `mise.toml` の `pnpm`・`packageManager`（`pnpm@<版>`）・`devEngines.packageManager.version`
+2. viteplus: `mise.toml` の `viteplus`・`devDependencies.vite`（`npm:@voidzero-dev/vite-plus-core@<版>`）
+
+既存の検査では、どちらも 1 箇所の更新漏れを早く・直接には落とせない。
+
+- pnpm は `devEngines` が `onFail: "warn"` のため、ずれても警告が出るだけでコマンドは成功する
+  （実測 2026-11-26 / Issue #219: mise を 12.22.0、`package.json` を 12.18.0 にした状態で
+  `pnpm --version` は `[WARN] This project is configured to use 12.18.0 of pnpm` を出して成功した）。
+- viteplus は `vp build` が起動前の厳密一致で落とすが（[dependency-policy.md](dependency-policy.md)
+  「vite は Vite+ core のエイリアスで管理する」）、CI では最後のほうの Build まで進まないと分からない。
+
+参照するのは宣言だけで、`pnpm-lock.yaml` は見ない（`package.json` との食い違いは CI の
+`pnpm install --frozen-lockfile` が落とす）。故障注入（2026-11-26）: `packageManager` だけ、
+`devEngines.packageManager.version` だけ、`vite` エイリアスだけをずらした状態で、いずれも exit 1 になる
+ことを確認した（`packageManager` のずれは lefthook の `pre-commit` 経路でも確認）。
 
 ## 新しいファイル種別を追加するときの確認
 

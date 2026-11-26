@@ -105,6 +105,15 @@ pre-commit:
               - "package.json"
             run: pnpm check:node-version
 
+          # mise 管理ツールと package.json の版の一致検査。pnpm（mise / packageManager /
+          # devEngines）と viteplus（mise / vite エイリアス）を等値で見る。
+          # node-version-parity と同じく 2 ファイル固定なので glob はゲートとして使う。
+          - name: tool-version-parity
+            glob:
+              - "mise.toml"
+              - "package.json"
+            run: pnpm check:tool-version
+
           # shellcheck: シェルスクリプト静的解析
           - name: shellcheck
             glob: "*.{sh,bash}"

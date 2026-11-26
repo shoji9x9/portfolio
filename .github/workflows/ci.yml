@@ -109,6 +109,10 @@ jobs:
           # tsc はこれらを見ないため、型だけ上げた PR は他のチェックでは緑になる。
           - name: Node version parity
             run: pnpm run check:node-version
+          # mise 管理ツールと package.json の版の一致。pnpm は devEngines が onFail: warn のため
+          # ずれても他のチェックは緑になり、viteplus は Build まで進まないと分からない。
+          - name: Tool version parity
+            run: pnpm run check:tool-version
           - name: Knip (unused files / deps)
             run: pnpm run knip
           - name: Copy-paste detection (jscpd)

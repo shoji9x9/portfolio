@@ -18,7 +18,7 @@
 ## pnpm 12 系の採用経緯
 
 pnpm 本体は `mise.toml` の `minimum_release_age`（7 日）を満たす 12 系の最新を採る
-（`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`）。12 系は 2 回、
+（`mise.toml` の `pnpm`・`package.json` の `packageManager` / `devEngines`。3 箇所の一致は `pnpm check:tool-version` が検査する）。12 系は 2 回、
 **Dependabot の npm 更新 PR が作られなくなる**ために見送った。経緯は次のとおり。
 
 | 日付       | 出来事                                                                                             |
@@ -204,7 +204,7 @@ viteplus 0.3.1 以降、`vp dev` / `vp build` / `vp preview` / `vp pack` は `no
 2. `package.json` の `vite` のエイリアス版を同じ版へ書き換える → `pnpm install`
 3. 両方を同じコミットに含める
 
-ずれた組み合わせは CI の Build（`vp build`）が上の厳密一致で必ず落とす。更新通知は
+ずれた組み合わせは `pnpm check:tool-version`（pre-commit と CI）が版の比較で先に落とし、CI の Build（`vp build`）も上の厳密一致で必ず落とす。更新通知は
 `outdated.yml`（mise の `viteplus`）が担い、Issue 本文が `vite` のエイリアスを対で上げるよう促す。
 Dependabot 側は `@voidzero-dev/vite-plus-core` を ignore してあるが、既定経路では
 エイリアス依存そのものが拾われないため、この ignore は実名へ解く経路が有効になった場合の保険である
