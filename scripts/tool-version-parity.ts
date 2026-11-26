@@ -97,7 +97,10 @@ function checkPnpm(miseToml: string, fields: PackageFields): readonly string[] {
       `package.json: packageManager は "${PACKAGE_MANAGER_PREFIX}<版>" 形式にしてください` +
         `（実際: ${packageManager === undefined ? "未定義" : `"${packageManager}"`}）。`,
     );
-  } else if (packageManager.slice(PACKAGE_MANAGER_PREFIX.length) !== misePin) {
+  } else if (
+    // corepack 形式の整合性ハッシュ（`pnpm@<版>+sha512.<hex>`）は版の一部ではないので除いて比べる。
+    packageManager.slice(PACKAGE_MANAGER_PREFIX.length).split("+")[0] !== misePin
+  ) {
     problems.push(
       `pnpm の版が一致していません: mise.toml の pnpm = "${misePin}"、` +
         `package.json の packageManager = "${packageManager}"。`,

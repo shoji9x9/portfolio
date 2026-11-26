@@ -71,6 +71,11 @@ describe("extractMiseToolPin", () => {
     expect(extractMiseToolPin(toml, "pnpm")).toBeUndefined();
   });
 
+  it("リテラル文字列（単一引用符）の値も取り出す", () => {
+    const toml = ["[tools]", "pnpm = '12.22.0'"].join("\n");
+    expect(extractMiseToolPin(toml, "pnpm")).toBe("12.22.0");
+  });
+
   it("[tools] 以外のテーブルの同名キーは拾わない", () => {
     const toml = ["[tools]", 'node = "26.13.1"', "[settings]", 'pnpm = "12.22.0"'].join("\n");
     expect(extractMiseToolPin(toml, "pnpm")).toBeUndefined();
@@ -91,6 +96,15 @@ describe("checkToolVersionParity", () => {
     expect(problems).toHaveLength(2);
     expect(problems[0]).toContain('packageManager = "pnpm@12.18.0"');
     expect(problems[1]).toContain('devEngines.packageManager.version = "12.18.0"');
+  });
+
+  it("packageManager の整合性ハッシュは版の比較から除く", () => {
+    expect(
+      check(miseToml("12.22.0", "1.6.0"), {
+        ...aligned,
+        packageManager: "pnpm@12.22.0+sha512.0123abcd",
+      }),
+    ).toEqual([]);
   });
 
   it("devEngines だけ取り残された状態を検出する", () => {

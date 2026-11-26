@@ -51,7 +51,9 @@ jobs:
           # 引数は pnpm へそのまま渡す（自己検査で `-C <dir>` を付ける）。
           read_ignored() {
             local raw
-            raw="$(pnpm "$@" config get audit --json)"
+            # コマンド置換の中では set -e が効かないため、pnpm の失敗を明示的に返す
+            # （握りつぶすと空の出力として `[]` に丸められる）。
+            raw="$(pnpm "$@" config get audit --json)" || return 1
             if [ -z "$raw" ]; then
               echo '[]'
             else
@@ -66,6 +68,7 @@ jobs:
           # `pnpm -C <probe> config get audit --json` は probe の pnpm-workspace.yaml を読み、付けなければ本体を読む）。
           probe_ghsa="GHSA-xxxx-xxxx-xxxx"
           probe="$(mktemp -d)"
+          trap 'rm -rf "$probe"' EXIT
           printf '{"name":"ignored-advisories-probe","private":true}\n' > "${probe}/package.json"
           printf 'auditConfig:\n  ignoreGhsas:\n    - %s\n' "$probe_ghsa" > "${probe}/pnpm-workspace.yaml"
           probe_ids="$(read_ignored -C "$probe")"

@@ -19,7 +19,10 @@ function escapeRegExp(value: string): string {
  */
 export function extractMiseToolPin(miseToml: string, tool: string): string | undefined {
   const escaped = escapeRegExp(tool);
-  const pinPattern = new RegExp(String.raw`^(?:${escaped}|"${escaped}")\s*=\s*"([^"]+)"`);
+  // 値は基本文字列（"..."）とリテラル文字列（'...'）のどちらも受ける。
+  const pinPattern = new RegExp(
+    String.raw`^(?:${escaped}|"${escaped}")\s*=\s*(?:"([^"]+)"|'([^']+)')`,
+  );
   let table = "";
 
   for (const rawLine of miseToml.split("\n")) {
@@ -38,7 +41,8 @@ export function extractMiseToolPin(miseToml: string, tool: string): string | und
     if (table !== "tools") continue;
 
     const pinMatch = pinPattern.exec(line);
-    if (pinMatch?.[1] !== undefined) return pinMatch[1];
+    const pin = pinMatch?.[1] ?? pinMatch?.[2];
+    if (pin !== undefined) return pin;
   }
 
   return undefined;
