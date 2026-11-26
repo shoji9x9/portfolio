@@ -49,6 +49,8 @@
   （メジャーを落とすと Dependabot だけがメジャー PR を出す非対称な状態になり、対で上げるべき依存の片側しか届かない）。
 - `ignored-advisories.yml`: 週次で `pnpm-workspace.yaml` の `auditConfig.ignoreGhsas` の各 advisory を GitHub Advisory Database で引き、
   修正版の公開または取り下げを Issue で通知する。pnpm が読んだ一覧とファイルの記載数が食い違うか、API が失敗したらジョブを失敗させる。
+  記載が 0 件だと件数照合は pnpm の設定キーの変化を落とせないため、ダミーを 1 件書いた一時設定を `pnpm -C` で読ませる自己検査を先に行う
+  （pnpm を上げるたびの手作業の実測は不要）。
 - `dependency-review.yml`: 依存マニフェスト変更 PR の既知脆弱性・拒否ライセンスを検査する。拒否ライセンスは `.github/license-policy.json` を正本としてローカル検査と共有する。
 - `dependabot-automerge.yml`: 対象の Dependabot PR が CI と Dependency Review を通過した場合だけ merge commit で自動マージする。
 

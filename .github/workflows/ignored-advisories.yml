@@ -46,22 +46,37 @@ jobs:
         run: |
           set -euo pipefail
           # 無視の一覧は、pnpm が実際に読み込んだ値（`pnpm config get audit` の `.ignore`）を正本にする。
-          # 実測（2026-10-19 / pnpm 11.28.4・12.12.1）: auditConfig.ignoreGhsas は `{"ignore": [...]}` として返り、
-          # キーが無いときは空の出力になる。
-          # 実測（2026-10-26 / pnpm 12.12.1・12.14.0）: `ignoreGhsas: []` のときは `null` が返り、下の `.ignore // []` で空になる。
-          # 実測（2026-11-02 / pnpm 12.15.0）: `{"ignore": [...]}` と `ignoreGhsas: []` の `null` は同じ。キーが無いときは
-          # 空の出力ではなく `null` が返る（下の `.ignore // []` で空になるため判定は変わらない）。
-          # 実測（2026-11-09 / pnpm 12.17.0）: 12.15.0 と同じ（`ignoreGhsas` を書いたときは `{"ignore": [...]}`、
-          # `ignoreGhsas: []`・`ignoreGhsas` が無いとき・`auditConfig` ごと無いときは `null`）。
-          # 実測（2026-11-16 / pnpm 12.18.0、2026-11-26 / pnpm 12.22.0）: 12.17.0 と同じ。
-          raw="$(pnpm config get audit --json)"
-          if [ -z "$raw" ]; then
-            ids='[]'
-          else
-            ids="$(printf '%s' "$raw" | jq -ce '.ignore // [] | if type == "array" and all(type == "string") then . else error("audit.ignore is not an array of strings") end')"
-          fi
+          # `ignoreGhsas` を書いたときは `{"ignore": [...]}`、空・キーなし・`auditConfig` ごと無いときは
+          # `null`（または空の出力）が返り、どちらも下の `.ignore // []` で空になる。
+          # 引数は pnpm へそのまま渡す（自己検査で `-C <dir>` を付ける）。
+          read_ignored() {
+            local raw
+            raw="$(pnpm "$@" config get audit --json)"
+            if [ -z "$raw" ]; then
+              echo '[]'
+            else
+              printf '%s' "$raw" | jq -ce '.ignore // [] | if type == "array" and all(type == "string") then . else error("audit.ignore is not an array of strings") end'
+            fi
+          }
 
-          # pnpm の設定キーの名前や形が変わると、上は無言で空になり「見直すものは無い」と誤判定する。
+          # 自己検査: pnpm の設定キーの名前や形が変わると、上は無言で空になる。下の件数照合は
+          # 記載が 0 件のとき（0 = 0）この変化を落とせないため、ダミーを 1 件書いた設定で毎回確かめる。
+          # pnpm を上げるたびに手で測って記録する代わりに、この検査が戻り値の形を保証する。
+          # 本体と同じ pnpm バイナリに `-C` で probe の設定を読ませる（実測 2026-11-26 / pnpm 12.22.0:
+          # `pnpm -C <probe> config get audit --json` は probe の pnpm-workspace.yaml を読み、付けなければ本体を読む）。
+          probe_ghsa="GHSA-xxxx-xxxx-xxxx"
+          probe="$(mktemp -d)"
+          printf '{"name":"ignored-advisories-probe","private":true}\n' > "${probe}/package.json"
+          printf 'auditConfig:\n  ignoreGhsas:\n    - %s\n' "$probe_ghsa" > "${probe}/pnpm-workspace.yaml"
+          probe_ids="$(read_ignored -C "$probe")"
+          if [ "$probe_ids" != "[\"${probe_ghsa}\"]" ]; then
+            echo "::error::pnpm $(pnpm --version) が auditConfig.ignoreGhsas を期待どおりに返しません（実際: ${probe_ids}）。read_ignored の読み取りを見直してください。"
+            exit 1
+          fi
+          echo "Self-test OK: pnpm $(pnpm --version) returns auditConfig.ignoreGhsas as .ignore"
+
+          ids="$(read_ignored)"
+
           # ファイルに書かれた GHSA の数と突き合わせ、食い違えば失敗させる（誤クローズより赤い方が安全）。
           declared="$(grep -cE '^[[:space:]]*-[[:space:]]*"?GHSA-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}"?[[:space:]]*$' pnpm-workspace.yaml || true)"
           loaded="$(printf '%s' "$ids" | jq 'length')"
