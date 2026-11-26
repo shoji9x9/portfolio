@@ -37,6 +37,8 @@
  * （`pnpm update` 等）は対象外。
  */
 
+import { extractMiseToolPin } from "./mise-toml";
+
 /** 検査対象のファイル内容。呼び出し側（CLI / テスト）が読み込んで渡す。 */
 export type NodeVersionSources = {
   /** `mise.toml` の内容。 */
@@ -55,35 +57,10 @@ const TYPES_FORM = "^<major>.<minor>.<patch>";
 
 /**
  * `mise.toml` の `[tools]` テーブルから `node` の固定バージョンを取り出す。
- *
- * TOML パーサーは導入せず行走査で解く（依存を増やさないため）。`[tools]` 以外のテーブル
- * （`[settings]` など）の同名キーを拾わないよう、現在のテーブル名を追跡する。
- * `wrangler = { version = "..." }` のようなインラインテーブルや
- * `"npm:typescript-language-server" = "..."` のような引用符付きキーは `node` に一致しない。
+ * 読み取りの規則は `extractMiseToolPin`（`./mise-toml`）を参照。
  */
 export function extractMiseNodePin(miseToml: string): string | undefined {
-  let table = "";
-
-  for (const rawLine of miseToml.split("\n")) {
-    const line = rawLine.trim();
-    if (line === "" || line.startsWith("#")) continue;
-
-    if (line.startsWith("[")) {
-      // 表 / 配列表のヘッダー行。末尾コメント付き（`[settings] # ...`）も表名として読む。
-      // 認識できない形（`[[foo]]` など）は「直前の表の続き」とは見なさず表名を捨てる。
-      // 続きと見なすと、別の表の `node = "..."` を [tools] の値として誤読してしまう。
-      const tableMatch = /^\[([^\]]+)]\s*(?:#.*)?$/.exec(line);
-      table = tableMatch?.[1] ?? "";
-      continue;
-    }
-
-    if (table !== "tools") continue;
-
-    const nodeMatch = /^node\s*=\s*"([^"]+)"/.exec(line);
-    if (nodeMatch?.[1] !== undefined) return nodeMatch[1];
-  }
-
-  return undefined;
+  return extractMiseToolPin(miseToml, "node");
 }
 
 /** `<major>.<minor>.<patch>` を数値へ分解する。形式が違えば undefined。 */

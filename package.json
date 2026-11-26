@@ -17,6 +17,7 @@
     "lint:fix": "vp lint -c oxlint.config.ts --type-aware --fix",
     "lint:md": "markdownlint-cli2",
     "check:node-version": "tsx scripts/check-node-version-parity.ts",
+    "check:tool-version": "tsx scripts/check-tool-version-parity.ts",
     "lint:sh": "git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 sh -c 'test \"$#\" -eq 0 || shellcheck --external-sources \"$@\"' _ && git ls-files -z '*.sh' '*.bash' ':(exclude).agents/**' ':(exclude).claude/**' | xargs -0 sh -c 'test \"$#\" -eq 0 || shfmt -d \"$@\"' _",
     "format": "vp fmt -c oxfmt.config.ts",
     "format:check": "vp fmt -c oxfmt.config.ts --check",
@@ -62,18 +63,18 @@
     "tailwindcss": "^4.3.5",
     "tsx": "^4.23.15",
     "typescript": "~7.0.0",
-    "vite": "npm:@voidzero-dev/vite-plus-core@1.5.0",
+    "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
     "vitest": "^5.1.0"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "12.18.0",
+      "version": "12.22.0",
       "onFail": "warn"
     }
   },
   "engines": {
     "node": ">=26.10.0"
   },
-  "packageManager": "pnpm@12.18.0"
+  "packageManager": "pnpm@12.22.0"
 }

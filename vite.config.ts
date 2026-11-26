@@ -57,6 +57,8 @@ export default defineConfig({
         "functions/**/*.ts",
         "scripts/tailwind-canonical.ts",
         "scripts/node-version-parity.ts",
+        "scripts/tool-version-parity.ts",
+        "scripts/mise-toml.ts",
         "vite/**/*.ts",
       ],
       // エントリ（main.tsx）・テスト・型定義はカバレッジ対象外。
